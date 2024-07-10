@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PWA Example</title>
+  <meta charset="UTF-8" />
+  <link rel="manifest" href="/app.webmanifest" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="theme-color" content="#000000" />
+  <!-- <script src="init.js" type="module" charset="utf-8"></script> -->
+  <script src='./lib/nostr-login.js' data-bunkers="misllaves.satoshidnc.com,acceso.satoshidnc.com"></script>
+  <script src='./lib/gl-matrix.js'></script>
+  <script src='./lib/fireglass.min.js'></script>
+  <script src='./lib/rune.min.js'></script>
+  <script src='./js/globals.js'></script>
+  <script src='./js/fonts/defaultFont.js'></script>
+  <script src='./js/splash.js'></script>
+  <script type="importmap">
+    { "imports": {
+      "@getalby/sdk": "https://esm.sh/@getalby/sdk@3.5.1",
+      "zustand/vanilla": "https://esm.sh/zustand@4.5.2/vanilla",
+      "@getalby/lightning-tools": "https://esm.sh/@getalby/lightning-tools@5.0.3",
+      "qrcode-generator": "https://esm.sh/qrcode-generator@1.4.4"
+    } }
+  </script>
+</head>
+<body style="text-align: center; touch-action: none; overflow: hidden; margin: 0; padding: 0;">
+  <script type="module">
+    // This module demonstrates use of Bitcoin Connect.
+
+    import {
+      init,
+      launchModal,
+      launchPaymentModal,
+      requestProvider,
+    } from './lib/bitcoin-connect.js'
+
+    init({
+      appName: 'PWA Example',
+    })
+
+    window.testPaymentModal = function() {
+      console.log('test')
+      launchPaymentModal({
+        invoice: 'lnbc10n1pnyln5msp50nepkmycsd6ek5e3ktd3g9avk6y3h6tq5afkrhrjxjuyzu6sudzspp5tl033nmw39s7yh8vynf6vy2s7t9d0ljfzqc9s2hw47gag9007glqdq8w3jhxaqcqpjrzjqt884w67vfvepaufs5stefepk7hrzct9amupzv7uleqx3l8mudavvrylucqqpusqqqqqqqqqqqqqqqsq2q9qxpqysgqx0k75yztchgxpv5g75egmdgcl49wyyp9u4jrvsrrrcqug00f4mrrlknsy9fnfnrnsefe38whyv0wtnwfmen4xy3daqd2xh57wavy08qq9nm0a3'
+      })
+    }
+
+    document.addEventListener("DOMContentLoaded", (event) => {
+    })
+  </script>
+  <script type="module">
+    // This module demonstrates use of Nostr Login.
+
+    document.addEventListener('nlAuth', (e) => {
+      console.log(e.detail)
+      // // type is login, signup or logout
+      // if (e.detail.type === 'login' || e.detail.type === 'signup') {
+      //   onLogin();  // get pubkey with window.nostr and show user profile
+      // } else {
+      //   onLogout()  // clear local user data, hide profile info 
+      // }
+    })
+
+    document.addEventListener("DOMContentLoaded", (event) => {
+      window.nostr.getPublicKey().then(result => console.log(result))
+    })
+  </script>
+  <script type="module">
+    // This module demonstrates use of Fireglass and Rune.
+    document.addEventListener("DOMContentLoaded", (event) => {
+
+      // Initialize globals
+      const canvas = document.querySelector('#app1')
+      vp.initialize(canvas)
+      gl = vp.getContext()
+      df.glSet(gl)
+
+      // Wait for fonts to load
+      const startupCheck = (f) => {
+        if (defaultFont.isReady()) {
+          defaultFont.init()
+          f()
+        } else {
+          setTimeout(startupCheck, 10)
+        }
+      }
+      startupCheck(() => {
+        vp.start(splash, true)
+      })
+    })
+  </script>
+  <span onclick="console.log('click');window.testPaymentModal()" style="cursor: pointer;">buy</span><br>
+  <canvas id="app1"></canvas>
+</body>
+</html>
