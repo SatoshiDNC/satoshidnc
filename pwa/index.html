@@ -89,7 +89,8 @@
   <!-- begin receipt-printer B -->
   <script type="module">
     // This module demonstrates use of the receipt printer.
-    window.testPrinter = function() {
+    const receiptPrinter = new WebUSBReceiptPrinter()
+    window.testPrinter = () => {
       console.log('Connecting to printer...')
       receiptPrinter.connect()
       console.log('Connected to printer')
