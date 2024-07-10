@@ -7,13 +7,8 @@
   <meta name="viewport" content="width=device-width" />
   <meta name="theme-color" content="#000000" />
   <!-- <script src="init.js" type="module" charset="utf-8"></script> -->
-  <script src='./lib/nostr-login.js' data-bunkers="misllaves.satoshidnc.com,acceso.satoshidnc.com"></script>
-  <script src='./lib/gl-matrix.js'></script>
-  <script src='./lib/fireglass.min.js'></script>
-  <script src='./lib/rune.min.js'></script>
-  <script src='./js/globals.js'></script>
-  <script src='./js/fonts/defaultFont.js'></script>
-  <script src='./js/splash.js'></script>
+
+  <!-- begin bitcoin-connect A -->
   <script type="importmap">
     { "imports": {
       "@getalby/sdk": "https://esm.sh/@getalby/sdk@3.5.1",
@@ -22,8 +17,29 @@
       "qrcode-generator": "https://esm.sh/qrcode-generator@1.4.4"
     } }
   </script>
+  <!-- end bitcoin-connect A -->
+
+  <!-- begin nostr-login A -->
+  <script src='./lib/nostr-login.js' data-bunkers="misllaves.satoshidnc.com,acceso.satoshidnc.com"></script>
+  <!-- end nostr-login A -->
+
+  <!-- begin fireglass + rune A -->
+  <script src='./lib/gl-matrix.js'></script>
+  <script src='./lib/fireglass.min.js'></script>
+  <script src='./lib/rune.min.js'></script>
+  <script src='./js/globals.js'></script>
+  <script src='./js/fonts/defaultFont.js'></script>
+  <script src='./js/splash.js'></script>
+  <!-- end fireglass + rune A -->
+
+  <!-- begin receipt-printer A -->
+  <script src="lib/webusb-receipt-printer.umd.js"></script>
+  <!-- end receipt-printer A -->
+
 </head>
 <body style="text-align: center; touch-action: none; overflow: hidden; margin: 0; padding: 0;">
+
+  <!-- begin bitcoin-connect B -->
   <script type="module">
     // This module demonstrates use of Bitcoin Connect.
 
@@ -48,6 +64,9 @@
     document.addEventListener("DOMContentLoaded", (event) => {
     })
   </script>
+  <!-- end bitcoin-connect B -->
+
+  <!-- begin nostr-login B -->
   <script type="module">
     // This module demonstrates use of Nostr Login.
 
@@ -65,17 +84,31 @@
       window.nostr.getPublicKey().then(result => console.log(result))
     })
   </script>
+  <!-- end nostr-login B -->
+
+  <!-- begin receipt-printer B -->
+  <script type="module">
+    // This module demonstrates use of the receipt printer.
+    window.testPrinter = function() {
+      console.log('Connecting to printer...')
+      receiptPrinter.connect()
+      console.log('Connected to printer')
+    }
+  </script>
+  <!-- end receipt-printer B -->
+
+  <!-- begin fireglass + rune B -->
   <script type="module">
     // This module demonstrates use of Fireglass and Rune.
     document.addEventListener("DOMContentLoaded", (event) => {
 
-      // Initialize globals
+      // initialize globals
       const canvas = document.querySelector('#app1')
       vp.initialize(canvas)
       gl = vp.getContext()
       df.glSet(gl)
 
-      // Wait for fonts to load
+      // wait for stuff to load on startup
       const startupCheck = (f) => {
         if (defaultFont.isReady()) {
           defaultFont.init()
@@ -84,12 +117,25 @@
           setTimeout(startupCheck, 10)
         }
       }
+
+      // entrypoint
       startupCheck(() => {
         vp.start(splash, true)
       })
     })
   </script>
-  <span onclick="console.log('click');window.testPaymentModal()" style="cursor: pointer;">buy</span><br>
+  <!-- end fireglass + rune B -->
+
+  <!-- begin bitcoin-connect C -->
+  [ bitcoin-connect: <span onclick="console.log('click');window.testPaymentModal()" style="cursor: pointer;">buy</span> ]<br>
+  <!-- end bitcoin-connect C -->
+
+  <!-- begin receipt-printer C -->
+  [ receipt-printer: <span onclick="console.log('click');window.testPrinter()" style="cursor: pointer;">connect</span> ]<br>
+  <!-- end receipt-printer C -->
+
+  <!-- begin fireglass + rune C -->
   <canvas id="app1"></canvas>
+  <!-- end fireglass + rune C -->
 </body>
 </html>
