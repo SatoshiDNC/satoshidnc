@@ -33,7 +33,8 @@
   <!-- end fireglass + rune A -->
 
   <!-- begin receipt-printer A -->
-  <script src="lib/webusb-receipt-printer.umd.js"></script>
+  <script src="lib/webusb-receipt-printer.umd.js"> // https://github.com/NielsLeenheer/WebUSBReceiptPrinter </script>
+  <script src='lib/thermal-printer-encoder.umd.js'> // https://github.com/NielsLeenheer/ThermalPrinterEncoder </script>
   <!-- end receipt-printer A -->
 
 </head>
@@ -90,10 +91,46 @@
   <script type="module">
     // This module demonstrates use of the receipt printer.
     const receiptPrinter = new WebUSBReceiptPrinter()
-    window.testPrinter = () => {
+    let lastUsedDevice
+    let printerLanguage
+    let printerCodepageMapping
+
+    receiptPrinter.addEventListener('connected', device => {
+      console.log(`Connected to ${device.manufacturerName} ${device.productName} (#${device.serialNumber})`)
+
+      printerLanguage = device.language
+      printerCodepageMapping = device.codepageMapping
+
+      /* Store device for reconnecting */
+      lastUsedDevice = device
+      console.log(JSON.stringify(lastUsedDevice))
+    })
+    window.testPrinterConnect = () => {
       console.log('Connecting to printer...')
       receiptPrinter.connect()
       console.log('Connected to printer')
+    }
+    window.testPrinterReconnect = () => {
+      console.log('Reconnecting to printer...')
+      receiptPrinter.reconnect(lastUsedDevice)
+      console.log('Reconnected to printer')
+    }
+    window.testPrinterPrint = () => {
+      console.log('Printing to printer...')
+      let encoder = new ThermalPrinterEncoder({
+        language:  printerLanguage,
+        codepageMapping: printerCodepageMapping
+      })
+
+      let data = encoder
+        .initialize()
+        .text('The quick brown fox jumps over the lazy dog')
+        .newline()
+        .qrcode('https://nielsleenheer.com')
+        .encode()
+
+      receiptPrinter.print(data)
+      console.log('Printed to printer')
     }
   </script>
   <!-- end receipt-printer B -->
@@ -132,7 +169,10 @@
   <!-- end bitcoin-connect C -->
 
   <!-- begin receipt-printer C -->
-  [ receipt-printer: <span onclick="console.log('click');window.testPrinter()" style="cursor: pointer;">connect</span> ]<br>
+  [ receipt-printer:
+  <span onclick="console.log('click');window.testPrinterConnect()" style="cursor: pointer;">connect</span> |
+  <span onclick="console.log('click');window.testPrinterReconnect()" style="cursor: pointer;">reconnect</span> |
+  <span onclick="console.log('click');window.testPrinterPrint()" style="cursor: pointer;">print</span> ]<br>
   <!-- end receipt-printer C -->
 
   <!-- begin fireglass + rune C -->
