@@ -151,7 +151,7 @@
       }
       let n = baseWidth * 2 * 3 // max seems to be 288 in single density, 576 in double density
       let data = new Uint8Array([0x1b, 0x2a, ...m(33), ...nn(n), ...d1_k(n)])
-      console.log('data length:', data.size())
+      console.log('data length:', data.length)
 
       receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
       receiptPrinter.print(cmdSetLineSpacing(0))
