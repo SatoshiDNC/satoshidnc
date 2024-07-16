@@ -136,6 +136,10 @@
 
       // Print using graphics commands:
       let encoder = new TextEncoder()
+      const baseWidth = 288
+      const cmdSelectUnidirectionalPrintMode = () => new Uint8Array([0x1b, 0x55, 0x01])
+      const cmdSetLineSpacing = n => new Uint8Array([0x1b, 0x33, n & 0xff])
+
       let m = m => new Uint8Array([m & 0xff])
       let nn = n => new Uint8Array([n & 0xff, (n >> 8) & 0xff])
       let d1_k = k => {
@@ -145,17 +149,17 @@
         }
         return s
       }
-      const baseWidth = 288
       let n = baseWidth * 2 * 3 // max seems to be 288 in single density, 576 in double density
       let data = new Uint8Array([0x1b, 0x2a, ...m(33), ...nn(n), ...d1_k(n)])
-      const cmdSelectUnidirectionalPrintMode = new Uint8Array([0x1b, 0x55, 0x01])
+      console.log('data length:', data.length())
 
-      receiptPrinter.print(cmdSelectUnidirectionalPrintMode)
+      receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
+      receiptPrinter.print(cmdSetLineSpacing(0))
       receiptPrinter.print(data)
-      receiptPrinter.print(data)
-      receiptPrinter.print(data)
-      receiptPrinter.print(data)
-      receiptPrinter.print(encoder.encode(`M\n`))
+      for (let j = 0; j < 50; j++) {
+        receiptPrinter.print(encoder.encode(`${j % 10}`))
+      }
+      receiptPrinter.print(encoder.encode(`\n`))
       console.log('Printed to printer')
     }
   </script>
