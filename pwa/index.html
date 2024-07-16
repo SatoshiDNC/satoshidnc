@@ -145,7 +145,8 @@
         }
         return s
       }
-      let data = encoder.encode(`\x1b\x2a${m(0)}${nn(x)}${d1_k(20)}`)
+      let n = 20
+      let data = encoder.encode(`\x1b\x2a${m(0)}${nn(n)}${d1_k(n)}`)
 
       receiptPrinter.print(data)
       receiptPrinter.print(encoder.encode(`M\n`))
