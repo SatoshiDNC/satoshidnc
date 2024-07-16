@@ -141,11 +141,11 @@
       let d1_k = k => {
         let s = ''
         for (let i = 0; i < k; i++) {
-          s = s + String.fromCharCode(i)
+          s = s + String.fromCharCode(i & 0xff)
         }
         return s
       }
-      let n = 300
+      let n = 240
       let data = encoder.encode(`\x1b\x2a${m(0)}${nn(n)}${d1_k(n)}`)
 
       receiptPrinter.print(data)
