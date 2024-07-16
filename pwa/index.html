@@ -122,12 +122,13 @@
         codepageMapping: printerCodepageMapping
       })
 
-      let data = encoder
-        .initialize()
-        .text('The quick brown fox jumps over the lazy dog')
-        .newline()
-        .qrcode('https://nielsleenheer.com')
-        .encode()
+      // let data = encoder
+      //   .initialize()
+      //   .text('The quick brown fox jumps over the lazy dog')
+      //   .newline()
+      //   .qrcode('https://nielsleenheer.com')
+      //   .encode()
+      let data = `TEST quick brown fox jumps over the lazy dog\n`
 
       receiptPrinter.print(data)
       console.log('Printed to printer')
