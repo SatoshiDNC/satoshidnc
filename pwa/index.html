@@ -136,17 +136,17 @@
 
       // Print using graphics commands:
       let encoder = new TextEncoder()
-      let m = m => [m & 0xff]
-      let nn = n => [n & 0xff, (n >> 8) & 0xff]
+      let m = m => new Uint8Array([m & 0xff])
+      let nn = n => new Uint8Array([n & 0xff, (n >> 8) & 0xff])
       let d1_k = k => {
-        let s = new UInt8Array(k)
+        let s = new Uint8Array(k)
         for (let i = 0; i < k; i++) {
           s[i] = i & 0xff
         }
         return s
       }
       let n = 300
-      let data = [0x1b, 0x2a, ...m(0), ...nn(n), ...d1_k(n)]
+      let data = new Uint8Array([0x1b, 0x2a, ...m(0), ...nn(n), ...d1_k(n)])
 
       receiptPrinter.print(data)
       receiptPrinter.print(encoder.encode(`M\n`))
