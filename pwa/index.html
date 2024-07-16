@@ -147,7 +147,9 @@
       }
       let n = 300 // 232 seems to be the max
       let data = new Uint8Array([0x1b, 0x2a, ...m(0), ...nn(n), ...d1_k(n)])
+      const cmdSelectUnidirectionalPrintMode = new Uint8Array([0x1b, 0x55, 0x01])
 
+      receiptPrinter.print(cmdSelectUnidirectionalPrintMode)
       receiptPrinter.print(data)
       receiptPrinter.print(data)
       receiptPrinter.print(data)
