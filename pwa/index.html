@@ -145,7 +145,7 @@
         }
         return s
       }
-      let n = 300 // 232 seems to be the max
+      let n = 1088 // max seems to be 544 in single density, 1088 in double density
       let data = new Uint8Array([0x1b, 0x2a, ...m(1), ...nn(n), ...d1_k(n)])
       const cmdSelectUnidirectionalPrintMode = new Uint8Array([0x1b, 0x55, 0x01])
 
