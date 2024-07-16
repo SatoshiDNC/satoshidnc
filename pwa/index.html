@@ -156,6 +156,7 @@
       receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
       receiptPrinter.print(cmdSetLineSpacing(0))
       receiptPrinter.print(data)
+      receiptPrinter.print(encoder.encode(`\n`))
       for (let j = 0; j < 50; j++) {
         receiptPrinter.print(encoder.encode(`${j % 10}`))
       }
