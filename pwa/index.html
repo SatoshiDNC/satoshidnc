@@ -117,18 +117,19 @@
     }
     window.testPrinterPrint = () => {
       console.log('Printing to printer...')
-      let encoder = new ThermalPrinterEncoder({
-        language:  printerLanguage,
-        codepageMapping: printerCodepageMapping
-      })
-
+      // let encoder = new ThermalPrinterEncoder({
+      //   language:  printerLanguage,
+      //   codepageMapping: printerCodepageMapping
+      // })
       // let data = encoder
       //   .initialize()
       //   .text('The quick brown fox jumps over the lazy dog')
       //   .newline()
       //   .qrcode('https://nielsleenheer.com')
       //   .encode()
-      let data = `TEST quick brown fox jumps over the lazy dog\n`
+
+      let encoder = new TextEncoder()
+      let data = encoder.encode(`TEST quick brown fox jumps over the lazy dog\n`)
 
       receiptPrinter.print(data)
       console.log('Printed to printer')
