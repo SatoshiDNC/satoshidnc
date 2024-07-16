@@ -135,7 +135,7 @@
       // let data = encoder.encode(`TEST quick brown fox jumps over the lazy dog\n`)
 
       // Print using graphics commands:
-      let encoder = new TextEncoder()
+      const encoder = new TextEncoder()
       const baseWidth = 288 // seems to be 288 (low density)
       const cmdSelectUnidirectionalPrintMode = () => new Uint8Array([0x1b, 0x55, 0x01])
       const cmdSetLineSpacing = n => new Uint8Array([0x1b, 0x33, n & 0xff])
@@ -150,15 +150,15 @@
         return s
       }
 
-      horizontalDoubleDensity = true
-      verticalTripleDensity = true
+      const horizontalDoubleDensity = true
+      const verticalTripleDensity = true
 
-      let pixelWidth = baseWidth * (horizontalDoubleDensity?2:1)
-      let bytes = pixelWidth * (verticalTripleDensity?3:1)
+      const pixelWidth = baseWidth * (horizontalDoubleDensity?2:1)
+      const bytesPerLine = pixelWidth * (verticalTripleDensity?3:1)
 
       receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
       receiptPrinter.print(cmdSetLineSpacing(0))
-      receiptPrinter.print(new Uint8Array([0x1b, 0x2a, ...m((verticalTripleDensity?32:0) + (horizontalDoubleDensity?1:0)), ...nn(pixelWidth), ...d1_k(bytes)]))
+      receiptPrinter.print(new Uint8Array([0x1b, 0x2a, ...m((verticalTripleDensity?32:0) + (horizontalDoubleDensity?1:0)), ...nn(pixelWidth), ...d1_k(bytesPerLine)]))
       receiptPrinter.print(encoder.encode(`\n`))
       console.log('Printed to printer')
     }
