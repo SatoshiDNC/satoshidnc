@@ -1,14 +1,14 @@
-const splash = v = new vp.View(null)
-v.name = Object.keys({splash}).pop()
+const receipt = v = new vp.View(null)
+v.name = Object.keys({receipt}).pop()
 v.designSize = 640*400
 v.splashMode = 0
 v.frameTimes = []
-v.bgColor = [0.2,0.2,0,0]
+v.bgColor = [0,0,0]
 v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = "PWA"
 v.setText = function(text) {
   this.loadingText = text
-  console.log('splash:', text)
+  console.log('receipt:', text)
 }
 v.finish = function(text) {
   if (text) this.loadingText = text
