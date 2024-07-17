@@ -238,8 +238,10 @@
         return s
       }
 
-      receiptPrinter.print(new Uint8Array([0x1b, 0x2a, ...m((verticalTripleDensity?32:0) + (horizontalDoubleDensity?1:0)), ...nn(pixelWidth), ...d1_k(bytesPerLine, 0)]))
-      receiptPrinter.print(encoder.encode(`\n`))
+      for (let l = 0; l < h/24; l++) {
+        receiptPrinter.print(new Uint8Array([0x1b, 0x2a, ...m((verticalTripleDensity?32:0) + (horizontalDoubleDensity?1:0)), ...nn(pixelWidth), ...d1_k(bytesPerLine, l)]))
+        receiptPrinter.print(encoder.encode(`\n`))
+      }
 
       console.log('Printed to printer')
     }
