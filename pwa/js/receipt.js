@@ -1,4 +1,3 @@
-const gl = glp
 const receipt = v = new fgp.View(null)
 v.name = Object.keys({receipt}).pop()
 v.designSize = 640*400
@@ -15,7 +14,7 @@ v.finish = function(text) {
   if (text) this.loadingText = text
 }
 v.renderFunc = function() {
-  const v = this
+  const v = this, gl = glp
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
   const mat = mat4.create()
