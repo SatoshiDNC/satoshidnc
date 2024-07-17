@@ -95,6 +95,31 @@
     let printerLanguage
     let printerCodepageMapping
 
+    // For using with FireGlass:
+    document.addEventListener("DOMContentLoaded", (event) => {
+
+      // initialize globals
+      const canvas = document.querySelector('#test1')
+      fgp.initialize(canvas, 556, 556)
+      const gl = fgp.getContext()
+      df.glSet(gl)
+
+      // wait for stuff to load on startup
+      const startupCheck = (f) => {
+        if (defaultFont.isReady()) {
+          defaultFont.init()
+          f()
+        } else {
+          setTimeout(startupCheck, 10)
+        }
+      }
+
+      // entrypoint
+      startupCheck(() => {
+        fg.start(receipt, true)
+      })
+    })
+
     receiptPrinter.addEventListener('connected', device => {
       console.log(`Connected to ${device.manufacturerName} ${device.productName} (#${device.serialNumber})`)
 
@@ -129,17 +154,41 @@
       //   .newline()
       //   .qrcode('https://nielsleenheer.com')
       //   .encode()
+      // receiptPrinter.print(data)
 
       // // Printing plain text works:
       // let encoder = new TextEncoder()
       // let data = encoder.encode(`TEST quick brown fox jumps over the lazy dog\n`)
+      // receiptPrinter.print(data)
 
-      // Print using graphics commands:
+      // // Print using graphics commands:
+      // const encoder = new TextEncoder()
+      // const baseWidth = 288 // seems to be 288 (low density)
+      // const cmdSelectUnidirectionalPrintMode = () => new Uint8Array([0x1b, 0x55, 0x01])
+      // const cmdSetLineSpacing = n => new Uint8Array([0x1b, 0x33, n & 0xff])
+      // let m = m => new Uint8Array([m & 0xff])
+      // let nn = n => new Uint8Array([n & 0xff, (n >> 8) & 0xff])
+      // let d1_k = k => {
+      //   let s = new Uint8Array(k)
+      //   for (let i = 0; i < k; i++) {
+      //     s[i] = i < 30? 0xff: 0
+      //   }
+      //   return s
+      // }
+      // const horizontalDoubleDensity = true
+      // const verticalTripleDensity = true
+      // const pixelWidth = baseWidth * (horizontalDoubleDensity?2:1)
+      // const bytesPerLine = pixelWidth * (verticalTripleDensity?3:1)
+      // receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
+      // receiptPrinter.print(cmdSetLineSpacing(0))
+      // receiptPrinter.print(new Uint8Array([0x1b, 0x2a, ...m((verticalTripleDensity?32:0) + (horizontalDoubleDensity?1:0)), ...nn(pixelWidth), ...d1_k(bytesPerLine)]))
+      // receiptPrinter.print(encoder.encode(`\n`))
+
+      // Print using fireglass:
       const encoder = new TextEncoder()
       const baseWidth = 288 // seems to be 288 (low density)
       const cmdSelectUnidirectionalPrintMode = () => new Uint8Array([0x1b, 0x55, 0x01])
       const cmdSetLineSpacing = n => new Uint8Array([0x1b, 0x33, n & 0xff])
-
       let m = m => new Uint8Array([m & 0xff])
       let nn = n => new Uint8Array([n & 0xff, (n >> 8) & 0xff])
       let d1_k = k => {
@@ -149,17 +198,15 @@
         }
         return s
       }
-
       const horizontalDoubleDensity = true
       const verticalTripleDensity = true
-
       const pixelWidth = baseWidth * (horizontalDoubleDensity?2:1)
       const bytesPerLine = pixelWidth * (verticalTripleDensity?3:1)
+      // receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
+      // receiptPrinter.print(cmdSetLineSpacing(0))
+      // receiptPrinter.print(new Uint8Array([0x1b, 0x2a, ...m((verticalTripleDensity?32:0) + (horizontalDoubleDensity?1:0)), ...nn(pixelWidth), ...d1_k(bytesPerLine)]))
+      // receiptPrinter.print(encoder.encode(`\n`))
 
-      receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
-      receiptPrinter.print(cmdSetLineSpacing(0))
-      receiptPrinter.print(new Uint8Array([0x1b, 0x2a, ...m((verticalTripleDensity?32:0) + (horizontalDoubleDensity?1:0)), ...nn(pixelWidth), ...d1_k(bytesPerLine)]))
-      receiptPrinter.print(encoder.encode(`\n`))
       console.log('Printed to printer')
     }
   </script>
@@ -172,8 +219,8 @@
 
       // initialize globals
       const canvas = document.querySelector('#app1')
-      vp.initialize(canvas)
-      gl = vp.getContext()
+      fg.initialize(canvas)
+      gl = fg.getContext()
       df.glSet(gl)
 
       // wait for stuff to load on startup
@@ -188,7 +235,7 @@
 
       // entrypoint
       startupCheck(() => {
-        vp.start(splash, true)
+        fg.start(splash, true)
       })
     })
   </script>
@@ -207,6 +254,7 @@
 
   <!-- begin fireglass + rune C -->
   <canvas id="app1"></canvas>
+  <canvas id="test1" width="556" height="556"></canvas>
   <!-- end fireglass + rune C -->
 </body>
 </html>
