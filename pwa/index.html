@@ -117,8 +117,11 @@
       }
 
       // entrypoint
+      console.log('ready to check')
       startupCheck(() => {
+        console.log('check passed')
         fgp.start(receipt, true)
+        console.log('started', receipt)
       })
     })
 
