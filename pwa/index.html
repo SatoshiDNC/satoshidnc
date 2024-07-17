@@ -210,8 +210,12 @@
       receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
       receiptPrinter.print(cmdSetLineSpacing(0))
 
-      const canvas = document.querySelector('#test1')
+      const source = document.querySelector('#test1')
+      var canvas = document.createElement('canvas')
+      canvas.width = source.width
+      canvas.height = source.height
       var ctx = canvas.getContext('2d')
+      ctx.drawImage(source,0,0)
       const w = canvas.width
       const h = canvas.height
       var imageData = ctx.getImageData(0, 0, w, h)
