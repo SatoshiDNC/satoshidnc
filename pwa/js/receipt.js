@@ -1,3 +1,4 @@
+const gl = glp
 const receipt = v = new fgp.View(null)
 v.name = Object.keys({receipt}).pop()
 v.designSize = 640*400
