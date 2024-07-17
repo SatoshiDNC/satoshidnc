@@ -196,21 +196,46 @@
       const cmdSetLineSpacing = n => new Uint8Array([0x1b, 0x33, n & 0xff])
       let m = m => new Uint8Array([m & 0xff])
       let nn = n => new Uint8Array([n & 0xff, (n >> 8) & 0xff])
-      let d1_k = k => {
-        let s = new Uint8Array(k)
-        for (let i = 0; i < k; i++) {
-          s[i] = i < 30? 0xff: 0
-        }
-        return s
-      }
+      // let d1_k = k => {
+      //   let s = new Uint8Array(k)
+      //   for (let i = 0; i < k; i++) {
+      //     s[i] = i < 30? 0xff: 0
+      //   }
+      //   return s
+      // }
       const horizontalDoubleDensity = true
       const verticalTripleDensity = true
       const pixelWidth = baseWidth * (horizontalDoubleDensity?2:1)
       const bytesPerLine = pixelWidth * (verticalTripleDensity?3:1)
-      // receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
-      // receiptPrinter.print(cmdSetLineSpacing(0))
-      // receiptPrinter.print(new Uint8Array([0x1b, 0x2a, ...m((verticalTripleDensity?32:0) + (horizontalDoubleDensity?1:0)), ...nn(pixelWidth), ...d1_k(bytesPerLine)]))
-      // receiptPrinter.print(encoder.encode(`\n`))
+      receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
+      receiptPrinter.print(cmdSetLineSpacing(0))
+
+      const canvas = document.querySelector('#test1')
+      var ctx = canvas.getContext('2d')
+      const w = canvas.width
+      const h = canvas.height
+      var imageData = ctx.getImageData(0, 0, w, h)
+      var data = imageData.data
+      let d1_k = (k, l) => {
+        let s = new Uint8Array(k)
+        for (let i = 0; i < k; i++) {
+          let v = 0
+          let x = i/3
+          for (let j = 0; j < 8; j++) {
+            let y = (i%3)*8 + j + l*24
+            let r = data[x*4+y*w*4+0]
+            let g = data[x*4+y*w*4+1]
+            let b = data[x*4+y*w*4+2]
+            v <<= 1
+            v |= (g*4+r*2+b >= 896)? 1: 0
+          }
+          s[i] = v
+        }
+        return s
+      }
+
+      receiptPrinter.print(new Uint8Array([0x1b, 0x2a, ...m((verticalTripleDensity?32:0) + (horizontalDoubleDensity?1:0)), ...nn(pixelWidth), ...d1_k(bytesPerLine, 0)]))
+      receiptPrinter.print(encoder.encode(`\n`))
 
       console.log('Printed to printer')
     }
