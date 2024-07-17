@@ -1,1 +1,1 @@
-let gl // OpenGL context
+let gl, glp // OpenGL context

@@ -102,8 +102,8 @@
       // initialize globals
       const canvas = document.querySelector('#test1')
       fgp.initialize(canvas, 556, 556)
-      const gl = fgp.getContext()
-      df.glSet(gl)
+      const glp = fgp.getContext()
+      df.glSet(glp)
 
       // wait for stuff to load on startup
       const startupCheck = (f) => {
@@ -117,7 +117,7 @@
 
       // entrypoint
       startupCheck(() => {
-        fg.start(receipt, true)
+        fgp.start(receipt, true)
       })
     })
 

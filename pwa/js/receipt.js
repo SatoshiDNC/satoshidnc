@@ -1,4 +1,4 @@
-const receipt = v = new vp.View(null)
+const receipt = v = new fgp.View(null)
 v.name = Object.keys({receipt}).pop()
 v.designSize = 640*400
 v.splashMode = 0
@@ -52,9 +52,9 @@ v.renderFunc = function() {
   } else if (v.splashMode == 2) {
     loadAccount()
     if (pinsettings.enablepin.state && securitypane.mode === 'unlock') {
-      vp.setRoot(securitypane)
+      fgp.setRoot(securitypane)
     } else {
-      vp.setRoot(home)
+      fgp.setRoot(home)
     }
   }
   this.setRenderFlag(true)

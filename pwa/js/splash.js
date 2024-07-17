@@ -1,4 +1,4 @@
-const splash = v = new vp.View(null)
+const splash = v = new fg.View(null)
 v.name = Object.keys({splash}).pop()
 v.designSize = 640*400
 v.splashMode = 0
@@ -52,9 +52,9 @@ v.renderFunc = function() {
   } else if (v.splashMode == 2) {
     loadAccount()
     if (pinsettings.enablepin.state && securitypane.mode === 'unlock') {
-      vp.setRoot(securitypane)
+      fg.setRoot(securitypane)
     } else {
-      vp.setRoot(home)
+      fg.setRoot(home)
     }
   }
   this.setRenderFlag(true)
