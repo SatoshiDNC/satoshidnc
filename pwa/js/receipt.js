@@ -1,6 +1,6 @@
 const receipt = v = new fgp.View(null)
 v.name = Object.keys({receipt}).pop()
-v.designSize = 640*400
+v.designSize = 64*40
 v.splashMode = 0
 v.frameTimes = []
 v.bgColor = [0,0,0,0]
@@ -21,8 +21,8 @@ v.renderFunc = function() {
   mat4.identity(mat)
   if (v.splashMode == 0 || v.splashMode == 1) {
     const str = v.loadingText
-    const x = (v.sw - defaultFont.calcWidth(str))/2
-    const y = (v.sh)/2
+    const x = 0 // (v.sw - defaultFont.calcWidth(str))/2
+    const y = 14 // (v.sh)/2
     defaultFont.draw(x,y, str, v.loadingColor, v.mat, mat)
 
     const now = new Date().getTime()
