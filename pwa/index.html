@@ -110,8 +110,8 @@
 
       // wait for stuff to load on startup
       const startupCheck = (f) => {
-        if (defaultFont.isReady()) {
-          defaultFont.init()
+        if (receiptFont.isReady()) {
+          receiptFont.init()
           f()
         } else {
           setTimeout(startupCheck, 10)
