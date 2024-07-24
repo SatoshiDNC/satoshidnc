@@ -28,8 +28,10 @@
   <script src='./lib/fireglass.min.js'></script>
   <script src='./lib/fireglass-for-printer.min.js'></script>
   <script src='./lib/rune.min.js'></script>
+  <script src='./lib/rune-for-printer.min.js'></script>
   <script src='./js/globals.js'></script>
   <script src='./js/fonts/defaultFont.js'></script>
+  <script src='./js/fonts/receiptFont.js'></script>
   <script src='./js/splash.js'></script>
   <script src='./js/receipt.js'></script>
   <!-- end fireglass + rune A -->
@@ -104,7 +106,7 @@
       const canvas = document.querySelector('#test1')
       fgp.initialize(canvas, 556, 556)
       glp = fgp.getContext()
-      df.glSet(glp)
+      dfp.glSet(glp)
 
       // wait for stuff to load on startup
       const startupCheck = (f) => {
@@ -257,7 +259,7 @@
       const canvas = document.querySelector('#app1')
       fg.initialize(canvas, 556, 556)
       gl = fg.getContext()
-      // df.glSet(gl)
+      df.glSet(gl)
 
       // wait for stuff to load on startup
       const startupCheck = (f) => {

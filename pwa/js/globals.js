@@ -1,2 +1,3 @@
 const fg = FireGlass, fgp = FireGlassForPrinter
-let gl, glp // OpenGL context
+const df = Rune, dfp = RuneForPrinter
+let gl, glp // OpenGL contexts

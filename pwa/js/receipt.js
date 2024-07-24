@@ -21,9 +21,9 @@ v.renderFunc = function() {
   mat4.identity(mat)
   if (v.splashMode == 0 || v.splashMode == 1) {
     const str = v.loadingText
-    const x = 0 // (v.sw - defaultFont.calcWidth(str))/2
+    const x = 0 // (v.sw - receiptFont.calcWidth(str))/2
     const y = 14 // (v.sh)/2
-    defaultFont.draw(x,y, str, v.loadingColor, v.mat, mat)
+    receiptFont.draw(x,y, str, v.loadingColor, v.mat, mat)
 
     const now = new Date().getTime()
     let nowPrime = now
