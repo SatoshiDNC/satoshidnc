@@ -100,14 +100,14 @@
     let printerCodepageMapping
 
     // For using with FireGlass:
+    let printBuffer
     document.addEventListener("DOMContentLoaded", (event) => {
 
       // initialize globals
       // const canvas = document.querySelector('#test1')
-      const canvas = document.createElement('canvas')
+      const canvas = printBuffer = document.createElement('canvas')
       canvas.width = 576
       canvas.height = 576
-      canvas.id = 'print-buffer'
       fgp.initialize(canvas, 576, 576)
       glp = fgp.getContext()
       dfp.glSet(glp)
@@ -216,7 +216,7 @@
       receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
       receiptPrinter.print(cmdSetLineSpacing(0))
 
-      const source = document.querySelector('#print-buffer')
+      const source = printBuffer // document.querySelector('#print-buffer')
       var canvas = document.createElement('canvas')
       canvas.width = source.width
       canvas.height = source.height
