@@ -104,7 +104,6 @@
     document.addEventListener("DOMContentLoaded", (event) => {
 
       // initialize globals
-      // const canvas = document.querySelector('#test1')
       const canvas = printBuffer = document.createElement('canvas')
       canvas.width = 576
       canvas.height = 576
@@ -216,7 +215,7 @@
       receiptPrinter.print(cmdSelectUnidirectionalPrintMode())
       receiptPrinter.print(cmdSetLineSpacing(0))
 
-      const source = printBuffer // document.querySelector('#print-buffer')
+      const source = printBuffer
       var canvas = document.createElement('canvas')
       canvas.width = source.width
       canvas.height = source.height
@@ -296,7 +295,6 @@
 
   <!-- begin fireglass + rune C -->
   <canvas id="app1"></canvas>
-  <canvas id="test1"></canvas>
   <!-- end fireglass + rune C -->
 </body>
 </html>
