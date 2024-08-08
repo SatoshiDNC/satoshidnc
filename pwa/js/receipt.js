@@ -57,5 +57,5 @@ v.renderFunc = function() {
       fgp.setRoot(home)
     }
   }
-  this.setRenderFlag(true)
+  // this.setRenderFlag(true)
 }
