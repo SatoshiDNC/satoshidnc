@@ -61,7 +61,7 @@ v.renderFunc = function() {
 }
 
 const homeSend = v = new fg.SliceView(null, 'br', 50)
-v.name = Object.keys({homeRoom}).pop()
+v.name = Object.keys({homeSend}).pop()
 v.a = sendBar; sendBar.parent = v
 v.b = homeView; homeView.parent = v
 
