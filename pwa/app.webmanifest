@@ -1,6 +1,6 @@
 {
-  "name": "PWA Example",
-  "short_name": "PWA Example",
+  "name": "Satoshi, D.N.C.",
+  "short_name": "SatoshiDNC",
   "icons": [
     {
       "src": "/app-icon/512.png",
@@ -19,8 +19,8 @@
   "id": "/",
   "theme_color": "#4287f5",
   "background_color": "#fff",
-  "lang": "en-US",
-  "description": "This is an example of a progressive web app.",
+  "lang": "es-PY",
+  "description": "Su nuevo capital",
   "screenshots": [
     {
       "src": "app-screenshots/narrow1.png",
