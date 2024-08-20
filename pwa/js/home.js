@@ -60,13 +60,15 @@ v.renderFunc = function() {
   // this.setRenderFlag(true)
 }
 
-const homeSend = v = new fg.SliceView(null, 'br', 50)
+const homeSend = v = new fg.SliceView(null, 'br', .125)
 v.name = Object.keys({homeSend}).pop()
+v.prop = true
 v.a = sendBar; sendBar.parent = v
 v.b = homeView; homeView.parent = v
 
-const homeRoom = v = new fg.SliceView(null, 'tl', 50)
+const homeRoom = v = new fg.SliceView(null, 'tl', .125)
 v.name = Object.keys({homeRoom}).pop()
+v.prop = true
 v.a = roomBar; roomBar.parent = v
 v.b = homeSend; homeSend.parent = v
 
