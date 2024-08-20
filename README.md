@@ -1,6 +1,6 @@
-# PWA Example
+# Satoshi, D.N.C.
 
-Live demo: [pwa-example.satoshidnc.com](https://pwa-example.satoshidnc.com)
+Source code for [dev.satoshidnc.com](https://dev.satoshidnc.com)
 
 ## To build:
 
