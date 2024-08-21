@@ -264,62 +264,11 @@
       gl = fg.getContext()
       df.glSet(gl)
 
-      var pubkeyCanvas = document.createElement('canvas')
-      pubkeyCanvas.width = 16
-      pubkeyCanvas.height = 16
-      var context = canvas.getContext('2d')
-      let imageData = context.createImageData(16, 16)
-      let data = imageData.data
-      let k = 0
-      for (let i = 0; i < 16; i++) {
-        b0 = 0x2d
-        b1 = 0xc5
-        v = [(b0>>6)&3, (b0>>4)&3, (b0>>2)&3, (b0)&3, , (b1>>6)&3, (b1>>4)&3, (b1>>2)&3, (b1)&3]
-        for (let j = 0; j < 8; j++) {
-          data[k++] = v[j] > 0? 255: 0 // red
-          data[k++] = v[j] > 1? 255: 0 // green
-          data[k++] = v[j] == 0 || v[j] == 3? 255: 0 // blue
-          data[k++] = 255 // alpha
-        }
-      }
-      context.putImageData(imageData, 0, 0) 
-
-      pubkeyFont = new df.GlyphSet()
-      pubkeyFont.name = 'pubkeyFont'
-      let f = pubkeyFont
-      f.initGlyphs()
-      f.pixCoords = []; f.texCoords = []
-      for (i=1; i<=1; i++) {
-        var l = f.glyphCodes.length
-        f.glyphCodes[l] = i
-        f.glyphWidths[l] = 16; f.glyphHeights[l] = 16
-        f.glyphX1[l] = 0; f.glyphY1[l] = 0
-        f.glyphX2[l] = 16; f.glyphY2[l] = 0
-        f.glyphHasColors[l] = 0//(chunk.type==ff.CHUNK_COLORGLYPHSET)?1:0
-        f.glyphColors[l] = []
-        f.glyphSourceX[l] = 0
-        f.glyphSourceY[l] = 0
-        f.glyphSourceZD[l] = 0
-        const g = l, b = 0, bmWidth = 16, bmHeight = 16
-        f.pixCoords[b*8 + 0] = 0; f.pixCoords[b*8 + 1] = f.glyphHeights[g];
-        f.pixCoords[b*8 + 2] = 0; f.pixCoords[b*8 + 3] = 0;
-        f.pixCoords[b*8 + 4] = f.glyphWidths[g]; f.pixCoords[b*8 + 5] = 0;
-        f.pixCoords[b*8 + 6] = f.glyphWidths[g]; f.pixCoords[b*8 + 7] = f.glyphHeights[g];
-        f.texCoords[b*8 + 0] = f.glyphSourceX[b] / bmWidth; f.texCoords[b*8 + 1] = (f.glyphSourceY[b] + f.glyphHeights[g]) / (bmHeight*2);
-        f.texCoords[b*8 + 2] = f.glyphSourceX[b] / bmWidth; f.texCoords[b*8 + 3] = f.glyphSourceY[b] / (bmHeight*2);
-        f.texCoords[b*8 + 4] = (f.glyphSourceX[b] + f.glyphWidths[g]) / bmWidth; f.texCoords[b*8 + 5] = f.glyphSourceY[b] / (bmHeight*2);
-        f.texCoords[b*8 + 6] = (f.glyphSourceX[b] + f.glyphWidths[g]) / bmWidth; f.texCoords[b*8 + 7] = (f.glyphSourceY[b] + f.glyphHeights[g]) / (bmHeight*2);
-      }
-      f.data = pubkeyCanvas
-      f.ready = true
-
-      // pubkeyFont.loadFromCanvas('pubkeyFont', ()=>{}, pubkeyCanvas) // TODO: manually load glyphs from npub
-    
       // wait for stuff to load on startup
       const startupCheck = (finisher) => {
-        if (defaultFont.isReady() && pubkeyFont.isReady()) {
+        if (defaultFont.isReady() && nybbleFont.isReady()) {
           defaultFont.init()
-          pubkeyFont.init()
+          nybbleFont.init()
           finisher()
         } else {
           setTimeout(startupCheck, 10)
