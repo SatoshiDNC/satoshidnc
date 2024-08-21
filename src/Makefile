@@ -9,7 +9,7 @@ bundle.js: $(FILES)
 # Clean files from subdirs and this dir
 .PHONY: clean
 clean:
-#	@$(MAKE) -sC dirname clean # ADD DIRS AS NEEDED
+	@$(MAKE) -sC font clean # ADD DIRS AS NEEDED
 	@-rm -f bundle.js
 
 # Textbook subdirectory recursion
