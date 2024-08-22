@@ -1,4 +1,4 @@
-import { roomBar } from '/roomBar.js'
+import { roomBar } from './roomBar.js'
 
 export const homeView = v = new fg.View(null)
 v.name = Object.keys({homeView}).pop()
