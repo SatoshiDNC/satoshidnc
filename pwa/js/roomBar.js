@@ -8,7 +8,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const mat = mat4.create()
   mat4.identity(mat)
-  const str = '0123456789ABCDEF'
+  const str = hpub()
   const x = (v.sw - nybbleFont.calcWidth(str))/2
   const y = (v.sh)/2
   nybbleFont.draw(x,y, str, v.fontColor, v.mat, mat)
