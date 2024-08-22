@@ -1,3 +1,5 @@
+const roomBar = require('./roomBar.js')
+
 const homeView = v = new fg.View(null)
 v.name = Object.keys({homeView}).pop()
 v.designSize = 640*400
