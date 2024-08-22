@@ -1,4 +1,4 @@
-import { hpub } from './key'
+import { hpub } from './key.js'
 
 const roomBar = v = new fg.SliceView(null, 'tl', 50)
 v.name = Object.keys({roomBar}).pop()
