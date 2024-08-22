@@ -17,7 +17,7 @@ v.renderFunc = function() {
   const mat = mat4.create()
   mat4.identity(mat)
   mat4.translate(mat, mat, [75, 27, 0])
-  mat4.scale(mat, mat, [1/92*16, 1/92*16, 1])
+  mat4.scale(mat, mat, [1/16*92, 1/16*92, 1])
   const m = mat4.create()
   hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.copy(m, mat)
