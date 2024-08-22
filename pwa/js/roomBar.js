@@ -9,8 +9,8 @@ v.renderFunc = function() {
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
   const mat = mat4.create()
-  mat4.identity(mat)
   hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
+    mat4.identity(mat)
     console.log(str, i)
     const x = (v.sw - nybbleFont.calcWidth(str))/2
     const y = (v.sh)/2 + i*8
