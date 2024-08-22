@@ -8,13 +8,14 @@
   <meta name="theme-color" content="#000" />
   <!-- <script src="init.js" type="module" charset="utf-8"></script> -->
 
-  <!-- begin bitcoin-connect A -->
   <script type="importmap">
     { "imports": {
       "@getalby/sdk": "https://esm.sh/@getalby/sdk@3.5.1",
       "zustand/vanilla": "https://esm.sh/zustand@4.5.2/vanilla",
       "@getalby/lightning-tools": "https://esm.sh/@getalby/lightning-tools@5.0.3",
-      "qrcode-generator": "https://esm.sh/qrcode-generator@1.4.4"
+      "qrcode-generator": "https://esm.sh/qrcode-generator@1.4.4",
+
+      "nostr-tools": "https://esm.sh/nbd-wtf/nostr-tools",
     } }
   </script>
   <!-- end bitcoin-connect A -->
@@ -22,12 +23,6 @@
   <!-- begin nostr-login A -->
   <script src='./lib/nostr-login.js' data-bunkers="misllaves.satoshidnc.com,acceso.satoshidnc.com"></script>
   <!-- end nostr-login A -->
-
-  <script type="importmap">
-    { "imports": {
-      "nostr-tools": "https://esm.sh/nbd-wtf/nostr-tools",
-    } }
-  </script>
 
   <!-- begin fireglass + rune A -->
   <script src='./lib/gl-matrix.js'></script>
