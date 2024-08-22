@@ -18,8 +18,8 @@ v.renderFunc = function() {
   hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.identity(mat)
     console.log(str, i)
-    const x = 0//(v.sw - nybbleFont.calcWidth(str))/2
-    const y = 8//(v.sh)/2
+    const x = -0.5 // (v.sw - nybbleFont.calcWidth(str))/2
+    const y = 8.5 // (v.sh)/2
     nybbleFont.draw(x,y + i*8, str, v.shirtColor[i], v.mat, mat)
   })
 }
