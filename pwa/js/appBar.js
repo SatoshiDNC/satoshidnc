@@ -11,7 +11,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const mat = mat4.create()
   mat4.identity(mat)
-  mat4.translate(mat, mat, [42, 53, 0])
+  mat4.translate(mat, mat, [42, 97, 0])
   mat4.scale(mat, mat, [1/14*44, 1/14*44, 1])
   let x = 0, y = 0
   defaultFont.draw(x,y, 'Satoshi, D.N.C.', v.textColor, v.mat, mat)
