@@ -1,4 +1,5 @@
 import { roomBar } from './roomBar.js'
+import { hpub } from './key.js'
 
 export const homeView = v = new fg.View(null)
 v.name = Object.keys({homeView}).pop()
