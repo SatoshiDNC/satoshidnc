@@ -1,8 +1,8 @@
 import { roomBar } from './roomBar.js'
 import { hpub } from './key.js'
 
-export const homeView = v = new fg.View(null)
-v.name = Object.keys({homeView}).pop()
+export const chatView = v = new fg.View(null)
+v.name = Object.keys({chatView}).pop()
 v.designSize = 640*400
 v.splashMode = 0
 v.frameTimes = []
@@ -63,16 +63,16 @@ v.renderFunc = function() {
   // this.setRenderFlag(true)
 }
 
-export const homeSend = v = new fg.SliceView(null, 'br', .125)
-v.name = Object.keys({homeSend}).pop()
+export const chatSend = v = new fg.SliceView(null, 'br', .125)
+v.name = Object.keys({chatSend}).pop()
 v.prop = true
 v.a = sendBar; sendBar.parent = v
-v.b = homeView; homeView.parent = v
+v.b = chatView; chatView.parent = v
 
-export const homeRoom = v = new fg.SliceView(null, 'tl', .125)
-v.name = Object.keys({homeRoom}).pop()
+export const chatRoom = v = new fg.SliceView(null, 'tl', .125)
+v.name = Object.keys({chatRoom}).pop()
 v.prop = true
 v.a = roomBar; roomBar.parent = v
-v.b = homeSend; homeSend.parent = v
+v.b = chatSend; chatSend.parent = v
 
-export const homeRoot = homeRoom
+export const chatRoot = chatRoom
