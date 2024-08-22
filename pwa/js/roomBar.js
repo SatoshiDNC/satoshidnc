@@ -12,7 +12,7 @@ v.renderFunc = function() {
   mat4.identity(mat)
   hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
     const x = (v.sw - nybbleFont.calcWidth(str))/2
-    const y = (v.sh)/2 + i*0
+    const y = (v.sh)/2 + i*8
     nybbleFont.draw(x,y, str, v.fontColor, v.mat, mat)
   })
 }
