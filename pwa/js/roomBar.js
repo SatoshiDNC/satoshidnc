@@ -4,7 +4,7 @@ export const roomBar = v = new fg.View()
 v.name = Object.keys({roomBar}).pop()
 v.designHeight = 147
 v.bgColor = [0.043,0.078,0.106,1]
-v.fontColor = [1,1,1,1]
+v.textColor = [1,1,1,1]
 v.white = [1,1,1,1]
 v.yellow = [1,0.8,0,1]
 v.red = [1,0,0,1]
@@ -19,11 +19,10 @@ v.renderFunc = function() {
   mat4.translate(mat, mat, [75, 27, 0])
   mat4.scale(mat, mat, [1/32*92, 1/32*92, 1])
   const m = mat4.create()
+  const x = -0.5, y = 8.5
   hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.copy(m, mat)
-    const x = -0.5 // (v.sw - nybbleFont.calcWidth(str))/2
-    const y = 8.5 // (v.sh)/2
-    nybbleFont.draw(x,y + i*8, str, v.shirtColor[i], v.mat, m)
+    nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
   })
 }
 
