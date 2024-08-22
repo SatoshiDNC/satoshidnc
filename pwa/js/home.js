@@ -1,4 +1,4 @@
-import { roomBar } from './roomBar.js'
+import { appBar as topBar } from './appBar.js'
 import { hpub } from './key.js'
 
 export const homeView = v = new fg.View(null)
@@ -72,7 +72,7 @@ v.b = homeView; homeView.parent = v
 export const homeRoom = v = new fg.SliceView(null, 'tl', .125)
 v.name = Object.keys({homeRoom}).pop()
 v.prop = true
-v.a = roomBar; roomBar.parent = v
+v.a = topBar; topBar.parent = v
 v.b = homeSend; homeSend.parent = v
 
 export const homeRoot = homeRoom
