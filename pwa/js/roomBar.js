@@ -24,5 +24,10 @@ v.renderFunc = function() {
     mat4.copy(m, mat)
     nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
   })
+  mat4.identity(mat)
+  mat4.translate(mat, mat, [190, 68, 0])
+  mat4.scale(mat, mat, [1/14*35, 1/14*35, 1])
+  x = 0, y = 14
+  defaultFont.draw(x,y, 'Satoshi, D.N.C.', v.textColor, v.mat, m)
 }
 
