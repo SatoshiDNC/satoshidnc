@@ -1,7 +1,8 @@
 import { hpub } from './key.js'
 
-export const roomBar = v = new fg.SliceView(null, 'tl', 50)
+export const roomBar = v = new fg.View()
 v.name = Object.keys({roomBar}).pop()
+v.designHeight = 32
 v.bgColor = [0.5,0.5,0.5,1]
 v.fontColor = [1,1,1,1]
 v.white = [1,1,1,1]
