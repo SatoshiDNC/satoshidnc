@@ -27,13 +27,13 @@ v.renderFunc = function() {
   mat4.identity(mat)
   mat4.translate(mat, mat, [190, 68, 0])
   mat4.scale(mat, mat, [1/14*35, 1/14*35, 1])
-  x = 0, y = -14
+  x = 0, y = 0
   defaultFont.draw(x,y, 'Satoshi, D.N.C.', v.textColor, v.mat, mat)
   
   mat4.identity(mat)
   mat4.translate(mat, mat, [190, 116, 0])
   mat4.scale(mat, mat, [1/14*23, 1/14*23, 1])
-  x = 0, y = -14
+  x = 0, y = 0
   defaultFont.draw(x,y, 'Online', v.textColor, v.mat, mat)
 }
 
