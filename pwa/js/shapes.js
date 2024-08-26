@@ -4,7 +4,7 @@ function alpha(rgba, a) {
 	return [rgba[0], rgba[1], rgba[2], Math.min(1, Math.max(0, a))];
 }
 
-const mainShapes = new fg.ShapeBuffer(function() {
+const mainShapes = new fg.ShapeBuffer(gl, function() {
 
 	// Shape definitions
 	this.addShape2('unitLine', gl.LINE_LOOP, 0,0, 1,1, );
