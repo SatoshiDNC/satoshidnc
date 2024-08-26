@@ -23,7 +23,17 @@ v.items.map((item, i) => {
   g.index = i
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log(g.label)
+    switch (g.index) {
+    case SIGN_CLIPBOARD:
+      Clipboard.read().then(items => {
+        console.log(items)
+        chatMenuRoot.easeOut()
+      })
+      break
+    default:
+      console.log(g.label)
+      chatMenuRoot.easeOut()
+    }
   }
 })
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
