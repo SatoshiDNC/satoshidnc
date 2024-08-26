@@ -81,25 +81,25 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.renderFunc = function() {
-//   const v = this
-//   if (v.easingState) {
-//     if (v.easingState == 1) {
-//       v.easingValue += v.easingRate
-//       if (v.easingValue >= 1) {
-//         v.easingValue = 1
-//         v.easingState = 0
-//       }
-//     }
-//     if (v.easingState == -1) {
-//       v.easingValue -= v.easingRate
-//       if (v.easingValue < 0) {
-//         v.easingValue = 0
-//         v.easingState = 0
-//         fg.setRoot(roomBar.backGad.target)
-//       }
-//     }
-//     v.setRenderFlag(true)
-//   }
+  const v = this
+  if (v.easingState) {
+    // if (v.easingState == 1) {
+    //   v.easingValue += v.easingRate
+    //   if (v.easingValue >= 1) {
+    //     v.easingValue = 1
+    //     v.easingState = 0
+    //   }
+    // }
+    if (v.easingState == -1) {
+      v.easingValue -= v.easingRate
+      if (v.easingValue < 0) {
+        v.easingValue = 0
+        v.easingState = 0
+        fg.setRoot(roomBar.backGad.target)
+      }
+    }
+    v.setRenderFlag(true)
+  }
 //   // if (v.easingValue < 1) {
 //   //   const m = mat4.create()
 
