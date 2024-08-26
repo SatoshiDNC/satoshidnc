@@ -98,6 +98,7 @@ v.prepMenu = function() {
   const v = this
   return new Promise((resolve, reject) => {
     v.gadgets[`index${SIGN_TEXT}`].enabled = false
+    v.gadgets[`index${SIGN_EVENT}`].enabled = false
     v.getText('text/plain').then(text => {
       v.gadgets[`index${SIGN_TEXT}`].enabled = true
       let event

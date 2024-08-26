@@ -14,6 +14,8 @@ v.shirtColor = [v.white, v.yellow, v.red, v.blue]
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = ':'
+  g.font = iconFont
+  g.fontSize = 11
   g.clickFunc = function() {
     const g = this, v = this.viewport
     if (fg.getRoot() !== g.target || g.target.easingState() == -1) {
@@ -21,6 +23,18 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     } else {
       g.target?.easeOut?.()
     }
+  }
+v.gadgets.push(g = v.backGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = '\x08'
+  g.x = 23, g.y = 52
+  g.w = 42, g.h = 42
+  g.font = iconFont
+  g.fontSize = 11
+  g.autoHull()
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log('back')
   }
 v.layoutFunc = function() {
   const v = this
@@ -57,8 +71,10 @@ v.renderFunc = function() {
   defaultFont.draw(x,y, 'Online', v.textColor, v.mat, mat)
 
   let g = v.menuGad
-  mat4.identity(mat)
-  mat4.translate(mat, mat, [g.x, g.y+g.h, 0])
-  mat4.scale(mat, mat, [g.h/11, g.h/11, 1])
-  iconFont.draw(0,0, g.label, v.textColor, v.mat, mat)
+  for (g of v.gadgets) {
+    mat4.identity(mat)
+    mat4.translate(mat, mat, [g.x, g.y+g.h, 0])
+    mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
+    g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
+  }
 }

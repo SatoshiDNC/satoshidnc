@@ -1,22 +1,24 @@
 // Helper functions
-function rgb(rgba) { return [rgba[0], rgba[1], rgba[2]]; }
+function rgb(rgba) { return [rgba[0], rgba[1], rgba[2]] }
 function alpha(rgba, a) {
-	return [rgba[0], rgba[1], rgba[2], Math.min(1, Math.max(0, a))];
+	return [rgba[0], rgba[1], rgba[2], Math.min(1, Math.max(0, a))]
 }
 
 export const mainShapeBuilder = function() {
 
 	// Shape definitions
-	this.addShape2('unitLine', gl.LINE_LOOP, 0,0, 1,1, );
-	this.addShape5('unitLine', gl.LINE_LOOP, 0,0,1,1,0, 1,1,0,1,0, );
-	this.addShape5('divLine', gl.LINE_STRIP, 0,0,0,0,0, 0.4,0.4,1,1,1, 0.6,0.6,1,1,1, 1,1,0,0,0, );
+	this.addShape2('unitLine', gl.LINE_LOOP, 0,0, 1,1, )
+	this.addShape5('unitLine', gl.LINE_LOOP, 0,0,1,1,0, 1,1,0,1,0, )
+	this.addShape5('divLine', gl.LINE_STRIP, 0,0,0,0,0, 0.4,0.4,1,1,1, 0.6,0.6,1,1,1, 1,1,0,0,0, )
 	this.addShape2('rect', gl.TRIANGLE_STRIP,
-		0.0,1, 0.0,0, 1.0,1, 1.0,0, );
+		0.0,1, 0.0,0, 1.0,1, 1.0,0, )
 	this.addShape4('rect', gl.TRIANGLE_STRIP,
-		0.0,1,0,1, 0.0,0,0,0, 1.0,1,1,1, 1.0,0,1,0, );
+		0.0,1,0,1, 0.0,0,0,0, 1.0,1,1,1, 1.0,0,1,0, )
 	this.addShape5('rect', gl.TRIANGLE_STRIP,
-		0.0,1,1,1,1, 0.0,0,1,1,1, 1.0,1,1,1,1, 1.0,0,1,1,1, );
-
+		0.0,1,1,1,1, 0.0,0,1,1,1, 1.0,1,1,1,1, 1.0,0,1,1,1, )
+  this.addShape2('backarrow', gl.TRIANGLE_STRIP,
+    21,0, 24,3, 6,21, 0,21, 21,42, 24,39, 24,39, 2.5,18.5, 2.5,18.5, 42,18.5, 42,23.5, 2.5,23.5, )
+  
 	{
     const p = []; var n = 20;
     for (var i=0; i<=n; i++) {
