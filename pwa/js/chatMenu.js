@@ -102,12 +102,12 @@ v.prepMenu = function() {
   return new Promise((resolve, reject) => {
     v.gadgets[`index${SIGN_TEXT}`].enabled = false
     v.getText('text/plain').then(text => {
+      v.gadgets[`index${SIGN_TEXT}`].enabled = true
       let event
       try {
         event = JSON.parse(text)
       } catch(e) {
       }
-      v.gadgets[`index${SIGN_TEXT}`].enabled = !!event
       v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
       finish()
     }).catch(e => {
