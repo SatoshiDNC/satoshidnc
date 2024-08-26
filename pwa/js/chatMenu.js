@@ -49,8 +49,8 @@ v.renderFunc = function() {
   const m = mat4.create()
   mat4.identity(m)
   mat4.translate(m,m, [v.menuX, v.menuY, 0])
-  //mat4.translate(m,m, [45, 112, 0])
-  //mat4.scale(m,m, [33/14, 33/14, 1])
+  mat4.translate(m,m, [45, -112, 0])
+  mat4.scale(m,m, [33/14, 33/14, 1])
   const str = v.loadingText
   const c = v.loadingColor
   defaultFont.draw(0,0, str, [c[0],c[1],c[2],v.easingValue], v.mat, m)
