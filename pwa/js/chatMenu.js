@@ -22,6 +22,7 @@ v.finish = function(text) {
   if (text) this.loadingText = text
 }
 v.layoutFunc = function() {
+  console.log(v.sw,v.sh)
 }
 v.renderFunc = function() {
   const v = this
