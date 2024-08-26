@@ -83,7 +83,6 @@ export const mainShapeBuilder = function() {
 		0.4,1,1,1,1, 0.6,1,1,1,1,
 		1.0,1,0.25,0.25,0.25, );
 	var r = 0.2, w = 0.8, b = 0.3;
-	if (style != PARAGUAY) { r = 1; w = 1; b = 1; }
 	this.addShape5('hamburger', gl.TRIANGLES,
 		0,0.0,1,r,r, 1,0.0,1,r,r, 0,0.2,1,r,r, 0,0.2,1,r,r, 1,0.0,1,r,r, 1,0.2,1,r,r,
 		0,0.4,w,w,w, 1,0.4,w,w,w, 0,0.6,w,w,w, 0,0.6,w,w,w, 1,0.4,w,w,w, 1,0.6,w,w,w,
