@@ -56,6 +56,6 @@ v.renderFunc = function() {
   mat4.identity(mat)
   mat4.translate(mat, mat, [g.x, g.y, 0])
   mat4.scale(mat, mat, [g.h/11, g.h/11, 1])
-  defaultFont.draw(0,0, g.label, v.textColor, v.mat, mat)
+  iconFont.draw(0,0, g.label, v.textColor, v.mat, mat)
 }
 
