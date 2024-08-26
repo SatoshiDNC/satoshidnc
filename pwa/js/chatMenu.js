@@ -2,6 +2,7 @@ import { chatRoot } from './chat.js'
 import { schnorr } from '@noble/curves/secp256k1'
 import { bsec } from './key.js'
 import { Buffer } from 'buffer'
+import { serializeEvent } from 'nostr-tools'
 
 let v, g
 export const chatMenuView = v = new fg.View(null)
@@ -56,9 +57,10 @@ v.items.map((item, i) => {
       })
       break
     case SIGN_EVENT:
-      getText('application/json').then(text => {
-        const signedText = Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), bsec())).toString('hex')
-        navigator.clipboard.write([new ClipboardItem({ 'application/json': new Blob([signedText], { type: 'application/json' }) })]).then(() => {
+      getText('text/plain').then(text => {
+        const event = text
+        const signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
+        navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
           chatMenuRoot.easeOut()
         })
       })
