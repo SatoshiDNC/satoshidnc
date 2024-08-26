@@ -21,7 +21,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 v.layoutFunc = function() {
   const v = this
   g.x = v.sw - 64
-  g.y = 51
+  g.y = 96
   g.w = 13
   g.h = 45
   g.autoHull()
