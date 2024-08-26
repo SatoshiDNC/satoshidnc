@@ -1,5 +1,6 @@
 import { chatRoot } from './chat.js'
 import { schnorr } from '@noble/curves/secp256k1'
+import { bsec } from './key.js'
 
 let v, g
 export const chatMenuView = v = new fg.View(null)
