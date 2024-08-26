@@ -10,7 +10,7 @@ v.loadingText = `Menu`//`${window.devicePixelRatio}, ${vvs = window.visualViewpo
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
-v.items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7']
+v.items = ['Item 1']
 v.menuX = 482
 v.menuY = 137
 v.menuW = 588
