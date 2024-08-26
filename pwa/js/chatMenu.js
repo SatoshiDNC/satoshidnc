@@ -22,6 +22,24 @@ v.menuY = 137
 v.menuW = 588
 v.menuH = 62 + 126 * v.items.length
 v.menuR = 32
+v.getText = (mime) => {
+  return new Promise((resolve, reject) => {
+    navigator.clipboard.read().then(items => {
+      if (items.length == 1) {
+        const item = items[0]
+        if (item.types.includes(mime)) {
+          item.getType(mime).then(blob => blob.text()).then(text => {
+            resolve(text)
+          })
+        } else {
+          reject(`To sign what is in the clipboard, the clipboard must contain ${mime}.`)
+        }
+      } else {
+        reject(`To sign what is in the clipboard, the clipboard must contain only one item.`)
+      }
+    })  
+  })
+}
 v.items.map((item, i) => {
   v.gadgets.push(g = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -29,27 +47,9 @@ v.items.map((item, i) => {
   g.index = i
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    const getText = (mime) => {
-      return new Promise((resolve, reject) => {
-        navigator.clipboard.read().then(items => {
-          if (items.length == 1) {
-            const item = items[0]
-            if (item.types.includes(mime)) {
-              item.getType(mime).then(blob => blob.text()).then(text => {
-                resolve(text)
-              })
-            } else {
-              reject(`To sign what is in the clipboard, the clipboard must contain ${mime}.`)
-            }
-          } else {
-            reject(`To sign what is in the clipboard, the clipboard must contain only one item.`)
-          }
-        })  
-      })
-    }
     switch (g.index) {
     case SIGN_TEXT:
-      getText('text/plain').then(text => {
+      v.getText('text/plain').then(text => {
         const signedText = Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), bsec())).toString('hex')
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
           console.log(`signature: ${signedText}`)
@@ -58,7 +58,7 @@ v.items.map((item, i) => {
       })
       break
     case SIGN_EVENT:
-      getText('text/plain').then(text => {
+      v.getText('text/plain').then(text => {
         let event
         try {
           event = JSON.parse(text)
@@ -100,12 +100,14 @@ v.layoutFunc = function() {
   const v = this
   v.menuX = v.sw - v.menuW - 10
   let g
-  for (g of v.gadgets) {
+  let i = 0
+  for (g of v.gadgets) if (g.enabled) {
     g.x = v.menuX + 45
-    g.y = v.menuY + 79 + g.index * 126
+    g.y = v.menuY + 79 + i * 126
     g.w = v.menuW - 45*2
     g.h = 33
     g.autoHull()
+    i++
   }
   g = v.menuGad
   g.x = v.menuX
@@ -152,7 +154,7 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  for (const g of v.gadgets) if (g.label) {
+  for (const g of v.gadgets) if (g.label && g.enabled) {
     mat4.identity(m)
     mat4.translate(m,m, [g.x, g.y + g.h, 0])
     mat4.scale(m,m, [g.h/14, g.h/14, 1])
@@ -170,13 +172,23 @@ export const chatMenuRoot = chatMenu
 chatMenuRoot.ghostOpacity = 0
 chatMenuRoot.easeIn = function() {
   const v = this
-  chatMenuView.easingState = 1
-  chatMenuView.easingRate = 0.06
-  const r = fg.getRoot()
-  if (r !== this) {
-    chatMenuRoot.ghostView = r
-    fg.setRoot(this)
-  }
+  getText('text/plain').then(text => {
+    let event
+    try {
+      event = JSON.parse(text)
+    } catch(e) {
+    }
+    v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
+
+
+    chatMenuView.easingState = 1
+    chatMenuView.easingRate = 0.06
+    const r = fg.getRoot()
+    if (r !== this) {
+      chatMenuRoot.ghostView = r
+      fg.setRoot(this)
+    }
+  })
 }
 chatMenuRoot.easeOut = function() {
   const v = this
