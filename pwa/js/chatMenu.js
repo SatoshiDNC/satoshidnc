@@ -66,7 +66,13 @@ v.items.map((item, i) => {
           chatMenuRoot.easeOut()
           return
         }
-        const signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
+        try {
+          const signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
+        } catch(e) {
+          `Unable to sign; invalid event in clipboard.`
+          chatMenuRoot.easeOut()
+          return
+        }
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
           chatMenuRoot.easeOut()
         })
