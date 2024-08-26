@@ -17,7 +17,6 @@ v.finish = function(text) {
 }
 v.renderFunc = function() {
   const v = this
-  console.log(`easing: ${v.easingState} ${v.easingValue} ${chatMenuRoot.ghostOpacity}`)
   if (v.easingState) {
     if (v.easingState == 1) {
       v.easingValue += v.easingRate
@@ -52,30 +51,23 @@ v.a = chatMenuView; chatMenuView.parent = v
 v.b = chatRoot; chatRoot.parent = v
 
 export const chatMenuRoot = chatMenu
+chatMenuRoot.ghostOpacity = 0
 chatMenuRoot.easeIn = function() {
-  console.log(`easeIn`)
   const v = this
   chatMenuView.easingState = 1
-  chatMenuRoot.in()
+  const r = fg.getRoot()
+  if (r !== this) {
+    chatMenuRoot.ghostView = r
+    fg.setRoot(this)
+  }
 }
 chatMenuRoot.easeOut = function() {
-  console.log(`easeOut`)
   const v = this
   chatMenuView.easingState = -1
 }
 chatMenuRoot.easingState = function() {
   return chatMenuView.easingState
 }
-chatMenuRoot.in = function() {
-  const r = fg.getRoot()
-  console.log(`root: ${r.name} ${chatMenuRoot.ghostOpacity}`)
-  if (r !== this) {
-    chatMenuRoot.ghostView = r
-    fg.setRoot(this)
-    console.log(`changed root to: ${fg.getRoot().name}`)
-  }
-}
 chatMenuRoot.out = function() {
   fg.setRoot(chatMenuRoot.ghostView)
-  console.log(`changed root to: ${fg.getRoot().name}`)
 }
