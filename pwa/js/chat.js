@@ -104,7 +104,7 @@ v.renderFunc = function() {
     const m = mat4.create()
 
     mainShapes.useProg2()
-    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([v.bgColor[0],v.bgColor[1],v.bgColor[2], 1-v.easingValue]))
+    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([v.bgColor[0],v.bgColor[1],v.bgColor[2], (1-v.easingValue)*.5]))
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
     mat4.identity(m)
     //mat4.translate(m,m, [0, v.menuY, 0])
