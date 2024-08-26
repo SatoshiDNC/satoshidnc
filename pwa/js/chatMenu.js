@@ -62,14 +62,14 @@ v.items.map((item, i) => {
         try {
           event = JSON.parse(text)
         } catch(e) {
-          `Invalid JSON in clipboard.`
+          console.warn(`Invalid JSON in clipboard.`)
           return
         }
         let signedText
         try {
           signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
         } catch(e) {
-          `Unable to sign; invalid event in clipboard.`
+          console.warn(`Unable to sign; invalid event in clipboard.`)
           return
         }
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
