@@ -68,7 +68,7 @@ chatMenuRoot.easingState = function() {
 }
 chatMenuRoot.in = function() {
   const r = fg.getRoot()
-  console.log(`root: ${r.name}`)
+  console.log(`root: ${r.name} ${chatMenuRoot.ghostOpacity}`)
   if (r !== this) {
     chatMenuRoot.ghostView = r
     fg.setRoot(this)
