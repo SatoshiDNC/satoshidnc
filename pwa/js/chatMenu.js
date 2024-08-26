@@ -30,6 +30,7 @@ v.renderFunc = function() {
       if (v.easingValue < 0) {
         v.easingValue = 0
         v.easingState = 0
+        chatMenuRoot.out()
       }
     }
     chatMenuRoot.ghostOpacity = v.easingValue * 0.5
@@ -55,8 +56,7 @@ chatMenuRoot.easeIn = function() {
   const v = this
   chatMenuView.easingState = 1
   chatMenuRoot.ghostOpacity = 0
-  chatMenuRoot.ghostView = fg.getRoot()
-  fg.setRoot(this)
+  chatMenuRoot.in()
   console.log(`changed root to: ${fg.getRoot().name}`)
 }
 chatMenuRoot.easeOut = function() {
@@ -64,6 +64,11 @@ chatMenuRoot.easeOut = function() {
   const v = this
   chatMenuView.easingState = -1
   chatMenuRoot.ghostOpacity = 1
-  fg.setRoot(chatMenuRoot.ghostView)
   console.log(`changed root to: ${fg.getRoot().name}`)
+}
+chatMenuRoot.in = function() {
+  chatMenuRoot.ghostView = fg.getRoot(); fg.setRoot(this)
+}
+chatMenuRoot.out = function() {
+  fg.setRoot(chatMenuRoot.ghostView); chatMenuRoot.ghostView = undefined
 }
