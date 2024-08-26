@@ -94,7 +94,7 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  for (const g of v.gadgets) {
+  for (const g of v.gadgets) if (g.label) {
     mat4.identity(m)
     mat4.translate(m,m, [g.x, g.y + g.h, 0])
     mat4.scale(m,m, [g.h/14, g.h/14, 1])
