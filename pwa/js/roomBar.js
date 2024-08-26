@@ -34,7 +34,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log('back')
+    g.root.easeOut(g.target)
   }
 v.layoutFunc = function() {
   const v = this
