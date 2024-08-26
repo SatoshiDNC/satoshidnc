@@ -1,4 +1,5 @@
 import { chatRoot } from './chat.js'
+import { schnorr } from '@noble/curves/secp256k1'
 
 let v, g
 export const chatMenuView = v = new fg.View(null)
@@ -32,7 +33,7 @@ v.items.map((item, i) => {
           if (item.types.includes('text/plain')) {
             item.getType('text/plain').then(blob => blob.text()).then(text => {
               console.log(`clipboard: ${text}`)
-              const signedText = bytesToHex(schnorr.sign(getEventHash(event), secretKey))
+              const signedText = bytesToHex(schnorr.sign(text, bsec()))
               navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
                 console.log('signature written')
                 chatMenuRoot.easeOut()
