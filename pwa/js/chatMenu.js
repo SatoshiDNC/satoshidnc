@@ -22,6 +22,8 @@ v.finish = function(text) {
   if (text) this.loadingText = text
 }
 v.layoutFunc = function() {
+  const v = this
+  v.menuX = v.sw - v.menuW - 10
 }
 v.renderFunc = function() {
   const v = this
@@ -72,6 +74,7 @@ chatMenuRoot.ghostOpacity = 0
 chatMenuRoot.easeIn = function() {
   const v = this
   chatMenuView.easingState = 1
+  chatMenuView.easingRate = 0.06
   const r = fg.getRoot()
   if (r !== this) {
     chatMenuRoot.ghostView = r
@@ -81,6 +84,7 @@ chatMenuRoot.easeIn = function() {
 chatMenuRoot.easeOut = function() {
   const v = this
   chatMenuView.easingState = -1
+  chatMenuView.easingRate = 0.1
 }
 chatMenuRoot.easingState = function() {
   return chatMenuView.easingState
