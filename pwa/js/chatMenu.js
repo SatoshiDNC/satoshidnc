@@ -72,5 +72,5 @@ chatMenuRoot.in = function() {
   chatMenuRoot.ghostView = fg.getRoot(); fg.setRoot(this)
 }
 chatMenuRoot.out = function() {
-  fg.setRoot(chatMenuRoot.ghostView); chatMenuRoot.ghostView = undefined
+  fg.setRoot(chatMenuRoot.ghostView)
 }
