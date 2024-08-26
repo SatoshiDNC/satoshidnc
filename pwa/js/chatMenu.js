@@ -119,6 +119,7 @@ v.prepMenu = function() {
 v.layoutFunc = function() {
   const v = this
   v.menuX = v.sw - v.menuW - 10
+  v.menuH = 62 + 126 * v.currentItemCount
   let g
   let i = 0
   for (g of v.gadgets) if (g.enabled) {
