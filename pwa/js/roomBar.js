@@ -38,6 +38,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   }
 v.layoutFunc = function() {
   const v = this
+  g = v.menuGad
   g.x = v.sw - 64
   g.y = 51
   g.w = 12
