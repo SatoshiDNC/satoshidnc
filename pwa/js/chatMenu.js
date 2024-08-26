@@ -45,6 +45,7 @@ v.items.map((item, i) => {
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = item
   g.index = i
+  v.gadgets[`index${i}`] = g
   g.clickFunc = function() {
     const g = this, v = this.viewport
     switch (g.index) {
@@ -96,6 +97,17 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.clickFunc = function() {
     chatMenuRoot.easeOut()
   }
+v.prepMenu = function() {
+  const v = this
+  v.getText('text/plain').then(text => {
+    let event
+    try {
+      event = JSON.parse(text)
+    } catch(e) {
+    }
+    v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
+  })
+}
 v.layoutFunc = function() {
   const v = this
   v.menuX = v.sw - v.menuW - 10
@@ -172,15 +184,7 @@ export const chatMenuRoot = chatMenu
 chatMenuRoot.ghostOpacity = 0
 chatMenuRoot.easeIn = function() {
   const v = this
-  getText('text/plain').then(text => {
-    let event
-    try {
-      event = JSON.parse(text)
-    } catch(e) {
-    }
-    v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
-
-
+  chatMenuView.prepMenu().then(() => {
     chatMenuView.easingState = 1
     chatMenuView.easingRate = 0.06
     const r = fg.getRoot()
