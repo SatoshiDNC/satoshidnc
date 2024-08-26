@@ -182,6 +182,7 @@ chatMenuRoot.easeOut = function() {
   const v = this
   chatMenuView.easingState = -1
   chatMenuView.easingRate = 0.1
+  v.setRenderFlag(true)
 }
 chatMenuRoot.easingState = function() {
   return chatMenuView.easingState
