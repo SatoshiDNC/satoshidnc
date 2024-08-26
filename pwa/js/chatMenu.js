@@ -26,7 +26,7 @@ v.items.map((item, i) => {
     const g = this, v = this.viewport
     switch (g.index) {
     case SIGN_CLIPBOARD:
-      Clipboard.read().then(items => {
+      navigator.clipboard.read().then(items => {
         console.log(items)
         chatMenuRoot.easeOut()
       })
