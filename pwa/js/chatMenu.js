@@ -1,4 +1,4 @@
-import { chatRoom } from './chat.js'
+import { chatRoot } from './chat.js'
 
 export const chatMenuView = v = new fg.View(null)
 v.name = Object.keys({chatMenuView}).pop()
