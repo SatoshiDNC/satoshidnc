@@ -8,6 +8,11 @@ v.loadingText = `Menu`//`${window.devicePixelRatio}, ${vvs = window.visualViewpo
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
+v.menuX = 482
+v.menuY = 137
+v.menuW = 588
+v.menuH = 138 + 126 * 7
+v.menuR = 32
 v.setText = function(text) {
   this.loadingText = text
   console.log('splash:', text)
@@ -36,13 +41,21 @@ v.renderFunc = function() {
     chatMenuRoot.ghostOpacity = v.easingValue * 0.5
     v.setRenderFlag(true)
   }
-  const mat = mat4.create()
-  mat4.identity(mat)
+  const m = mat4.create()
+  mat4.identity(m)
   const str = v.loadingText
   const x = (v.sw - defaultFont.calcWidth(str))/2
   const y = (v.sh)/2
   const c = v.loadingColor
-  defaultFont.draw(x,y, str, [c[0],c[1],c[2],v.easingValue], v.mat, mat)
+  defaultFont.draw(x,y, str, [c[0],c[1],c[2],v.easingValue], v.mat, m)
+
+  // mainShapes.useProg2()
+  // gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
+  // mat4.identity(m)
+  // mat4.translate(m,m, [v.menuX, v.menuY, 0])
+  // mat4.scale(m,m, [v.menuW, v.menuH, 1])
+  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  // mainShapes.drawArrays2('rect')
 }
 
 export const chatMenu = v = new fg.OverlayView(null)
