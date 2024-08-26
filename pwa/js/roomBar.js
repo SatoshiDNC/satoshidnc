@@ -22,7 +22,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     } else {
       g.target?.easeOut?.()
     }
-    console.log(`changed root to: ${g.target?.name}`)
   }
 v.layoutFunc = function() {
   const v = this
