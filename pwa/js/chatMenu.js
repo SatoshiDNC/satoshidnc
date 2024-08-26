@@ -18,20 +18,20 @@ v.renderFunc = function() {
   const v = this
   if (v.easingState) {
     if (v.easingState == 1) {
-      v.easingValue += 0.01
+      v.easingValue += 0.033
       if (v.easingValue >= 1) {
         v.easingValue = 1
         v.easingState = 0
       }
     }
     if (v.easingState == -1) {
-      v.easingValue -= 0.01
+      v.easingValue -= 0.033
       if (v.easingValue < 0) {
         v.easingValue = 0
         v.easingState = 0
       }
     }
-    chatMenuRoot.ghostOpacity = v.easingValue
+    chatMenuRoot.ghostOpacity = v.easingValue * 0.5
     v.setRenderFlag(true)
   }
   const mat = mat4.create()
