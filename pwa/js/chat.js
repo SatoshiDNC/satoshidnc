@@ -80,7 +80,7 @@ v.bgColor = [0,0,0,1]
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
-// v.renderFunc = function() {
+v.renderFunc = function() {
 //   const v = this
 //   if (v.easingState) {
 //     if (v.easingState == 1) {
@@ -112,10 +112,10 @@ v.easingRate = 0.033
 //   //   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
 //   //   mainShapes.drawArrays2('rect')
 //   // }
-// }
+}
 chatRoot.easeOut = function() {
   const v = this
-  chatRoot.easingState = -1
-  chatRoot.easingRate = 0.1
+  v.easingState = -1
+  v.easingRate = 0.1
   v.setRenderFlag(true)
 }
