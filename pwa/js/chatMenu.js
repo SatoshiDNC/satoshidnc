@@ -2,6 +2,7 @@ import { chatRoot } from './chat.js'
 
 export const chatMenuView = v = new fg.View(null)
 v.name = Object.keys({chatMenuView}).pop()
+v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = `Menu`//`${window.devicePixelRatio}, ${vvs = window.visualViewport.scale}`
@@ -19,6 +20,8 @@ v.setText = function(text) {
 }
 v.finish = function(text) {
   if (text) this.loadingText = text
+}
+v.layoutFunc = function() {
 }
 v.renderFunc = function() {
   const v = this
