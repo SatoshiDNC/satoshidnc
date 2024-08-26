@@ -51,6 +51,7 @@ v.renderFunc = function() {
 
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)
   mat4.translate(m,m, [v.menuX, v.menuY, 0])
   mat4.scale(m,m, [v.menuW, v.menuH, 1])
