@@ -33,7 +33,7 @@ v.items.map((item, i) => {
           if (item.types.includes('text/plain')) {
             item.getType('text/plain').then(blob => blob.text()).then(text => {
               console.log(`clipboard: ${text}`)
-              const signedText = bytesToHex(schnorr.sign(text, bsec()))
+              const signedText = schnorr.sign(text, bsec()).toString('hex')
               navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
                 console.log('signature written')
                 chatMenuRoot.easeOut()
