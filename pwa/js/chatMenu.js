@@ -58,7 +58,7 @@ v.items.map((item, i) => {
       break
     case SIGN_EVENT:
       getText('text/plain').then(text => {
-        const event = text
+        const event = JSON.parse(text)
         const signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
           chatMenuRoot.easeOut()
