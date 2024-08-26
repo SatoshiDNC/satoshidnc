@@ -54,9 +54,9 @@ chatMenuRoot.easeIn = function() {
   const v = this
   chatMenuView.easingState = 1
   chatMenuRoot.ghostOpacity = 0
-  chatMenuRoot.ghostView = fg.peekRoot()
+  chatMenuRoot.ghostView = fg.getRoot()
   fg.setRoot(this)
-  console.log(`changed root to: ${fg.peekRoot().name}`)
+  console.log(`changed root to: ${fg.getRoot().name}`)
 }
 chatMenuRoot.easeOut = function() {
   console.log(`easeOut`)
@@ -64,5 +64,5 @@ chatMenuRoot.easeOut = function() {
   chatMenuView.easingState = -1
   chatMenuRoot.ghostOpacity = 1
   fg.setRoot(chatMenuRoot.ghostView)
-  console.log(`changed root to: ${fg.peekRoot().name}`)
+  console.log(`changed root to: ${fg.getRoot().name}`)
 }
