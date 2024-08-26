@@ -28,6 +28,24 @@ v.items.map((item, i) => {
   g.index = i
   g.clickFunc = function() {
     const g = this, v = this.viewport
+    const getText = (mime) => {
+      return new Promise((resolve, reject) => {
+        navigator.clipboard.read().then(items => {
+          if (items.length == 1) {
+            const item = items[0]
+            if (item.types.includes(mime)) {
+              item.getType(mime).then(blob => blob.text()).then(text => {
+                resolve(text)
+              })
+            } else {
+              reject(`To sign what is in the clipboard, the clipboard must contain ${mime}.`)
+            }
+          } else {
+            reject(`To sign what is in the clipboard, the clipboard must contain only one item.`)
+          }
+        })  
+      })
+    }
     switch (g.index) {
     case SIGN_TEXT:
       getText('text/plain').then(text => {
@@ -48,24 +66,6 @@ v.items.map((item, i) => {
     default:
       console.log(g.label)
       chatMenuRoot.easeOut()
-    }
-    const getText = (mime) => {
-      return new Promise((resolve, reject) => {
-        navigator.clipboard.read().then(items => {
-          if (items.length == 1) {
-            const item = items[0]
-            if (item.types.includes(mime)) {
-              item.getType(mime).then(blob => blob.text()).then(text => {
-                resolve(text)
-              })
-            } else {
-              reject(`To sign what is in the clipboard, the clipboard must contain ${mime}.`)
-            }
-          } else {
-            reject(`To sign what is in the clipboard, the clipboard must contain only one item.`)
-          }
-        })  
-      })
     }
   }
 })
