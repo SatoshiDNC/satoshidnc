@@ -99,13 +99,16 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   }
 v.prepMenu = function() {
   const v = this
-  v.getText('text/plain').then(text => {
-    let event
-    try {
-      event = JSON.parse(text)
-    } catch(e) {
-    }
-    v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
+  return new Promise((resolve, reject) => {
+    v.getText('text/plain').then(text => {
+      let event
+      try {
+        event = JSON.parse(text)
+      } catch(e) {
+      }
+      v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
+      resolve()
+    })
   })
 }
 v.layoutFunc = function() {
