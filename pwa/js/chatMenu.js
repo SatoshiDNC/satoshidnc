@@ -16,21 +16,22 @@ v.menuW = 588
 v.menuH = 138 + 126 * 7
 v.menuR = 32
 v.items = ['Item 1', 'Item 2']
-for (let item of v.items) {
+v.items.map((item, i) => {
   v.gadgets.push(g = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = item
+  g.index = i
   g.clickFunc = function() {
     const g = this, v = this.viewport
     console.log(g.label)
   }
-}
+})
 v.layoutFunc = function() {
   const v = this
   v.menuX = v.sw - v.menuW - 10
   for (const g of v.gadgets) {
     g.x = v.menuX + 45
-    g.y = v.menuY + 112
+    g.y = v.menuY + 112 + g.index * 126
     g.w = v.menuW - 45*2
     g.h = 33
   }
