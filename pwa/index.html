@@ -33,7 +33,6 @@
   <script src='./lib/rune.min.js'></script>
   <script src='./lib/rune-for-printer.min.js'></script><!-- hack: a copy for print canvas -->
   <script src='./js/globals.js'></script>
-  <script src='./js/shapes.js'></script>
   <script src='./js/key.js' type="module"></script>
   <script src='./js/font/defaultFont.js'></script>
   <script src='./js/font/receiptFont.js'></script><!-- hack: a copy for print canvas -->
@@ -265,6 +264,7 @@
   <script type="module">
 
     import { chatRoot } from './js/chat.js'
+    import { mainShapeBuilfer } from './js/shapes.js'
 
     // This module demonstrates use of Fireglass and Rune.
     document.addEventListener("DOMContentLoaded", (event) => {
@@ -274,6 +274,9 @@
       fg.initialize(canvas)
       gl = fg.getContext()
       df.glSet(gl)
+
+      mainShapes = new fg.ShapeBuffer(gl, mainShapeBuilder)
+      mainShapes.build()
 
       // wait for stuff to load on startup
       const startupCheck = (finisher) => {
