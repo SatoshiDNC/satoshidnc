@@ -14,8 +14,8 @@ v.finish = function(text) {
 }
 v.renderFunc = function() {
   const v = this
-  gl.clearColor(...v.bgColor)
-  gl.clear(gl.COLOR_BUFFER_BIT)
+  // gl.clearColor(...v.bgColor)
+  // gl.clear(gl.COLOR_BUFFER_BIT)
   const mat = mat4.create()
   mat4.identity(mat)
   const str = v.loadingText
