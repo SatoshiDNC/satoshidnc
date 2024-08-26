@@ -27,8 +27,19 @@ v.items.map((item, i) => {
     switch (g.index) {
     case SIGN_CLIPBOARD:
       navigator.clipboard.read().then(items => {
-        console.log(items)
-        chatMenuRoot.easeOut()
+        if (items.length == 1) {
+          const item = items[0]
+          if (item.types.includes('text/plain')) {
+            item.getType('text/plain').then(value => {
+              console.log(value)
+              chatMenuRoot.easeOut()  
+            })
+          } else {
+            console.log(`To sign what is in the clipboard, the clipboard must contain text/plain.`)
+          }
+        } else {
+          console.log(`To sign what is in the clipboard, the clipboard must contain only one item.`)
+        }
       })
       break
     default:
