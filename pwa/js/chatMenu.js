@@ -65,8 +65,9 @@ v.items.map((item, i) => {
           `Invalid JSON in clipboard.`
           return
         }
+        let signedText
         try {
-          const signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
+          signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
         } catch(e) {
           `Unable to sign; invalid event in clipboard.`
           return
