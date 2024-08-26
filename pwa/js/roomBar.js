@@ -30,7 +30,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.x = 23, g.y = 52
   g.w = 42, g.h = 42
   g.font = iconFont
-  g.fontSize = 11
+  g.fontSize = 13
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
