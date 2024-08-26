@@ -76,4 +76,4 @@ v.a = roomBar; roomBar.parent = v
 v.b = chatSend; chatSend.parent = v
 
 export const chatRoot = chatRoom
-chatRoot.bgColor = [0,0,0,0]
+chatRoot.bgColor = [0,0,0,1]
