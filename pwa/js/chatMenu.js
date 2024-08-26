@@ -3,6 +3,7 @@ import { schnorr } from '@noble/curves/secp256k1'
 import { bsec } from './key.js'
 import { Buffer } from 'buffer'
 import { serializeEvent } from 'nostr-tools'
+import { finalizeEvent, verifyEvent } from 'nostr-tools/pure'
 
 let v, g
 export const chatMenuView = v = new fg.View(null)
@@ -60,22 +61,16 @@ v.items.map((item, i) => {
       break
     case SIGN_EVENT:
       v.getText('text/plain').then(text => {
-        let event
+        let event = JSON.parse(text)
         try {
-          event = JSON.parse(text)
-        } catch(e) {
-          console.warn(`Invalid JSON in clipboard.`)
-          return
-        }
-        let signedText
-        try {
-          signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
+          let signedEvent = finalizeEvent(event, bsec())
+          //signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
         } catch(e) {
           console.warn(`Unable to sign; invalid event in clipboard.`)
           return
         }
-        navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
-          console.log(`signature: ${signedText}`)
+        navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedEvent], { type: 'text/plain' }) })]).then(() => {
+          console.log(`signed event: ${signedEvent}`)
           chatMenuRoot.easeOut()
         })
       })
