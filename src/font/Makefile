@@ -5,12 +5,30 @@
 
 AUTOGEN_FILES = \
 	nybbleFont.js \
+	iconFont.js \
 
 bundle.js: $(AUTOGEN_FILES)
 	cat $(AUTOGEN_FILES) > bundle.js
 
 VARNAME = nybbleFont
 SRCFILE = nybble.font.png
+OUTFILE = $(VARNAME).js
+nybbleFont.js: $(SRCFILE)
+	echo "  $(VARNAME) = new df.GlyphSet()" > $(OUTFILE)
+	echo "  $(VARNAME).loadFromURL(" >> $(OUTFILE)
+	echo "    \"$(VARNAME)\"," >> $(OUTFILE)
+	echo "    ()=>{}," >> $(OUTFILE)
+#	echo "    \"src/font/$(SRCFILE)\"," >> $(OUTFILE)
+	cat $(SRCFILE) | base64 | tr -d '\r\n' > base64.output.txt
+	certutil -encodehex -f $(SRCFILE) base64.output.txt 0x40000001
+	echo "    \"data:application/octet-stream;base64,`cat base64.output.txt`\"," \
+		>> $(OUTFILE)
+	echo "  )" >> $(OUTFILE)
+	rm base64.*
+	cp $(OUTFILE) ../../pwa/js/font/
+
+VARNAME = iconFont
+SRCFILE = icon.font.png
 OUTFILE = $(VARNAME).js
 nybbleFont.js: $(SRCFILE)
 	echo "  $(VARNAME) = new df.GlyphSet()" > $(OUTFILE)
