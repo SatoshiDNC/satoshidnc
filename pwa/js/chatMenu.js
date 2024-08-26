@@ -47,13 +47,6 @@ v.renderFunc = function() {
     v.setRenderFlag(true)
   }
   const m = mat4.create()
-  mat4.identity(m)
-  mat4.translate(m,m, [v.menuX, v.menuY, 0])
-  mat4.translate(m,m, [45, -112, 0])
-  mat4.scale(m,m, [33/14, 33/14, 1])
-  const str = v.loadingText
-  const c = v.loadingColor
-  defaultFont.draw(0,0, str, [c[0],c[1],c[2],v.easingValue], v.mat, m)
 
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
@@ -63,6 +56,14 @@ v.renderFunc = function() {
   mat4.scale(m,m, [v.menuW, v.menuH * v.easingValue, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
+
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX, v.menuY, 0])
+  mat4.translate(m,m, [45, 112, 0])
+  mat4.scale(m,m, [33/14, 33/14, 1])
+  const str = v.loadingText
+  const c = v.loadingColor
+  defaultFont.draw(0,0, str, [c[0],c[1],c[2],v.easingValue], v.mat, m)
 }
 
 export const chatMenu = v = new fg.OverlayView(null)
