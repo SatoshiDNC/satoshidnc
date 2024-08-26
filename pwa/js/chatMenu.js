@@ -32,7 +32,11 @@ v.items.map((item, i) => {
           if (item.types.includes('text/plain')) {
             item.getType('text/plain').then(blob => blob.text()).then(text => {
               console.log(text)
-              chatMenuRoot.easeOut()  
+              const signedText = '<<<' + text + '>>>'
+              navigator.clipboard.write([new ClipboardItem({ [type]: new Blob([signedText], { [type]: 'text/plain' }) })]).then(() => {
+                console.log('signature written')
+                chatMenuRoot.easeOut()
+              })
             })
           } else {
             console.log(`To sign what is in the clipboard, the clipboard must contain text/plain.`)
