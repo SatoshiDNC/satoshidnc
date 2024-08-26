@@ -10,12 +10,12 @@ v.loadingText = `Menu`//`${window.devicePixelRatio}, ${vvs = window.visualViewpo
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
+v.items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7']
 v.menuX = 482
 v.menuY = 137
 v.menuW = 588
-v.menuH = 138 + 126 * 7
+v.menuH = 138 + 126 * v.items.length
 v.menuR = 32
-v.items = ['Item 1', 'Item 2']
 v.items.map((item, i) => {
   v.gadgets.push(g = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
