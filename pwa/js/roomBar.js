@@ -17,7 +17,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     console.log(`'${g.label}' click`)
-    if (fg.getRoot() !== g.target || g.target.easingState == -1) {
+    if (fg.getRoot() !== g.target || g.target.easingState() == -1) {
       g.target?.easeIn?.()
     } else {
       g.target?.easeOut?.()

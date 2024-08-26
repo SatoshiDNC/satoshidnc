@@ -65,6 +65,9 @@ chatMenuRoot.easeOut = function() {
   chatMenuView.easingState = -1
   console.log(`changed root to: ${fg.getRoot().name}`)
 }
+chatMenuRoot.easingState = function() {
+  return chatMenuView.easingState
+}
 chatMenuRoot.in = function() {
   chatMenuRoot.ghostView = fg.getRoot(); fg.setRoot(this)
 }
