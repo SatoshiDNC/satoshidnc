@@ -7,7 +7,7 @@ v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = `Menu`//`${window.devicePixelRatio}, ${vvs = window.visualViewport.scale}`
 v.easingState = 1
 v.easingValue = 0
-v.easingRate = 0.01
+v.easingRate = 0.033
 v.setText = function(text) {
   this.loadingText = text
   console.log('splash:', text)
@@ -56,7 +56,6 @@ chatMenuRoot.easeIn = function() {
   console.log(`easeIn`)
   const v = this
   chatMenuView.easingState = 1
-  chatMenuRoot.ghostOpacity = 0
   chatMenuRoot.in()
 }
 chatMenuRoot.easeOut = function() {
@@ -72,6 +71,7 @@ chatMenuRoot.in = function() {
   console.log(`root: ${r.name} ${chatMenuRoot.ghostOpacity}`)
   if (r !== this) {
     chatMenuRoot.ghostView = r
+    chatMenuRoot.ghostOpacity = chatMenuView.easingValue * 0.5
     fg.setRoot(this)
     console.log(`changed root to: ${fg.getRoot().name}`)
   }
