@@ -10,7 +10,7 @@ v.loadingText = `Menu`//`${window.devicePixelRatio}, ${vvs = window.visualViewpo
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
-v.items = ['Item 1']
+v.items = ['Sign Clipboard']
 v.menuX = 482
 v.menuY = 137
 v.menuW = 588
