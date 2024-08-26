@@ -10,6 +10,21 @@ v.yellow = [1,0.8,0,1]
 v.red = [1,0,0,1]
 v.blue = [0,0,1,1]
 v.shirtColor = [v.white, v.yellow, v.red, v.blue]
+v.gadgets.push(g = v.menuGad = new vp.Gadget(v))
+  g.actionFlags = vp.GAF_CLICKABLE
+  g.label = ':'
+  g.clickFunc = function() {
+    const g = this
+    console.log(`${g.label} click`)
+  }
+v.layoutFunc = function() {
+  const v = this
+  g.x = v.sw - 64
+  g.y = 51
+  g.w = 13
+  g.h = 45
+  g.autoHull()
+}
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
@@ -35,5 +50,11 @@ v.renderFunc = function() {
   mat4.scale(mat, mat, [1/14*23, 1/14*23, 1])
   x = 0, y = 0
   defaultFont.draw(x,y, 'Online', v.textColor, v.mat, mat)
+
+  let g = v.menuGad
+  mat4.identity(mat)
+  mat4.translate(mat, mat, [g.x, g.y, 0])
+  mat4.scale(mat, mat, [g.h/11, g.h/11, 1])
+  defaultFont.draw(0,0, 'Online', v.textColor, v.mat, mat)
 }
 
