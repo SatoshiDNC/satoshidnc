@@ -20,7 +20,7 @@ const SIGN_EVENT = 1; v.items[SIGN_EVENT] = 'Sign Event'
 v.menuX = 482
 v.menuY = 137
 v.menuW = 588
-v.menuH = 62 + 126 * v.items.length
+v.menuH = 62 + 126 * v.currentItemCount
 v.menuR = 32
 v.getText = (mime) => {
   return new Promise((resolve, reject) => {
@@ -107,6 +107,11 @@ v.prepMenu = function() {
       } catch(e) {
       }
       v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
+      let count = 0
+      for (g of v.gadgets) if (g.label && g.enabled) {
+        count++
+      }
+      v.currentItemCount = count
       resolve()
     })
   })
