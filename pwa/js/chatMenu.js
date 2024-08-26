@@ -56,3 +56,10 @@ chatMenuRoot.easeIn = function() {
   chatMenuRoot.ghostOpacity = 0
   fg.pushRoot(this)
 }
+chatMenuRoot.easeOut = function() {
+  const v = this
+  chatMenuView.easingState = -1
+  chatMenuView.easingValue = 1
+  chatMenuRoot.ghostOpacity = 1
+  fg.pushRoot(this)
+}

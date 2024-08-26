@@ -17,7 +17,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     console.log(`'${g.label}' click`)
-    g.target?.easeIn?.()
+    if (g.target?.easingState != 1) {
+      g.target?.easeIn?.()
+    } else {
+      g.target?.easeOut?.()
+    }
     console.log(`changed root to: ${g.target?.name}`)
   }
 v.layoutFunc = function() {
