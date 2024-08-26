@@ -265,6 +265,7 @@
 
     import { chatRoot } from './js/chat.js'
     import { mainShapeBuilder } from './js/shapes.js'
+    import { plainProgram } from './js/shaders.js'
 
     // This module demonstrates use of Fireglass and Rune.
     document.addEventListener("DOMContentLoaded", (event) => {
@@ -277,6 +278,7 @@
 
       mainShapes = new fg.ShapeBuffer(gl, mainShapeBuilder)
       mainShapes.build()
+      prog2 = plainProgram(gl)
 
       // wait for stuff to load on startup
       const startupCheck = (finisher) => {
