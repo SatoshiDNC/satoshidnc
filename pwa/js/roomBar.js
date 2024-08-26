@@ -22,7 +22,7 @@ v.layoutFunc = function() {
   const v = this
   g.x = v.sw - 64
   g.y = 51
-  g.w = 13
+  g.w = 12
   g.h = 45
   g.autoHull()
 }
