@@ -71,7 +71,7 @@ v.items.map((item, i) => {
           return
         }
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedEvent], { type: 'text/plain' }) })]).then(() => {
-          console.log(`signed event: ${signedEvent}`)
+          console.log(`signed event: ${JSON.stringify(signedEvent)}`)
           chatMenuRoot.easeOut()
         })
       })
