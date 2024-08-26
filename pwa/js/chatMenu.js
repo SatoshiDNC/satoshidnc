@@ -57,24 +57,25 @@ chatMenuRoot.easeIn = function() {
   const v = this
   chatMenuView.easingState = 1
   chatMenuRoot.in()
-  console.log(`changed root to: ${fg.getRoot().name}`)
 }
 chatMenuRoot.easeOut = function() {
   console.log(`easeOut`)
   const v = this
   chatMenuView.easingState = -1
-  console.log(`changed root to: ${fg.getRoot().name}`)
 }
 chatMenuRoot.easingState = function() {
   return chatMenuView.easingState
 }
 chatMenuRoot.in = function() {
   const r = getRoot()
+  console.log(`root: ${r.name}`)
   if (r !== this) {
     chatMenuRoot.ghostView = r
     fg.setRoot(this)
+    console.log(`changed root to: ${fg.getRoot().name}`)
   }
 }
 chatMenuRoot.out = function() {
   fg.setRoot(chatMenuRoot.ghostView)
+  console.log(`changed root to: ${fg.getRoot().name}`)
 }
