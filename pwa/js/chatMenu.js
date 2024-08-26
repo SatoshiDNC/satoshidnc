@@ -16,6 +16,7 @@ v.finish = function(text) {
 }
 v.renderFunc = function() {
   const v = this
+  console.log(`easing: ${v.easingState} ${v.easingValue} ${chatMenuRoot.ghostOpacity}`)
   if (v.easingState) {
     if (v.easingState == 1) {
       v.easingValue += 0.033
