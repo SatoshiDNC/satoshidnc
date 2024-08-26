@@ -28,7 +28,7 @@ for (let item of v.items) {
 v.layoutFunc = function() {
   const v = this
   v.menuX = v.sw - v.menuW - 10
-  for (const g of g.gadgets) {
+  for (const g of v.gadgets) {
     g.x = v.menuX + 45
     g.y = v.menuY + 112
     g.w = v.menuW - 45*2
