@@ -62,8 +62,9 @@ v.items.map((item, i) => {
     case SIGN_EVENT:
       v.getText('text/plain').then(text => {
         let event = JSON.parse(text)
+        let signedEvent
         try {
-          let signedEvent = finalizeEvent(event, bsec())
+          signedEvent = finalizeEvent(event, bsec())
           //signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
         } catch(e) {
           console.warn(`Unable to sign; invalid event in clipboard.`)
