@@ -14,7 +14,8 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.items = []
-const SIGN_CLIPBOARD = 0; v.items[SIGN_CLIPBOARD] = 'Sign Clipboard'
+const SIGN_TEXT = 0; v.items[SIGN_TEXT] = 'Sign Text'
+const SIGN_EVENT = 1; v.items[SIGN_EVENT] = 'Sign Event'
 v.menuX = 482
 v.menuY = 137
 v.menuW = 588
@@ -28,30 +29,43 @@ v.items.map((item, i) => {
   g.clickFunc = function() {
     const g = this, v = this.viewport
     switch (g.index) {
-    case SIGN_CLIPBOARD:
-      navigator.clipboard.read().then(items => {
-        if (items.length == 1) {
-          const item = items[0]
-          if (item.types.includes('text/plain')) {
-            item.getType('text/plain').then(blob => blob.text()).then(text => {
-              console.log(`clipboard: ${text}`)
-              const signedText = Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), bsec())).toString('hex')
-              navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
-                console.log('signature written')
-                chatMenuRoot.easeOut()
-              })
-            })
-          } else {
-            console.log(`To sign what is in the clipboard, the clipboard must contain text/plain.`)
-          }
-        } else {
-          console.log(`To sign what is in the clipboard, the clipboard must contain only one item.`)
-        }
+    case SIGN_TEXT:
+      getText('text/plain').then(text => {
+        const signedText = Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), bsec())).toString('hex')
+        navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
+          chatMenuRoot.easeOut()
+        })
+      })
+      break
+    case SIGN_EVENT:
+      getText('application/json').then(text => {
+        const signedText = Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), bsec())).toString('hex')
+        navigator.clipboard.write([new ClipboardItem({ 'application/json': new Blob([signedText], { type: 'application/json' }) })]).then(() => {
+          chatMenuRoot.easeOut()
+        })
       })
       break
     default:
       console.log(g.label)
       chatMenuRoot.easeOut()
+    }
+    const getText = (mime) => {
+      return new Promise((resolve, reject) => {
+        navigator.clipboard.read().then(items => {
+          if (items.length == 1) {
+            const item = items[0]
+            if (item.types.includes(mime)) {
+              item.getType(mime).then(blob => blob.text()).then(text => {
+                resolve(text)
+              })
+            } else {
+              reject(`To sign what is in the clipboard, the clipboard must contain ${mime}.`)
+            }
+          } else {
+            reject(`To sign what is in the clipboard, the clipboard must contain only one item.`)
+          }
+        })  
+      })
     }
   }
 })
