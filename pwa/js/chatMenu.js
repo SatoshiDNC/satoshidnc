@@ -30,8 +30,8 @@ v.items.map((item, i) => {
         if (items.length == 1) {
           const item = items[0]
           if (item.types.includes('text/plain')) {
-            item.getType('text/plain').then(value => {
-              console.log(value)
+            item.getType('text/plain').then(blob => blob.text()).then(text => {
+              console.log(text)
               chatMenuRoot.easeOut()  
             })
           } else {
