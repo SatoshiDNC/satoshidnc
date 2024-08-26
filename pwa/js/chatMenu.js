@@ -52,6 +52,7 @@ v.items.map((item, i) => {
       getText('text/plain').then(text => {
         const signedText = Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), bsec())).toString('hex')
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
+          console.log(`signature: ${signedText}`)
           chatMenuRoot.easeOut()
         })
       })
@@ -73,6 +74,7 @@ v.items.map((item, i) => {
           return
         }
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
+          console.log(`signature: ${signedText}`)
           chatMenuRoot.easeOut()
         })
       })
