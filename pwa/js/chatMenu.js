@@ -52,14 +52,13 @@ export const chatMenuRoot = chatMenu
 chatMenuRoot.easeIn = function() {
   const v = this
   chatMenuView.easingState = 1
-  chatMenuView.easingValue = 0
   chatMenuRoot.ghostOpacity = 0
+  chatMenuRoot.ghostView = fg.peekRoot()
   fg.pushRoot(this)
 }
 chatMenuRoot.easeOut = function() {
   const v = this
   chatMenuView.easingState = -1
-  chatMenuView.easingValue = 1
   chatMenuRoot.ghostOpacity = 1
-  fg.pushRoot(this)
+  fg.pushRoot(chatMenuRoot.ghostView)
 }
