@@ -1,5 +1,6 @@
 import { chatRoot } from './chat.js'
 
+let v, g
 export const chatMenuView = v = new fg.View(null)
 v.name = Object.keys({chatMenuView}).pop()
 v.designSize = 1080*2183
