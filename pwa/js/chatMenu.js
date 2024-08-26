@@ -70,8 +70,9 @@ v.items.map((item, i) => {
           console.warn(`Unable to sign; invalid event in clipboard.`)
           return
         }
-        navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedEvent], { type: 'text/plain' }) })]).then(() => {
-          console.log(`signed event: ${JSON.stringify(signedEvent)}`)
+        const signedText = JSON.stringify(signedEvent)
+        navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
+          console.log(`signed event: ${signedText}`)
           chatMenuRoot.easeOut()
         })
       })
