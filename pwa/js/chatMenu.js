@@ -14,8 +14,6 @@ v.finish = function(text) {
 }
 v.renderFunc = function() {
   const v = this
-  // gl.clearColor(...v.bgColor)
-  // gl.clear(gl.COLOR_BUFFER_BIT)
   const mat = mat4.create()
   mat4.identity(mat)
   const str = v.loadingText
@@ -27,6 +25,6 @@ v.renderFunc = function() {
 export const chatMenu = v = new fg.OverlayView(null)
 v.name = Object.keys({chatMenu}).pop()
 v.a = chatMenuView; chatMenuView.parent = v
-v.b = chatRoom; chatRoom.parent = v
+v.b = chatRoot; chatRoot.parent = v
 
 export const chatMenuRoot = chatMenu
