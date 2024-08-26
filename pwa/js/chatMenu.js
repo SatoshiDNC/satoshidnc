@@ -39,6 +39,7 @@ v.renderFunc = function() {
   const str = v.loadingText
   const x = (v.sw - defaultFont.calcWidth(str))/2
   const y = (v.sh)/2
+  const c = v.loadingColor
   defaultFont.draw(x,y, str, [c[0],c[1],c[2],v.easingValue], v.mat, mat)
 }
 
