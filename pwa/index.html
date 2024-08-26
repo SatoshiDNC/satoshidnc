@@ -275,9 +275,15 @@
 
       // wait for stuff to load on startup
       const startupCheck = (finisher) => {
-        if (defaultFont.isReady() && nybbleFont.isReady()) {
+        if (
+          defaultFont.isReady() &&
+          nybbleFont.isReady() &&
+          iconFont.isReady() &&
+          true
+        ) {
           defaultFont.init()
           nybbleFont.init()
+          iconFont.init()
           finisher()
         } else {
           setTimeout(startupCheck, 10)
