@@ -35,7 +35,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function() {
-    vchatMenuRoot.easeOut()
+    chatMenuRoot.easeOut()
   }
 v.layoutFunc = function() {
   const v = this
