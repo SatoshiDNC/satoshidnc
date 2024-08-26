@@ -16,6 +16,18 @@ v.menuY = 137
 v.menuW = 588
 v.menuH = 62 + 126 * v.items.length
 v.menuR = 32
+v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log('screen')
+  }
+v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log('menu')
+  }
 v.items.map((item, i) => {
   v.gadgets.push(g = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -29,6 +41,19 @@ v.items.map((item, i) => {
 v.layoutFunc = function() {
   const v = this
   v.menuX = v.sw - v.menuW - 10
+  let g
+  g = v.screenGad
+  g.x = 0
+  g.y = 0
+  g.w = v.sw
+  g.h = v.sh
+  g.autoHull()
+  g = v.menuGad
+  g.x = v.menuX
+  g.y = v.menuY
+  g.w = v.menuW
+  g.h = v.menuH
+  g.autoHull()
   for (const g of v.gadgets) {
     g.x = v.menuX + 45
     g.y = v.menuY + 79 + g.index * 126
