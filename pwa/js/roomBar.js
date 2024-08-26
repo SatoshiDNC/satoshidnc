@@ -10,7 +10,7 @@ v.yellow = [1,0.8,0,1]
 v.red = [1,0,0,1]
 v.blue = [0,0,1,1]
 v.shirtColor = [v.white, v.yellow, v.red, v.blue]
-v.gadgets.push(g = v.menuGad = new vp.Gadget(v))
+v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = vp.GAF_CLICKABLE
   g.label = ':'
   g.clickFunc = function() {
