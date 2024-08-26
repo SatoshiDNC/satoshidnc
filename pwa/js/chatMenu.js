@@ -14,16 +14,25 @@ v.menuY = 137
 v.menuW = 588
 v.menuH = 138 + 126 * 7
 v.menuR = 32
-v.setText = function(text) {
-  this.loadingText = text
-  console.log('splash:', text)
-}
-v.finish = function(text) {
-  if (text) this.loadingText = text
+v.items = ['Item 1', 'Item 2']
+for (let item of v.items) {
+  v.gadgets.push(g = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = item
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log(g.label)
+  }
 }
 v.layoutFunc = function() {
   const v = this
   v.menuX = v.sw - v.menuW - 10
+  for (const g of g.gadgets) {
+    g.x = v.menuX + 45
+    g.y = v.menuY + 112
+    g.w = v.menuW - 45*2
+    g.h = 33
+  }
 }
 v.renderFunc = function() {
   const v = this
@@ -57,13 +66,13 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  mat4.identity(m)
-  mat4.translate(m,m, [v.menuX, v.menuY, 0])
-  mat4.translate(m,m, [45, 112, 0])
-  mat4.scale(m,m, [33/14, 33/14, 1])
-  const str = v.loadingText
-  const c = v.loadingColor
-  defaultFont.draw(0,0, str, [c[0],c[1],c[2],v.easingValue], v.mat, m)
+  for (const g of v.gadgets) {
+    mat4.identity(m)
+    mat4.translate(m,m, [g.x, g.y, 0])
+    mat4.scale(m,m, [g.h/14, g.h/14, 1])
+    const c = v.loadingColor
+    defaultFont.draw(0,0, g.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
+  }
 }
 
 export const chatMenu = v = new fg.OverlayView(null)
