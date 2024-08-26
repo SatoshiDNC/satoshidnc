@@ -69,7 +69,11 @@ chatMenuRoot.easingState = function() {
   return chatMenuView.easingState
 }
 chatMenuRoot.in = function() {
-  chatMenuRoot.ghostView = fg.getRoot(); fg.setRoot(this)
+  const r = getRoot()
+  if (r !== this) {
+    chatMenuRoot.ghostView = r
+    fg.setRoot(this)
+  }
 }
 chatMenuRoot.out = function() {
   fg.setRoot(chatMenuRoot.ghostView)
