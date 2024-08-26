@@ -33,7 +33,7 @@ v.items.map((item, i) => {
             item.getType('text/plain').then(blob => blob.text()).then(text => {
               console.log(text)
               const signedText = '<<<' + text + '>>>'
-              navigator.clipboard.write([new ClipboardItem({ [type]: new Blob([signedText], { [type]: 'text/plain' }) })]).then(() => {
+              navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { [type]: 'text/plain' }) })]).then(() => {
                 console.log('signature written')
                 chatMenuRoot.easeOut()
               })
