@@ -1,4 +1,3 @@
-import { chatMenuRoot } from './chatMenu.js'
 import { hpub } from './key.js'
 
 let v, g
@@ -18,8 +17,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     console.log(`${g.label} click`)
-    fg.pushRoot(chatMenuRoot)
-    console.log(`changed root`)
+    if(g.target) fg.pushRoot(g.target)
+    console.log(`changed root to: ${g.target?.name}`)
   }
 v.layoutFunc = function() {
   const v = this
