@@ -31,7 +31,7 @@ v.layoutFunc = function() {
   v.menuX = v.sw - v.menuW - 10
   for (const g of v.gadgets) {
     g.x = v.menuX + 45
-    g.y = v.menuY + 112 + g.index * 126
+    g.y = v.menuY + 79 + g.index * 126
     g.w = v.menuW - 45*2
     g.h = 33
     g.autoHull()
@@ -71,7 +71,7 @@ v.renderFunc = function() {
 
   for (const g of v.gadgets) {
     mat4.identity(m)
-    mat4.translate(m,m, [g.x, g.y, 0])
+    mat4.translate(m,m, [g.x, g.y + g.h, 0])
     mat4.scale(m,m, [g.h/14, g.h/14, 1])
     const c = v.loadingColor
     defaultFont.draw(0,0, g.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
