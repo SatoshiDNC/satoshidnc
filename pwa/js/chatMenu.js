@@ -7,6 +7,7 @@ v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = `Menu`//`${window.devicePixelRatio}, ${vvs = window.visualViewport.scale}`
 v.easingState = 1
 v.easingValue = 0
+v.easingRate = 0.01
 v.setText = function(text) {
   this.loadingText = text
   console.log('splash:', text)
@@ -19,14 +20,14 @@ v.renderFunc = function() {
   console.log(`easing: ${v.easingState} ${v.easingValue} ${chatMenuRoot.ghostOpacity}`)
   if (v.easingState) {
     if (v.easingState == 1) {
-      v.easingValue += 0.033
+      v.easingValue += v.easingRate
       if (v.easingValue >= 1) {
         v.easingValue = 1
         v.easingState = 0
       }
     }
     if (v.easingState == -1) {
-      v.easingValue -= 0.033
+      v.easingValue -= v.easingRate
       if (v.easingValue < 0) {
         v.easingValue = 0
         v.easingState = 0
