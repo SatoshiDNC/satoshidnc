@@ -34,6 +34,7 @@ v.layoutFunc = function() {
     g.y = v.menuY + 112 + g.index * 126
     g.w = v.menuW - 45*2
     g.h = 33
+    g.autoHull()
   }
 }
 v.renderFunc = function() {
