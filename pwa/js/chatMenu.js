@@ -51,8 +51,8 @@ v.b = chatRoot; chatRoot.parent = v
 export const chatMenuRoot = chatMenu
 chatMenuRoot.easeIn = function() {
   const v = this
-  v.easingState = 1
-  v.easingValue = 0
-  v.ghostOpacity = 0
+  chatMenuView.easingState = 1
+  chatMenuView.easingValue = 0
+  chatMenuRoot.ghostOpacity = 0
   fg.pushRoot(this)
 }
