@@ -71,7 +71,6 @@ chatMenuRoot.in = function() {
   console.log(`root: ${r.name} ${chatMenuRoot.ghostOpacity}`)
   if (r !== this) {
     chatMenuRoot.ghostView = r
-    chatMenuRoot.ghostOpacity = chatMenuView.easingValue * 0.5
     fg.setRoot(this)
     console.log(`changed root to: ${fg.getRoot().name}`)
   }
