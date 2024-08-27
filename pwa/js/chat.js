@@ -86,8 +86,8 @@ v.renderFunc = function() {
     if (v.easingState == 1) {
       v.easingValue += v.easingRate
       // if (v.easingValue >= 1) {
-      //   v.easingValue = 1
-      //   v.easingState = 0
+        v.easingValue = 1
+        v.easingState = 0
       // }
     }
     if (v.easingState == -1) {
