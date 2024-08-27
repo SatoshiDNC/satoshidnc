@@ -1,5 +1,6 @@
 import { hpub } from './key.js'
 
+let v, g
 export const appBar = v = new fg.View()
 v.name = Object.keys({appBar}).pop()
 v.designHeight = 147
