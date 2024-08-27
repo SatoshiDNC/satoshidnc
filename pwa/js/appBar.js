@@ -46,13 +46,13 @@ v.layoutFunc = function() {
   g.h = 45
   g.autoHull()
   g = v.searchGad
-  g.x = v.sw - 64-50
+  g.x = v.sw - 192
   g.y = 51
   g.w = 45
   g.h = 45
   g.autoHull()
   g = v.lawGad
-  g.x = v.sw - 64-100
+  g.x = v.sw - 322
   g.y = 51
   g.w = 45
   g.h = 45
