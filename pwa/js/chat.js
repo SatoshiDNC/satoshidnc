@@ -80,15 +80,15 @@ v.bgColor = [0,0,0,1]
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
-v.renderFunc = function() {
+v.renderFinish = function() {
   const v = this
   if (v.easingState) {
     if (v.easingState == 1) {
       v.easingValue += v.easingRate
-      // if (v.easingValue >= 1) {
+      if (v.easingValue >= 1) {
         v.easingValue = 1
         v.easingState = 0
-      // }
+      }
     }
     if (v.easingState == -1) {
       v.easingValue -= v.easingRate
