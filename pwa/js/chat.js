@@ -100,20 +100,20 @@ v.renderFinish = function() {
     }
     v.setRenderFlag(true)
   }
-  if (v.easingValue < 1) {
+//  if (v.easingValue < 1) {
     const m = mat4.create()
 
     mainShapes.useProg2()
-    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([v.bgColor[0],v.bgColor[1],v.bgColor[2], (1-v.easingValue)*.5]))
+    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([v.bgColor[0],v.bgColor[1],v.bgColor[2], 0.5]))
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
     mat4.identity(m)
     //mat4.translate(m,m, [0, v.menuY, 0])
     mat4.scale(m,m, [v.sw, v.sh, 1])
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
     mainShapes.drawArrays2('rect')
-  }
+//  }
 }
-chatRoot.easeOut = function() {
+v.easeOut = function() {
   const v = this
   v.easingState = -1
   v.easingRate = 0.1
