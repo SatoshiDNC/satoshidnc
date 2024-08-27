@@ -172,7 +172,6 @@ v.renderFunc = function() {
   const m = mat4.create()
 
   mainShapes.useProg2()
-  gl.enable(gl.BLEND)
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)
