@@ -101,6 +101,7 @@ v.renderFinish = function() {
     v.setRenderFlag(true)
   }
 //  if (v.easingValue < 1) {
+    console.log('rendering')
     const m = mat4.create()
 
     mainShapes.useProg2()
