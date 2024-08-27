@@ -113,7 +113,7 @@ v.renderFinish = function() {
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
     mat4.identity(m)
     //mat4.translate(m,m, [0, v.menuY, 0])
-    mat4.scale(m,m, [v.w, v.h, 1])
+    mat4.scale(m,m, [v.sw, v.sh, 1])
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
     mainShapes.drawArrays2('rect')
   }
