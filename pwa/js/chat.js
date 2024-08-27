@@ -63,19 +63,22 @@ v.renderFunc = function() {
   // this.setRenderFlag(true)
 }
 
-export const chatSend = v = new fg.SliceView(null, 'br', .125)
+export const chatSend = new fg.SliceView(null, 'br', .125)
+v = chatSend
 v.name = Object.keys({chatSend}).pop()
 v.prop = true
 v.a = sendBar; sendBar.parent = v
 v.b = chatView; chatView.parent = v
 
-export const chatRoom = v = new fg.SliceView(null, 'tl', .125)
+export const chatRoom = new fg.SliceView(null, 'tl', .125)
+v = chatRoom
 v.name = Object.keys({chatRoom}).pop()
 v.prop = true
 v.a = roomBar; roomBar.parent = v
 v.b = chatSend; chatSend.parent = v
 
-export const chatRoot = v = chatRoom
+export const chatRoot = chatRoom
+v = chatRoot
 v.bgColor = [0,0,0,1]
 v.easingState = 1
 v.easingValue = 0
