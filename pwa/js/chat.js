@@ -100,7 +100,7 @@ v.renderFinish = function() {
     }
     v.setRenderFlag(true)
   }
-//  if (v.easingValue < 1) {
+ if (v.easingValue < 1) {
     console.log('rendering')
     const m = mat4.create()
 
@@ -113,7 +113,7 @@ v.renderFinish = function() {
     mat4.scale(m,m, [v.sw, v.sh, 1])
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
     mainShapes.drawArrays2('rect')
-//  }
+  }
 }
 v.easeOut = function() {
   const v = this
