@@ -24,7 +24,7 @@ v.renderFunc = function() {
     { pubkey: hpub(), name: npub(), xmitDate: new Date(), xmitText: 'You reacted "&" to "Ok, thanks for the help!"' },
   ]
 
-  const npubRender = (x,y) => {
+  const npubRender = (c, x, y) => {
     mat4.identity(mat)
     mat4.translate(mat, mat, [x, y, 0])
     mat4.scale(mat, mat, [127/32, 127/32, 1])
@@ -34,7 +34,7 @@ v.renderFunc = function() {
       nybbleFont.draw(ox,oy + i*8, str, v.titleColor, v.mat, m)
     })  
   }
-  const dateRender = (x,y) => {
+  const dateRender = (c, x, y) => {
     mat4.identity(m)
     mat4.translate(m,m, [x,y, 0])
     const s2 = 25/14
@@ -44,7 +44,7 @@ v.renderFunc = function() {
     defaultFont.draw(-w1,0, str, v.subtitleColor, v.mat, m)
     return { text: str, width: w1, scale: s2 }
   }
-  const titleRender = (x, y, w1, s2) => {
+  const titleRender = (c, x, y, w1, s2) => {
     mat4.identity(m)
     mat4.translate(m,m, [x, y, 0])
     const s1 = 35/14
@@ -62,7 +62,7 @@ v.renderFunc = function() {
     }
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
   }
-  const subtitleRender = (x, y) => {
+  const subtitleRender = (c, x, y) => {
     mat4.identity(m)
     mat4.translate(m,m, [x, y, 0])
     const s3 = 31/14
@@ -83,10 +83,10 @@ v.renderFunc = function() {
 
   let i = 0
   for (const c of contacts) {
-    npubRender(31, 204 + 200 * i)
-    const { text: str, width: w1, scale: s2 } = dateRender(v.sw - 45, 247 + 200 * i)
-    titleRender(192, 253 + 200 * i, w1, s2)
-    subtitleRender(195, 318 + 200 * i)
+    npubRender(c, 31, 204 + 200 * i)
+    const { text: str, width: w1, scale: s2 } = dateRender(c, v.sw - 45, 247 + 200 * i)
+    titleRender(c, 192, 253 + 200 * i, w1, s2)
+    subtitleRender(c, 195, 318 + 200 * i)
     i++
   }
 
