@@ -68,7 +68,7 @@ v.renderFunc = function() {
     const w4 = v.sw - 192 - 45 - 25
     if (defaultFont.calcWidth(c.xmitText) * s3 > w4) {
       let l = c.xmitText.length
-      while (defaultFont.calcWidth(c.xmitText.substring(0,l)+'...') * s3 > w3) {
+      while (defaultFont.calcWidth(c.xmitText.substring(0,l)+'...') * s3 > w4) {
         l--
       }
       str = c.xmitText.substring(0,l)+'...'
