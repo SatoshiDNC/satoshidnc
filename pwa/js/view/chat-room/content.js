@@ -1,4 +1,5 @@
 import { barTop } from './bar-top.js'
+import { setEasingParameters } from '../util.js'
 
 export const chatView = v = new fg.View(null)
 v.name = Object.keys({chatView}).pop()
