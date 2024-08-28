@@ -20,8 +20,8 @@ v.renderFunc = function() {
   const mat = mat4.create()
 
   const contacts = [
-    { pubkey: hpub(), name: 'You', xmitDate: Date.now(), xmitText: 'link' },
-    { pubkey: hpub(), name: 'Rando', xmitDate: Date.now(), xmitText: 'tbd' },
+    { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
+    { pubkey: hpub(), name: 'Rando', xmitDate: new Date(), xmitText: 'tbd' },
   ]
 
   let i = 0
