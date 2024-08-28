@@ -1,5 +1,5 @@
-import { appBar as topBar } from '../appBar.js'
-import { hpub, npub } from '../key.js'
+import { barTop as topBar } from './bar-top.js'
+import { hpub, npub } from '../../key.js'
 
 let v, g
 export const newChatView = v = new fg.View(null)
