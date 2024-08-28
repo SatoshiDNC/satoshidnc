@@ -5,7 +5,6 @@ import { setEasingParameters } from '../util.js'
 let v, g
 export const newChatView = v = new fg.View(null)
 v.name = Object.keys({newChatView}).pop()
-v.designSize = 1080*1825
 v.splashMode = 0
 v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
