@@ -137,6 +137,7 @@ v.renderFunc = function() {
   }
 
   let i = 0
+  let g
   g = v.newGroupGad
   iconRender('\x02', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
   titleRender(g.label, 192, 124 + 179 * i, 0, 1)
@@ -145,7 +146,8 @@ v.renderFunc = function() {
   g = v.newContactGad
   iconRender('\x01', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
   titleRender(g.label, 192, 124 + 179 * i, 0, 1)
-  let g = v.scanGad
+  
+  g = v.scanGad
   mat4.identity(m)
   mat4.translate(m,m, [g.x, g.y + g.h, 0])
   let s = g.w/iconFont.calcWidth(g.label)
