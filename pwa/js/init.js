@@ -4,7 +4,7 @@ import { menuRoot } from './menu.js'
 import { chatRoot } from './chat.js'
 import { homeRoot } from './home.js'
 import { homeOverlayView } from './home.js'
-import { newChatRoot } from './view/new-chat/new-chat.js'
+import { newChatRoot } from './view/new-chat/content.js'
 
 appBar.menuGad.target = menuRoot
 roomBar.menuGad.target = menuRoot
