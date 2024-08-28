@@ -84,14 +84,3 @@ v.renderFunc = function() {
   // item spacing: 200
   // photo x=31, w=127, h=127
 }
-
-export const newChatPage = v = new fg.SliceView(null, 'tl', .125)
-v.name = Object.keys({newChatPage}).pop()
-v.prop = true
-v.a = topBar; topBar.parent = v
-v.b = newChatView; newChatView.parent = v
-
-export const newChatRoot = newChatPage
-v = newChatRoot
-v.bgColor = [0,0,0,1]
-setEasingParameters(newChatRoot)
