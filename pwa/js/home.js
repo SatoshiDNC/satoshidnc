@@ -92,18 +92,22 @@ v.renderFunc = function() {
   const m = mat4.create()
 
   const g = v.addGad
-  mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.buttonFaceColor))
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  mat4.identity(m)
-  mat4.translate(m,m, [g.x, g.y, 0])
-  mat4.scale(m,m, [g.w, g.h, 1])
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('rect')
+  // mainShapes.useProg2()
+  // gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.buttonFaceColor))
+  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  // mat4.identity(m)
+  // mat4.translate(m,m, [g.x, g.y, 0])
+  // mat4.scale(m,m, [g.w, g.h, 1])
+  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  // mainShapes.drawArrays2('rect')
 
   mat4.identity(m)
   mat4.translate(m,m, [g.x, g.y + g.h, 0])
-  mat4.scale(m,m, [g.h/14, g.h/14, 1])
+  mat4.scale(m,m, [g.w/6, g.h/6, 1])
+  iconFont.draw(0,0, `\x0a`, v.buttonFaceColor, v.mat, m)
+  mat4.identity(m)
+  mat4.translate(m,m, [g.x + 42, g.y + 95, 0])
+  mat4.scale(m,m, [43/9, 43/9, 1])
   defaultFont.draw(0,0, g.label, v.buttonTextColor, v.mat, m)
 }
 
