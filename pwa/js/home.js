@@ -26,10 +26,15 @@ v.renderFunc = function() {
   let i = 0
   for (const c of contacts) {
     mat4.identity(m)
-    const str = c.name
     mat4.translate(m,m, [192, 253 + 200 * i, 0])
     mat4.scale(m,m, [35/14, 35/14, 1])
-    defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
+    defaultFont.draw(0,0, c.name, v.titleColor, v.mat, m)
+
+    mat4.identity(m)
+    mat4.translate(m,m, [195, 287 + 200 * i, 0])
+    mat4.scale(m,m, [31/14, 31/14, 1])
+    defaultFont.draw(0,0, c.xmitText, v.subtitleColor, v.mat, m)
+    
     i++
   }
 
