@@ -40,6 +40,7 @@ v.gadgets.push(g = v.newCommunityGad = new fg.Gadget(v))
 v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = '\x04'
+  g.z = 1
   g.clickFunc = function() {
     const g = this, v = this.viewport
     //g.root.easeOut(g.target)
