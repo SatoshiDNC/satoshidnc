@@ -81,7 +81,12 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
   }
 
-  let i = 0
+  let c = { pubkey: hpub(), name: 'New group' }
+  npubRender(c, 31, 53) // 151 less
+  titleRender(c, 192, 102, 0, 1)
+  subtitleRender(c, 195, 167)
+
+  let i = 1
   for (const c of contacts) {
     npubRender(c, 31, 204 + 200 * i)
     const { text: str, width: w1, scale: s2 } = dateRender(c, v.sw - 45, 247 + 200 * i)
