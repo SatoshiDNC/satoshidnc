@@ -12,7 +12,7 @@ v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.label = '\x08'
+  g.label = '\x04'
   g.clickFunc = function() {
     const g = this, v = this.viewport
     //g.root.easeOut(g.target)
@@ -22,7 +22,7 @@ v.layoutFunc = function() {
   const v = this
   let g
   g = v.scanGad
-  g.x = v.sw - 220, g.y = 308
+  g.x = v.sw - 220, g.y = 261
   g.w = 47, g.h = 47
   g.autoHull()
 }
@@ -117,7 +117,7 @@ v.renderFunc = function() {
   titleRender(c, 192, 124 + 179 * i, 0, 1)
   let g = v.scanGad
   mat4.identity(m)
-  mat4.translate(m,m, [g.x, g.y, 0])
+  mat4.translate(m,m, [g.x, g.y + g.h, 0])
   let s = g.w/iconFont.calcWidth(g.label)
   mat4.scale(m,m, [s, s, 1])
   iconFont.draw(0,0, g.label, v.titleColor, v.mat, m)
