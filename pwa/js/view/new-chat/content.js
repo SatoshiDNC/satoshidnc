@@ -22,16 +22,16 @@ v.renderFunc = function() {
     { pubkey: hpub(), name: npub(), xmitDate: new Date(), xmitText: 'You reacted "&" to "Ok, thanks for the help!"' },
   ]
 
-  const iconRender = (icon, x, y) => {
+  const iconRender = (icon, x, y, ix, iy, iw, ih) => {
     const size = 105
     mat4.identity(m)
     mat4.translate(m,m, [x, y + size, 0])
     mat4.scale(m,m, [size/6, size/6, 1])
     iconFont.draw(0,0, `\x0a`, v.buttonFaceColor, v.mat, m)
     mat4.identity(m)
-    mat4.translate(m,m, [x + 49, y + 95, 0])
-    mat4.scale(m,m, [51/11, 51/11, 1])
-    iconFont.draw(-2,0, icon, v.buttonTextColor, v.mat, m)
+    mat4.translate(m,m, [ix, iy, 0])
+    mat4.scale(m,m, [iw/iconFont.calcWidth(icon), iw/iconFont.calcWidth(icon), 1])
+    iconFont.draw(0,0, icon, v.buttonTextColor, v.mat, m)
   }
   const npubRender = (c, x, y) => {
     mat4.identity(mat)
@@ -90,11 +90,22 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
   }
 
-  let c = { pubkey: hpub(), name: 'New group' }
-  iconRender('\x08', 42, 53)
-  titleRender(c, 192, 124, 0, 1)
+  let c = { name: 'New group' }
+  let i = 0
+  iconRender('\x02', 42, 53 + 179 * i, 63, 84, 63, 43)
+  titleRender(c, 192, 124 + 179 * i, 0, 1)
+  i++
 
-  let i = 1
+  c = { name: 'New contact' }
+  iconRender('\x01', 42, 53 + 179 * i, 63, 84, 63, 43)
+  titleRender(c, 192, 124 + 179 * i, 0, 1)
+  i++
+
+  c = { name: 'New community' }
+  iconRender('\x03', 42, 53 + 179 * i, 63, 84, 63, 43)
+  titleRender(c, 192, 124 + 179 * i, 0, 1)
+  i++
+  
   for (const c of contacts) {
     npubRender(c, 31, 204 + 200 * i)
     const { text: str, width: w1, scale: s2 } = dateRender(c, v.sw - 45, 247 + 200 * i)
