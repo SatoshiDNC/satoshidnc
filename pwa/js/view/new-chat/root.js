@@ -8,4 +8,4 @@ v.designSize = 1080 * 2183
 v.bgColor = [0,0,0,1]
 v.a = barTop; barTop.parent = v
 v.b = newChatView; newChatView.parent = v
-setEasingParameters(homeRoot)
+setEasingParameters(v)

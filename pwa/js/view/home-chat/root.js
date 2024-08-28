@@ -19,4 +19,4 @@ v.c = barBot; barBot.parent = v
 export const homeRoot = homeRoom
 v = homeRoot
 v.bgColor = [0,0,0,1]
-setEasingParameters(homeRoot)
+setEasingParameters(v)

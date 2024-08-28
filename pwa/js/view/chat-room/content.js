@@ -80,4 +80,4 @@ v.b = chatSend; chatSend.parent = v
 export const chatRoot = chatRoom
 v = chatRoot
 v.bgColor = [0,0,0,1]
-setEasingParameters(chatRoot)
+setEasingParameters(v)
