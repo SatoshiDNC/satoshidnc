@@ -10,6 +10,33 @@ v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
+v.gadgets.push(g = v.newGroupGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = 'New group'
+  g.x = 0, g.y = 16 + 179 * 0, g.h = 179
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    //g.root.easeOut(g.target)
+    console.log('newGroupGad click')
+  }
+v.gadgets.push(g = v.newContactGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = 'New contact'
+  g.x = 0, g.y = 16 + 179 * 1, g.h = 179
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    //g.root.easeOut(g.target)
+    console.log('newContactGad click')
+  }
+v.gadgets.push(g = v.newCommunityGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = 'New community'
+  g.x = 0, g.y = 16 + 179 * 2, g.h = 179
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    //g.root.easeOut(g.target)
+    console.log('newCommunityGad click')
+  }
 v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = '\x04'
@@ -21,6 +48,9 @@ v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
 v.layoutFunc = function() {
   const v = this
   let g
+  g = v.newGroupGad
+  g.w = v.sw
+  g.autoHull()
   g = v.scanGad
   g.x = v.sw - 220, g.y = 261
   g.w = 47, g.h = 47
@@ -69,21 +99,21 @@ v.renderFunc = function() {
     defaultFont.draw(-w1,0, str, v.subtitleColor, v.mat, m)
     return { text: str, width: w1, scale: s2 }
   }
-  const titleRender = (c, x, y, w1, s2) => {
+  const titleRender = (title, x, y, w1, s2) => {
     mat4.identity(m)
     mat4.translate(m,m, [x, y, 0])
     const s1 = 35/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 192 - 45 - 25 - w1 * s2
     let str
-    if (defaultFont.calcWidth(c.name) * s1 > w3) {
-      let l = c.name.length
-      while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w3) {
+    if (defaultFont.calcWidth(title) * s1 > w3) {
+      let l = title.length
+      while (defaultFont.calcWidth(title.substring(0,l)+'...') * s1 > w3) {
         l--
       }
-      str = c.name.substring(0,l)+'...'
+      str = title.substring(0,l)+'...'
     } else {
-      str = c.name
+      str = title
     }
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
   }
@@ -106,15 +136,15 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
   }
 
-  let c = { name: 'New group' }
   let i = 0
+  g = v.newGroupGad
   iconRender('\x02', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
-  titleRender(c, 192, 124 + 179 * i, 0, 1)
+  titleRender(g.label, 192, 124 + 179 * i, 0, 1)
   i++
 
-  c = { name: 'New contact' }
+  g = v.newContactGad
   iconRender('\x01', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
-  titleRender(c, 192, 124 + 179 * i, 0, 1)
+  titleRender(g.label, 192, 124 + 179 * i, 0, 1)
   let g = v.scanGad
   mat4.identity(m)
   mat4.translate(m,m, [g.x, g.y + g.h, 0])
@@ -123,9 +153,9 @@ v.renderFunc = function() {
   iconFont.draw(0,0, g.label, v.titleColor, v.mat, m)
   i++
 
-  c = { name: 'New community' }
+  g = v.newCommunityGad
   iconRender('\x03', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
-  titleRender(c, 192, 124 + 179 * i, 0, 1)
+  titleRender(g.label, 192, 124 + 179 * i, 0, 1)
   i++
 
   let x = 44, y = 617
@@ -139,7 +169,7 @@ v.renderFunc = function() {
   for (const c of contacts) {
     npubRender(c, 31, 686 + 200 * i) // 482
     const { text: str, width: w1, scale: s2 } = dateRender(c, v.sw - 45, 729 + 200 * i)
-    titleRender(c, 192, 735 + 200 * i, w1, s2)
+    titleRender(c.name, 192, 735 + 200 * i, w1, s2)
     subtitleRender(c, 195, 800 + 200 * i)
     i++
   }
