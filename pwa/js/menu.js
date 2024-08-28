@@ -1,4 +1,4 @@
-import { chatRoot } from './chat.js'
+import { chatRoot } from './view/chat-room/content.js'
 import { schnorr } from '@noble/curves/secp256k1'
 import { bsec } from './key.js'
 import { Buffer } from 'buffer'

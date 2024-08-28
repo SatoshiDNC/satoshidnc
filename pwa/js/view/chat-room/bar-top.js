@@ -1,8 +1,8 @@
 import { hpub } from './key.js'
 
 let v, g
-export const roomBar = v = new fg.View()
-v.name = Object.keys({roomBar}).pop()
+export const barTop = v = new fg.View()
+v.name = Object.keys({barTop}).pop()
 v.designHeight = 147
 v.bgColor = [0.043,0.078,0.106,1]
 v.textColor = [1,1,1,1]
