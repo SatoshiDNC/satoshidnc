@@ -3,7 +3,7 @@ import { barTop as newChatTop } from './view/new-chat/bar-top.js'
 import { barTop as chatRoomBar } from './view/chat-room/bar-top.js'
 import { menuRoot } from './menu.js'
 import { chatRoot } from './view/chat-room/content.js'
-import { homeRoot } from './view/home-chat/content.js'
+import { homeRoot } from './view/home-chat/root.js'
 import { homeOverlayView } from './view/home-chat/content.js'
 import { newChatRoot } from './view/new-chat/content.js'
 

@@ -1,6 +1,4 @@
-import { barTop } from './bar-top.js'
 import { hpub, npub } from '../../key.js'
-import { setEasingParameters } from '../util.js'
 
 let v, g
 export const homeView = v = new fg.View(null)
@@ -131,26 +129,3 @@ v.renderFunc = function() {
   mat4.scale(m,m, [51/11, 51/11, 1])
   iconFont.draw(-2,0, g.label, v.buttonTextColor, v.mat, m)
 }
-
-export const homeOverlay = v = new fg.OverlayView(null)
-v.name = Object.keys({homeOverlay}).pop()
-v.ghostOpacity = 0
-v.a = homeOverlayView; homeOverlayView.parent = v
-v.b = homeView; homeView.parent = v
-
-export const homeSend = v = new fg.SliceView(null, 'br', .125)
-v.name = Object.keys({homeSend}).pop()
-v.prop = true
-v.a = sendBar; sendBar.parent = v
-v.b = homeOverlay; homeOverlay.parent = v
-
-export const homeRoom = v = new fg.SliceView(null, 'tl', .125)
-v.name = Object.keys({homeRoom}).pop()
-v.prop = true
-v.a = barTop; barTop.parent = v
-v.b = homeSend; homeSend.parent = v
-
-export const homeRoot = homeRoom
-v = homeRoot
-v.bgColor = [0,0,0,1]
-setEasingParameters(homeRoot)
