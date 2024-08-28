@@ -68,7 +68,8 @@ export const homeOverlayView = v = new fg.View(null)
 v.name = Object.keys({homeOverlayView}).pop()
 v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
-v.buttonColor = colors.accentButtonFace
+v.buttonFaceColor = colors.accentButtonFace
+v.buttonTextColor = colors.accentButtonText
 v.gadgets.push(g = v.addGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = '+'
@@ -92,7 +93,7 @@ v.renderFunc = function() {
 
   const g = v.addGad
   mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.buttonColor))
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.buttonFaceColor))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)
   mat4.translate(m,m, [g.x, g.y, 0])
@@ -103,8 +104,7 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m,m, [g.x, g.y + g.h, 0])
   mat4.scale(m,m, [g.h/14, g.h/14, 1])
-  const c = v.loadingColor
-  defaultFont.draw(0,0, g.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
+  defaultFont.draw(0,0, g.label, v.buttonTextColor, v.mat, m)
 }
 
 export const homeOverlay = v = new fg.OverlayView(null)
