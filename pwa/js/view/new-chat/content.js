@@ -31,7 +31,7 @@ v.renderFunc = function() {
     mat4.identity(m)
     mat4.translate(m,m, [ix, iy, 0])
     mat4.scale(m,m, [iw/iconFont.calcWidth(icon), iw/iconFont.calcWidth(icon), 1])
-    iconFont.draw(0,0, icon, v.buttonTextColor, v.mat, m)
+    iconFont.draw(0,0, icon, v.titleColor, v.mat, m)
   }
   const npubRender = (c, x, y) => {
     mat4.identity(mat)
