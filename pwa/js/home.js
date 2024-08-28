@@ -113,6 +113,7 @@ v.renderFunc = function() {
 
 export const homeOverlay = v = new fg.OverlayView(null)
 v.name = Object.keys({homeOverlay}).pop()
+v.ghostOpacity = 0
 v.a = homeOverlayView; homeOverlayView.parent = v
 v.b = homeView; homeView.parent = v
 
