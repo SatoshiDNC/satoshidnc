@@ -24,6 +24,17 @@ v.renderFunc = function() {
     { pubkey: hpub(), name: npub(), xmitDate: new Date(), xmitText: 'You reacted "&" to "Ok, thanks for the help!"' },
   ]
 
+  const iconRender = (icon, x, y) => {
+    const size = 105
+    mat4.identity(m)
+    mat4.translate(m,m, [x, y + size, 0])
+    mat4.scale(m,m, [size/6, size/6, 1])
+    iconFont.draw(0,0, `\x0a`, v.buttonFaceColor, v.mat, m)
+    mat4.identity(m)
+    mat4.translate(m,m, [x + 49, y + 95, 0])
+    mat4.scale(m,m, [51/11, 51/11, 1])
+    iconFont.draw(-2,0, icon, v.buttonTextColor, v.mat, m)
+  }
   const npubRender = (c, x, y) => {
     mat4.identity(mat)
     mat4.translate(mat, mat, [x, y, 0])
@@ -82,7 +93,7 @@ v.renderFunc = function() {
   }
 
   let c = { pubkey: hpub(), name: 'New group' }
-  npubRender(c, 31, 53) // 151 less
+  iconRender('\x08', 42, 53)
   titleRender(c, 192, 124, 0, 1)
 
   let i = 1
