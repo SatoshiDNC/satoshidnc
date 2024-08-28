@@ -4,6 +4,18 @@ v.name = Object.keys({barTop}).pop()
 v.designHeight = 147
 v.bgColor = [0.043,0.078,0.106,1]
 v.textColor = [1,1,1,1]
+v.gadgets.push(g = v.backGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = '\x08'
+  g.x = 43, g.y = 52
+  g.w = 42, g.h = 42
+  g.font = iconFont
+  g.fontSize = 13
+  g.autoHull()
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    g.root.easeOut(g.target)
+  }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = ':'
@@ -60,18 +72,23 @@ v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
-  const mat = mat4.create()
-  mat4.identity(mat)
-  mat4.translate(mat, mat, [42, 97, 0])
-  mat4.scale(mat, mat, [1/14*44, 1/14*44, 1])
-  let x = 0, y = 0
-  defaultFont.draw(x,y, 'Satoshi, D.N.C.', v.textColor, v.mat, mat)
+  const m = mat4.create()
+
+  mat4.identity(m)
+  mat4.translate(m, m, [138, 68, 0])
+  mat4.scale(m, m, [33/14, 33/14, 1])
+  defaultFont.draw(0,0, 'Select contact', v.textColor, v.mat, m)
+
+  mat4.identity(m)
+  mat4.translate(m, m, [138, 118, 0])
+  mat4.scale(m, m, [25/14, 25/14, 1])
+  defaultFont.draw(0,0, '# contacts'.replace('#', '123'), v.textColor, v.mat, m)
 
   for (g of v.gadgets) {
-    mat4.identity(mat)
-    mat4.translate(mat, mat, [g.x, g.y+g.h, 0])
-    mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
-    g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
+    mat4.identity(m)
+    mat4.translate(m, m, [g.x, g.y+g.h, 0])
+    mat4.scale(m, m, [g.h/g.fontSize, g.h/g.fontSize, 1])
+    g.font.draw(0,0, g.label, v.textColor, v.mat, m)
   }
 }
 
