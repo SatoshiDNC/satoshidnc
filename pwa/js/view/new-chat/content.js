@@ -93,3 +93,4 @@ v.b = newChatView; newChatView.parent = v
 export const newChatRoot = newChatPage
 v = newChatRoot
 v.bgColor = [0,0,0,1]
+setEasingParameters(newChatRoot)
