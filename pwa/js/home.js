@@ -50,7 +50,7 @@ v.renderFunc = function() {
     const s1 = 35/14
     mat4.scale(m,m, [s1, s1, 1])
     let l = c.name.length
-    while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > v.sw - 192 - 45 - 25 - w1) {
+    while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > v.sw - 192 - 45 - 25 - w2) {
       l--
     }
     defaultFont.draw(0,0, c.name.substring(0,l)+'...', v.titleColor, v.mat, m)
