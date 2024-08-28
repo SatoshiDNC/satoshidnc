@@ -92,17 +92,17 @@ v.renderFunc = function() {
 
   let c = { name: 'New group' }
   let i = 0
-  iconRender('\x02', 42, 53 + 179 * i, 63, 84 + 179 * i, 63)
+  iconRender('\x02', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
   titleRender(c, 192, 124 + 179 * i, 0, 1)
   i++
 
   c = { name: 'New contact' }
-  iconRender('\x01', 42, 53 + 179 * i, 63, 84 + 179 * i, 63)
+  iconRender('\x01', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
   titleRender(c, 192, 124 + 179 * i, 0, 1)
   i++
 
   c = { name: 'New community' }
-  iconRender('\x03', 42, 53 + 179 * i, 63, 84 + 179 * i, 63)
+  iconRender('\x03', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
   titleRender(c, 192, 124 + 179 * i, 0, 1)
   i++
 
