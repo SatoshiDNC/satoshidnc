@@ -76,3 +76,5 @@ v.a = topBar; topBar.parent = v
 v.b = homeSend; homeSend.parent = v
 
 export const homeRoot = homeRoom
+v = homeRoot
+v.bgColor = [0,0,0,1]
