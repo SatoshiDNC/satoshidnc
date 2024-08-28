@@ -28,12 +28,11 @@ v.renderFunc = function() {
   for (const c of contacts) {
 
     mat4.identity(mat)
-    mat4.translate(mat, mat, [31, 204, 0])
+    mat4.translate(mat, mat, [31, 204 + 200 * i, 0])
     mat4.scale(mat, mat, [127/32, 127/32, 1])
     let x = -0.5, y = 8.5
     hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
       mat4.copy(m, mat)
-      console.log(str)
       nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
     })
       
