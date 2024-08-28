@@ -22,7 +22,7 @@ v.renderFunc = function() {
     { pubkey: hpub(), name: npub(), xmitDate: new Date(), xmitText: 'You reacted "&" to "Ok, thanks for the help!"' },
   ]
 
-  const iconRender = (icon, x, y, ix, iy, iw, ih) => {
+  const iconRender = (icon, x, y, ix, iy, iw) => {
     const size = 105
     mat4.identity(m)
     mat4.translate(m,m, [x, y + size, 0])
@@ -92,20 +92,20 @@ v.renderFunc = function() {
 
   let c = { name: 'New group' }
   let i = 0
-  iconRender('\x02', 42, 53 + 179 * i, 63, 84, 63, 43)
+  iconRender('\x02', 42, 53 + 179 * i, 63, 84 + 179 * i, 63)
   titleRender(c, 192, 124 + 179 * i, 0, 1)
   i++
 
   c = { name: 'New contact' }
-  iconRender('\x01', 42, 53 + 179 * i, 63, 84, 63, 43)
+  iconRender('\x01', 42, 53 + 179 * i, 63, 84 + 179 * i, 63)
   titleRender(c, 192, 124 + 179 * i, 0, 1)
   i++
 
   c = { name: 'New community' }
-  iconRender('\x03', 42, 53 + 179 * i, 63, 84, 63, 43)
+  iconRender('\x03', 42, 53 + 179 * i, 63, 84 + 179 * i, 63)
   titleRender(c, 192, 124 + 179 * i, 0, 1)
   i++
-  
+
   for (const c of contacts) {
     npubRender(c, 31, 204 + 200 * i)
     const { text: str, width: w1, scale: s2 } = dateRender(c, v.sw - 45, 247 + 200 * i)
