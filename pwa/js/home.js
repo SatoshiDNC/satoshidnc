@@ -37,20 +37,25 @@ v.renderFunc = function() {
     })
       
     mat4.identity(m)
+    mat4.translate(m,m, [v.sw - 45, 247 + 200 * i, 0])
+    mat4.scale(m,m, [25/14, 25/14, 1])
+    const str = c.xmitDate.toLocaleTimeString(undefined, { hour12: true, hourCycle: 'h11', hour: 'numeric', minute: 'numeric' })
+    const w1 = defaultFont.calcWidth(str)
+    defaultFont.draw(-w1,0, str, v.subtitleColor, v.mat, m)
+    
+    mat4.identity(m)
     mat4.translate(m,m, [192, 253 + 200 * i, 0])
     mat4.scale(m,m, [35/14, 35/14, 1])
-    defaultFont.draw(0,0, c.name, v.titleColor, v.mat, m)
+    l = c.name.length
+    while (defaultFont.calcWidth(c.name.substring(0,l)+'...') > v.sw - 192 - 45 - 25 - w1) {
+      l--
+    }
+    defaultFont.draw(0,0, c.name.substring(0,l)+'...', v.titleColor, v.mat, m)
 
     mat4.identity(m)
     mat4.translate(m,m, [195, 318 + 200 * i, 0])
     mat4.scale(m,m, [31/14, 31/14, 1])
     defaultFont.draw(0,0, c.xmitText, v.subtitleColor, v.mat, m)
-    
-    mat4.identity(m)
-    mat4.translate(m,m, [v.sw - 45, 247 + 200 * i, 0])
-    mat4.scale(m,m, [25/14, 25/14, 1])
-    const str = c.xmitDate.toLocaleTimeString(undefined, { hour12: true, hourCycle: 'h11', hour: 'numeric', minute: 'numeric' })
-    defaultFont.draw(-defaultFont.calcWidth(str),0, str, v.subtitleColor, v.mat, m)
     
     i++
   }
