@@ -108,7 +108,7 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m,m, [g.x + 42, g.y + 95, 0])
   mat4.scale(m,m, [43/9, 43/9, 1])
-  defaultFont.draw(0,0, g.label, v.buttonTextColor, v.mat, m)
+  iconFont.draw(0,0, g.label, v.buttonTextColor, v.mat, m)
 }
 
 export const homeOverlay = v = new fg.OverlayView(null)
