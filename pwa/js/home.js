@@ -106,8 +106,8 @@ v.renderFunc = function() {
   mat4.scale(m,m, [g.w/6, g.h/6, 1])
   iconFont.draw(0,0, `\x0a`, v.buttonFaceColor, v.mat, m)
   mat4.identity(m)
-  mat4.translate(m,m, [g.x + 51, g.y + 95, 0])
-  mat4.scale(m,m, [43/9, 43/9, 1])
+  mat4.translate(m,m, [g.x + 49, g.y + 95, 0])
+  mat4.scale(m,m, [51/11, 51/11, 1])
   iconFont.draw(-2,0, g.label, v.buttonTextColor, v.mat, m)
 }
 
