@@ -21,7 +21,7 @@ v.renderFunc = function() {
 
   const contacts = [
     { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
-    { pubkey: hpub(), name: npub(), xmitDate: new Date(), xmitText: 'tbd' },
+    { pubkey: hpub(), name: npub(), xmitDate: new Date(), xmitText: 'You reacted "&" to "Ok, thanks for the help!"' },
   ]
 
   let i = 0
@@ -63,8 +63,19 @@ v.renderFunc = function() {
 
     mat4.identity(m)
     mat4.translate(m,m, [195, 318 + 200 * i, 0])
-    mat4.scale(m,m, [31/14, 31/14, 1])
-    defaultFont.draw(0,0, c.xmitText, v.subtitleColor, v.mat, m)
+    const s3 = 31/14
+    mat4.scale(m,m, [s3, s3, 1])
+    const w4 = v.sw - 192 - 45 - 25
+    if (defaultFont.calcWidth(c.xmitText) * s3 > w4) {
+      let l = c.xmitText.length
+      while (defaultFont.calcWidth(c.xmitText.substring(0,l)+'...') * s3 > w3) {
+        l--
+      }
+      str = c.xmitText.substring(0,l)+'...'
+    } else {
+      str = c.xmitText
+    }
+    defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
     
     i++
   }
