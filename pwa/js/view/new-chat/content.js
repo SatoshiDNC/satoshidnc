@@ -45,7 +45,6 @@ v.renderFunc = function() {
       mat4.scale(m,m, [s2, s2, 1])
       let str = c.xmitDate.toLocaleTimeString(undefined, { hour12: true, hourCycle: 'h11', hour: 'numeric', minute: 'numeric' })
       const w1 = defaultFont.calcWidth(str)
-      const w2 = w1 * s2
       defaultFont.draw(-w1,0, str, v.subtitleColor, v.mat, m)
     }
     const titleRender = (x,y) => {
@@ -53,7 +52,8 @@ v.renderFunc = function() {
       mat4.translate(m,m, [x, y, 0])
       const s1 = 35/14
       mat4.scale(m,m, [s1, s1, 1])
-      const w3 = v.sw - 192 - 45 - 25 - w2
+      const w1 = defaultFont.calcWidth(str)
+      const w3 = v.sw - 192 - 45 - 25 - w1 * s2
       if (defaultFont.calcWidth(c.name) * s1 > w3) {
         let l = c.name.length
         while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w3) {
