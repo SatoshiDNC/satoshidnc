@@ -6,7 +6,6 @@
   <link rel="manifest" href="/app.webmanifest" />
   <meta name="viewport" content="width=device-width" />
   <meta name="theme-color" content="#000" />
-  <!-- <script src="init.js" type="module" charset="utf-8"></script> -->
 
   <script type="importmap">
     { "imports": {
@@ -22,11 +21,6 @@
       "qrcode-generator": "https://esm.sh/qrcode-generator@1.4.4"
     } }
   </script>
-  <!-- end bitcoin-connect A -->
-
-  <!-- begin nostr-login A -->
-  <script src='./lib/nostr-login.js' data-bunkers="misllaves.satoshidnc.com,acceso.satoshidnc.com"></script>
-  <!-- end nostr-login A -->
 
   <!-- begin fireglass + rune A -->
   <script src='./lib/gl-matrix.js'></script>
@@ -82,26 +76,6 @@
     })
   </script>
   <!-- end bitcoin-connect B -->
-
-  <!-- begin nostr-login B -->
-  <script type="module">
-    // This module demonstrates use of Nostr Login.
-
-    document.addEventListener('nlAuth', (e) => {
-      console.log(e.detail)
-      // // type is login, signup or logout
-      // if (e.detail.type === 'login' || e.detail.type === 'signup') {
-      //   onLogin();  // get pubkey with window.nostr and show user profile
-      // } else {
-      //   onLogout()  // clear local user data, hide profile info 
-      // }
-    })
-
-    document.addEventListener("DOMContentLoaded", (event) => {
-      //window.nostr.getPublicKey().then(result => console.log(result))
-    })
-  </script>
-  <!-- end nostr-login B -->
 
   <!-- begin receipt-printer B -->
   <script type="module">
