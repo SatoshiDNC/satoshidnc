@@ -46,7 +46,7 @@ v.renderFunc = function() {
     mat4.identity(m)
     mat4.translate(m,m, [192, 253 + 200 * i, 0])
     mat4.scale(m,m, [35/14, 35/14, 1])
-    l = c.name.length
+    let l = c.name.length
     while (defaultFont.calcWidth(c.name.substring(0,l)+'...') > v.sw - 192 - 45 - 25 - w1) {
       l--
     }
