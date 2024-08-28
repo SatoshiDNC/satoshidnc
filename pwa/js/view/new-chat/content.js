@@ -71,6 +71,7 @@ v.renderFunc = function() {
       const s3 = 31/14
       mat4.scale(m,m, [s3, s3, 1])
       const w4 = v.sw - 192 - 45 - 25
+      let str
       if (defaultFont.calcWidth(c.xmitText) * s3 > w4) {
         let l = c.xmitText.length
         while (defaultFont.calcWidth(c.xmitText.substring(0,l)+'...') * s3 > w4) {
