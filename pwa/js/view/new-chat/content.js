@@ -48,9 +48,9 @@ v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
 v.layoutFunc = function() {
   const v = this
   let g
-  g = v.newGroupGad
-  g.w = v.sw
-  g.autoHull()
+  g = v.newGroupGad, g.w = v.sw, g.autoHull()
+  g = v.newContactGad, g.w = v.sw, g.autoHull()
+  g = v.newCommunityGad, g.w = v.sw, g.autoHull()
   g = v.scanGad
   g.x = v.sw - 220, g.y = 261
   g.w = 47, g.h = 47
@@ -146,7 +146,7 @@ v.renderFunc = function() {
   g = v.newContactGad
   iconRender('\x01', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
   titleRender(g.label, 192, 124 + 179 * i, 0, 1)
-  
+
   g = v.scanGad
   mat4.identity(m)
   mat4.translate(m,m, [g.x, g.y + g.h, 0])
