@@ -24,7 +24,7 @@ v.renderFunc = function() {
   ]
 
   let i = 0
-  for (c of contacts) {
+  for (const c of contacts) {
     mat4.identity(mat)
     const str = c.name
     const x = 192
