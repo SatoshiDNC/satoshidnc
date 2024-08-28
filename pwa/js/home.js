@@ -46,6 +46,12 @@ v.renderFunc = function() {
     mat4.scale(m,m, [31/14, 31/14, 1])
     defaultFont.draw(0,0, c.xmitText, v.subtitleColor, v.mat, m)
     
+    mat4.identity(m)
+    mat4.translate(m,m, [v.sw - 45, 247 + 200 * i, 0])
+    mat4.scale(m,m, [25/14, 25/14, 1])
+    const str = c.xmitDate.toLocaleTimeString(undefined, { hour12: true, hour: 'numeric', minute: 'numeric' })
+    defaultFont.draw(-defaultFont.calcWidth(str),0, str, v.subtitleColor, v.mat, m)
+    
     i++
   }
 
