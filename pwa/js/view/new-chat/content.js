@@ -10,6 +10,22 @@ v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
+v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = '\x08'
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    //g.root.easeOut(g.target)
+    console.log('scanGad click')
+  }
+v.layoutFunc = function() {
+  const v = this
+  let g
+  g = v.scanGad
+  g.x = v.sw - 220, g.y = 308
+  g.w = 47, g.h = 47
+  g.autoHull()
+}
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
@@ -99,10 +115,12 @@ v.renderFunc = function() {
   c = { name: 'New contact' }
   iconRender('\x01', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
   titleRender(c, 192, 124 + 179 * i, 0, 1)
+  let g = v.scanGad
   mat4.identity(m)
-  mat4.translate(m,m, [v.sw - 220, 308, 0])
-  mat4.scale(m,m, [47/18, 47/18, 1])
-  iconFont.draw(0,0, '\x04', v.titleColor, v.mat, m)
+  mat4.translate(m,m, [g.x, g.y, 0])
+  let s = g.w/iconFont.calcWidth(g.label)
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, g.label, v.titleColor, v.mat, m)
   i++
 
   c = { name: 'New community' }
