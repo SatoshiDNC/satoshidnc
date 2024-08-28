@@ -21,7 +21,7 @@ v.b = homeView; homeView.parent = v
 // v.a = barTop; barTop.parent = v
 // v.b = homeSend; homeSend.parent = v
 
-export const homeRoom = v = new fg.TriView(null, 'v', 147, 0, 211)
+export const homeRoom = v = new fg.DualSliceView(null, 'v', 147, 211)
 v.name = Object.keys({homeRoom}).pop()
 v.prop = true
 v.a = barTop; barTop.parent = v
