@@ -8,7 +8,7 @@ import { homeOverlayView } from './view/home-chat/content.js'
 import { newChatRoot } from './view/new-chat/content.js'
 
 homeChatTop.menuGad.target = menuRoot
+newChatTop.backGad.root = newChatRoot, newChatTop.backGad.target = homeRoot
 roomBar.menuGad.target = menuRoot
 roomBar.backGad.root = chatRoot, roomBar.backGad.target = homeRoot
 homeOverlayView.addGad.root = homeRoot, homeOverlayView.addGad.target = newChatRoot
-newChatTop.backGad.root = newChatRoot, newChatTop.backGad.target = homeRoot
