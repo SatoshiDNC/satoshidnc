@@ -16,7 +16,7 @@ v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
-  const mat = mat4.create()
+  const m = mat4.create()
 
   const contacts = [
     { pubkey: hpub(), name: 'You', xmitDate: Date.now(), xmitText: 'link' },
@@ -25,11 +25,11 @@ v.renderFunc = function() {
 
   let i = 0
   for (const c of contacts) {
-    mat4.identity(mat)
+    mat4.identity(m)
     const str = c.name
-    const x = 192
-    const y = 253 + 200 * i
-    defaultFont.draw(x,y, str, v.titleColor, v.mat, mat)
+    mat4.translate(m,m, [192, 253 + 200 * i, 0])
+    mat4.scale(m,m, [35/14, 35/14, 1])
+    defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
     i++
   }
 
