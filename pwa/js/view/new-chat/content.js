@@ -27,11 +27,11 @@ v.renderFunc = function() {
     mat4.identity(m)
     mat4.translate(m,m, [x, y + size, 0])
     mat4.scale(m,m, [size/6, size/6, 1])
-    iconFont.draw(0,0, `\x0a`, v.buttonFaceColor, v.mat, m)
+    iconFont.draw(0,0, `\x0d`, v.buttonFaceColor, v.mat, m)
     mat4.identity(m)
     mat4.translate(m,m, [ix, iy, 0])
     mat4.scale(m,m, [iw/iconFont.calcWidth(icon), iw/iconFont.calcWidth(icon), 1])
-    iconFont.draw(0,0, icon, v.titleColor, v.mat, m)
+    iconFont.draw(0,0, icon, v.buttonTextColor, v.mat, m)
   }
   const npubRender = (c, x, y) => {
     mat4.identity(mat)
