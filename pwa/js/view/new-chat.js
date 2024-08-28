@@ -2,8 +2,8 @@ import { appBar as topBar } from './appBar.js'
 import { hpub, npub } from './key.js'
 
 let v, g
-export const homeView = v = new fg.View(null)
-v.name = Object.keys({homeView}).pop()
+export const newChatView = v = new fg.View(null)
+v.name = Object.keys({newChatView}).pop()
 v.designSize = 1080*1825
 v.splashMode = 0
 v.frameTimes = []
@@ -84,71 +84,12 @@ v.renderFunc = function() {
   // photo x=31, w=127, h=127
 }
 
-export const homeOverlayView = v = new fg.View(null)
-v.name = Object.keys({homeOverlayView}).pop()
-v.designSize = 1080*1825
-v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
-v.buttonFaceColor = colors.accentButtonFace
-v.buttonTextColor = colors.accentButtonText
-v.gadgets.push(g = v.addGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.label = '+'
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    g.root.easeOut(g.target)
-  }
-v.layoutFunc = function() {
-  const v = this
-  let g
-  g = v.addGad
-  g.x = v.sw-189
-  g.y = v.sh-189
-  g.w = 147
-  g.h = 147
-  g.autoHull()
-}
-v.renderFunc = function() {
-  const v = this
-  const m = mat4.create()
-
-  const g = v.addGad
-  // mainShapes.useProg2()
-  // gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.buttonFaceColor))
-  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  // mat4.identity(m)
-  // mat4.translate(m,m, [g.x, g.y, 0])
-  // mat4.scale(m,m, [g.w, g.h, 1])
-  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  // mainShapes.drawArrays2('rect')
-
-  mat4.identity(m)
-  mat4.translate(m,m, [g.x, g.y + g.h, 0])
-  mat4.scale(m,m, [g.w/6, g.h/6, 1])
-  iconFont.draw(0,0, `\x0a`, v.buttonFaceColor, v.mat, m)
-  mat4.identity(m)
-  mat4.translate(m,m, [g.x + 49, g.y + 95, 0])
-  mat4.scale(m,m, [51/11, 51/11, 1])
-  iconFont.draw(-2,0, g.label, v.buttonTextColor, v.mat, m)
-}
-
-export const homeOverlay = v = new fg.OverlayView(null)
-v.name = Object.keys({homeOverlay}).pop()
-v.ghostOpacity = 0
-v.a = homeOverlayView; homeOverlayView.parent = v
-v.b = homeView; homeView.parent = v
-
-export const homeSend = v = new fg.SliceView(null, 'br', .125)
-v.name = Object.keys({homeSend}).pop()
-v.prop = true
-v.a = sendBar; sendBar.parent = v
-v.b = homeOverlay; homeOverlay.parent = v
-
-export const homeRoom = v = new fg.SliceView(null, 'tl', .125)
-v.name = Object.keys({homeRoom}).pop()
+export const newChatPage = v = new fg.SliceView(null, 'tl', .125)
+v.name = Object.keys({newChatPage}).pop()
 v.prop = true
 v.a = topBar; topBar.parent = v
-v.b = homeSend; homeSend.parent = v
+v.b = newChatView; newChatView.parent = v
 
-export const homeRoot = homeRoom
-v = homeRoot
+export const newChatRoot = newChatPage
+v = newChatRoot
 v.bgColor = [0,0,0,1]
