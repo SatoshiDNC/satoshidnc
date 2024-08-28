@@ -1,10 +1,10 @@
 import { barTop as topBar } from './bar-top.js'
-import { hpub, npub } from '../../key.js'
-import { setEasingParameters } from '../util.js'
+import { hpub, npub } from '../../../key.js'
+import { setEasingParameters } from '../../util.js'
 
 let v, g
-export const newChatView = v = new fg.View(null)
-v.name = Object.keys({newChatView}).pop()
+export const contentView = v = new fg.View(null)
+v.name = Object.keys({contentView}).pop()
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
@@ -25,8 +25,7 @@ v.gadgets.push(g = v.newContactGad = new fg.Gadget(v))
   g.x = 0, g.y = 16 + 179 * 1, g.h = 179
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    //g.root.easeOut(g.target)
-    console.log('newContactGad click')
+    g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.newCommunityGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
