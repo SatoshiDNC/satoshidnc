@@ -1,5 +1,5 @@
 import { appBar as topBar } from './appBar.js'
-import { hpub } from './key.js'
+import { hpub, npub } from './key.js'
 
 let v, g
 export const homeView = v = new fg.View(null)
@@ -21,7 +21,7 @@ v.renderFunc = function() {
 
   const contacts = [
     { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
-    { pubkey: hpub(), name: 'Rando', xmitDate: new Date(), xmitText: 'tbd' },
+    { pubkey: hpub(), name: npub(), xmitDate: new Date(), xmitText: 'tbd' },
   ]
 
   let i = 0
