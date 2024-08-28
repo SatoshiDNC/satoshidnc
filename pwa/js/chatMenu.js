@@ -203,6 +203,7 @@ chatMenuRoot.easeIn = function() {
     chatMenuView.easingRate = 0.06
     const r = fg.getRoot()
     if (r !== this) {
+      chatMenu.b = r; r.parent = chatMenu
       chatMenuRoot.ghostView = r
       fg.setRoot(this)
     }
