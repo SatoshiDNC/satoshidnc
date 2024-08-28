@@ -49,11 +49,17 @@ v.renderFunc = function() {
     mat4.translate(m,m, [192, 253 + 200 * i, 0])
     const s1 = 35/14
     mat4.scale(m,m, [s1, s1, 1])
-    let l = c.name.length
-    while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > v.sw - 192 - 45 - 25 - w2) {
-      l--
+    const w3 = v.sw - 192 - 45 - 25 - w2
+    if (defaultFont.calcWidth(c.name) * s1 > w3) {
+      let l = c.name.length
+      while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w3) {
+        l--
+      }
+      str = c.name.substring(0,l)+'...'
+    } else {
+      str = c.name
     }
-    defaultFont.draw(0,0, c.name.substring(0,l)+'...', v.titleColor, v.mat, m)
+    defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
 
     mat4.identity(m)
     mat4.translate(m,m, [195, 318 + 200 * i, 0])
