@@ -106,11 +106,12 @@ v.renderFunc = function() {
   titleRender(c, 192, 124 + 179 * i, 0, 1)
   i++
 
+  i = 0
   for (const c of contacts) {
-    npubRender(c, 31, 204 + 200 * i)
-    const { text: str, width: w1, scale: s2 } = dateRender(c, v.sw - 45, 247 + 200 * i)
-    titleRender(c, 192, 253 + 200 * i, w1, s2)
-    subtitleRender(c, 195, 318 + 200 * i)
+    npubRender(c, 31, 686 + 200 * i) // 482
+    const { text: str, width: w1, scale: s2 } = dateRender(c, v.sw - 45, 729 + 200 * i)
+    titleRender(c, 192, 735 + 200 * i, w1, s2)
+    subtitleRender(c, 195, 800 + 200 * i)
     i++
   }
 
