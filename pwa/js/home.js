@@ -4,7 +4,7 @@ import { hpub } from './key.js'
 let v, g
 export const homeView = v = new fg.View(null)
 v.name = Object.keys({homeView}).pop()
-v.designSize = 640*400
+v.designSize = 1080*1825
 v.splashMode = 0
 v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
@@ -66,7 +66,7 @@ v.renderFunc = function() {
 
 export const homeOverlayView = v = new fg.View(null)
 v.name = Object.keys({homeOverlayView}).pop()
-v.designSize = 1080*2183
+v.designSize = 1080*1825
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
