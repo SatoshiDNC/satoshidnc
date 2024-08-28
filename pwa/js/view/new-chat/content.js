@@ -1,5 +1,6 @@
 import { barTop as topBar } from './bar-top.js'
 import { hpub, npub } from '../../key.js'
+import { setEasingParameters } from '../util.js'
 
 let v, g
 export const newChatView = v = new fg.View(null)

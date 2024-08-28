@@ -1,5 +1,6 @@
 import { appBar as topBar } from './appBar.js'
 import { hpub, npub } from './key.js'
+import { setEasingParameters } from './view/util.js'
 
 let v, g
 export const homeView = v = new fg.View(null)
