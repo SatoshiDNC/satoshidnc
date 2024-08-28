@@ -170,7 +170,7 @@ v.renderFinish = function() {
       if (v.easingValue < 0) {
         v.easingValue = 0
         v.easingState = 0
-        fg.setRoot(roomBar.backGad.target)
+        fg.setRoot(v.easingTarget)
       }
     }
     v.setRenderFlag(true)
@@ -189,9 +189,10 @@ v.renderFinish = function() {
     mainShapes.drawArrays2('rect')
   }
 }
-v.easeOut = function() {
+v.easeOut = function(targetView) {
   const v = this
   v.easingState = -1
   v.easingRate = 0.1
+  v.easingTarget = targetView
   v.setRenderFlag(true)
 }
