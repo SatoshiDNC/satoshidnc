@@ -33,6 +33,7 @@ v.renderFunc = function() {
     let x = -0.5, y = 8.5
     hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
       mat4.copy(m, mat)
+      console.log(str)
       nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
     })
       
