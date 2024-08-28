@@ -106,6 +106,13 @@ v.renderFunc = function() {
   titleRender(c, 192, 124 + 179 * i, 0, 1)
   i++
 
+  let x = 44, y = 617
+  mat4.identity(m)
+  mat4.translate(m,m, [x, y, 0])
+  const s3 = 29/14
+  mat4.scale(m,m, [s3, s3, 1])
+  defaultFont.draw(0,0, 'Contacts on Nostr', v.subtitleColor, v.mat, m)
+
   i = 0
   for (const c of contacts) {
     npubRender(c, 31, 686 + 200 * i) // 482
