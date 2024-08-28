@@ -17,6 +17,7 @@ v.renderFunc = function() {
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
+  const mat = mat4.create()
 
   const contacts = [
     { pubkey: hpub(), name: 'You', xmitDate: Date.now(), xmitText: 'link' },
@@ -25,6 +26,16 @@ v.renderFunc = function() {
 
   let i = 0
   for (const c of contacts) {
+
+    mat4.identity(mat)
+    mat4.translate(mat, mat, [31, 204, 0])
+    mat4.scale(mat, mat, [127/32, 127/32, 1])
+    let x = -0.5, y = 8.5
+    hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
+      mat4.copy(m, mat)
+      nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
+    })
+      
     mat4.identity(m)
     mat4.translate(m,m, [192, 253 + 200 * i, 0])
     mat4.scale(m,m, [35/14, 35/14, 1])
