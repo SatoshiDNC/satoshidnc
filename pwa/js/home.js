@@ -34,7 +34,7 @@ v.renderFunc = function() {
     hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
       mat4.copy(m, mat)
       console.log(str)
-      nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
+      nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
     })
       
     mat4.identity(m)
