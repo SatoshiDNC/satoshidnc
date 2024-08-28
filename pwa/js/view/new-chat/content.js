@@ -28,55 +28,68 @@ v.renderFunc = function() {
   let i = 0
   for (const c of contacts) {
 
-    mat4.identity(mat)
-    mat4.translate(mat, mat, [31, 204 + 200 * i, 0])
-    mat4.scale(mat, mat, [127/32, 127/32, 1])
-    let x = -0.5, y = 8.5
-    c.pubkey.toUpperCase().match(/.{1,16}/g).map((str, i) => {
-      mat4.copy(m, mat)
-      nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
-    })
-      
-    mat4.identity(m)
-    mat4.translate(m,m, [v.sw - 45, 247 + 200 * i, 0])
-    const s2 = 25/14
-    mat4.scale(m,m, [s2, s2, 1])
-    let str = c.xmitDate.toLocaleTimeString(undefined, { hour12: true, hourCycle: 'h11', hour: 'numeric', minute: 'numeric' })
-    const w1 = defaultFont.calcWidth(str)
-    const w2 = w1 * s2
-    defaultFont.draw(-w1,0, str, v.subtitleColor, v.mat, m)
-    
-    mat4.identity(m)
-    mat4.translate(m,m, [192, 253 + 200 * i, 0])
-    const s1 = 35/14
-    mat4.scale(m,m, [s1, s1, 1])
-    const w3 = v.sw - 192 - 45 - 25 - w2
-    if (defaultFont.calcWidth(c.name) * s1 > w3) {
-      let l = c.name.length
-      while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w3) {
-        l--
-      }
-      str = c.name.substring(0,l)+'...'
-    } else {
-      str = c.name
+    const npubRender = (x,y) => {
+      mat4.identity(mat)
+      mat4.translate(mat, mat, [x, y, 0])
+      mat4.scale(mat, mat, [127/32, 127/32, 1])
+      let ox = -0.5, oy = 8.5
+      c.pubkey.toUpperCase().match(/.{1,16}/g).map((str, i) => {
+        mat4.copy(m, mat)
+        nybbleFont.draw(ox,oy + i*8, str, v.titleColor, v.mat, m)
+      })  
     }
-    defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
+    const dateRender = (x,y) => {
+      mat4.identity(m)
+      mat4.translate(m,m, [x,y, 0])
+      const s2 = 25/14
+      mat4.scale(m,m, [s2, s2, 1])
+      let str = c.xmitDate.toLocaleTimeString(undefined, { hour12: true, hourCycle: 'h11', hour: 'numeric', minute: 'numeric' })
+      const w1 = defaultFont.calcWidth(str)
+      const w2 = w1 * s2
+      defaultFont.draw(-w1,0, str, v.subtitleColor, v.mat, m)
+    }
+    const titleRender = (x,y) => {
+      mat4.identity(m)
+      mat4.translate(m,m, [x, y, 0])
+      const s1 = 35/14
+      mat4.scale(m,m, [s1, s1, 1])
+      const w3 = v.sw - 192 - 45 - 25 - w2
+      if (defaultFont.calcWidth(c.name) * s1 > w3) {
+        let l = c.name.length
+        while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w3) {
+          l--
+        }
+        str = c.name.substring(0,l)+'...'
+      } else {
+        str = c.name
+      }
+      defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
+    }
+    const subtitleRender = (x, y) => {
+      mat4.identity(m)
+      mat4.translate(m,m, [x, y, 0])
+      const s3 = 31/14
+      mat4.scale(m,m, [s3, s3, 1])
+      const w4 = v.sw - 192 - 45 - 25
+      if (defaultFont.calcWidth(c.xmitText) * s3 > w4) {
+        let l = c.xmitText.length
+        while (defaultFont.calcWidth(c.xmitText.substring(0,l)+'...') * s3 > w4) {
+          l--
+        }
+        str = c.xmitText.substring(0,l)+'...'
+      } else {
+        str = c.xmitText
+      }
+      defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
+    }
 
-    mat4.identity(m)
-    mat4.translate(m,m, [195, 318 + 200 * i, 0])
-    const s3 = 31/14
-    mat4.scale(m,m, [s3, s3, 1])
-    const w4 = v.sw - 192 - 45 - 25
-    if (defaultFont.calcWidth(c.xmitText) * s3 > w4) {
-      let l = c.xmitText.length
-      while (defaultFont.calcWidth(c.xmitText.substring(0,l)+'...') * s3 > w4) {
-        l--
-      }
-      str = c.xmitText.substring(0,l)+'...'
-    } else {
-      str = c.xmitText
-    }
-    defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
+    npubRender(31, 204 + 200 * i)
+    dateRender(v.sw - 45, 247 + 200 * i)
+    titleRender(192, 253 + 200 * i)
+    subtitleRender(195, 318 + 200 * i)
+      
+    
+
     
     i++
   }
