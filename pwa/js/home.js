@@ -1,6 +1,7 @@
 import { appBar as topBar } from './appBar.js'
 import { hpub } from './key.js'
 
+let v, g
 export const homeView = v = new fg.View(null)
 v.name = Object.keys({homeView}).pop()
 v.designSize = 640*400
