@@ -71,7 +71,6 @@ v.renderFunc = function() {
   x = 0, y = 0
   defaultFont.draw(x,y, 'Online', v.textColor, v.mat, mat)
 
-  let g = v.menuGad
   for (g of v.gadgets) {
     mat4.identity(mat)
     mat4.translate(mat, mat, [g.x, g.y+g.h, 0])

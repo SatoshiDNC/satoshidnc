@@ -63,11 +63,59 @@ v.renderFunc = function() {
   // this.setRenderFlag(true)
 }
 
+export const homeOverlayView = v = new fg.View(null)
+v.name = Object.keys({homeOverlayView}).pop()
+v.designSize = 1080*2183
+v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
+v.buttonColor = colors.accentButtonFace
+v.gadgets.push(g = v.addGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = '+'
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log('add')
+  }
+v.layoutFunc = function() {
+  const v = this
+  let g
+  g = v.addGad
+  g.x = v.sw-189
+  g.y = v.sh-189
+  g.w = 147
+  g.h = 147
+  g.autoHull()
+}
+v.renderFunc = function() {
+  const v = this
+  const m = mat4.create()
+
+  const g = v.addGad
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.buttonColor))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [g.x, g.y, 0])
+  mat4.scale(m,m, [g.w, g.h, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
+
+  mat4.identity(m)
+  mat4.translate(m,m, [g.x, g.y + g.h, 0])
+  mat4.scale(m,m, [g.h/14, g.h/14, 1])
+  const c = v.loadingColor
+  defaultFont.draw(0,0, g.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
+}
+
+export const homeOverlay = v = new fg.OverlayView(null)
+v.name = Object.keys({homeOverlay}).pop()
+v.a = homeOverlayView; homeOverlayView.parent = v
+v.b = homeView; homeView.parent = v
+
 export const homeSend = v = new fg.SliceView(null, 'br', .125)
 v.name = Object.keys({homeSend}).pop()
 v.prop = true
 v.a = sendBar; sendBar.parent = v
-v.b = homeView; homeView.parent = v
+v.b = homeOverlay; homeOverlay.parent = v
 
 export const homeRoom = v = new fg.SliceView(null, 'tl', .125)
 v.name = Object.keys({homeRoom}).pop()
