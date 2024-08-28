@@ -83,8 +83,7 @@ v.renderFunc = function() {
 
   let c = { pubkey: hpub(), name: 'New group' }
   npubRender(c, 31, 53) // 151 less
-  titleRender(c, 192, 102, 0, 1)
-  subtitleRender(c, 195, 167)
+  titleRender(c, 192, 124, 0, 1)
 
   let i = 1
   for (const c of contacts) {
