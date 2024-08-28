@@ -9,18 +9,6 @@ v.ghostOpacity = 0
 v.a = homeOverlayView; homeOverlayView.parent = v
 v.b = homeView; homeView.parent = v
 
-// export const homeSend = v = new fg.SliceView(null, 'br', .125)
-// v.name = Object.keys({homeSend}g).pop()
-// v.prop = true
-// v.a = barBot; barBot.parent = v
-// v.b = homeOverlay; homeOverlay.parent = v
-
-// export const homeRoom = v = new fg.SliceView(null, 'tl', .125)
-// v.name = Object.keys({homeRoom}).pop()
-// v.prop = true
-// v.a = barTop; barTop.parent = v
-// v.b = homeSend; homeSend.parent = v
-
 export const homeRoom = v = new fg.DualSliceView(null, 'v', 147, 211)
 v.name = Object.keys({homeRoom}).pop()
 v.designSize = 1080 * 2183
