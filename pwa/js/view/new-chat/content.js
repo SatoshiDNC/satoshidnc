@@ -54,6 +54,7 @@ v.renderFunc = function() {
       const s1 = 35/14
       mat4.scale(m,m, [s1, s1, 1])
       const w3 = v.sw - 192 - 45 - 25 - w1 * s2
+      let str
       if (defaultFont.calcWidth(c.name) * s1 > w3) {
         let l = c.name.length
         while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w3) {
