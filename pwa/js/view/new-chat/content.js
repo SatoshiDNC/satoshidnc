@@ -43,16 +43,16 @@ v.renderFunc = function() {
       mat4.translate(m,m, [x,y, 0])
       const s2 = 25/14
       mat4.scale(m,m, [s2, s2, 1])
-      let str = c.xmitDate.toLocaleTimeString(undefined, { hour12: true, hourCycle: 'h11', hour: 'numeric', minute: 'numeric' })
+      const str = c.xmitDate.toLocaleTimeString(undefined, { hour12: true, hourCycle: 'h11', hour: 'numeric', minute: 'numeric' })
       const w1 = defaultFont.calcWidth(str)
       defaultFont.draw(-w1,0, str, v.subtitleColor, v.mat, m)
+      return { text: str, width: w1, scale: s2 }
     }
-    const titleRender = (x,y) => {
+    const titleRender = (x, y, w1, s2) => {
       mat4.identity(m)
       mat4.translate(m,m, [x, y, 0])
       const s1 = 35/14
       mat4.scale(m,m, [s1, s1, 1])
-      const w1 = defaultFont.calcWidth(str)
       const w3 = v.sw - 192 - 45 - 25 - w1 * s2
       if (defaultFont.calcWidth(c.name) * s1 > w3) {
         let l = c.name.length
@@ -84,8 +84,8 @@ v.renderFunc = function() {
     }
 
     npubRender(31, 204 + 200 * i)
-    dateRender(v.sw - 45, 247 + 200 * i)
-    titleRender(192, 253 + 200 * i)
+    const { text: str, width: w1, scale: s2 } = dateRender(v.sw - 45, 247 + 200 * i)
+    titleRender(192, 253 + 200 * i, w1, s2)
     subtitleRender(195, 318 + 200 * i)
       
     
