@@ -99,6 +99,10 @@ v.renderFunc = function() {
   c = { name: 'New contact' }
   iconRender('\x01', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
   titleRender(c, 192, 124 + 179 * i, 0, 1)
+  mat4.identity(m)
+  mat4.translate(m,m, [v.sw - 220, 308, 0])
+  mat4.scale(m,m, [47/18, 47/18, 1])
+  iconFont.draw(0,0, '\x04', v.titleColor, v.mat, m)
   i++
 
   c = { name: 'New community' }
