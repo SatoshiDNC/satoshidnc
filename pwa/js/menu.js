@@ -6,8 +6,8 @@ import { serializeEvent } from 'nostr-tools'
 import { finalizeEvent, verifyEvent } from 'nostr-tools/pure'
 
 let v, g
-export const chatMenuView = v = new fg.View(null)
-v.name = Object.keys({chatMenuView}).pop()
+export const menuView = v = new fg.View(null)
+v.name = Object.keys({menuView}).pop()
 v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
@@ -55,7 +55,7 @@ v.items.map((item, i) => {
         const signedText = Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), bsec())).toString('hex')
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
           console.log(`signature: ${signedText}`)
-          chatMenuRoot.easeOut()
+          menuRoot.easeOut()
         })
       })
       break
@@ -73,13 +73,13 @@ v.items.map((item, i) => {
         const signedText = JSON.stringify(signedEvent)
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
           console.log(`signed event: ${signedText}`)
-          chatMenuRoot.easeOut()
+          menuRoot.easeOut()
         })
       })
       break
     default:
       console.log(g.label)
-      chatMenuRoot.easeOut()
+      menuRoot.easeOut()
     }
   }
 })
@@ -92,7 +92,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function() {
-    chatMenuRoot.easeOut()
+    menuRoot.easeOut()
   }
 v.prepMenu = function() {
   const v = this
@@ -163,10 +163,10 @@ v.renderFunc = function() {
       if (v.easingValue < 0) {
         v.easingValue = 0
         v.easingState = 0
-        chatMenuRoot.out()
+        menuRoot.out()
       }
     }
-    chatMenuRoot.ghostOpacity = v.easingValue * 0.5
+    menuRoot.ghostOpacity = v.easingValue * 0.5
     v.setRenderFlag(true)
   }
   const m = mat4.create()
@@ -189,35 +189,35 @@ v.renderFunc = function() {
   }
 }
 
-export const chatMenu = v = new fg.OverlayView(null)
-v.name = Object.keys({chatMenu}).pop()
-v.a = chatMenuView; chatMenuView.parent = v
+export const menuShim = v = new fg.OverlayView(null)
+v.name = Object.keys({menuShim}).pop()
+v.a = menuView; menuView.parent = v
 v.b = chatRoot; chatRoot.parent = v
 
-export const chatMenuRoot = chatMenu
-chatMenuRoot.ghostOpacity = 0
-chatMenuRoot.easeIn = function() {
+export const menuRoot = menuShim
+menuRoot.ghostOpacity = 0
+menuRoot.easeIn = function() {
   const v = this
-  chatMenuView.prepMenu().then(() => {
-    chatMenuView.easingState = 1
-    chatMenuView.easingRate = 0.06
+  menuView.prepMenu().then(() => {
+    menuView.easingState = 1
+    menuView.easingRate = 0.06
     const r = fg.getRoot()
     if (r !== this) {
-      chatMenu.b = r; r.parent = chatMenu
-      chatMenuRoot.ghostView = r
+      menuShim.b = r; r.parent = menuShim
+      menuRoot.ghostView = r
       fg.setRoot(this)
     }
   })
 }
-chatMenuRoot.easeOut = function() {
+menuRoot.easeOut = function() {
   const v = this
-  chatMenuView.easingState = -1
-  chatMenuView.easingRate = 0.1
+  menuView.easingState = -1
+  menuView.easingRate = 0.1
   v.setRenderFlag(true)
 }
-chatMenuRoot.easingState = function() {
-  return chatMenuView.easingState
+menuRoot.easingState = function() {
+  return menuView.easingState
 }
-chatMenuRoot.out = function() {
-  fg.setRoot(chatMenuRoot.ghostView)
+menuRoot.out = function() {
+  fg.setRoot(menuRoot.ghostView)
 }
