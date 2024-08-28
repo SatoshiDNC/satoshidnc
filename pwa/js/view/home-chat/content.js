@@ -1,4 +1,4 @@
-import { barTop as topBar } from './view/home-chat/bar-top.js'
+import { barTop } from './bar-top.js'
 import { hpub, npub } from '../../key.js'
 import { setEasingParameters } from '../util.js'
 
@@ -147,7 +147,7 @@ v.b = homeOverlay; homeOverlay.parent = v
 export const homeRoom = v = new fg.SliceView(null, 'tl', .125)
 v.name = Object.keys({homeRoom}).pop()
 v.prop = true
-v.a = topBar; topBar.parent = v
+v.a = barTop; barTop.parent = v
 v.b = homeSend; homeSend.parent = v
 
 export const homeRoot = homeRoom
