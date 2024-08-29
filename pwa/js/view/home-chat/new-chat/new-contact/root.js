@@ -1,7 +1,7 @@
 import { barTop } from './bar-top.js'
 import { barBot } from './bar-bot.js'
 import { contentView } from './content.js'
-import { setEasingParameters } from '../util.js'
+import { setEasingParameters } from '../../util.js'
 
 export const newContactRoot = v = new fg.DualSliceView(null, 'v', 147, 211)
 v.name = Object.keys({homeRoom}).pop()
