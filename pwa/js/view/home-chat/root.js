@@ -10,7 +10,7 @@ v.a = overlayView; overlayView.parent = v
 v.b = contentView; contentView.parent = v
 
 export const homeRoot = v = new fg.DualSliceView(null, 'v', 147, 211)
-v.name = Object.keys({homeRoom}).pop()
+v.name = Object.keys({homeRoot}).pop()
 v.designSize = 1080 * 2183
 v.bgColor = [0,0,0,1]
 v.a = barTop; barTop.parent = v
