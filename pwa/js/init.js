@@ -14,4 +14,4 @@ newChatTop.backGad.root = homeChat_newChat_root, newChatTop.backGad.target = hom
 chatRoomBar.backGad.root = chatRoot, chatRoomBar.backGad.target = homeChat_root
 chatRoomBar.menuGad.target = menuRoot
 homeChat_overlay.addGad.root = homeChat_root, homeChat_overlay.addGad.target = homeChat_newChat_root
-homeChat_newChat_content.newContactGad.root = homeChat_newChat_root, homeChat_newChat_content.addContactGad.target = homeChat_newChat_newContact_root
+homeChat_newChat_content.newContactGad.root = homeChat_newChat_root, homeChat_newChat_content.newContactGad.target = homeChat_newChat_newContact_root
