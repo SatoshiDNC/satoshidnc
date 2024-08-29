@@ -1,4 +1,4 @@
-import { hpub, npub } from '../../../key.js'
+import { hpub, npub } from '../../../../key.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
