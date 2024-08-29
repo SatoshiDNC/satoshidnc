@@ -9,6 +9,29 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.hintColor = [0xb5/0xff, 0xb9/0xff, 0xbc/0xff, 1]
 v.iconColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 183, g.y = 100, g.h = 70
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log('gad')
+    navigator.virtualKeyboard.show()
+  }
+v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 183, g.y = 100 + 212, g.h = 70
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log('gad2')
+    navigator.virtualKeyboard.show()
+  }
+v.layoutFunc = function() {
+  const v = this
+  let g
+  g = v.nameGad
+  g.w = v.sw - 183 - 73
+  g.autoHull()
+}
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
