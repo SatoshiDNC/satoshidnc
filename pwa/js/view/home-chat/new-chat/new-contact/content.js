@@ -14,18 +14,18 @@ v.renderFunc = function() {
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
-  const mat = mat4.create()
+  let s
 
   mat4.identity(m)
   mat4.translate(m,m, [73, 158, 0])
-  const s1 = 43/iconFont.calcWidth('\x00')
-  mat4.scale(m,m, [s1, s1, 1])
+  s = 43/iconFont.calcWidth('\x00')
+  mat4.scale(m,m, [s, s, 1])
   iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
 
   mat4.identity(m)
   mat4.translate(m,m, [186, 147, 0])
-  const s2 = 33/14
-  mat4.scale(m,m, [s2, s2, 1])
+  s = 33/14
+  mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, 'Name on this device', v.hintColor, v.mat, m)
   
   mainShapes.useProg2()
@@ -37,5 +37,25 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
+  mat4.identity(m)
+  mat4.translate(m,m, [73, 158 + 212, 0])
+  s = 43/iconFont.calcWidth('\x06')
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
+
+  mat4.identity(m)
+  mat4.translate(m,m, [186, 147 + 212, 0])
+  s = 33/14
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, 'Nostr public key', v.hintColor, v.mat, m)
+  
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.iconColor))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [183, 167 + 212, 0])
+  mat4.scale(m,m, [v.sw - 183 - 73, 3, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
 
 }
