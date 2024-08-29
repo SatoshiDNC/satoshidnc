@@ -16,6 +16,12 @@ v.renderFunc = function() {
   const mat = mat4.create()
 
   mat4.identity(m)
+  mat4.translate(m,m, [73, 158, 0])
+  const s1 = 43/iconFont.calcWidth('\x00')
+  mat4.scale(m,m, [s1, s1, 1])
+  iconFont.draw(0,0, '\x00', v.hintColor, v.mat, m)
+
+  mat4.identity(m)
   mat4.translate(m,m, [186, 147, 0])
   const s2 = 33/14
   mat4.scale(m,m, [s2, s2, 1])
