@@ -291,7 +291,7 @@
 
   <!-- begin fireglass + rune C -->
   <input id="input" name="input" type="text" style="position: absolute; opacity: 0;">
-  <canvas id="app1" tabindex=1 contenteditable virtualkeyboardpolicy="auto" inputmode="text"></canvas>
+  <canvas id="app1" onclick="document.getElementById('input').blur()"></canvas>
   <!-- end fireglass + rune C -->
 </body>
 </html>
