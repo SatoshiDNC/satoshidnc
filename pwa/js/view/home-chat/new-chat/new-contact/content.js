@@ -15,7 +15,8 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     console.log('gad')
-    navigator.virtualKeyboard.show()
+    //navigator.virtualKeyboard.show()
+    document.getElementById("input").focus()
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
