@@ -31,6 +31,9 @@ v.layoutFunc = function() {
   g = v.nameGad
   g.w = v.sw - 183 - 73
   g.autoHull()
+  g = v.npubGad
+  g.w = v.sw - 183 - 73
+  g.autoHull()
 }
 v.renderFunc = function() {
   const v = this
