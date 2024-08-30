@@ -1,4 +1,4 @@
-import { hpub, npub } from '../../../../key.js'
+import { hpub, npub } from '../../../../keys.js'
 import { getKeyboardInput } from '../../../util.js'
 
 let v, g

@@ -1,6 +1,6 @@
 import { chatRoot } from './view/chat-room/content.js'
 import { schnorr } from '@noble/curves/secp256k1'
-import { bsec } from './key.js'
+import { bsec } from './keys.js'
 import { Buffer } from 'buffer'
 import { serializeEvent } from 'nostr-tools'
 import { finalizeEvent, verifyEvent } from 'nostr-tools/pure'

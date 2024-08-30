@@ -1,4 +1,4 @@
-import { hpub } from '../../key.js'
+import { hpub } from '../../keys.js'
 
 let v, g
 export const barTop = v = new fg.View()
