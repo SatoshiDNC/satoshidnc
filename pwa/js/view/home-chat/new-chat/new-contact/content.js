@@ -20,9 +20,9 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
     console.log('gad')
     //navigator.virtualKeyboard.show()
     //document.getElementById("input").focus()
-    let s = prompt(g.label, 'Uncle Jim')
+    let s = prompt(g.label, g.text || 'Uncle Jim')
     if (s !== null) {
-      while (s.indexOf('  ') !== -1) {
+      while (s.includes('  ') !== -1) {
         s.replace('  ', ' ')
       }
       g.text = s.trim()
