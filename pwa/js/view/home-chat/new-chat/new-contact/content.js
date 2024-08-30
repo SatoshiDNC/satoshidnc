@@ -23,7 +23,7 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
     let s = prompt(g.label, g.text || 'Uncle Jim')
     if (s !== null) {
       while (s.includes('  ') !== -1) {
-        s.replace('  ', ' ')
+        s = s.replace('  ', ' ')
       }
       g.text = s.trim()
     }
