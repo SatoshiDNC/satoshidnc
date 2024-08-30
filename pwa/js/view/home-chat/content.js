@@ -13,7 +13,7 @@ v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = `Satoshi, D.N.C.`//`${window.devicePixelRatio}, ${vvs = window.visualViewport.scale}`
 v.filterGads = []
-for (label of ['All', 'Unread', 'Favorites', 'Groups']) {
+for (const label of ['All', 'Unread', 'Favorites', 'Groups']) {
   v.gadgets.push(g = new fg.Gadget(v))
   v.filterGads.push(g)
   g.actionFlags = fg.GAF_CLICKABLE
