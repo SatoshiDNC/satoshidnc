@@ -1,5 +1,6 @@
 export function init() {
   return new Promise((resolve, reject) => {
-    reject('not implemented')
+    resolve()
+    //reject('not implemented')
   })
 }

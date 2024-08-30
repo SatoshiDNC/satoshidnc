@@ -5,7 +5,7 @@ v.name = Object.keys({splash}).pop()
 v.designSize = 640*400
 v.splashMode = 0
 v.frameTimes = []
-v.bgColor = [0.2,0.2,0,0]
+v.bgColor = [0,0,0,1]
 v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = `PWA`//`${window.devicePixelRatio}, ${vvs = window.visualViewport.scale}`
 v.setText = function(text) {
