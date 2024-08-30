@@ -1,3 +1,5 @@
+import { contacts, newContact } from '../../../../contacts.js'
+
 let v, g
 export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
@@ -10,6 +12,11 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
   g.label = 'Save'
   g.clickFunc = function() {
     const g = this, v = g.viewport
+    const name = g.formView.nameGad.text
+    const npub = g.formView.npubGad.text
+    if (name && npub) {
+      contacts.push(newContact(name, npub))
+    }
     g.root.easeOut(g.target)
     g.formView.clear()
   }

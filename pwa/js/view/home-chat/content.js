@@ -1,4 +1,5 @@
 import { hpub, npub } from '../../key.js'
+import { contacts } from '../../contacts.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -17,13 +18,9 @@ v.renderFunc = function() {
   const m = mat4.create()
   const mat = mat4.create()
 
-  const contacts = [
-    { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
-    { pubkey: hpub(), name: npub(), xmitDate: new Date(), xmitText: 'You reacted "&" to "Ok, thanks for the help!"' },
-  ]
-
   let i = 0
-  for (const c of contacts) {
+  for (const c of [    { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
+    ...contacts]) {
 
     mat4.identity(mat)
     mat4.translate(mat, mat, [31, 204 + 200 * i, 0])
