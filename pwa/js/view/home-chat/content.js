@@ -45,7 +45,7 @@ v.renderFunc = function() {
   for (const g of v.filterGads) {
     const goal = g.label == v.activeFilter? 1: 0
     if (g.animValue != goal) {
-      g.animValue = g.animValue * 0.7 + goal * 0.3
+      g.animValue = g.animValue * 0.3 + goal * 0.7
       if (Math.abs(goal - g.animValue) < 0.005) {
         g.animValue = goal
       }
