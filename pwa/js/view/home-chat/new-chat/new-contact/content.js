@@ -68,7 +68,7 @@ v.renderFunc = function() {
     }
     goal = g.focused? 1: 0
     if (goal != g.focusValue) {
-      g.focusValue = g.focusValue * 0.7 + goal * 0.3
+      g.focusValue = g.focusValue * 0.3 + goal * 0.7
       if (Math.abs(goal - g.focusValue) < 0.005) {
         g.focusValue = goal
       }
