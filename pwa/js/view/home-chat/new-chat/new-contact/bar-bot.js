@@ -10,8 +10,8 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
   g.label = 'Save'
   g.clickFunc = function() {
     const g = this, v = g.viewport
+    g.root.easeOut(g.target)
     g.formView.clear()
-    console.log('save')
   }
 v.layoutFunc = function() {
   const v = this

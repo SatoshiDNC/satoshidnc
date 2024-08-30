@@ -20,3 +20,4 @@ homeChat_overlay.addGad.root = homeChat_root, homeChat_overlay.addGad.target = h
 homeChat_newChat_content.newContactGad.root = homeChat_newChat_root, homeChat_newChat_content.newContactGad.target = homeChat_newChat_newContact_root
 homeChat_newChat_newContact_top.backGad.root = homeChat_newChat_newContact_root, homeChat_newChat_newContact_top.backGad.target = homeChat_newChat_root
 homeChat_newChat_newContact_bot.saveGad.formView = homeChat_newChat_newContact_content
+homeChat_newChat_newContact_bot.saveGad.root = homeChat_newChat_newContact_root, homeChat_newChat_newContact_bot.saveGad.target = homeChat_newChat_root
