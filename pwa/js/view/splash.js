@@ -60,5 +60,6 @@ v.renderFunc = function() {
     }
   }
   // this.setRenderFlag(true)
+  this.renderFinish?.()
 }
 setEasingParameters(v)
