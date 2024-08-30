@@ -1,3 +1,5 @@
+import { setEasingParameters } from './util.js'
+
 export const splash = v = new fg.View(null)
 v.name = Object.keys({splash}).pop()
 v.designSize = 640*400
