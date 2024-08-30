@@ -57,12 +57,6 @@ v.renderFunc = function() {
   const m = mat4.create()
   let s
 
-  mat4.identity(m)
-  mat4.translate(m,m, [73, 158, 0])
-  s = 43/iconFont.calcWidth('\x00')
-  mat4.scale(m,m, [s, s, 1])
-  iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
-
   const drawTextInput = (g) => {
     let goal = g.focused || g.text? 1: 0
     if (goal != g.animValue) {
@@ -112,19 +106,30 @@ v.renderFunc = function() {
       }
       defaultFont.draw(0,0, str, v.textColor, v.mat, m)
     }
+
+    c = [
+      v.iconColor[0] * g0 + colors.activeText[0] * g1,
+      v.iconColor[1] * g0 + colors.activeText[1] * g1,
+      v.iconColor[2] * g0 + colors.activeText[2] * g1,
+    1]
+    mainShapes.useProg2()
+    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(c))
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+    mat4.identity(m)
+    mat4.translate(m,m, [g.x, g.y + 67, 0])
+    mat4.scale(m,m, [v.sw - 183 - 73, 3, 1])
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+    mainShapes.drawArrays2('rect')
   }
+
+  mat4.identity(m)
+  mat4.translate(m,m, [73, 158, 0])
+  s = 43/iconFont.calcWidth('\x00')
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
 
   drawTextInput(v.nameGad)
   
-  mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.iconColor))
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  mat4.identity(m)
-  mat4.translate(m,m, [183, 167, 0])
-  mat4.scale(m,m, [v.sw - 183 - 73, 3, 1])
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('rect')
-
   mat4.identity(m)
   mat4.translate(m,m, [73, 158 + 212, 0])
   s = 43/iconFont.calcWidth('\x06')
@@ -133,14 +138,14 @@ v.renderFunc = function() {
 
   drawTextInput(v.npubGad)
   
-  mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.iconColor))
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  mat4.identity(m)
-  mat4.translate(m,m, [183, 167 + 212, 0])
-  mat4.scale(m,m, [v.sw - 183 - 73, 3, 1])
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('rect')
+  // mainShapes.useProg2()
+  // gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.iconColor))
+  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  // mat4.identity(m)
+  // mat4.translate(m,m, [183, 167 + 212, 0])
+  // mat4.scale(m,m, [v.sw - 183 - 73, 3, 1])
+  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  // mainShapes.drawArrays2('rect')
 
   for (g of v.gadgets) {
     if (g.animValue != 0 && g.animValue != 1) {
