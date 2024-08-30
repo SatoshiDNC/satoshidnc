@@ -20,7 +20,7 @@ export const mainShapeBuilder = function() {
     21,0, 24,3, 6,21, 0,21, 21,42, 24,39, 24,39, 2.5,18.5, 2.5,18.5, 42,18.5, 42,23.5, 2.5,23.5, )
   
 	{
-    const p = []; var n = 20;
+    const p = []; var n = 50;
     for (var i=0; i<=n; i++) {
       p.push(0.5 + 0.5 * Math.cos(i/n*2*Math.PI));
       p.push(0.5 + 0.5 * Math.sin(i/n*2*Math.PI));

@@ -1,4 +1,5 @@
 import { contacts, newContact } from '../../../../contacts.js'
+import { drawPill } from '../../../../draw.js'
 
 let v, g
 export const barBot = v = new fg.View()
@@ -34,14 +35,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
 
-  mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.buttonFaceColor))
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  mat4.identity(m)
-  mat4.translate(m,m, [g.x, g.y, 0])
-  mat4.scale(m,m, [g.w, g.h, 1])
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('rect')
+  drawPill(v, v.buttonFaceColor, g.x, g.y, g.w, g.h)
 
   mat4.identity(m)
   const s = 28/14
