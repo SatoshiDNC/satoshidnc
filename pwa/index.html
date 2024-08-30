@@ -268,10 +268,10 @@
         let initializingDB = true
         let loadingFonts = true
         function updateStatus() {
-          if (initializingDB) {
-            splash.setText('initializing database...')
-          } else if (loadingFonts) {
+          if (loadingFonts) {
             splash.setText('loading fonts...')
+          } else if (initializingDB) {
+            splash.setText('initializing database...')
           } else {
             splash.setText('ready!')
           }
