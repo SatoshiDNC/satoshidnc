@@ -117,7 +117,7 @@ v.renderFunc = function() {
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
     mat4.identity(m)
     mat4.translate(m,m, [g.x, g.y + 67, 0])
-    mat4.scale(m,m, [v.sw - 183 - 73, 3, 1])
+    mat4.scale(m,m, [g.w, 300, 1])
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
     mainShapes.drawArrays2('rect')
   }
@@ -138,15 +138,6 @@ v.renderFunc = function() {
 
   drawTextInput(v.npubGad)
   
-  // mainShapes.useProg2()
-  // gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.iconColor))
-  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  // mat4.identity(m)
-  // mat4.translate(m,m, [183, 167 + 212, 0])
-  // mat4.scale(m,m, [v.sw - 183 - 73, 3, 1])
-  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  // mainShapes.drawArrays2('rect')
-
   for (g of v.gadgets) {
     if (g.animValue != 0 && g.animValue != 1) {
       v.setRenderFlag(true)
