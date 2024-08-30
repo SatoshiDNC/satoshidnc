@@ -275,6 +275,8 @@
         fg.start(splash, true)
         dbInit().then(() => {
           console.log('dbInit')
+        }).catch(e => {
+          splash.setText(e)
         })
       })
     })
