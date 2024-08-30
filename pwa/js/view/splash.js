@@ -19,7 +19,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const mat = mat4.create()
   mat4.identity(mat)
-  if (v.splashMode == 0 || v.splashMode == 1) {
+  // if (v.splashMode == 0 || v.splashMode == 1) {
     const str = v.loadingText
     const x = (v.sw - defaultFont.calcWidth(str))/2
     const y = (v.sh)/2
