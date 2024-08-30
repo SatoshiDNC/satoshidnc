@@ -253,28 +253,52 @@
       mainShapes.build()
       prog2 = plainProgram(gl)
 
-      // wait for stuff to load on startup
-      const startupCheck = (finisher) => {
-        if (
-          defaultFont.isReady() &&
-          nybbleFont.isReady() &&
-          iconFont.isReady() &&
-          true
-        ) {
+      // wait for splash requirements to load on startup
+      const splashCheck = (finisher) => {
+        if (defaultFont.isReady()) {
           defaultFont.init()
-          nybbleFont.init()
-          iconFont.init()
           finisher()
         } else {
-          setTimeout(startupCheck, 10)
+          setTimeout(splashCheck, 10)
         }
       }
-
-      // entrypoint
-      startupCheck(() => {
+      splashCheck(() => {
+        // entrypoint
         fg.start(splash, true)
+        function updateStatus() {
+          if (initializingDB) {
+            splash.setText('initializing database...')
+          } else if (loadingFonts) {
+            splash.setText('loading fonts...')
+          } else {
+            splash.setText('ready!')
+          }
+        }
+
+        // wait for other fonts to load on startup
+        let loadingFonts = true, updateStatus()
+        const fontCheck = (finisher) => {
+          if (
+            nybbleFont.isReady() &&
+            iconFont.isReady() &&
+            true
+          ) {
+            nybbleFont.init()
+            iconFont.init()
+            finisher()
+          } else {
+            setTimeout(startupCheck, 10)
+          }
+        }
+        fontCheck(() => {
+          loadingFonts = false, updateStatus()
+        })
+
+        // initialize database
+        let initializingDB = true, updateStatus()
         dbInit().then(() => {
           console.log('dbInit')
+          initializingDB = false, updateStatus()
         }).catch(e => {
           splash.setText(e)
         })
