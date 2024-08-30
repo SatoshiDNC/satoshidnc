@@ -10,21 +10,20 @@ v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
-v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
-v.loadingText = `Satoshi, D.N.C.`//`${window.devicePixelRatio}, ${vvs = window.visualViewport.scale}`
 v.filterGads = []
 for (const label of ['All', 'Unread', 'Favorites', 'Groups']) {
   v.gadgets.push(g = new fg.Gadget(v))
   v.filterGads.push(g)
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = label
-  g.faceColor = colors.accentDark
-  g.textColor = colors.accentBright
   g.clickFunc = function() {
     const g = this, v = g.viewport
+    v.activeFilter = g.label
+    v.setRenderFlag(true)
     console.log(`${g.label}filter click`)
   }
 }
+v.activeFilter = v.filterGads[0].label
 v.layoutFunc = function() {
   const v = this
   let x = 42
@@ -43,12 +42,14 @@ v.renderFunc = function() {
   const mat = mat4.create()
 
   for (const g of v.filterGads) {
-    drawPill(v, g.faceColor, g.x, g.y, g.w, g.h)
+    const light = g.label == v.activeFilter? g.accent: g.inactive
+    const dark = g.label == v.activeFilter? g.accentDark: g.inactiveDark
+    drawPill(v, dark, g.x, g.y, g.w, g.h)
     mat4.identity(m)
     const s = 29/14
     mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + 59, 0])
     mat4.scale(m,m, [s, s, 1])
-    defaultFont.draw(0,0, g.label, g.textColor, v.mat, m)
+    defaultFont.draw(0,0, g.label, light, v.mat, m)
   }
 
   let i = 0
