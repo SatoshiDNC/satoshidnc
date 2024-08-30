@@ -38,7 +38,7 @@ v.renderFunc = function() {
 
   mat4.identity(m)
   const s = 28/14
-  mat4.translate(m,m, [g.x + defaultFont.calcWidth(g.label) * s, g.y + 66, 0])
+  mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + 66, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, g.label, v.buttonTextColor, v.mat, m)
 }
