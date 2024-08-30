@@ -12,22 +12,28 @@ v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = `Satoshi, D.N.C.`//`${window.devicePixelRatio}, ${vvs = window.visualViewport.scale}`
-v.gadgets.push(g = v.allGad = new fg.Gadget(v))
+v.filterGads = []
+for (label of ['All', 'Unread', 'Favorites', 'Groups']) {
+  v.gadgets.push(g = new fg.Gadget(v))
+  v.filterGads.push(g)
   g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 42, g.y = 51, g.h = 86
-  g.label = 'All'
+  g.label = label
   g.faceColor = colors.accentDark
   g.textColor = colors.accentBright
   g.clickFunc = function() {
     const g = this, v = g.viewport
-    console.log('all click')
+    console.log(`${g.label}filter click`)
   }
+}
 v.layoutFunc = function() {
   const v = this
-  let g
-  g = v.allGad
-  g.w = 33 + defaultFont.calcWidth(g.label) * 30/14 + 33
-  g.autoHull()
+  let x = 42
+  for (const g of v.filterGads) {
+    g.x = x, g.y = 51, g.h = 86
+    g.w = 33 + defaultFont.calcWidth(g.label) * 30/14 + 33
+    g.autoHull()
+    x += g.w + 15
+  }
 }
 v.renderFunc = function() {
   const v = this
@@ -36,14 +42,14 @@ v.renderFunc = function() {
   const m = mat4.create()
   const mat = mat4.create()
 
-  let g
-  g = v.allGad
-  drawPill(v, g.faceColor, g.x, g.y, g.w, g.h)
-  mat4.identity(m)
-  const s = 29/14
-  mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + 59, 0])
-  mat4.scale(m,m, [s, s, 1])
-  defaultFont.draw(0,0, g.label, g.textColor, v.mat, m)
+  for (const g of v.filterGads) {
+    drawPill(v, g.faceColor, g.x, g.y, g.w, g.h)
+    mat4.identity(m)
+    const s = 29/14
+    mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + 59, 0])
+    mat4.scale(m,m, [s, s, 1])
+    defaultFont.draw(0,0, g.label, g.textColor, v.mat, m)
+  }
 
   let i = 0
   for (const c of [    { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
