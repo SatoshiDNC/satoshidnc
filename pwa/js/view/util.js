@@ -45,3 +45,15 @@ export const setEasingParameters = function(v) {
     v.setRenderFlag(true)
   }  
 }
+
+export function getKeyboardInput(defaultValue) {
+  //navigator.virtualKeyboard.show()
+  //document.getElementById("input").focus()
+  let s = prompt(g.label, defaultValue)
+  if (s !== null) {
+    while (s.includes('  ')) {
+      s = s.replace('  ', ' ')
+    }
+    g.text = s.trim()
+  }
+}
