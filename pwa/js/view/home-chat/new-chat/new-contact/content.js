@@ -42,6 +42,12 @@ v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.focusValue = 0
   g.focused = false
   g.clickFunc = v.nameGad.clickFunc
+v.clear = function() {
+  const v = this
+  v.nameGad.text = ''
+  v.npubGad.text = ''
+  v.setRenderFlag(true)
+}
 v.layoutFunc = function() {
   const v = this
   let g
