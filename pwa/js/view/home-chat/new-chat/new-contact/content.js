@@ -79,7 +79,12 @@ v.renderFunc = function() {
     mat4.translate(m,m, [g.x + 3, g.y + 47 * f0 - 26 * f1, 0])
     const s = 33/14 * f0 + 25/14 * f1
     mat4.scale(m,m, [s, s, 1])
-    defaultFont.draw(0,0, g.label, v.hintColor, v.mat, m)
+    const c = [
+      v.hintColor[0] * f0 + colors.activeText[0] * f1,
+      v.hintColor[1] * f0 + colors.activeText[1] * f1,
+      v.hintColor[2] * f0 + colors.activeText[2] * f1,
+    1]
+    defaultFont.draw(0,0, g.label, c, v.mat, m)
     if (g.text) {
       mat4.identity(m)
       mat4.translate(m,m, [g.x + 3, g.y + 47, 0])
