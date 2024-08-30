@@ -42,8 +42,8 @@ v.renderFunc = function() {
   const mat = mat4.create()
 
   for (const g of v.filterGads) {
-    const light = g.label == v.activeFilter? g.accent: g.inactive
-    const dark = g.label == v.activeFilter? g.accentDark: g.inactiveDark
+    const light = g.label == v.activeFilter? colors.accent: colors.inactive
+    const dark = g.label == v.activeFilter? colors.accentDark: colors.inactiveDark
     drawPill(v, dark, g.x, g.y, g.w, g.h)
     mat4.identity(m)
     const s = 29/14
