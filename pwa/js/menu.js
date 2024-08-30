@@ -1,9 +1,9 @@
 import { chatRoot } from './view/chat-room/content.js'
 import { schnorr } from '@noble/curves/secp256k1'
-import { bsec } from './keys.js'
+import { hpub, signText, signEvent } from './keys.js'
 import { Buffer } from 'buffer'
 import { serializeEvent } from 'nostr-tools'
-import { finalizeEvent, verifyEvent } from 'nostr-tools/pure'
+import { finalizeEvent } from 'nostr-tools/pure'
 
 let v, g
 export const menuView = v = new fg.View(null)
@@ -52,7 +52,7 @@ v.items.map((item, i) => {
     switch (g.index) {
     case SIGN_TEXT:
       v.getText('text/plain').then(text => {
-        const signedText = Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), bsec())).toString('hex')
+        const signedText = signText(text, hpub()).toString('hex')
         navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
           console.log(`signature: ${signedText}`)
           menuRoot.easeOut()

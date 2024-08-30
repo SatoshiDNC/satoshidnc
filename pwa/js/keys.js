@@ -10,3 +10,17 @@ function nsec() { return nip19.nsecEncode(bsec()) }
 export function hpub() { return getPublicKey(bsec()) }
 export function bpub() { return Buffer.from(hpub(), 'hex') }
 export function npub() { return nip19.npubEncode(hpub()) }
+
+function getSecretKey(pubkey) {
+  if (pubkey == bpub() || pubkey == hpub() || pubkey == npub()) {
+    return bsec()
+  }
+}
+
+export function signText(text, pubkey) {
+  return Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), getSecretKey(pubkey)))
+}
+
+export function signEvent(event, pubkey) {
+  return finalizeEvent(event, getSecretKey(pubkey))
+}
