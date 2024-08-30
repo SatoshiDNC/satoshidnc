@@ -16,18 +16,30 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.x = 183, g.y = 100, g.h = 70
   g.label = 'Name on this device'
   g.text = ''
+  g.animValue = 0
+  g.focused = false
   g.clickFunc = function() {
     const g = this, v = this.viewport
+    g.focused = true
+    v.setRenderFlag(true)
     g.text = getKeyboardInput(g.label, g.text || 'Satoshi, D.N.C.')
+    g.focused = false
+    v.setRenderFlag(true)
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100 + 212, g.h = 70
   g.label = 'Nostr public key'
   g.text = ''
+  g.animValue = 0
+  g.focused = false
   g.clickFunc = function() {
     const g = this, v = this.viewport
+    g.focused = true
+    v.setRenderFlag(true)
     g.text = getKeyboardInput(g.label, g.text || 'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf')
+    g.focused = false
+    v.setRenderFlag(true)
   }
 v.layoutFunc = function() {
   const v = this
@@ -53,23 +65,39 @@ v.renderFunc = function() {
   iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
 
   const drawTextInput = (g) => {
-    mat4.identity(m)
-    mat4.translate(m,m, [g.x + 3, g.y + 47, 0])
-    const s = 33/14
-    mat4.scale(m,m, [s, s, 1])
-    const full = g.text || g.label
-    let str
-    const max = g.w - 3
-    if (defaultFont.calcWidth(full) * s > max) {
-      let l = full.length
-      while (defaultFont.calcWidth(full.substring(0,l)+'...') * s > max) {
-        l--
+    const goal = g.focused || g.text? 1: 0
+    if (goal != g.animValue) {
+      g.animValue = (g.animValue + goal) / 2
+      if (Math.abs(goal - g.animValue) < 0.5) {
+        g.animValue = goal
       }
-      str = full.substring(0,l)+'...'
-    } else {
-      str = full
+      v.setRenderFlag(true)
     }
-    defaultFont.draw(0,0, str, g.text? v.textColor: v.hintColor, v.mat, m)
+    const f1 = g.animValue
+    const f0 = 1 - f1
+    mat4.identity(m)
+    mat4.translate(m,m, [g.x + 3, g.y + 47 * f0 - 26 * f1, 0])
+    const s = 33/14 * f0 + 25/14 * f1
+    mat4.scale(m,m, [s, s, 1])
+    defaultFont.draw(0,0, g.label, v.hintColor, v.mat, m)
+    if (g.text) {
+      mat4.identity(m)
+      mat4.translate(m,m, [g.x + 3, g.y + 47, 0])
+      const s = 33/14
+      mat4.scale(m,m, [s, s, 1])
+      let str
+      const max = g.w - 3
+      if (defaultFont.calcWidth(g.text) * s > max) {
+        let l = g.text.length
+        while (defaultFont.calcWidth(g.text.substring(0,l)+'...') * s > max) {
+          l--
+        }
+        str = g.text.substring(0,l)+'...'
+      } else {
+        str = g.text
+      }
+      defaultFont.draw(0,0, str, v.textColor, v.mat, m)
+    }
   }
 
   drawTextInput(v.nameGad)
@@ -100,4 +128,10 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
+  for (g of v.gadgets) {
+    if (g.animValue != 0 && g.animValue != 1) {
+      v.setRenderFlag(true)
+      break
+    }
+  }
 }
