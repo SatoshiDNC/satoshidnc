@@ -1,4 +1,5 @@
 import { hpub, npub } from '../../../../key.js'
+import { getKeyboardInput } from '../../../util.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -17,24 +18,14 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.text = ''
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log('gad')
-    //navigator.virtualKeyboard.show()
-    //document.getElementById("input").focus()
-    let s = prompt(g.label, g.text || 'Uncle Jim')
-    if (s !== null) {
-      while (s.includes('  ')) {
-        s = s.replace('  ', ' ')
-      }
-      g.text = s.trim()
-    }
+    g.text = getKeyboardInput(g.text || 'Satoshi, D.N.C.')
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100 + 212, g.h = 70
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log('gad2')
-    navigator.virtualKeyboard.show()
+    g.text = getKeyboardInput(g.text || 'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf')
   }
 v.layoutFunc = function() {
   const v = this
