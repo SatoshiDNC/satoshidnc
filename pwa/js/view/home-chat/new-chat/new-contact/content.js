@@ -23,11 +23,13 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     g.focused = true
     v.setRenderFlag(true)
-    setTimeout(() => {
+    g.timerId = setInterval(() => {
+      if (g.focusValue != 1) return
       g.text = getKeyboardInput(g.label, g.text || g.defaultValue)
       g.focused = false
       v.setRenderFlag(true)
-    }, 100)
+      clearInterval(g.timerId), delete g.timerId
+    }, 10)
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
