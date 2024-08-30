@@ -7,7 +7,7 @@ export function newContact(name, npub) {
   console.log(nip19.decode(npub))
   return {
     name: name,
-    pubkey: nip19.decode(npub).toString('hex'),
+    pubkey: nip19.decode(npub).data,
     xmitDate: new Date(),
     xmitText: 'You reacted "&" to "Ok, thanks for the help!"',
   }
