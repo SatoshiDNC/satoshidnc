@@ -15,7 +15,7 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100, g.h = 70
   g.label = 'Name on this device'
-  g.text = ''
+  g.text = '', g.defaultValue = 'Satoshi, D.N.C.'
   g.animValue = 0
   g.focusValue = 0
   g.focused = false
@@ -23,26 +23,21 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     g.focused = true
     v.setRenderFlag(true)
-    g.text = getKeyboardInput(g.label, g.text || 'Satoshi, D.N.C.')
-    g.focused = false
-    v.setRenderFlag(true)
+    setTimeout(() => {
+      g.text = getKeyboardInput(g.label, g.text || g.defaultValue)
+      g.focused = false
+      v.setRenderFlag(true)
+    }, 0)
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100 + 212, g.h = 70
   g.label = 'Nostr public key'
-  g.text = ''
+  g.text = '', g.defaultValue = 'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf'
   g.animValue = 0
   g.focusValue = 0
   g.focused = false
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    g.focused = true
-    v.setRenderFlag(true)
-    g.text = getKeyboardInput(g.label, g.text || 'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf')
-    g.focused = false
-    v.setRenderFlag(true)
-  }
+  g.clickFunc = v.nameGad.clickFunc
 v.layoutFunc = function() {
   const v = this
   let g
