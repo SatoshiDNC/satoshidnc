@@ -276,7 +276,7 @@
         }
 
         // wait for other fonts to load on startup
-        let loadingFonts = true, updateStatus()
+        let loadingFonts = true; updateStatus()
         const fontCheck = (finisher) => {
           if (
             nybbleFont.isReady() &&
@@ -291,14 +291,14 @@
           }
         }
         fontCheck(() => {
-          loadingFonts = false, updateStatus()
+          loadingFonts = false; updateStatus()
         })
 
         // initialize database
-        let initializingDB = true, updateStatus()
+        let initializingDB = true; updateStatus()
         dbInit().then(() => {
           console.log('dbInit')
-          initializingDB = false, updateStatus()
+          initializingDB = false; updateStatus()
         }).catch(e => {
           splash.setText(e)
         })
