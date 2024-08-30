@@ -27,7 +27,7 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
       g.text = getKeyboardInput(g.label, g.text || g.defaultValue)
       g.focused = false
       v.setRenderFlag(true)
-    }, 0)
+    }, 100)
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
