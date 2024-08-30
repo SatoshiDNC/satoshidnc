@@ -1,7 +1,7 @@
 all: subdirs bundle.js # Textbook subdirectory recursion
 
 FILES = \
-	init.js \
+
 
 bundle.js: $(FILES)
 	cat $(FILES) > bundle.js
