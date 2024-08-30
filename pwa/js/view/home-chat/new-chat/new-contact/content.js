@@ -57,7 +57,19 @@ v.renderFunc = function() {
     mat4.translate(m,m, [g.x + 3, g.y + 47, 0])
     const s = 33/14
     mat4.scale(m,m, [s, s, 1])
-    defaultFont.draw(0,0, g.text || g.label, g.text? v.textColor: v.hintColor, v.mat, m)
+    const full = g.text || g.label
+    let str
+    const max = g.w - 3
+    if (defaultFont.calcWidth(full) * s > max) {
+      let l = full.length
+      while (defaultFont.calcWidth(full.substring(0,l)+'...') * s > max) {
+        l--
+      }
+      str = full.substring(0,l)+'...'
+    } else {
+      str = full
+    }
+    defaultFont.draw(0,0, str, g.text? v.textColor: v.hintColor, v.mat, m)
   }
 
   drawTextInput(v.nameGad)
