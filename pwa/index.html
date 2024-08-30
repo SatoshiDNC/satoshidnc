@@ -300,7 +300,6 @@
 
         // initialize database
         dbInit().then(() => {
-          console.log('dbInit')
           initializingDB = false; updateStatus()
         }).catch(e => {
           splash.setText(e)
