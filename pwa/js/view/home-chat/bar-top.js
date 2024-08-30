@@ -74,6 +74,7 @@ v.renderFunc = function() {
     g.font.draw(0,0, g.label, v.textColor, v.mat, m)
   }
 
+  mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)
