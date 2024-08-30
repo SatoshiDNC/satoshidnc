@@ -56,5 +56,5 @@ export function getKeyboardInput(title, defaultValue) {
     }
     return s.trim()
   }
-  return s
+  return defaultValue
 }
