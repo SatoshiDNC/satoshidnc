@@ -4,7 +4,7 @@ export const contacts = []
 
 export function newContact(name, npub) {
   console.log(name, npub)
-  console.log(nup19.decode(npub))
+  console.log(nip19.decode(npub))
   return {
     name: name,
     pubkey: nip19.decode(npub).toString('hex'),
