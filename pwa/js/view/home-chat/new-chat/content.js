@@ -1,6 +1,7 @@
 import { barTop as topBar } from './bar-top.js'
 import { hpub, npub } from '../../../key.js'
 import { setEasingParameters } from '../../util.js'
+import { contacts } from '../../../contacts.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -62,11 +63,6 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   const mat = mat4.create()
-
-  const contacts = [
-    { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
-    { pubkey: hpub(), name: npub(), xmitDate: new Date(), xmitText: 'You reacted "&" to "Ok, thanks for the help!"' },
-  ]
 
   const iconRender = (icon, x, y, ix, iy, iw) => {
     const size = 105
