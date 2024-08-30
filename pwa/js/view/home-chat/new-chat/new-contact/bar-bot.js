@@ -36,7 +36,6 @@ v.renderFunc = function() {
   const m = mat4.create()
 
   drawPill(v, v.buttonFaceColor, g.x, g.y, g.w, g.h)
-
   mat4.identity(m)
   const s = 28/14
   mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + 66, 0])
