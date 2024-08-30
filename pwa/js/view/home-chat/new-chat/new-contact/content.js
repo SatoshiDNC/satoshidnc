@@ -12,11 +12,20 @@ v.iconColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100, g.h = 70
+  g.label = 'Name on this device'
+  g.text = ''
   g.clickFunc = function() {
     const g = this, v = this.viewport
     console.log('gad')
     //navigator.virtualKeyboard.show()
-    document.getElementById("input").focus()
+    //document.getElementById("input").focus()
+    let s = prompt(g.label, 'Uncle Jim')
+    if (s !== null) {
+      while (s.indexOf('  ') !== -1) {
+        s.replace('  ', ' ')
+      }
+      g.text = s.trim()
+    }
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -49,11 +58,12 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s, s, 1])
   iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
 
+  let g = v.nameGad
   mat4.identity(m)
   mat4.translate(m,m, [186, 147, 0])
   s = 33/14
   mat4.scale(m,m, [s, s, 1])
-  defaultFont.draw(0,0, 'Name on this device', v.hintColor, v.mat, m)
+  defaultFont.draw(0,0, g.text || g.label, g.text? v.textColor: v.hintColor, v.mat, m)
   
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.iconColor))
