@@ -70,7 +70,7 @@ v.renderFunc = function() {
     let goal = g.focused || g.text? 1: 0
     if (goal != g.animValue) {
       g.animValue = g.animValue * 0.7 + goal * 0.3
-      if (Math.abs(goal - g.animValue) < 0.5) {
+      if (Math.abs(goal - g.animValue) < 0.005) {
         g.animValue = goal
       }
       v.setRenderFlag(true)
@@ -78,7 +78,7 @@ v.renderFunc = function() {
     goal = g.focused? 1: 0
     if (goal != g.focusValue) {
       g.focusValue = g.focusValue * 0.7 + goal * 0.3
-      if (Math.abs(goal - g.focusValue) < 0.5) {
+      if (Math.abs(goal - g.focusValue) < 0.005) {
         g.focusValue = goal
       }
       v.setRenderFlag(true)
