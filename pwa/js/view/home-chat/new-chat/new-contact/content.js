@@ -25,10 +25,12 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
     v.setRenderFlag(true)
     g.timerId = setInterval(() => {
       if (g.focusValue != 1) return
-      g.text = getKeyboardInput(g.label, g.text || g.defaultValue)
-      g.focused = false
-      v.setRenderFlag(true)
-      clearInterval(g.timerId), delete g.timerId
+      getKeyboardInput(g.label, g.text || g.defaultValue, value => {
+        if (value !== undefined) g.text = value
+        g.focused = false
+        v.setRenderFlag(true)
+        clearInterval(g.timerId), delete g.timerId
+      })
     }, 10)
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
