@@ -82,7 +82,7 @@ v.renderFunc = function() {
     mat4.translate(m,m, [g.x + 3, g.y + 47 * f0 - 26 * f1, 0])
     const s = 33/14 * f0 + 25/14 * f1
     mat4.scale(m,m, [s, s, 1])
-    const c = [
+    let c = [
       v.hintColor[0] * g0 + colors.activeText[0] * g1,
       v.hintColor[1] * g0 + colors.activeText[1] * g1,
       v.hintColor[2] * g0 + colors.activeText[2] * g1,
