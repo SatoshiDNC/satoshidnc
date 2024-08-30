@@ -17,6 +17,7 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.label = 'Name on this device'
   g.text = ''
   g.animValue = 0
+  g.focusValue = 0
   g.focused = false
   g.clickFunc = function() {
     const g = this, v = this.viewport
@@ -32,6 +33,7 @@ v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.label = 'Nostr public key'
   g.text = ''
   g.animValue = 0
+  g.focusValue = 0
   g.focused = false
   g.clickFunc = function() {
     const g = this, v = this.viewport
@@ -65,24 +67,34 @@ v.renderFunc = function() {
   iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
 
   const drawTextInput = (g) => {
-    const goal = g.focused || g.text? 1: 0
+    let goal = g.focused || g.text? 1: 0
     if (goal != g.animValue) {
-      g.animValue = (g.animValue + goal) / 2
+      g.animValue = g.animValue * 0.7 + goal * 0.3
       if (Math.abs(goal - g.animValue) < 0.5) {
         g.animValue = goal
       }
       v.setRenderFlag(true)
     }
+    goal = g.focused? 1: 0
+    if (goal != g.focusValue) {
+      g.focusValue = g.focusValue * 0.7 + goal * 0.3
+      if (Math.abs(goal - g.focusValue) < 0.5) {
+        g.focusValue = goal
+      }
+      v.setRenderFlag(true)
+    }
     const f1 = g.animValue
     const f0 = 1 - f1
+    const g1 = g.focusValue
+    const g0 = 1 - g1
     mat4.identity(m)
     mat4.translate(m,m, [g.x + 3, g.y + 47 * f0 - 26 * f1, 0])
     const s = 33/14 * f0 + 25/14 * f1
     mat4.scale(m,m, [s, s, 1])
     const c = [
-      v.hintColor[0] * f0 + colors.activeText[0] * f1,
-      v.hintColor[1] * f0 + colors.activeText[1] * f1,
-      v.hintColor[2] * f0 + colors.activeText[2] * f1,
+      v.hintColor[0] * g0 + colors.activeText[0] * g1,
+      v.hintColor[1] * g0 + colors.activeText[1] * g1,
+      v.hintColor[2] * g0 + colors.activeText[2] * g1,
     1]
     defaultFont.draw(0,0, g.label, c, v.mat, m)
     if (g.text) {
@@ -135,6 +147,10 @@ v.renderFunc = function() {
 
   for (g of v.gadgets) {
     if (g.animValue != 0 && g.animValue != 1) {
+      v.setRenderFlag(true)
+      break
+    }
+    if (g.focusValue != 0 && g.focusValue != 1) {
       v.setRenderFlag(true)
       break
     }
