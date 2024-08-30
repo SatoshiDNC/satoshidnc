@@ -18,14 +18,16 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.text = ''
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    g.text = getKeyboardInput(g.text || 'Satoshi, D.N.C.')
+    g.text = getKeyboardInput(g.label, g.text || 'Satoshi, D.N.C.')
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100 + 212, g.h = 70
+  g.label = 'Nostr public key'
+  g.text = ''
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    g.text = getKeyboardInput(g.text || 'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf')
+    g.text = getKeyboardInput(g.label, g.text || 'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf')
   }
 v.layoutFunc = function() {
   const v = this
@@ -50,12 +52,15 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s, s, 1])
   iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
 
-  let g = v.nameGad
-  mat4.identity(m)
-  mat4.translate(m,m, [186, 147, 0])
-  s = 33/14
-  mat4.scale(m,m, [s, s, 1])
-  defaultFont.draw(0,0, g.text || g.label, g.text? v.textColor: v.hintColor, v.mat, m)
+  const drawTextInput = (g) => {
+    mat4.identity(m)
+    mat4.translate(m,m, [g.x + 3, g.y + 47, 0])
+    const s = 33/14
+    mat4.scale(m,m, [s, s, 1])
+    defaultFont.draw(0,0, g.text || g.label, g.text? v.textColor: v.hintColor, v.mat, m)
+  }
+
+  drawTextInput(v.nameGad)
   
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.iconColor))
@@ -72,11 +77,7 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s, s, 1])
   iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
 
-  mat4.identity(m)
-  mat4.translate(m,m, [186, 147 + 212, 0])
-  s = 33/14
-  mat4.scale(m,m, [s, s, 1])
-  defaultFont.draw(0,0, 'Nostr public key', v.hintColor, v.mat, m)
+  drawTextInput(v.npubGad)
   
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.iconColor))
