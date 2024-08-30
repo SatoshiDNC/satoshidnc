@@ -68,7 +68,7 @@ v.renderFunc = function() {
     }
     goal = g.focused? 1: 0
     if (goal != g.focusValue) {
-      g.focusValue = g.focusValue * 0.9 + goal * 0.1
+      g.focusValue = g.focusValue * 0.7 + goal * 0.3
       if (Math.abs(goal - g.focusValue) < 0.005) {
         g.focusValue = goal
       }
@@ -117,7 +117,7 @@ v.renderFunc = function() {
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
     mat4.identity(m)
     mat4.translate(m,m, [g.x, g.y + 67, 0])
-    mat4.scale(m,m, [g.w, 300, 1])
+    mat4.scale(m,m, [g.w, 3, 1])
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
     mainShapes.drawArrays2('rect')
   }
