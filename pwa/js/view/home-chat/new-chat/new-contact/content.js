@@ -29,8 +29,8 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
         if (value !== undefined) g.text = value
         g.focused = false
         v.setRenderFlag(true)
-        clearInterval(g.timerId), delete g.timerId
       })
+      clearInterval(g.timerId), delete g.timerId
     }, 10)
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
