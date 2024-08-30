@@ -41,7 +41,7 @@ v.renderFunc = function() {
   drawPill(v, g.faceColor, g.x, g.y, g.w, g.h)
   mat4.identity(m)
   const s = 29/14
-  mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + 30, 0])
+  mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + 59, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, g.label, g.textColor, v.mat, m)
 
