@@ -5,7 +5,7 @@ export const contacts = []
 export function newContact(name, npub) {
   return {
     name: name,
-    pubkey: nip19.npubDecode(npub),
+    pubkey: nip19.decode(npub),
     xmitDate: new Date(),
     xmitText: 'You reacted "&" to "Ok, thanks for the help!"',
   }
