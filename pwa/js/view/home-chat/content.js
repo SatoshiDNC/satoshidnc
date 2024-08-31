@@ -50,18 +50,18 @@ v.renderFunc = function() {
       }
       v.setRenderFlag(true)
     }
-    // const f1 = g.animValue
-    // const f0 = 1 - f1
-    // const light = [
-    //   colors.accent[0] * f1 + colors.inactive[0] * f0,
-    //   colors.accent[1] * f1 + colors.inactive[1] * f0,
-    //   colors.accent[2] * f1 + colors.inactive[2] * f0, 1]
-    // const dark = [
-    //   colors.accentDark[0] * f1 + colors.inactiveDark[0] * f0,
-    //   colors.accentDark[1] * f1 + colors.inactiveDark[1] * f0, 
-    //   colors.accentDark[2] * f1 + colors.inactiveDark[2] * f0, 1]
-    const light = g.label == v.activeFilter? colors.accent: colors.inactive
-    const dark = g.label == v.activeFilter? colors.accentDark: colors.inactiveDark
+    const f1 = g.animValue
+    const f0 = 1 - f1
+    const light = [
+      colors.accent[0] * f1 + colors.inactive[0] * f0,
+      colors.accent[1] * f1 + colors.inactive[1] * f0,
+      colors.accent[2] * f1 + colors.inactive[2] * f0, 1]
+    const dark = [
+      colors.accentDark[0] * f1 + colors.inactiveDark[0] * f0,
+      colors.accentDark[1] * f1 + colors.inactiveDark[1] * f0, 
+      colors.accentDark[2] * f1 + colors.inactiveDark[2] * f0, 1]
+    // const light = g.label == v.activeFilter? colors.accent: colors.inactive
+    // const dark = g.label == v.activeFilter? colors.accentDark: colors.inactiveDark
     drawPill(v, dark, g.x, g.y, g.w, g.h)
     mat4.identity(m)
     const s = 29/14
