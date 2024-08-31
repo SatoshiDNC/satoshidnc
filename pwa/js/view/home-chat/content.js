@@ -43,7 +43,7 @@ v.renderFunc = function() {
   const mat = mat4.create()
 
   for (const g of v.filterGads) {
-    const goal = g.label == v.activeFilter? 1: 0
+    let goal = g.label == v.activeFilter? 1: 0
     if (g.animValue != goal) {
       g.animValue = g.animValue * 0.3 + goal * 0.7
       if (Math.abs(goal - g.animValue) < 0.005) {
@@ -51,19 +51,19 @@ v.renderFunc = function() {
       }
       v.setRenderFlag(true)
     }
-    const f1 = g.animValue
-    const f0 = 1 - f1
-    const light = [
+    let f1 = g.animValue
+    let f0 = 1 - f1
+    let light = [
       colors.accent[0] * f1 + colors.inactive[0] * f0,
       colors.accent[1] * f1 + colors.inactive[1] * f0,
       colors.accent[2] * f1 + colors.inactive[2] * f0, 1]
-    const dark = [
+    let dark = [
       colors.accentDark[0] * f1 + colors.inactiveDark[0] * f0,
       colors.accentDark[1] * f1 + colors.inactiveDark[1] * f0, 
       colors.accentDark[2] * f1 + colors.inactiveDark[2] * f0, 1]
     drawPill(v, dark, g.x, g.y, g.w, g.h)
     mat4.identity(m)
-    const s = 29/14
+    let s = 29/14
     mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + 59, 0])
     mat4.scale(m,m, [s, s, 1])
     defaultFont.draw(0,0, g.label, light, v.mat, m)
