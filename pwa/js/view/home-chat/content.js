@@ -45,9 +45,9 @@ v.renderFunc = function() {
     const goal = g.label == v.activeFilter? 1: 0
     if (g.animValue != goal) {
       g.animValue = g.animValue * 0.9 + goal * 0.1
-    //   if (Math.abs(goal - g.animValue) < 0.005) {
+      if (Math.abs(goal - g.animValue) < 0.005) {
     //     g.animValue = goal
-    //   }
+      }
       v.setRenderFlag(true)
     }
     // const f1 = g.animValue
