@@ -21,7 +21,6 @@ for (const label of ['All', 'Unread', 'Favorites', 'Groups']) {
     const g = this, v = g.viewport
     v.activeFilter = g.label
     v.setRenderFlag(true)
-    console.log(`${g.label}filter click`)
   }
 }
 v.activeFilter = v.filterGads[0].label
@@ -51,19 +50,19 @@ v.renderFunc = function() {
       }
       v.setRenderFlag(true)
     }
-    let f1 = g.animValue
-    let f0 = 1 - f1
-    let light = [
+    const f1 = g.animValue
+    const f0 = 1 - f1
+    const light = [
       colors.accent[0] * f1 + colors.inactive[0] * f0,
       colors.accent[1] * f1 + colors.inactive[1] * f0,
       colors.accent[2] * f1 + colors.inactive[2] * f0, 1]
-    let dark = [
+    const dark = [
       colors.accentDark[0] * f1 + colors.inactiveDark[0] * f0,
       colors.accentDark[1] * f1 + colors.inactiveDark[1] * f0, 
       colors.accentDark[2] * f1 + colors.inactiveDark[2] * f0, 1]
     drawPill(v, dark, g.x, g.y, g.w, g.h)
     mat4.identity(m)
-    let s = 29/14
+    const s = 29/14
     mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + 59, 0])
     mat4.scale(m,m, [s, s, 1])
     defaultFont.draw(0,0, g.label, light, v.mat, m)
