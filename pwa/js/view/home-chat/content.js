@@ -48,9 +48,11 @@ v.renderFunc = function() {
       if (Math.abs(goal - g.animValue) < 0.005) {
         g.animValue = goal
       }
-      console.log('set flag')
-      v.setRenderFlag(true)
-      overlayView.setRenderFlag(true)
+      setTimeout(() => {
+        console.log('set flag')
+        v.setRenderFlag(true)
+        overlayView.setRenderFlag(true)
+      }, 0)
     }
     const f1 = g.animValue
     const f0 = 1 - f1
