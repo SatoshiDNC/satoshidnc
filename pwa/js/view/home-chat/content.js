@@ -48,7 +48,7 @@ v.renderFunc = function() {
     //   if (Math.abs(goal - g.animValue) < 0.005) {
     //     g.animValue = goal
     //   }
-    //   v.setRenderFlag(true)
+      v.setRenderFlag(true)
     }
     // const f1 = g.animValue
     // const f0 = 1 - f1
