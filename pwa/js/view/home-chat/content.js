@@ -48,9 +48,7 @@ v.renderFunc = function() {
       if (Math.abs(goal - g.animValue) < 0.005) {
         g.animValue = goal
       }
-      // setTimeout(() => {
-        v.setRenderFlag(true)
-      //}, 0)
+      v.setRenderFlag(true)
     }
     const f1 = g.animValue
     const f0 = 1 - f1
@@ -155,8 +153,6 @@ v.layoutFunc = function() {
   g.autoHull()
 }
 v.renderFunc = function() {
-  console.log(`overlay render`)
-  gl.disable(gl.BLEND)
   const v = this
   const m = mat4.create()
   const g = v.addGad
