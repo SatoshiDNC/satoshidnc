@@ -153,6 +153,7 @@ v.layoutFunc = function() {
   g.autoHull()
 }
 v.renderFunc = function() {
+  console.log(`overlay render`)
   gl.disable(gl.BLEND)
   const v = this
   const m = mat4.create()
