@@ -46,7 +46,7 @@ v.renderFunc = function() {
     if (g.animValue != goal) {
       g.animValue = g.animValue * 0.9 + goal * 0.1
       if (Math.abs(goal - g.animValue) < 0.005) {
-    //     g.animValue = goal
+        g.animValue = goal
       }
       v.setRenderFlag(true)
     }
