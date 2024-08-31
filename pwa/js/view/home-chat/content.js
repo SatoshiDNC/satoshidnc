@@ -60,8 +60,6 @@ v.renderFunc = function() {
       colors.accentDark[0] * f1 + colors.inactiveDark[0] * f0,
       colors.accentDark[1] * f1 + colors.inactiveDark[1] * f0, 
       colors.accentDark[2] * f1 + colors.inactiveDark[2] * f0, 1]
-    // const light = g.label == v.activeFilter? colors.accent: colors.inactive
-    // const dark = g.label == v.activeFilter? colors.accentDark: colors.inactiveDark
     drawPill(v, dark, g.x, g.y, g.w, g.h)
     mat4.identity(m)
     const s = 29/14
@@ -155,19 +153,10 @@ v.layoutFunc = function() {
   g.autoHull()
 }
 v.renderFunc = function() {
+  gl.disable(gl.BLEND)
   const v = this
   const m = mat4.create()
-
   const g = v.addGad
-  // mainShapes.useProg2()
-  // gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.buttonFaceColor))
-  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  // mat4.identity(m)
-  // mat4.translate(m,m, [g.x, g.y, 0])
-  // mat4.scale(m,m, [g.w, g.h, 1])
-  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  // mainShapes.drawArrays2('rect')
-
   mat4.identity(m)
   mat4.translate(m,m, [g.x, g.y + g.h, 0])
   mat4.scale(m,m, [g.w/6, g.h/6, 1])

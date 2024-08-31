@@ -24,7 +24,7 @@ export const setEasingParameters = function(v) {
       }
       v.setRenderFlag(true)
     }
-   if (v.easingValue < 1) {
+    if (v.easingValue < 1) {
       const m = mat4.create()
   
       mainShapes.useProg2()
