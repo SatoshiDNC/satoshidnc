@@ -1,5 +1,6 @@
 import { addNewContact } from '../../../../contacts.js'
 import { drawPill } from '../../../../draw.js'
+import * as nip19 from 'nostr-tools/nip19'
 
 let v, g
 export const barBot = v = new fg.View()
