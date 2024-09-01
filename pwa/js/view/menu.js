@@ -184,16 +184,15 @@ export const menuRoot = menuShim
 menuRoot.ghostOpacity = 0
 menuRoot.easeIn = function(items) {
   const v = this
-  menuView.prepMenu(items).then(() => {
-    menuView.easingState = 1
-    menuView.easingRate = 0.06
-    const r = fg.getRoot()
-    if (r !== v) {
-      menuShim.b = r; r.parent = menuShim
-      v.ghostView = r
-      fg.setRoot(v)
-    }
-  })
+  menuView.prepMenu(items)
+  menuView.easingState = 1
+  menuView.easingRate = 0.06
+  const r = fg.getRoot()
+  if (r !== v) {
+    menuShim.b = r; r.parent = menuShim
+    v.ghostView = r
+    fg.setRoot(v)
+  }
 }
 menuRoot.easeOut = function() {
   const v = this
