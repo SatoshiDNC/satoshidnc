@@ -14,6 +14,30 @@ export const contacts = []
 
 export function addNewContact(hpub, name) {
   const tr = db.transaction('contacts', 'readwrite', { durability: 'strict' })
-  const contacts = tr.objectStore('contacts')
-  contacts.put({ hpub, name })
+  const os = tr.objectStore('contacts')
+  os.put({ hpub, name })
+  reloadContacts()
+}
+
+export function reloadContacts() {
+  const tr = db.transaction('contacts', 'readonly')
+  const os = tr.objectStore('contacts')
+  req = os.openCursor()
+  req.onerror = function(e) {
+     console.err(e)
+  }
+  const newList = []
+  req.onsuccess = function(e) {
+    let cursor = e.target.result
+    if (cursor) {
+      let key = cursor.primaryKey
+      let value = cursor.value
+      console.log(key, value)
+      newList.push({ name: 'name', hpub: key, xmitDate: new Date(), xmitText: 'tbd' })
+      cursor.continue()
+    } else {
+      contacts.length = 0
+      contacts.push(...newList)
+    }
+  }
 }
