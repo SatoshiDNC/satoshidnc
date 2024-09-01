@@ -4,7 +4,6 @@ export const setEasingParameters = function(v) {
   v.easingRate = 0.033
   v.renderFinish = function() {
     const v = this
-    console.log(`renderFinish ${v.name}`)
     if (v.easingState) {
       if (v.easingState == 1) {
         v.easingValue += v.easingRate
