@@ -15,9 +15,21 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = g.viewport
     const name = g.formView.nameGad.text
-    const npub = g.formView.npubGad.text
-    if (name && npub) {
-      const hpub = nip19.decode(npub).data
+    const pubkey = g.formView.pubkeyGad.text
+    if (name && pubkey) {
+      if (pubkey.length == 64 && pubkey.toLower().reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
+        hpub = pubkey
+      }
+      if (!hpub) {
+        try {
+          hpub = nip19.decode(npub).data
+        } catch(e) {
+        }
+      }
+      if (!hpub) {
+        alert(`Unrecognized public key format. Supported formats include: npub, hex`)
+        return
+      }
       let cancel = false
       console.log(contacts)
       console.log(contacts.filter(c => c.hpub == hpub))
