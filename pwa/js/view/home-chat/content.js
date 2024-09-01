@@ -48,9 +48,6 @@ v.layoutFunc = function() {
     g.autoHull()
     x += g.w + 15
   }
-}
-v.layoutFunc = function() {
-  const v = this
   let g
   g = v.listGad
   g.x = 0, g.y = 0
