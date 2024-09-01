@@ -18,15 +18,19 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const pubkey = g.formView.pubkeyGad.text
     if (name && pubkey) {
       let hpub
+      console.log(hpub)
       if (pubkey.length == 64 && Array.from(pubkey.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
         hpub = pubkey.toLowerCase()
       }
+      console.log(hpub)
       if (!hpub) {
         try {
           hpub = nip19.decode(npub).data
+          console.log(hpub)
         } catch(e) {
         }
       }
+      console.log(hpub)
       if (!hpub) {
         alert(`Unrecognized public key format. Supported formats include: npub, hex`)
         return
