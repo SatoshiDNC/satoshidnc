@@ -167,7 +167,7 @@ v.renderFunc = function() {
       }
     }
     menuRoot.ghostOpacity = v.easingValue * 0.5
-    v.setRenderFlag(true)
+    setTimeout(() => { v.setRenderFlag(true) })
   }
   const m = mat4.create()
 
