@@ -17,6 +17,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const name = g.formView.nameGad.text
     const pubkey = g.formView.pubkeyGad.text
     if (name && pubkey) {
+      let hpub
       if (pubkey.length == 64 && pubkey.toLower().reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
         hpub = pubkey
       }
