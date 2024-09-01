@@ -17,12 +17,27 @@ for (const label of ['All', 'Unread', 'Favorites', 'Groups']) {
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = label
   g.animValue = 0
-  g.clickFunc = function() {
+  g.clickFunc = function(e) {
     const g = this, v = g.viewport
     v.activeFilter = g.label
     v.setRenderFlag(true)
   }
 }
+v.gadgets.push(g = v.listGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
+    const index = Math.floor((y - 167.5) / 200)
+    console.log('click', x, y, index)
+    // menuRoot.easeOut()
+    // if (index >= 0 && index < v.items.length) {
+    //   v.items[index].handler(v.items[index])
+    //   menuRoot.easeOut()
+    // } else {
+    //   // console.log('menu', x, y, index)
+    // }
+  }
 v.activeFilter = v.filterGads[0].label
 v.layoutFunc = function() {
   const v = this
@@ -33,6 +48,14 @@ v.layoutFunc = function() {
     g.autoHull()
     x += g.w + 15
   }
+}
+v.layoutFunc = function() {
+  const v = this
+  let g
+  g = v.screenGad
+  g.x = 0, g.y = 0
+  g.w = v.sw, g.h = v.sh
+  g.autoHull()
 }
 contactViewDependencies.push(v)
 v.renderFunc = function() {
