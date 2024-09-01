@@ -109,7 +109,7 @@ v.prepMenu = function(items) {
     //   v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
     //   finish()
     // }).catch(e => {
-      finish()
+    //   finish()
     // })
     const finish = () => {
       // let count = 0
@@ -119,6 +119,7 @@ v.prepMenu = function(items) {
       v.currentItemCount = items.length
       resolve()
     }
+    finish()
   })
 }
 v.layoutFunc = function() {
