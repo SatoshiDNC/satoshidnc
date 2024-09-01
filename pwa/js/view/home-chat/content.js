@@ -17,7 +17,7 @@ for (const label of ['All', 'Unread', 'Favorites', 'Groups']) {
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = label
   g.animValue = 0
-  g.clickFunc = function(e) {
+  g.clickFunc = function() {
     const g = this, v = g.viewport
     v.activeFilter = g.label
     v.setRenderFlag(true)
