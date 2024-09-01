@@ -1,4 +1,3 @@
-import { chatRoot } from './chat-room/content.js'
 import { schnorr } from '@noble/curves/secp256k1'
 // import { hpub, signText } from './keys.js'
 import { Buffer } from 'buffer'
@@ -178,7 +177,7 @@ v.renderFunc = function() {
 export const menuShim = v = new fg.OverlayView(null)
 v.name = Object.keys({menuShim}).pop()
 v.a = menuView; menuView.parent = v
-v.b = chatRoot; chatRoot.parent = v
+// v.b = chatRoot; chatRoot.parent = v
 
 export const menuRoot = menuShim
 menuRoot.ghostOpacity = 0
