@@ -2,7 +2,7 @@ export function init() {
   return new Promise((resolve, reject) => {
     const req = window.indexedDB.open('db', 1)
     req.onsuccess = e => {
-      db = req.result
+      db = e.target.result
       resolve()
     }
     req.onerror = e => {
