@@ -82,17 +82,17 @@ v.items.map((item, i) => {
     }
   }
 })
-// v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
-//   g.actionFlags = fg.GAF_CLICKABLE
-//   g.clickFunc = function() {
-//     const g = this, v = this.viewport
-//     console.log('menu')
-//   }
-// v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
-//   g.actionFlags = fg.GAF_CLICKABLE
-//   g.clickFunc = function() {
-//     menuRoot.easeOut()
-//   }
+v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log('menu')
+  }
+v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function() {
+    menuRoot.easeOut()
+  }
 v.prepMenu = function(items) {
   const v = this
   v.items = items
