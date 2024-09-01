@@ -78,7 +78,7 @@ v.renderFunc = function() {
     mat4.translate(mat, mat, [x, y, 0])
     mat4.scale(mat, mat, [127/32, 127/32, 1])
     let ox = -0.5, oy = 8.5
-    c.pubkey.toUpperCase().match(/.{1,16}/g).map((str, i) => {
+    c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
       mat4.copy(m, mat)
       nybbleFont.draw(ox,oy + i*8, str, v.titleColor, v.mat, m)
     })  

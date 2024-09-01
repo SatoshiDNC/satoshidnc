@@ -34,6 +34,7 @@ v.layoutFunc = function() {
     x += g.w + 15
   }
 }
+contactViewDependencies.push(v)
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
@@ -70,7 +71,7 @@ v.renderFunc = function() {
 
   let i = 0
   for (const c of [    
-    // { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
+    // { hpub: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
     ...contacts
   ]) {
 
@@ -78,7 +79,7 @@ v.renderFunc = function() {
     mat4.translate(mat, mat, [31, 204 + 200 * i, 0])
     mat4.scale(mat, mat, [127/32, 127/32, 1])
     let x = -0.5, y = 8.5
-    c.pubkey.toUpperCase().match(/.{1,16}/g).map((str, i) => {
+    c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
       mat4.copy(m, mat)
       nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
     })
@@ -130,7 +131,6 @@ v.renderFunc = function() {
   // item spacing: 200
   // photo x=31, w=127, h=127
 }
-contactViewDependencies.push(v)
 
 export const overlayView = v = new fg.View(null)
 v.name = Object.keys({overlayView}).pop()
