@@ -1,6 +1,3 @@
-import { barTop as topBar } from './bar-top.js'
-import { hpub, npub } from '../../../keys.js'
-import { setEasingParameters } from '../../util.js'
 import { contacts } from '../../../contacts.js'
 
 let v, g

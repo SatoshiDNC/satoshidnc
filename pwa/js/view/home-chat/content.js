@@ -1,4 +1,4 @@
-import { hpub, npub } from '../../keys.js'
+// import { hpub, npub } from '../../keys.js'
 import { contacts } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 
