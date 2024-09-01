@@ -1,4 +1,4 @@
-import { addNewContact } from '../../../../contacts.js'
+import { contacts, addNewContact } from '../../../../contacts.js'
 import { drawPill } from '../../../../draw.js'
 import * as nip19 from 'nostr-tools/nip19'
 
@@ -18,10 +18,21 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const npub = g.formView.npubGad.text
     if (name && npub) {
       const hpub = nip19.decode(npub).data
-      addNewContact(hpub, name)
+      let cancel = false
+      const existing = contacts.filter(c => c.hpub == hpub)?.[0]
+      if (existing) {
+        if (name != existing.name) {
+          if (!confirm()`You already have this contact with the name '${existing.name}'. Overwrite it?`) {
+            cancel = true
+          }
+        }
+      }
+      if (!cancel) {
+        addNewContact(hpub, name)
+        g.root.easeOut(g.target)
+        g.formView.clear()
+      }
     }
-    g.root.easeOut(g.target)
-    g.formView.clear()
   }
 v.layoutFunc = function() {
   const v = this
