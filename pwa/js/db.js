@@ -1,8 +1,10 @@
+export let db
+
 export function init() {
   return new Promise((resolve, reject) => {
     const req = window.indexedDB.open('db', 1)
     req.onsuccess = e => {
-      db = e.target.result
+      db = req.result
       resolve()
     }
     req.onerror = e => {
