@@ -30,10 +30,8 @@ export function reloadContacts() {
   req.onsuccess = function(e) {
     let cursor = e.target.result
     if (cursor) {
-      let key = cursor.primaryKey
-      let value = cursor.value
-      console.log(key, value)
-      newList.push({ name: 'name', hpub: key, xmitDate: new Date(), xmitText: 'tbd' })
+      let v = cursor.value
+      newList.push({ name: v.name, hpub: v.hpub, xmitDate: new Date(), xmitText: 'tbd' })
       cursor.continue()
     } else {
       contacts.length = 0
