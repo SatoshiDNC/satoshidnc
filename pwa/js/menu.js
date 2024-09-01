@@ -200,7 +200,7 @@ menuRoot.easeIn = function() {
   const v = this
   menuView.prepMenu().then(() => {
     menuView.easingState = 1
-    menuView.easingRate = 0.006
+    menuView.easingRate = 0.06
     const r = fg.getRoot()
     if (r !== v) {
       menuShim.b = r; r.parent = menuShim
@@ -212,7 +212,7 @@ menuRoot.easeIn = function() {
 menuRoot.easeOut = function() {
   const v = this
   menuView.easingState = -1
-  menuView.easingRate = 0.01
+  menuView.easingRate = 0.1
   v.setRenderFlag(true)
 }
 menuRoot.easingState = function() {
