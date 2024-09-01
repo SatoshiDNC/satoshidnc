@@ -18,7 +18,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const pubkey = g.formView.pubkeyGad.text
     if (name && pubkey) {
       let hpub
-      if (pubkey.length == 64 && pubkey.toLowerCase().reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
+      if (pubkey.length == 64 && Array.from(pubkey.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
         hpub = pubkey.toLowerCase()
       }
       if (!hpub) {
