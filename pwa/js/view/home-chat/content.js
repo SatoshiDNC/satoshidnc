@@ -25,7 +25,7 @@ for (const label of ['All', 'Unread', 'Favorites', 'Groups']) {
 }
 v.gadgets.push(g = v.listGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.clickFunc = function() {
+  g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
     const index = Math.floor((y - 167.5) / 200)
