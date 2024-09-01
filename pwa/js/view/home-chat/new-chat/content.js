@@ -1,4 +1,4 @@
-import { contacts } from '../../../contacts.js'
+import { contacts, contactViewDependencies } from '../../../contacts.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
