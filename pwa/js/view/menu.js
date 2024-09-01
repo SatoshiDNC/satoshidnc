@@ -103,31 +103,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
 v.prepMenu = function(items) {
   const v = this
   v.items = items
-  return new Promise((resolve, reject) => {
-    // v.gadgets[`index${SIGN_TEXT}`].enabled = false
-    // v.gadgets[`index${SIGN_EVENT}`].enabled = false
-    // v.getText('text/plain').then(text => {
-    //   v.gadgets[`index${SIGN_TEXT}`].enabled = true
-    //   let event
-    //   try {
-    //     event = JSON.parse(text)
-    //   } catch(e) {
-    //   }
-    //   v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
-    //   finish()
-    // }).catch(e => {
-    //   finish()
-    // })
-    const finish = () => {
-      // let count = 0
-      // for (g of v.gadgets) if (g.label && g.enabled) {
-      //   count++
-      // }
-      v.currentItemCount = items.length
-      resolve()
-    }
-    finish()
-  })
+  v.currentItemCount = items.length
 }
 v.layoutFunc = function() {
   const v = this
