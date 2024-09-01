@@ -25,7 +25,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       console.log(hpub)
       if (!hpub) {
         try {
-          hpub = nip19.decode(npub).data
+          hpub = nip19.decode(pubkey).data
           console.log(hpub)
         } catch(e) {
         }
