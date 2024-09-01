@@ -69,8 +69,10 @@ v.renderFunc = function() {
   }
 
   let i = 0
-  for (const c of [    { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
-    ...contacts]) {
+  for (const c of [    
+    // { pubkey: hpub(), name: 'You', xmitDate: new Date(), xmitText: 'link' },
+    ...contacts
+  ]) {
 
     mat4.identity(mat)
     mat4.translate(mat, mat, [31, 204 + 200 * i, 0])
