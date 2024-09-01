@@ -82,40 +82,41 @@ v.items.map((item, i) => {
     }
   }
 })
-v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    console.log('menu')
-  }
-v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.clickFunc = function() {
-    menuRoot.easeOut()
-  }
-v.prepMenu = function() {
+// v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
+//   g.actionFlags = fg.GAF_CLICKABLE
+//   g.clickFunc = function() {
+//     const g = this, v = this.viewport
+//     console.log('menu')
+//   }
+// v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
+//   g.actionFlags = fg.GAF_CLICKABLE
+//   g.clickFunc = function() {
+//     menuRoot.easeOut()
+//   }
+v.prepMenu = function(items) {
   const v = this
+  v.items = items
   return new Promise((resolve, reject) => {
-    v.gadgets[`index${SIGN_TEXT}`].enabled = false
-    v.gadgets[`index${SIGN_EVENT}`].enabled = false
-    v.getText('text/plain').then(text => {
-      v.gadgets[`index${SIGN_TEXT}`].enabled = true
-      let event
-      try {
-        event = JSON.parse(text)
-      } catch(e) {
-      }
-      v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
+    // v.gadgets[`index${SIGN_TEXT}`].enabled = false
+    // v.gadgets[`index${SIGN_EVENT}`].enabled = false
+    // v.getText('text/plain').then(text => {
+    //   v.gadgets[`index${SIGN_TEXT}`].enabled = true
+    //   let event
+    //   try {
+    //     event = JSON.parse(text)
+    //   } catch(e) {
+    //   }
+    //   v.gadgets[`index${SIGN_EVENT}`].enabled = !!event
+    //   finish()
+    // }).catch(e => {
       finish()
-    }).catch(e => {
-      finish()
-    })
+    // })
     const finish = () => {
-      let count = 0
-      for (g of v.gadgets) if (g.label && g.enabled) {
-        count++
-      }
-      v.currentItemCount = count
+      // let count = 0
+      // for (g of v.gadgets) if (g.label && g.enabled) {
+      //   count++
+      // }
+      v.currentItemCount = items.length
       resolve()
     }
   })
@@ -179,12 +180,14 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  for (const g of v.gadgets) if (g.label && g.enabled) {
+  let i = 0
+  for (const item of v.items) {
     mat4.identity(m)
-    mat4.translate(m,m, [g.x, g.y + g.h, 0])
-    mat4.scale(m,m, [g.h/14, g.h/14, 1])
+    mat4.translate(m,m, [v.menuX + 45, v.menuY + 79 + i * 126 + 33, 0])
+    mat4.scale(m,m, [33/14, 33/14, 1])
     const c = v.textColor
-    defaultFont.draw(0,0, g.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
+    defaultFont.draw(0,0, item.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
+    i++
   }
 }
 
@@ -195,9 +198,9 @@ v.b = chatRoot; chatRoot.parent = v
 
 export const menuRoot = menuShim
 menuRoot.ghostOpacity = 0
-menuRoot.easeIn = function() {
+menuRoot.easeIn = function(items) {
   const v = this
-  menuView.prepMenu().then(() => {
+  menuView.prepMenu(items).then(() => {
     menuView.easingState = 1
     menuView.easingRate = 0.06
     const r = fg.getRoot()

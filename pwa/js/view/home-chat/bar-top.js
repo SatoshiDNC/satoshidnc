@@ -9,10 +9,20 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.label = ':'
   g.font = iconFont
   g.fontSize = 11
+  g.handler = function(id) {
+    console.log(`id ${id}`)
+  }
+  g.items = [
+    { id: 1, handler: g.handler, label: 'New group' },
+    { id: 2, handler: g.handler, label: 'New broadcast' },
+    { id: 3, handler: g.handler, label: 'Linked devices' },
+    { id: 4, handler: g.handler, label: 'Starred messages' },
+    { id: 5, handler: g.handler, label: 'Settings' },
+  ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
     if (fg.getRoot() !== g.target || g.target.easingState() == -1) {
-      g.target?.easeIn?.()
+      g.target?.easeIn?.(g.items)
     } else {
       g.target?.easeOut?.()
     }
