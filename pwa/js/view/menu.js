@@ -88,7 +88,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
     const index = Math.floor((y - 79 - 33 / 2 + 126 / 2) / 126)
-    console.log('menu', x, y, index)
+    if (index >= 1 && index <= v.items.length) {
+      v.items[index - 1].handler(v.items[index - 1])
+    } else {
+      console.log('menu', x, y, index)
+    }
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
