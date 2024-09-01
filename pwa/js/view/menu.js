@@ -10,8 +10,7 @@ export const menuView = v = new fg.View(null)
 v.name = Object.keys({menuView}).pop()
 v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
-v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
-v.loadingText = `Menu`//`${window.devicePixelRatio}, ${vvs = window.visualViewport.scale}`
+v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
@@ -184,7 +183,7 @@ v.renderFunc = function() {
     mat4.identity(m)
     mat4.translate(m,m, [g.x, g.y + g.h, 0])
     mat4.scale(m,m, [g.h/14, g.h/14, 1])
-    const c = v.loadingColor
+    const c = v.textColor
     defaultFont.draw(0,0, g.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
   }
 }
