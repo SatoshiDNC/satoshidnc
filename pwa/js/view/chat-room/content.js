@@ -9,6 +9,11 @@ v.frameTimes = []
 v.bgColor = [0xfa/0xff, 0xf8/0xff, 0xf5/0xff, 1]
 v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = `Satoshi, D.N.C.`//`${window.devicePixelRatio}, ${vvs = window.visualViewport.scale}`
+v.setContact(contact) {
+  const v = this
+  v.contact = contact
+  barTop.contact = contact
+}
 v.setText = function(text) {
   this.loadingText = text
   console.log('splash:', text)
