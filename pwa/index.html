@@ -240,6 +240,7 @@
     import { plainProgram } from './js/shaders.js'
     import { init as dbInit } from './js/db.js'
     import { homeRoot } from './js/view/home-chat/root.js'
+    import { reloadContacts } from './js/contacts.js'
 
     // This module demonstrates use of Fireglass and Rune.
     document.addEventListener("DOMContentLoaded", (event) => {
@@ -301,6 +302,7 @@
         // initialize database
         dbInit().then(() => {
           initializingDB = false; updateStatus()
+          reloadContacts()
         }).catch(e => {
           splash.setText(e)
         })
