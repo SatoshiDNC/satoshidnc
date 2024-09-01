@@ -19,12 +19,10 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     if (name && npub) {
       const hpub = nip19.decode(npub).data
       let cancel = false
-      console.log(contacts)
-      console.log(contacts.filter(c => c.hpub == hpub))
       const existing = contacts.filter(c => c.hpub == hpub)?.[0]
       if (existing) {
         if (name != existing.name) {
-          if (!confirm()`You already have this contact with the name '${existing.name}'. Overwrite it?`) {
+          if (!confirm(`You already have this contact with the name '${existing.name}'. Overwrite it?`)) {
             cancel = true
           }
         }
