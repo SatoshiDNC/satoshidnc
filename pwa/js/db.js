@@ -20,9 +20,7 @@ export function init() {
       // ⚖ { "def": "keys", "text": "This app's private keys are stored in the IndexedDB, which means it is (only) as secure as your device." }
       if (e.oldVersion < 1) {
         db.createObjectStore(`keys`, { keyPath: 'hpub' })
-        os = db.createObjectStore(`contacts`, { keyPath: 'hpub' })
-        os.createIndex('hpub', 'hpub')
-        os.createIndex('name', ['name', 'creation' ])
+        db.createObjectStore(`contacts`, { keyPath: 'hpub' })
       }
       // ⚖
     }

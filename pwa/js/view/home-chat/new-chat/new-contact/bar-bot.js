@@ -16,7 +16,8 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const name = g.formView.nameGad.text
     const npub = g.formView.npubGad.text
     if (name && npub) {
-      contacts.push(newContact(name, npub))
+      const hpub = nip19.decode(npub).data
+      addNewContact(hpub, name)
     }
     g.root.easeOut(g.target)
     g.formView.clear()
