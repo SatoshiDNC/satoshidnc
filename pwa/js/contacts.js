@@ -1,3 +1,4 @@
+import { db } from './db.js'
 import * as nip19 from 'nostr-tools/nip19'
 
 export const contacts = []
