@@ -1,4 +1,4 @@
-import { contacts, newContact } from '../../../../contacts.js'
+import { addNewContact } from '../../../../contacts.js'
 import { drawPill } from '../../../../draw.js'
 
 let v, g
