@@ -54,6 +54,7 @@ v.layoutFunc = function() {
   g.w = 47, g.h = 47
   g.autoHull()
 }
+contactViewDependencies.push(v)
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)

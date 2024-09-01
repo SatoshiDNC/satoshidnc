@@ -1,6 +1,8 @@
 import { db } from './db.js'
 import * as nip19 from 'nostr-tools/nip19'
 
+export const contactViewDependencies = []
+
 export const contacts = []
 
 // function newContact(hpub, name) {
@@ -36,6 +38,7 @@ export function reloadContacts() {
     } else {
       contacts.length = 0
       contacts.push(...newList)
+      contactViewDependencies.map(v => v.setRenderFlag(true))
     }
   }
 }

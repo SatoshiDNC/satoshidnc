@@ -1,5 +1,5 @@
 // import { hpub, npub } from '../../keys.js'
-import { contacts } from '../../contacts.js'
+import { contacts, contactViewDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 
 let v, g
@@ -130,6 +130,7 @@ v.renderFunc = function() {
   // item spacing: 200
   // photo x=31, w=127, h=127
 }
+contactViewDependencies.push(v)
 
 export const overlayView = v = new fg.View(null)
 v.name = Object.keys({overlayView}).pop()
