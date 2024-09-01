@@ -63,13 +63,16 @@ v.renderFunc = function() {
   mat4.translate(mat, mat, [190, 68, 0])
   mat4.scale(mat, mat, [35/14, 35/14, 1])
   x = 0, y = 0
-  defaultFont.draw(x,y, 'Satoshi, D.N.C.', v.textColor, v.mat, mat)
+  defaultFont.draw(x,y, contact.name, v.textColor, v.mat, mat)
   
   mat4.identity(mat)
   mat4.translate(mat, mat, [190, 116, 0])
   mat4.scale(mat, mat, [23/14, 23/14, 1])
   x = 0, y = 0
-  defaultFont.draw(x,y, 'Online', v.textColor, v.mat, mat)
+  // online
+  // last seen today at 12:50 PM
+  // Business Account
+  defaultFont.draw(x,y, 'online', v.textColor, v.mat, mat)
 
   for (g of v.gadgets) {
     mat4.identity(mat)
