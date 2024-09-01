@@ -9,8 +9,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.label = ':'
   g.font = iconFont
   g.fontSize = 11
-  g.handler = function(id) {
-    console.log(`id ${id}`)
+  g.handler = function(item) {
+    console.log(`id ${JSON.stringify(item)}`)
   }
   g.items = [
     { id: 1, handler: g.handler, label: 'New group' },
