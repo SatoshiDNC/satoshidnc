@@ -86,8 +86,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    console.log('menu')
-    console.log(e)
+    console.log('menu', e.x - v.menuX, e.y - v.menuY)
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
