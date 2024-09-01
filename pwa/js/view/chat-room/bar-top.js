@@ -1,4 +1,4 @@
-import { hpub } from '../../keys.js'
+// import { hpub } from '../../keys.js'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -55,10 +55,10 @@ v.renderFunc = function() {
   mat4.scale(mat, mat, [1/32*92, 1/32*92, 1])
   const m = mat4.create()
   let x = -0.5, y = 8.5
-  hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
-    mat4.copy(m, mat)
-    nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
-  })
+  // hpub().toUpperCase().match(/.{1,16}/g).map((str, i) => {
+  //   mat4.copy(m, mat)
+  //   nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
+  // })
   mat4.identity(mat)
   mat4.translate(mat, mat, [190, 68, 0])
   mat4.scale(mat, mat, [35/14, 35/14, 1])
