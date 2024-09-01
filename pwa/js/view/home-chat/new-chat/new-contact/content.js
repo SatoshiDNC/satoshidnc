@@ -32,7 +32,7 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
       clearInterval(g.timerId), delete g.timerId
     }, 10)
   }
-v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
+v.gadgets.push(g = v.pubkeyGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100 + 212, g.h = 70
   g.label = 'Nostr public key'
@@ -44,7 +44,7 @@ v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
 v.clear = function() {
   const v = this
   v.nameGad.text = ''
-  v.npubGad.text = ''
+  v.pubkeyGad.text = ''
   v.setRenderFlag(true)
 }
 v.layoutFunc = function() {
@@ -53,7 +53,7 @@ v.layoutFunc = function() {
   g = v.nameGad
   g.w = v.sw - 183 - 73
   g.autoHull()
-  g = v.npubGad
+  g = v.pubkeyGad
   g.w = v.sw - 183 - 73
   g.autoHull()
 }
@@ -143,7 +143,7 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s, s, 1])
   iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
 
-  drawTextInput(v.npubGad)
+  drawTextInput(v.pubkeyGad)
   
   for (g of v.gadgets) {
     if (g.animValue != 0 && g.animValue != 1) {
