@@ -1,7 +1,7 @@
 // import { hpub, npub } from '../../keys.js'
 import { contacts, contactViewDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
-import { contentView } from '../chat-room/content.js'
+import { contentView as targetView } from '../chat-room/content.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -32,7 +32,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const index = Math.floor((y - 167.5) / 200)
     const c = contacts?.[index]
     if (c) {
-      contentView.contact = c
+      targetView.contact = c
       g.root.easeOut(g.target)
     }
   }
