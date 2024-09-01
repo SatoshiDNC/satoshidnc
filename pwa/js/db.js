@@ -10,6 +10,10 @@ export function init() {
     }
     req.onupgradeneeded = e => {
       console.log(`db: upgrading from ${e.oldVersion} to ${e.newVersion}`)
+      const db = e.target.result
+      db.onerror = e => {
+        console.error(e)
+      }
       let os
       if (e.oldVersion < 1) {
         const keys = os = db.createObjectStore(`keys`, { keyPath: 'hpub' })
