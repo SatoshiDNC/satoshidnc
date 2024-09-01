@@ -88,8 +88,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
     const index = Math.floor((y - 79 - 33 / 2 + 126 / 2) / 126)
-    if (index >= 1 && index <= v.items.length) {
-      v.items[index - 1].handler(v.items[index - 1])
+    if (index >= 0 && index < v.items.length) {
+      v.items[index].handler(v.items[index])
       menuRoot.easeOut()
     } else {
       // console.log('menu', x, y, index)
