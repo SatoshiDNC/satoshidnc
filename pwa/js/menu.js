@@ -1,6 +1,6 @@
 import { chatRoot } from './view/chat-room/content.js'
 import { schnorr } from '@noble/curves/secp256k1'
-import { hpub, signText, signEvent } from './keys.js'
+// import { hpub, signText } from './keys.js'
 import { Buffer } from 'buffer'
 import { serializeEvent } from 'nostr-tools'
 import { finalizeEvent } from 'nostr-tools/pure'
@@ -51,31 +51,31 @@ v.items.map((item, i) => {
     const g = this, v = this.viewport
     switch (g.index) {
     case SIGN_TEXT:
-      v.getText('text/plain').then(text => {
-        const signedText = signText(text, hpub()).toString('hex')
-        navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
-          console.log(`signature: ${signedText}`)
-          menuRoot.easeOut()
-        })
-      })
+      // v.getText('text/plain').then(text => {
+      //   const signedText = signText(text, hpub()).toString('hex')
+      //   navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
+      //     console.log(`signature: ${signedText}`)
+      //     menuRoot.easeOut()
+      //   })
+      // })
       break
     case SIGN_EVENT:
-      v.getText('text/plain').then(text => {
-        let event = JSON.parse(text)
-        let signedEvent
-        try {
-          signedEvent = finalizeEvent(event, bsec())
-          //signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
-        } catch(e) {
-          console.warn(`Unable to sign; invalid event in clipboard.`)
-          return
-        }
-        const signedText = JSON.stringify(signedEvent)
-        navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
-          console.log(`signed event: ${signedText}`)
-          menuRoot.easeOut()
-        })
-      })
+      // v.getText('text/plain').then(text => {
+      //   let event = JSON.parse(text)
+      //   let signedEvent
+      //   try {
+      //     signedEvent = finalizeEvent(event, bsec())
+      //     //signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
+      //   } catch(e) {
+      //     console.warn(`Unable to sign; invalid event in clipboard.`)
+      //     return
+      //   }
+      //   const signedText = JSON.stringify(signedEvent)
+      //   navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
+      //     console.log(`signed event: ${signedText}`)
+      //     menuRoot.easeOut()
+      //   })
+      // })
       break
     default:
       console.log(g.label)

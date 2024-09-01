@@ -16,10 +16,11 @@ export function init() {
       db.onerror = e => {
         console.error(e)
       }
-      let os
+      // ⚖ { "def": "keys", "text": "This app's private keys are stored in the IndexedDB, which means it is (only) as secure as your device." }
       if (e.oldVersion < 1) {
-        const keys = os = db.createObjectStore(`keys`, { keyPath: 'hpub' })
+        db.createObjectStore(`keys`, { keyPath: 'hpub' })
       }
+      // ⚖
     }
   })
 }
