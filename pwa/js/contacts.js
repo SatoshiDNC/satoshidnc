@@ -22,7 +22,7 @@ export function addNewContact(hpub, name) {
 export function reloadContacts() {
   const tr = db.transaction('contacts', 'readonly')
   const os = tr.objectStore('contacts')
-  req = os.openCursor()
+  const req = os.openCursor()
   req.onerror = function(e) {
      console.err(e)
   }
