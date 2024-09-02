@@ -8,7 +8,7 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.gadgets.push(g = v.msgGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 127, g.y = 12, g.h = 123
-  g.label = 'Message'
+  g.hint = 'Message'
   g.text = '', g.defaultValue = 'Type something'
   g.animValue = 0
   g.focusValue = 0
@@ -68,7 +68,7 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m,m, [131, 92, 0])
   mat4.scale(m,m, [s, s, 1])
-  defaultFont.draw(0,0, 'Message', colors.chatInfoText, v.mat, m)
+  defaultFont.draw(0,0, g.text||g.hint, g.text?colors.activeText:colors.chatInfoText, v.mat, m)
   drawRect(v, colors.accent.map((v,i)=>i==3?f1:v), g.x, g.y+26, 5, 70)
 
   g = v.sendGad
