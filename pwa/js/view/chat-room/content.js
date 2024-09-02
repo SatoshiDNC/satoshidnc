@@ -17,8 +17,9 @@ v.setContact = function(contact) {
     type: 'security info',
     text: [
       'End-to-end encrypted. This is no guarantee',
+      'of privacy if your device can be surveilled.',
       //'End-to-end encryption does not guarantee',
-      'privacy when your device can be surveilled.',
+      //'privacy when your device can be surveilled.',
   
       //'Encryption does not guarantee your privacy',
       //'E2E encrypted, without guarantee of privacy',
