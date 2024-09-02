@@ -28,7 +28,7 @@ v.renderFunc = function() {
   text = [
     'Encryption does not guarantee your privacy',
     'when your device is subject to surveillence.',
-    'Use an offline encryption and signing device.',
+    'Use an offline encryption device with this app.',
   ]
   w = text.map(line => defaultFont.calcWidth(line) * s)
   let maxw = w.reduce((p,q)=>Math.max(p,q),0)
