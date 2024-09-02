@@ -153,6 +153,8 @@ v.renderFunc = function() {
     menuRoot.ghostOpacity = v.easingValue * 0.5
     v.setRenderFlag(true)
   }
+  const f1 = v.easingValue
+  const f0 = 1 - f1
   const m = mat4.create()
 
   // mainShapes.useProg2()
