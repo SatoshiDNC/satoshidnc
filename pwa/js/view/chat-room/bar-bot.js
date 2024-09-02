@@ -50,6 +50,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
 
+  let g = v.msgGad
   let goal = g.focused? 1: 0
   if (goal != g.focusValue) {
     g.focusValue = g.focusValue * 0.0 + goal * 1.0
@@ -67,7 +68,6 @@ v.renderFunc = function() {
   mat4.translate(m,m, [131, 92, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, 'Message', colors.chatInfoText, v.mat, m)
-  let g = v.msgGad
   drawRect(v, colors.accent.map((v,i)=>i==3?f1:v), g.x, g.y+26, 5, 70)
 
   g = v.sendGad
