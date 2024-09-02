@@ -1,5 +1,6 @@
 import { contacts, addNewContact } from '../../../../contacts.js'
 import { detectRelay } from '../../../../relays.js'
+import { addRelayContactRelation, R_KNOWS_C } from '../../../../graph.js'
 import { drawPill } from '../../../../draw.js'
 import * as nip19 from 'nostr-tools/nip19'
 
@@ -53,9 +54,8 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       }
       if (!cancel) {
         addNewContact(hpub, name)
-        if (relays) {
-          relays.map(r => detectRelay(r))
-        }
+        relays?.map(r => detectRelay(r))
+        relays?.map(r => addRelayContactRelation(r, hpub, R_KNOWS_C))
         g.root.easeOut(g.target)
         g.formView.clear()
       }

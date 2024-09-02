@@ -21,6 +21,7 @@ export function init() {
         db.createObjectStore(`keys`, { keyPath: 'hpub' })
         db.createObjectStore(`contacts`, { keyPath: 'hpub' })
         db.createObjectStore(`relays`, { keyPath: 'url' })
+        db.createObjectStore(`relay-contact-relations`, { keyPath: ['relayUrl', 'contactHpub', 'relation'] })
       }
     }
   })
