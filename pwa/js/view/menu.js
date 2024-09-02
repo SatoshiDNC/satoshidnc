@@ -110,15 +110,6 @@ v.layoutFunc = function() {
   v.menuX = v.sw - v.menuW - 10
   v.menuH = 62 + 126 * v.currentItemCount
   let g
-  let i = 0
-  for (g of v.gadgets) if (g.enabled) {
-    g.x = v.menuX + 45
-    g.y = v.menuY + 79 + i * 126
-    g.w = v.menuW - 45*2
-    g.h = 33
-    g.autoHull()
-    i++
-  }
   g = v.menuGad
   g.x = v.menuX
   g.y = v.menuY
