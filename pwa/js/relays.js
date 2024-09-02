@@ -18,7 +18,7 @@ export function detectRelay(url) {
   reloadRelays()
 }
 
-export function reloadContacts() {
+export function reloadRelays() {
   const tr = db.transaction('relays', 'readonly')
   const os = tr.objectStore('relays')
   const req = os.openCursor()
