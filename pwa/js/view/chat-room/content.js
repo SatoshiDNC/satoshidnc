@@ -17,7 +17,7 @@ v.renderFunc = function() {
   const m = mat4.create()
 
   let s = 27/14
-  let text = new Date().toLocaleDateString('en-US', { month: 'long' })
+  let text = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
   let w = defaultFont.calcWidth(text) * s
   drawRoundedRect(v, colors.chatInfoBubble, 20, (v.sw-w-24*2)/2,13,w+24*2,78)
   mat4.identity(m)
