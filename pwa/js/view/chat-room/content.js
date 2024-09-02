@@ -14,8 +14,16 @@ v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
-  const mat = mat4.create()
+  const m = mat4.create()
 
-  drawRoundedRect(v, colors.chatInfoBubble, 20, 406,13,267,78)
+  let s = 27/14
+  let text = new Date().toLocaleDateString('en-US', {})
+  let w = defaultFont.calcWidth(text) * s
+  drawRoundedRect(v, colors.chatInfoBubble, 20, (v.sw-w+24*2)/2,13,w+24*2,78)
+  mat4.identity(m)
+  mat4.translate(m,m, [(v.sw-w)/2, 66, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, text, colors.chatInfoText, v.mat, m)
+
   drawRoundedRect(v, colors.chatInfoBubble, 20, 101,118,877,165)
 }
