@@ -49,6 +49,7 @@ v.renderFunc = function() {
   const v = this, contact = v.contact
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
+  const m = mat4.create()  
 
   // subtle divider line
   mainShapes.useProg2()
@@ -64,7 +65,6 @@ v.renderFunc = function() {
   mat4.identity(mat)
   mat4.translate(mat, mat, [75, 27, 0])
   mat4.scale(mat, mat, [1/32*92, 1/32*92, 1])
-  const m = mat4.create()
   let x = -0.5, y = 8.5
   contact.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.copy(m, mat)
