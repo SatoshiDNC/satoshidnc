@@ -49,7 +49,18 @@ v.renderFunc = function() {
   const v = this, contact = v.contact
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
-  const mat = mat4.create()
+
+  // subtle divider line
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [0, v.sh-2, 0])
+  mat4.scale(m,m, [v.sw, 2, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
+
+  const mat = mat4.create()  
   mat4.identity(mat)
   mat4.translate(mat, mat, [75, 27, 0])
   mat4.scale(mat, mat, [1/32*92, 1/32*92, 1])
