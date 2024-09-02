@@ -173,8 +173,7 @@ v.renderFunc = function() {
   }
 
   let g = v.sendGad
-  console.log(g)
-  drawPill(v, colors.accent, g.x, g.y, g.w, g.h)
+  drawPill(v, colors.accent, g.x, g.y + v.menuH * f0, g.w, g.h)
 }
 
 export const menuShim = v = new fg.OverlayView(null)
