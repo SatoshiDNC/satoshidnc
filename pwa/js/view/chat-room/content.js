@@ -33,7 +33,7 @@ v.renderFunc = function() {
   w = text.map(line => defaultFont.calcWidth(line) * s)
   let maxw = w.reduce((p,q)=>Math.max(p,q),0)
   drawRoundedRect(v, colors.chatInfoBubble, 20, (v.sw-maxw-24*2)/2,118,maxw+24*2,165)
-  for (const i = 0; i < 3; i++) {
+  for (let i = 0; i < 3; i++) {
     mat4.identity(m)
     mat4.translate(m,m, [(v.sw-w[i])/2, 170 + 44*i, 0])
     mat4.scale(m,m, [s, s, 1])
