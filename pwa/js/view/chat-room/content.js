@@ -17,4 +17,5 @@ v.renderFunc = function() {
   const mat = mat4.create()
 
   drawRoundedRect(v, colors.chatInfoBubble, 20, 406,13,267,78)
+  drawRoundedRect(v, colors.chatInfoBubble, 20, 101,118,877,165)
 }
