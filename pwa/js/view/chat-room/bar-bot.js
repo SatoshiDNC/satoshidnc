@@ -43,7 +43,6 @@ v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log('send')
     if (fg.getRoot() !== g.target || g.target.easingState() == -1) {
       g.target?.easeIn?.(g.items)
     } else {
