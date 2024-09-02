@@ -26,8 +26,7 @@ v.renderFunc = function() {
   defaultFont.draw(0,0, text, colors.chatInfoText, v.mat, m)
 
   text = [
-    'End-to-end encryption does not guarantee your',
-    //'E2E encrypted, without guarantee of privacy',
+    'End-to-end encryption does not guarantee',
     'privacy, when your device can be surveilled.',
 
     //'Encryption does not guarantee your privacy',
