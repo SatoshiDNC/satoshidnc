@@ -282,7 +282,7 @@
         }
         function refreshStatuses() {
           let todo = false
-          for (p of progress) {
+          for (const p of progress) {
             if (p.value) {
               todo = true
               splash.setText(p.message)
