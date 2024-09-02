@@ -25,5 +25,18 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, text, colors.chatInfoText, v.mat, m)
 
-  drawRoundedRect(v, colors.chatInfoBubble, 20, 101,118,877,165)
+  text = [
+    'Your device might be under surveillence,',
+    'so encryption does not guarantee your privacy.',
+    'Use an offline encryption and signing device.',
+  ]
+  w = text.map(line => defaultFont.calcWidth(line) * s)
+  let maxw = w.reduce((p,q)=>Math.max(p,q),0)
+  drawRoundedRect(v, colors.chatInfoBubble, 20, (v.sw-maxw-24*2)/2,118,maxw+24*2,165)
+  for (const i = 0; i < 3; i++) {
+    mat4.identity(m)
+    mat4.translate(m,m, [(v.sw-w[i])/2, 170 + 44*i, 0])
+    mat4.scale(m,m, [s, s, 1])
+    defaultFont.draw(0,0, text[i], colors.chatInfoText, v.mat, m)
+  }
 }
