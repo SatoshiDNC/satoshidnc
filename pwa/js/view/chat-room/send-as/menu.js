@@ -179,6 +179,9 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, item.label, v.textColor, v.mat, m)
     i++
   }
+
+  let g = v.sendGad
+  drawPill(v, colors.accent, g.x, g.y, g.w, g.h)
 }
 
 export const menuShim = v = new fg.OverlayView(null)
