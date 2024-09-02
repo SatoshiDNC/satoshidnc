@@ -77,7 +77,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
-    const index = Math.floor((y - 79 - 33 / 2 + 126 / 2) / 126)
+    const index = Math.floor((y - 203 - 41 - 79 - 33 / 2 + 126 / 2) / 126)
     if (index >= 0 && index < v.items.length) {
       v.items[index].handler(v.items[index])
       menuRoot.easeOut()
