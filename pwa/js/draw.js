@@ -1,4 +1,4 @@
-export function drawPill(v, color, x,y,w,h) {
+export function drawRect(v, color, x,y,w,h) {
   mainShapes.useProg2()
   const m = mat4.create()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(color))
