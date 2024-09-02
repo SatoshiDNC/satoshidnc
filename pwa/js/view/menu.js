@@ -154,14 +154,15 @@ v.renderFunc = function() {
   }
   const m = mat4.create()
 
-  mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  mat4.identity(m)
-  mat4.translate(m,m, [v.menuX, v.menuY, 0])
-  mat4.scale(m,m, [v.menuW, v.menuH * v.easingValue, 1])
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('rect')
+  // mainShapes.useProg2()
+  // gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
+  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  // mat4.identity(m)
+  // mat4.translate(m,m, [v.menuX, v.menuY, 0])
+  // mat4.scale(m,m, [v.menuW, v.menuH * v.easingValue, 1])
+  // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  // mainShapes.drawArrays2('rect')
+  drawRoundedRect(v, v.bgColor, 32, v.menuX,v.menuY * f1 -v.menuH * f0,v.menuW,v.menuH)
 
   let i = 0
   for (const item of v.items) {
