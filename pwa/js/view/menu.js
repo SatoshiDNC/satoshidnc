@@ -3,7 +3,7 @@ import { schnorr } from '@noble/curves/secp256k1'
 import { Buffer } from 'buffer'
 import { serializeEvent } from 'nostr-tools'
 import { finalizeEvent } from 'nostr-tools/pure'
-import { drawRoundedRect } from '../../../draw.js'
+import { drawRoundedRect } from '../draw.js'
 
 let v, g
 export const menuView = v = new fg.View(null)
