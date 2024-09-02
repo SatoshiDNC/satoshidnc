@@ -50,6 +50,17 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
 
+  let goal = g.focused? 1: 0
+  if (goal != g.focusValue) {
+    g.focusValue = g.focusValue * 0.0 + goal * 1.0
+    if (Math.abs(goal - g.focusValue) < 0.005) {
+      g.focusValue = goal
+    }
+    v.setRenderFlag(true)
+  }
+  const f1 = g.focusValue
+  const f0 = 1 - f1
+
   let s = 37/14
   drawPill(v, colors.chatTextBox, 13, 11, v.sw - 13 - 148, 123)
   mat4.identity(m)
@@ -57,7 +68,7 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, 'Message', colors.chatInfoText, v.mat, m)
   let g = v.msgGad
-  drawRect(v, colors.accent, g.x, g.y+26, 5, 70)
+  drawRect(v, colors.accent.map((v,i)=>i==3?f1:v), g.x, g.y+26, 5, 70)
 
   g = v.sendGad
   drawPill(v, colors.accent, g.x, g.y, g.w, g.h)
