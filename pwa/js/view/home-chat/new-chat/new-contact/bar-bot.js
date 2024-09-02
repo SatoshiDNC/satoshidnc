@@ -22,8 +22,8 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
         hpub = pubkey.toLowerCase()
       }
       if (!hpub) {
+        console.log(JSON.stringify(nip19.decode(pubkey)))
         try {
-          console.log(JSON.stringify(nip19.decode(pubkey)))
           hpub = nip19.decode(pubkey).data
         } catch(e) {
         }
