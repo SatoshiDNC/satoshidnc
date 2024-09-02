@@ -123,6 +123,7 @@ v.layoutFunc = function() {
   g = v.sendGad
   g.y = v.sh - 147
   g.w = v.sw - 2 * g.x
+  g.autoHull()
   g = v.menuGad
   g.x = v.menuX
   g.y = v.menuY
@@ -181,6 +182,7 @@ v.renderFunc = function() {
   }
 
   let g = v.sendGad
+  console.log(g)
   drawPill(v, colors.accent, g.x, g.y, g.w, g.h)
 }
 
