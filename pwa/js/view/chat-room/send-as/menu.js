@@ -15,9 +15,6 @@ v.easingValue = 0
 v.easingRate = 0.033
 v.items = []
 v.menuX = 0
-v.menuY = 137
-v.menuW = 588
-v.menuH = 62 + 126 * v.currentItemCount
 v.menuR = 32
 v.getText = (mime) => {
   return new Promise((resolve, reject) => {
@@ -104,8 +101,9 @@ v.prepMenu = function(items) {
 }
 v.layoutFunc = function() {
   const v = this
-  // v.menuX = v.sw - v.menuW - 10
   v.menuH = 62 + 126 * v.currentItemCount
+  v.menuY = v.sh - v.menuH
+  v.menuW = v.sw
   let g
   let i = 0
   for (g of v.gadgets) if (g.enabled) {
