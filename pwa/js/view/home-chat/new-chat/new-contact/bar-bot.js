@@ -17,7 +17,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const name = g.formView.nameGad.text
     const pubkey = g.formView.pubkeyGad.text
     if (name && pubkey) {
-      let hpub
+      let hpub, relays
       if (pubkey.length == 64 && Array.from(pubkey.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
         hpub = pubkey.toLowerCase()
       }
@@ -26,6 +26,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
           const decoded = nip19.decode(pubkey)
           if (decoded?.type == 'nprofile') {
             hpub = decoded.data.pubkey
+            relays = decoded.data.relays
           } else if (decoded?.type == 'npub') {
             hpub = decoded.data
           }
@@ -51,6 +52,9 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       }
       if (!cancel) {
         addNewContact(hpub, name)
+        if (relays) {
+          relays.map(r => detectRelay(r))
+        }
         g.root.easeOut(g.target)
         g.formView.clear()
       }

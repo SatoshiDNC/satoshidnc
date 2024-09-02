@@ -20,17 +20,3 @@ v.renderFunc = function() {
   const mat = mat4.create()
 
 }
-
-// export const chatSend = new fg.SliceView(null, 'br', .125)
-// v = chatSend
-// v.name = Object.keys({chatSend}).pop()
-// v.prop = true
-// v.a = sendBar; sendBar.parent = v
-// v.b = chatView; chatView.parent = v
-
-// export const chatRoom = new fg.SliceView(null, 'tl', .125)
-// v = chatRoom
-// v.name = Object.keys({chatRoom}).pop()
-// v.prop = true
-// v.a = barTop; barTop.parent = v
-// v.b = chatSend; chatSend.parent = v

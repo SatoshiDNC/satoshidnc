@@ -17,8 +17,10 @@ export const contacts = []
 export function addNewContact(hpub, name) {
   const tr = db.transaction('contacts', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('contacts')
-  os.put({ hpub, name })
-  reloadContacts()
+  const req = os.put({ hpub, name })
+  req.onsuccess = (e) => {
+    reloadContacts()
+  }
 }
 
 export function reloadContacts() {
