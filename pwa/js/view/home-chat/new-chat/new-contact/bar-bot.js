@@ -24,7 +24,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       if (!hpub) {
         console.log(JSON.stringify(nip19.decode(pubkey)))
         try {
-          decoded = nip19.decode(pubkey)
+          const decoded = nip19.decode(pubkey)
           if (decoded.type == 'nprofile') {
             hpub = decoded.data.pubkey
           } else if (decoded.type == 'npub') {
