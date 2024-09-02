@@ -148,7 +148,8 @@ v.renderFunc = function() {
   const f0 = 1 - f1
   const m = mat4.create()
 
-  drawRoundedRect(v, v.bgColor, 75, v.menuX,v.menuY * f1 + v.sh * f0,v.menuW,v.menuH + 75)
+  drawPill(v, colors.inactive, v.menuX + (v.menuW - 84) / 2, v.menuY + v.menuH * f0, 84, 11)
+  drawRoundedRect(v, v.bgColor, 75, v.menuX, v.menuY + v.menuH * f0, v.menuW, v.menuH + 75)
 
   mat4.identity(m)
   mat4.translate(m,m, [v.menuX + 45, v.menuY + 203 + 41 + v.menuH * f0, 0])
