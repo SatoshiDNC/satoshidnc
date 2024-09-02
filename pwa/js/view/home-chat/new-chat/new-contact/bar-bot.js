@@ -23,12 +23,13 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       }
       if (!hpub) {
         try {
+          console.log(JSON.stringify(nip19.decode(pubkey)))
           hpub = nip19.decode(pubkey).data
         } catch(e) {
         }
       }
       if (!hpub) {
-        alert(`Unrecognized public key format. Supported formats include: npub, hex`)
+        alert(`Unrecognized public key format. Supported formats include: nprofile, npub, hex`)
         return
       }
       let cancel = false
