@@ -1,4 +1,5 @@
 import { contacts, addNewContact } from '../../../../contacts.js'
+import { detectRelay } from '../../../../relays.js'
 import { drawPill } from '../../../../draw.js'
 import * as nip19 from 'nostr-tools/nip19'
 
