@@ -144,6 +144,8 @@ v.renderFunc = function() {
     menuRoot.ghostOpacity = v.easingValue * 0.5
     v.setRenderFlag(true)
   }
+  const f1 = v.easingValue
+  const f0 = 1 - f1
   const m = mat4.create()
 
   // mainShapes.useProg2()
@@ -154,7 +156,7 @@ v.renderFunc = function() {
   // mat4.scale(m,m, [v.menuW, v.menuH * v.easingValue, 1])
   // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   // mainShapes.drawArrays2('rect')
-  drawRoundedRect(v, v.bgColor, 75, v.menuX,v.menuY,v.menuW,v.menuH)
+  drawRoundedRect(v, v.bgColor, 75, v.menuX,v.menuY * f1 + v.sh * f0,v.menuW,v.menuH)
 
   let i = 0
   for (const item of v.items) {
