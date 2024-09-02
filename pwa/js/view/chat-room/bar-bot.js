@@ -68,7 +68,7 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m,m, [131, 92, 0])
   mat4.scale(m,m, [s, s, 1])
-  defaultFont.draw(0,0, g.text||g.hint, g.text?colors.activeText:colors.chatInfoText, v.mat, m)
+  defaultFont.draw(0,0, g.text||g.hint, g.text?[1,1,1,1]:colors.chatInfoText, v.mat, m)
   drawRect(v, colors.accent.map((v,i)=>i==3?f1:v), g.x, g.y+26, 5, 70)
 
   g = v.sendGad
