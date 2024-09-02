@@ -11,6 +11,7 @@ import { barTop as homeChat_newChat_newContact_top } from './view/home-chat/new-
 import { newContactRoot as homeChat_newChat_newContact_root } from './view/home-chat/new-chat/new-contact/root.js'
 import { barBot as homeChat_newChat_newContact_bot } from './view/home-chat/new-chat/new-contact/bar-bot.js'
 import { contentView as homeChat_newChat_newContact_content } from './view/home-chat/new-chat/new-contact/content.js'
+import { barBot as chatRoom_bot } from './view/chat-room/bar-bot.js'
 
 homeChatTop.menuGad.target = menuRoot
 newChatTop.backGad.root = homeChat_newChat_root, newChatTop.backGad.target = homeChat_root
@@ -22,3 +23,4 @@ homeChat_newChat_content.newContactGad.root = homeChat_newChat_root, homeChat_ne
 homeChat_newChat_newContact_top.backGad.root = homeChat_newChat_newContact_root, homeChat_newChat_newContact_top.backGad.target = homeChat_newChat_root
 homeChat_newChat_newContact_bot.saveGad.formView = homeChat_newChat_newContact_content
 homeChat_newChat_newContact_bot.saveGad.root = homeChat_newChat_newContact_root, homeChat_newChat_newContact_bot.saveGad.target = homeChat_newChat_root
+chatRoom_bot.sendGad.root = chatRoom_root, chatRoom_bot.sendGad.target = menuRoot

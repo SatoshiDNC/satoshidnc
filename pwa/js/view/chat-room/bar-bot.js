@@ -31,9 +31,24 @@ v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.y = 12, g.w = 123, g.h = 123
   g.label = 'Send'
+  g.handler = function(item) {
+    console.log(`send as ${JSON.stringify(item)}`)
+  }
+  g.items = [
+    { id: 1, handler: g.handler, label: 'A' },
+    { id: 2, handler: g.handler, label: 'B' },
+    { id: 3, handler: g.handler, label: 'C' },
+    { id: 4, handler: g.handler, label: 'D' },
+    { id: 5, handler: g.handler, label: 'E' },
+  ]
   g.clickFunc = function() {
-    const g = this, v = g.viewport
+    const g = this, v = this.viewport
     console.log('send')
+    if (fg.getRoot() !== g.target || g.target.easingState() == -1) {
+      g.target?.easeIn?.(g.items)
+    } else {
+      g.target?.easeOut?.()
+    }
   }
 v.layoutFunc = function() {
   const v = this
