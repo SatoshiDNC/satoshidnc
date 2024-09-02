@@ -1,5 +1,5 @@
 import { barTop } from './bar-top.js'
-import { setEasingParameters } from '../util.js'
+import { drawRoundedRect } from '../../draw.js'
 
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
@@ -19,4 +19,5 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const mat = mat4.create()
 
+  drawRoundedRect(v, colors.chatInfoBubble, 20, 406,13,267,78)
 }
