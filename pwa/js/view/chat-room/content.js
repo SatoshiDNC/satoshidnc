@@ -19,7 +19,7 @@ v.renderFunc = function() {
   let s = 27/14
   let text = new Date().toLocaleDateString('en-US', {})
   let w = defaultFont.calcWidth(text) * s
-  drawRoundedRect(v, colors.chatInfoBubble, 20, (v.sw-w+24*2)/2,13,w+24*2,78)
+  drawRoundedRect(v, colors.chatInfoBubble, 20, (v.sw-w-24*2)/2,13,w+24*2,78)
   mat4.identity(m)
   mat4.translate(m,m, [(v.sw-w)/2, 66, 0])
   mat4.scale(m,m, [s, s, 1])
