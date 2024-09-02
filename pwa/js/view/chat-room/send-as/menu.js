@@ -75,6 +75,13 @@ v.getText = (mime) => {
 //     }
 //   }
 // })
+v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 69, g.h = 104
+  g.clickFunc = function(e) {
+    const g = this, v = this.viewport
+    console.log('sendGad')
+  }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
@@ -113,6 +120,9 @@ v.layoutFunc = function() {
     g.autoHull()
     i++
   }
+  g = v.sendGad
+  g.y = v.sh - 147
+  g.w = v.sw - 2 * g.x
   g = v.menuGad
   g.x = v.menuX
   g.y = v.menuY
