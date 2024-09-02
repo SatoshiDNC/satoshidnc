@@ -157,7 +157,7 @@ v.renderFunc = function() {
   drawPill(v, colors.inactive, v.menuX + (v.menuW - 84) / 2, v.menuY + 26 + v.menuH * f0, 84, 11)
 
   mat4.identity(m)
-  let str = 'Send messages in this chat as'
+  let str = 'Identify in this chat as'
   let s = 41/14
   mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + TITLE_TOP + 41 + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
