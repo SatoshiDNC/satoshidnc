@@ -55,7 +55,7 @@ v.renderFunc = function() {
         drawRoundedRect(v, colors.chatInfoBubble, 20, (v.sw-maxw-24*2)/2,y,maxw+24*2,165)
         for (let i = 0; i < 3; i++) {
           mat4.identity(m)
-          mat4.translate(m,m, [(v.sw-w[i])/2, 52 + 44*i, 0])
+          mat4.translate(m,m, [(v.sw-w[i])/2, y + 52 + 44*i, 0])
           mat4.scale(m,m, [s, s, 1])
           defaultFont.draw(0,0, text[i], colors.chatInfoText2, v.mat, m)
         }
