@@ -1,6 +1,7 @@
 import { drawPill, drawRoundedRect } from '../../../draw.js'
 
 const TITLE_TOP = 120
+const BOT_SPACE = 203
 
 let v, g
 export const menuView = v = new fg.View(null)
@@ -99,7 +100,7 @@ v.prepMenu = function(items) {
 }
 v.layoutFunc = function() {
   const v = this
-  v.menuH = TITLE_TOP + 41 + 62 + 126 * v.currentItemCount
+  v.menuH = TITLE_TOP + 41 + 62 + 126 * v.currentItemCount + BOT_SPACE
   v.menuY = v.sh - v.menuH
   v.menuW = v.sw
   let g
