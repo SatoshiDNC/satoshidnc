@@ -26,9 +26,13 @@ v.renderFunc = function() {
   defaultFont.draw(0,0, text, colors.chatInfoText, v.mat, m)
 
   text = [
-    'Encryption does not guarantee your privacy',
+    'End-to-end encryption does not guarantee your',
     //'E2E encrypted, without guarantee of privacy',
-    'when your device is subject to surveillence.',
+    'privacy, when your device can be surveilled.',
+
+    //'Encryption does not guarantee your privacy',
+    //'E2E encrypted, without guarantee of privacy',
+    //'when your device is subject to surveillence.',
     'Tap for offline encryption and signing info.',
   ]
   w = text.map(line => defaultFont.calcWidth(line) * s)
