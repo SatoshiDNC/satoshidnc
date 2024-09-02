@@ -32,7 +32,11 @@ export function drawPill(v, color, x,y,w,h) {
   mainShapes.drawArrays2('rect')
 }
 
-export function drawRoundedRect(v, color, r, x,y,w,h) {
+export function drawRoundedRect(v, color, radius, x,y,w,h) {
+  let r = radius
+  if (r * 2 > w || r * 2 > h) {
+    r = Math.min(w, h) / 2
+  }
   const d = r*2
   mainShapes.useProg2()
   const m = mat4.create()
