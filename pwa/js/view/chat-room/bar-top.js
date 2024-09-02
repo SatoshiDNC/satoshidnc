@@ -10,6 +10,10 @@ v.white = [1,1,1,1]
 v.yellow = [1,0.8,0,1]
 v.red = [1,0,0,1]
 v.blue = [0,0,1,1]
+v.VPOS0 = 90
+v.VPOS1 = 68
+v.lastSubtitle = ''
+v.subtitleOpacity = 0
 v.shirtColor = [v.white, v.yellow, v.red, v.blue]
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -70,8 +74,22 @@ v.renderFunc = function() {
     mat4.copy(m, mat)
     nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
   })
+
+  const subtitle = ''
+  v.lastSubtitle ||= subtitle
+  let goal = subtitle? 1: 0
+  if (goal != g.subtitleOpacity) {
+    g.subtitleOpacity = g.subtitleOpacity * 0.7 + goal * 0.3
+    if (Math.abs(goal - g.subtitleOpacity) < 0.005) {
+      g.subtitleOpacity = goal
+    }
+    v.setRenderFlag(true)
+  }
+  const f1 = g.subtitleOpacity
+  const f0 = 1 - f1
+
   mat4.identity(mat)
-  mat4.translate(mat, mat, [190, 68, 0])
+  mat4.translate(mat, mat, [190, v.VPOS0 * f0 + v.VPOS1 * f1, 0])
   mat4.scale(mat, mat, [35/14, 35/14, 1])
   x = 0, y = 0
   defaultFont.draw(x,y, contact.name, v.textColor, v.mat, mat)
@@ -83,7 +101,8 @@ v.renderFunc = function() {
   // online
   // last seen today at 12:50 PM
   // Business Account
-  defaultFont.draw(x,y, 'online', v.textColor, v.mat, mat)
+  const c = v.textColor
+  defaultFont.draw(x,y, 'online', [c[0], c[1], c[2], f1], v.mat, mat)
 
   for (g of v.gadgets) {
     mat4.identity(mat)
