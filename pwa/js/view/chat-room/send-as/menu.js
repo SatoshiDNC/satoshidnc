@@ -150,7 +150,6 @@ v.renderFunc = function() {
 
   drawRoundedRect(v, v.bgColor, 75, v.menuX, v.menuY + v.menuH * f0, v.menuW, v.menuH + 75)
   drawPill(v, colors.inactive, v.menuX + (v.menuW - 84) / 2, v.menuY + 26 + v.menuH * f0, 84, 11)
-  console.log(colors.inactive, v.menuX + (v.menuW - 84) / 2, v.menuY + 26 + v.menuH * f0, 84, 11)
 
   mat4.identity(m)
   let str = 'Send messages in this chat as'
@@ -162,7 +161,7 @@ v.renderFunc = function() {
   let i = 0
   for (const item of v.items) {
     mat4.identity(m)
-    mat4.translate(m,m, [v.menuX + 45, v.menuY + 79 + i * 126 + 33, 0])
+    mat4.translate(m,m, [v.menuX + 45, v.menuY + 203 + 41 + 79 + i * 126 + 33, 0])
     mat4.scale(m,m, [33/14, 33/14, 1])
     const c = v.textColor
     defaultFont.draw(0,0, item.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
