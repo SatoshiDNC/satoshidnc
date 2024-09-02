@@ -80,8 +80,11 @@ v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
   g.x = 69, g.h = 104
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    console.log('sendGad')
-  }
+    if (v.index >= 0 && v.index < v.items.length) {
+      v.items[v.index].handler(v.items[v.index])
+      menuRoot.easeOut()
+    }
+}
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
@@ -89,8 +92,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
     const index = Math.floor((y - TITLE_TOP - 41 - 79 - 33 / 2 + 126 / 2) / 126)
     if (index >= 0 && index < v.items.length) {
-      v.items[index].handler(v.items[index])
-      menuRoot.easeOut()
+      v.index = index
+      // v.items[index].handler(v.items[index])
+      // menuRoot.easeOut()
     } else {
       // console.log('menu', x, y, index)
     }
@@ -103,6 +107,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
 v.prepMenu = function(items) {
   const v = this
   v.items = items
+  v.index = -1
   v.currentItemCount = items.length
 }
 v.layoutFunc = function() {
