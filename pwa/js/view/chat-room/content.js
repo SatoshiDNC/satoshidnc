@@ -27,7 +27,7 @@ v.renderFunc = function() {
 
   text = [
     'End-to-end encryption does not guarantee',
-    'privacy, when your device can be surveilled.',
+    'privacy when your device can be surveilled.',
 
     //'Encryption does not guarantee your privacy',
     //'E2E encrypted, without guarantee of privacy',
