@@ -34,7 +34,7 @@ v.renderFunc = function() {
 
   let s, text, w
   let y = 0
-  for (msg of v.messages) {
+  for (const msg of v.messages) {
     s = 27/14
     y += 13
     switch (msg.type) {
