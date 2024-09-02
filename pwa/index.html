@@ -264,22 +264,37 @@
           setTimeout(splashCheck, 10)
         }
       }
+      const startTime = Date.now()
       splashCheck(() => {
         // entrypoint
         fg.start(splash, true)
-        let initializingDB = true
-        let loadingFonts = true
-        function updateStatus() {
-          if (loadingFonts) {
-            splash.setText('loading fonts...')
-          } else if (initializingDB) {
-            splash.setText('initializing database...')
-          } else {
+        function newStatus(key, message) {
+          return { key, value: true, expected_time: window.localStorage.getItem(key), message }          
+        }
+        const progress = [
+          newStatus('initializing_db', 'initializing database...'),
+          newStatus('loading_fonts', 'loading fonts...'),
+        ]
+        const clearStatus = key => {
+          window.localStorage.setItem(key, Date.now() - startTime)
+          progress.filter(p => p.key == key)?.[0].value = false
+          refreshStatuses()
+        }
+        function refreshStatuses() {
+          let todo = false
+          for (p of progress) {
+            if (p.value) {
+              todo = true
+              splash.setText(p.message)
+              break
+            }
+          }
+          if (!todo) {
             splash.setText('ready!')
             splash.easeOut(homeRoot)
           }
         }
-        updateStatus()
+        refreshStatuses()
 
         // wait for other fonts to load on startup
         const fontCheck = (finisher) => {
@@ -292,16 +307,16 @@
             iconFont.init()
             finisher()
           } else {
-            setTimeout(startupCheck, 10)
+            setTimeout(fontCheck, 10)
           }
         }
         fontCheck(() => {
-          loadingFonts = false; updateStatus()
+          clearStatus('loading_fonts')
         })
 
         // initialize database
         dbInit().then(() => {
-          initializingDB = false; updateStatus()
+          clearStatus('initializing_db')
           reloadContacts()
         }).catch(e => {
           splash.setText(e)
