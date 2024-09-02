@@ -33,11 +33,11 @@ export function reloadRelayContactGraph() {
     let cursor = e.target.result
     if (cursor) {
       let v = cursor.value
-      contact = contacts.filter(c => c.hpub == v.contactHpub)[0]
+      const contact = contacts.filter(c => c.hpub == v.contactHpub)[0]
       if (!contact.relays.includes(v.relayUrl)) {
         contact.relays.push(v.relayUrl)
       }
-      relay = relays.filter(r => r.url == v.relayUrl)[0]
+      const relay = relays.filter(r => r.url == v.relayUrl)[0]
       if (!relay.contacts.includes(v.contactHpub)) {
         relay.contacts.push(v.contactHpub)
       }
