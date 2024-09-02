@@ -37,6 +37,6 @@ v.renderFunc = function() {
     mat4.identity(m)
     mat4.translate(m,m, [(v.sw-w[i])/2, 170 + 44*i, 0])
     mat4.scale(m,m, [s, s, 1])
-    defaultFont.draw(0,0, text[i], colors.chatInfoText, v.mat, m)
+    defaultFont.draw(0,0, text[i], colors.chatInfoText2, v.mat, m)
   }
 }
