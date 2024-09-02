@@ -1,4 +1,5 @@
 import { drawPill, drawRect } from '../../draw.js'
+import { getKeyboardInput } from '../util.js'
 
 let v, g
 export const barBot = v = new fg.View()
