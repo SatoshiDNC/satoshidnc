@@ -31,7 +31,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
           }
         } catch(e) {
           if (pubkey.startsWith('nprofile') || pubkey.startsWith('npub')) {
-            alert(`Error: ${e}`)
+            alert(`${e}`)
             return
           }
         }
