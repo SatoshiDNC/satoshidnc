@@ -1,5 +1,7 @@
 import { drawPill, drawRoundedRect } from '../../../draw.js'
 
+const TITLE_TOP = 120
+
 let v, g
 export const menuView = v = new fg.View(null)
 v.name = Object.keys({menuView}).pop()
@@ -77,7 +79,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
-    const index = Math.floor((y - 203 - 41 - 79 - 33 / 2 + 126 / 2) / 126)
+    const index = Math.floor((y - TITLE_TOP - 41 - 79 - 33 / 2 + 126 / 2) / 126)
     if (index >= 0 && index < v.items.length) {
       v.items[index].handler(v.items[index])
       menuRoot.easeOut()
@@ -97,7 +99,7 @@ v.prepMenu = function(items) {
 }
 v.layoutFunc = function() {
   const v = this
-  v.menuH = 203 + 41 + 62 + 126 * v.currentItemCount
+  v.menuH = TITLE_TOP + 41 + 62 + 126 * v.currentItemCount
   v.menuY = v.sh - v.menuH
   v.menuW = v.sw
   let g
@@ -154,14 +156,14 @@ v.renderFunc = function() {
   mat4.identity(m)
   let str = 'Send messages in this chat as'
   let s = 41/14
-  mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + 203 + 41 + v.menuH * f0, 0])
+  mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + TITLE_TOP + 41 + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.textColor, v.mat, m)
 
   let i = 0
   for (const item of v.items) {
     mat4.identity(m)
-    mat4.translate(m,m, [v.menuX + 45, v.menuY + 203 + 41 + 79 + i * 126 + 33 + v.menuH * f0, 0])
+    mat4.translate(m,m, [v.menuX + 45, v.menuY + TITLE_TOP + 41 + 79 + i * 126 + 33 + v.menuH * f0, 0])
     mat4.scale(m,m, [33/14, 33/14, 1])
     defaultFont.draw(0,0, item.label, v.textColor, v.mat, m)
     i++
