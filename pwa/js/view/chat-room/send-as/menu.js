@@ -97,7 +97,7 @@ v.prepMenu = function(items) {
 }
 v.layoutFunc = function() {
   const v = this
-  v.menuH = 62 + 126 * v.currentItemCount
+  v.menuH = 203 + 41 + 62 + 126 * v.currentItemCount
   v.menuY = v.sh - v.menuH
   v.menuW = v.sw
   let g
