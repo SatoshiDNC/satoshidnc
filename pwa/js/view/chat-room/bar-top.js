@@ -78,14 +78,14 @@ v.renderFunc = function() {
   const subtitle = ''
   v.lastSubtitle ||= subtitle
   let goal = subtitle? 1: 0
-  if (goal != g.subtitleOpacity) {
-    g.subtitleOpacity = g.subtitleOpacity * 0.7 + goal * 0.3
-    if (Math.abs(goal - g.subtitleOpacity) < 0.005) {
-      g.subtitleOpacity = goal
+  if (goal != v.subtitleOpacity) {
+    v.subtitleOpacity = v.subtitleOpacity * 0.7 + goal * 0.3
+    if (Math.abs(goal - v.subtitleOpacity) < 0.005) {
+      v.subtitleOpacity = goal
     }
     v.setRenderFlag(true)
   }
-  const f1 = g.subtitleOpacity
+  const f1 = v.subtitleOpacity
   const f0 = 1 - f1
 
   mat4.identity(mat)
