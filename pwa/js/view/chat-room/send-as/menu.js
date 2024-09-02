@@ -174,6 +174,12 @@ v.renderFunc = function() {
 
   let g = v.sendGad
   drawPill(v, colors.accent, g.x, g.y + v.menuH * f0, g.w, g.h)
+  mat4.identity(m)
+  str = 'Send'
+  s = 29/14
+  mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(str) * s) / 2, g.y + 66 + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.bgColor, v.mat, m)
 }
 
 export const menuShim = v = new fg.OverlayView(null)
