@@ -30,7 +30,7 @@ export function reloadRelays() {
     let cursor = e.target.result
     if (cursor) {
       let v = cursor.value
-      newList.push({ url: v.url })
+      newList.push({ url: v.url, contacts: [] })
       cursor.continue()
     } else {
       relays.length = 0
