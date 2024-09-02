@@ -26,8 +26,8 @@ v.renderFunc = function() {
   defaultFont.draw(0,0, text, colors.chatInfoText, v.mat, m)
 
   text = [
-    'Your device might be under surveillence;',
-    'encryption does not guarantee your privacy.',
+    'Encryption does not guarantee your privacy',
+    'when your device is subject to surveillence.',
     'Use an offline encryption and signing device.',
   ]
   w = text.map(line => defaultFont.calcWidth(line) * s)
