@@ -23,6 +23,7 @@ v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
+  const m = mat4.create()
 
   let s = 37/14
   drawPill(v, colors.chatTextBox, 13, 11, v.sw - 13 - 148, 123)
