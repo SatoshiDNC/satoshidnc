@@ -1,3 +1,5 @@
+import { drawPill } from '../../draw.js'
+
 let v, g
 export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
@@ -15,4 +17,6 @@ v.renderFunc = function() {
   mat4.scale(m,m, [v.sw, 2, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
+
+  drawPill(v, colors.chatTextBox, 13, 11, v.sw - 13 - 148, 123)
 }

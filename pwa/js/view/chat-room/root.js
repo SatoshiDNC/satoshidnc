@@ -3,7 +3,7 @@ import { barBot } from './bar-bot.js'
 import { contentView } from './content.js'
 import { setEasingParameters } from '../util.js'
 
-export const chatRoomRoot = v = new fg.DualSliceView(null, 'v', 147, 211)
+export const chatRoomRoot = v = new fg.DualSliceView(null, 'v', 147, 147)
 v.name = Object.keys({chatRoomRoot}).pop()
 v.designSize = 1080 * 2183
 v.bgColor = [0,0,0,1]
