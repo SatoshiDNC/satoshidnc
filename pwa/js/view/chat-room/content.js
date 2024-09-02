@@ -49,7 +49,7 @@ v.renderFunc = function() {
         y += 78
         break
       case 'security info':
-        test = msg.text
+        text = msg.text
         w = text.map(line => defaultFont.calcWidth(line) * s)
         let maxw = w.reduce((p,q)=>Math.max(p,q),0)
         drawRoundedRect(v, colors.chatInfoBubble, 20, (v.sw-maxw-24*2)/2,y,maxw+24*2,165)
