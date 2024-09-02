@@ -153,7 +153,7 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m,m, [v.menuX + 45, v.menuY + 203 + 41 + v.menuH * f0, 0])
   mat4.scale(m,m, [41/14, 41/14, 1])
-  defaultFont.draw(0,0, item.label, v.textColor, v.mat, m)
+  defaultFont.draw(0,0, 'Send messages in this chat as', v.textColor, v.mat, m)
 
   let i = 0
   for (const item of v.items) {
