@@ -22,18 +22,20 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
         hpub = pubkey.toLowerCase()
       }
       if (!hpub) {
-        console.log(JSON.stringify(nip19.decode(pubkey)))
         try {
           const decoded = nip19.decode(pubkey)
-          if (decoded.type == 'nprofile') {
+          if (decoded?.type == 'nprofile') {
             hpub = decoded.data.pubkey
-          } else if (decoded.type == 'npub') {
+          } else if (decoded?.type == 'npub') {
             hpub = decoded.data
           }
         } catch(e) {
+          if (pubkey.startsWith('nprofile') || pubkey.startsWith('npub')) {
+            alert(`Error: ${e}`)
+            return
+          }
         }
       }
-      console.log(hpub)
       if (!hpub) {
         alert(`Unrecognized public key format. Supported formats include: nprofile, npub, hex`)
         return
