@@ -68,7 +68,18 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m,m, [131, 92, 0])
   mat4.scale(m,m, [s, s, 1])
-  defaultFont.draw(0,0, g.text||g.hint, g.text?[1,1,1,1]:colors.chatInfoText, v.mat, m)
+  let str
+  const max = g.w - 3
+  if (defaultFont.calcWidth(g.text) * s > max) {
+    let l = g.text.length
+    while (defaultFont.calcWidth(g.text.substring(0,l)+'...') * s > max) {
+      l--
+    }
+    str = g.text.substring(0,l)+'...'
+  } else {
+    str = g.text
+  }
+  defaultFont.draw(0,0, str||g.hint, g.text?[1,1,1,1]:colors.chatInfoText, v.mat, m)
   drawRect(v, colors.accent.map((v,i)=>i==3?f1:v), g.x, g.y+26, 5, 70)
 
   g = v.sendGad
