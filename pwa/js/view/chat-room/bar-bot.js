@@ -1,9 +1,31 @@
-import { drawPill } from '../../draw.js'
+import { drawPill, drawRect } from '../../draw.js'
 
 let v, g
 export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
+v.gadgets.push(g = v.msgGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 127, g.y = 12, g.h = 123
+  g.label = 'Message'
+  g.text = '', g.defaultValue = 'Type something'
+  g.animValue = 0
+  g.focusValue = 0
+  g.focused = false
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    g.focused = true
+    v.setRenderFlag(true)
+    g.timerId = setInterval(() => {
+      if (g.focusValue != 1) return
+      getKeyboardInput(g.label, g.text || g.defaultValue, value => {
+        if (value !== undefined) g.text = value
+        g.focused = false
+        v.setRenderFlag(true)
+      })
+      clearInterval(g.timerId), delete g.timerId
+    }, 10)
+  }
 v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.y = 12, g.w = 123, g.h = 123
@@ -15,6 +37,9 @@ v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
 v.layoutFunc = function() {
   const v = this
   let g
+  g = v.msgGad
+  g.w = v.sw - 400 - g.x
+  g.autoHull()
   g = v.sendGad
   g.x = v.sw - 135
   g.autoHull()
@@ -31,7 +56,9 @@ v.renderFunc = function() {
   mat4.translate(m,m, [131, 92, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, 'Message', colors.chatInfoText, v.mat, m)
+  let g = v.msgGad
+  drawRect(v, colors.accent, g.x, g.y+26, 5, 70)
 
-  let g = v.sendGad
+  g = v.sendGad
   drawPill(v, colors.accent, g.x, g.y, g.w, g.h)
 }
