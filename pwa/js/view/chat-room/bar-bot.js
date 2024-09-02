@@ -84,4 +84,9 @@ v.renderFunc = function() {
 
   g = v.sendGad
   drawPill(v, colors.accent, g.x, g.y, g.w, g.h)
+  mat4.identity(m)
+  mat4.translate(m,m, [g.x + 38, g.y + 83, 0])
+  s = 42/7
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, '>', v.bgColor, v.mat, m)
 }
