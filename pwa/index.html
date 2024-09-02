@@ -274,7 +274,7 @@
         const progress = [
           newStatus('initializing_db', 'initializing database...'),
           newStatus('loading_fonts', 'loading fonts...'),
-        ]
+        ].sort((a, b) => a.expected_time - b.expected_time)
         const clearStatus = key => {
           window.localStorage.setItem(key, Date.now() - startTime)
           progress.filter(p => p.key == key)[0].value = false
