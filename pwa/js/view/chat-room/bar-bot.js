@@ -24,7 +24,12 @@ v.renderFunc = function() {
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
 
+  let s = 37/14
   drawPill(v, colors.chatTextBox, 13, 11, v.sw - 13 - 148, 123)
+  mat4.identity(m)
+  mat4.translate(m,m, [131, 92, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, 'Message', colors.chatInfoText, v.mat, m)
 
   let g = v.sendGad
   drawPill(v, colors.accent, g.x, g.y, g.w, g.h)
