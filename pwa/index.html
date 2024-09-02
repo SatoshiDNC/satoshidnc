@@ -277,7 +277,7 @@
         ]
         const clearStatus = key => {
           window.localStorage.setItem(key, Date.now() - startTime)
-          progress.filter(p => p.key == key)?.[0].value = false
+          progress.filter(p => p.key == key)[0].value = false
           refreshStatuses()
         }
         function refreshStatuses() {
