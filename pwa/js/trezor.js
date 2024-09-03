@@ -112,8 +112,12 @@ export function trezorAction() {
   }).then(d => {
     console.log(`out:`, d)
     return readFunc()
-  }).then(d => {
-    console.log(`in:`, d)
+  }).then(res => {
+    console.log(`in:`, res)
+    const d = new Uint8Array(res.data.buffer)
+    if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
+      console.log('magic found')
+    }
   }).catch(e => {
     console.error(e)
   })
