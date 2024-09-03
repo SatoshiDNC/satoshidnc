@@ -126,13 +126,14 @@ export function trezorAction() {
         console.log('finisher', msg)
         function readVarInt(data) {
           console.log('readvarint', data)
-          let n = 1
+          let n = 0
           let x = 0
           while (data[n] & 0x80 !== 0) {
             x = x * 128 + (data[n] & 0x7f)
             n++
           }
           x = x * 128 + (data[n] & 0x7f)
+          n++
           data.splice(0, n)
           return x
         }
