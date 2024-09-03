@@ -132,7 +132,7 @@ export function trezorAction() {
             n++
           }
           x = x * 128 + (data[n] & 0x7f)
-          data = data.splice(0, n)
+          data.splice(0, n)
           return x
         }
         function readType(data, type) {
@@ -151,6 +151,7 @@ export function trezorAction() {
         switch (msgType) {
           case OUT_Failure:
             while (msg.length > 0) {
+              console.log(msg)
               let { param, type, len, value } = readTLV(msg)
               switch (param) {
                 case 1: console.log('code:', value)
