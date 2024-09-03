@@ -125,7 +125,7 @@ export function trezorAction() {
       const finisher = msg => {
         console.log('finisher', msg)
         function readVarInt(data) {
-          console.log('readvarint', msg)
+          console.log('readvarint', data)
           let n = 1
           let x = 0
           while (data[n] & 0x80 !== 0) {
@@ -137,11 +137,11 @@ export function trezorAction() {
           return x
         }
         function readBuf(data, len) {
-          console.log('readbuf', msg)
+          console.log('readbuf', data)
           return data.splice(0, len)
         }
         function readType(data, type) {
-          console.log('readtype', msg)
+          console.log('readtype', data)
           switch (type) {
             case 0:
               return readVarInt(data)
@@ -152,7 +152,7 @@ export function trezorAction() {
           }
         }
         function readTLV(data) {
-          console.log('readtlv', msg)
+          console.log('readtlv', data)
           let tag = readVarInt(data)
           let param = tag >> 3
           let type = tag & 0x7
