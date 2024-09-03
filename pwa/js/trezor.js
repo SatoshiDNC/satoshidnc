@@ -123,8 +123,9 @@ export function trezorAction() {
       payload.splice(0, 0, ...d.slice(9,9 + Math.min(55, remaining)))
       remaining -= 55
       const finisher = msg => {
-        console.log(msg)
+        console.log('finisher', msg)
         function readVarInt(data) {
+          console.log('readvarint' msg)
           let n = 1
           let x = 0
           while (data[n] & 0x80 !== 0) {
@@ -136,9 +137,11 @@ export function trezorAction() {
           return x
         }
         function readBuf(data, len) {
+          console.log('readbuf' msg)
           return data.splice(0, len)
         }
         function readType(data, type) {
+          console.log('readtype' msg)
           switch (type) {
             case 0:
               return readVarInt(data)
@@ -149,6 +152,7 @@ export function trezorAction() {
           }
         }
         function readTLV(data) {
+          console.log('readtlv' msg)
           let tag = readVarInt(data)
           let param = tag >> 3
           let type = tag & 0x7
