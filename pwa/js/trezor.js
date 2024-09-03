@@ -136,7 +136,6 @@ export function trezorAction() {
           console.log('x,n,d', x,n,data[n])
           x = x * 128 + (data[n] & 0x7f)
           n++
-          console.log('x,n,d', x,n,data[n])
           data.splice(0, n)
           return x
         }
