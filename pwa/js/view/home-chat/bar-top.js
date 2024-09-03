@@ -12,6 +12,21 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
     if (item.id == 3) {
+
+      readFunc = d => {
+        return new Promise((resolve, reject) => {
+          if (d.status == 'ok') {
+            device.transferIn(1, 1).then(d => {
+              console.log(`in:`, d)
+              resolve(readFunc(d))
+            })
+          } else {
+            resolve()
+          }
+        })
+      }
+
+
       let device
       navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
         device = selectedDevice
@@ -22,14 +37,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       }).then(() => {
         return device.transferOut(1, new Uint8Array([1]))
       }).then(d => {
-        return new Promise((resolve, reject) => {
-          console.log(`out:`, d)
-          for (let i = 0; i < 100; i++) {
-            device.transferIn(1, 1).then(d => {
-              console.log(`in:`, d)
-            })
-          }
-        })
+        console.log(`out:`, d)
       }).then(d => {
         console.log(`in:`, d)
       }).catch(e => {
