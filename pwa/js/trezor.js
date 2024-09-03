@@ -138,24 +138,7 @@ export function trezorAction() {
               return { param, type, value }
             }
             switch (msgType) {
-              case OUT_Failure:
-                let code
-                let message
-                while (msg.length > 0) {
-                  console.log(msg)
-                  let { param, type, value } = readTLV(msg)
-                  switch (param) {
-                    case 1:
-                      code = value
-                      break
-                    case 2:
-                      message = new TextDecoder().decode(new Uint8Array(value).buffer)
-                      break
-                  }
-                }
-                console.log(`error ${code}: ${message}`)
-                resolve({ msgType: OUT_Failure, code, message })
-                break
+              case OUT_Failure: resolve({ msgType, ...msgFailure() }); break
             }
           }
           const readMore = finisher => {
@@ -183,11 +166,24 @@ export function trezorAction() {
     })
   }
 
-  const handlerFunc = () => {
-    return new Promise((resolve, reject) => {
-      const d = new Uint8Array(res.data.buffer)
-    })
+  function msgFailure() {
+    let code
+    let message
+    while (msg.length > 0) {
+      console.log(msg)
+      let { param, type, value } = readTLV(msg)
+      switch (param) {
+        case 1:
+          code = value
+          break
+        case 2:
+          message = new TextDecoder().decode(new Uint8Array(value).buffer)
+          break
+      }
+    }
+    return { code, message }
   }
+
   
   let device
   navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
