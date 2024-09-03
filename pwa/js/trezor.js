@@ -135,16 +135,23 @@ export function trezorAction() {
           data.splice(0, n)
           return x
         }
+        function readBuf(data, len) {
+          return data.splice(0, len)
+        }
         function readType(data, type) {
           switch (type) {
-            case 0: return readVarInt(data)
+            case 0:
+              return readVarInt(data)
+            case 2:
+              let len = readVarInt(data)
+              return readBuf(data, len)
+            default: console.error('unhandled case')
           }
         }
         function readTLV(data) {
           let tag = readVarInt(data)
           let param = tag >> 3
           let type = tag & 0x7
-          let len = readVarInt(data)
           let value = readType(data, type)
           return { param, type, len, value }
         }
