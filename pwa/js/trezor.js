@@ -138,7 +138,7 @@ export function trezorAction() {
               return { param, type, value }
             }
             switch (msgType) {
-              case OUT_Failure: resolve({ msgType, ...msgFailure() }); break
+              case OUT_Failure: resolve({ msgType, ...msgFailure(msg) }); break
             }
           }
           const readMore = finisher => {
@@ -166,7 +166,7 @@ export function trezorAction() {
     })
   }
 
-  function msgFailure() {
+  function msgFailure(msg) {
     let code
     let message
     while (msg.length > 0) {
