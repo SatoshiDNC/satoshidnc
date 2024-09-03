@@ -195,7 +195,7 @@ export function trezorAction() {
   }).then(() => {
     return device.claimInterface(0)
   }).then(() => {
-    return device.transferOut(1, new Uint8Array([...new TextDecoder().encode('?##'), ...twoByte(IN_Ping), ...fourByte(0)]))
+    return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Ping), ...fourByte(0)]))
   }).then(d => {
     console.log(`out:`, d)
     return readFunc()
