@@ -118,12 +118,37 @@ export function trezorAction() {
     if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
       console.log('magic found')
       const msgType = d[3]*256 + d[4]
-      const msgSize = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
-      const msgPayload = new TextDecoder().decode(d.slice(9,64))
-      switch (msgType) {
-        case OUT_Failure:
-          console.error(msgPayload.substring(0,msgSize))
-          break
+      const remaining = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
+      let payload = []
+      payload.splice(0, 0, ...d.slice(9,9 + Min(55, remaining)))
+      remaining -= 55
+      const readMore = finisher => {
+        readFunc().then(() => {
+          if (new TextDecoder().decode(d.slice(0,1)) == '?') {
+            payload.splice(0, 0, ...d.slice(1,1 + Min(63, remaining)))
+            remaining -= 63
+            if (remaining > 0) {
+              readMore(finisher)
+            } else {
+              fininsher(payload)
+            }
+          } else {
+            console.error('protocol error while reading from Trezor')
+          }
+        })
+      }
+      const finisher = msg => {
+        console.log(msg)
+        switch (msgType) {
+          case OUT_Failure:
+            console.error(msg)
+            break
+        }
+      }
+      if (remaining > 0) {
+        readMore(finisher)
+      } else {
+        fininsher(payload)
       }
     }
   }).catch(e => {
