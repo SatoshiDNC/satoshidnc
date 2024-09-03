@@ -124,9 +124,42 @@ export function trezorAction() {
       remaining -= 55
       const finisher = msg => {
         console.log(msg)
+        function readVarInt(data) {
+          let n = 0
+          let x = 0
+          while (data[n] & 0x80 !== 0) {
+            x = x * 128 + (data[n] & 0x7f)
+            n++
+          }
+          x = x * 128 + (data[n] & 0x7f)
+          data = data.splice(0, n)
+          return x
+        }
+        function readType(data, type) {
+          switch (type) {
+            case 0: return readVarInt(data)
+          }
+        }
+        function readTLV(data) {
+          let tag = readVarInt(data)
+          let param = tag >> 3
+          let type = tag & 0x7
+          let len = readVarInt(data)
+          let value = readType(data, type)
+          return { param, type, len, value }
+        }
         switch (msgType) {
           case OUT_Failure:
-            console.error(msg)
+            while (msg.length > 0) {
+              let { param, type, len, value } = readTLV(msg)
+              switch (param) {
+                case 1: console.log('code:', value)
+                case 2: console.log('msg:', value)
+              }
+            }
+            if (param == 1) {
+              console.log('code:', )
+            }
             break
         }
       }
