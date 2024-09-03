@@ -171,7 +171,9 @@ v.renderFunc = function() {
 
   let i = 0
   for (const item of v.items) {
-    drawRect(v, colors.inactiveDark, v.menuX, v.menuY + TITLE_TOP + 41 + 79 + 35 / 2 - 179 / 2 + v.menuH * f0, v.menuW, 179)
+    if (item.hpub == v.items[v.index].hpub) {
+      drawRect(v, colors.inactiveDark, v.menuX, v.menuY + TITLE_TOP + 41 + 79 + 35 / 2 - 179 / 2 + v.menuH * f0, v.menuW, 179)
+    }
     mat4.identity(mat)
     mat4.translate(mat, mat, [v.menuX + 42, v.menuY + TITLE_TOP + 41 + 44 + 179 * i + v.menuH * f0, 0])
     mat4.scale(mat, mat, [105/32, 105/32, 1])
