@@ -1,5 +1,6 @@
 import { drawPill, drawRect } from '../../draw.js'
 import { getKeyboardInput } from '../util.js'
+import { contacts } from '../../contacts.js'
 
 let v, g
 export const barBot = v = new fg.View()
@@ -34,13 +35,7 @@ v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`send as ${JSON.stringify(item)}`)
   }
-  g.items = [
-    { id: 1, handler: g.handler, label: 'A' },
-    { id: 2, handler: g.handler, label: 'B' },
-    { id: 3, handler: g.handler, label: 'C' },
-    { id: 4, handler: g.handler, label: 'D' },
-    { id: 5, handler: g.handler, label: 'E' },
-  ]
+  g.items = contacts
   g.clickFunc = function() {
     const g = this, v = this.viewport
     if (fg.getRoot() !== g.target || g.target.easingState() == -1) {
