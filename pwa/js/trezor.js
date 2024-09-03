@@ -99,44 +99,6 @@ export function trezorAction() {
           remaining -= 55
           const finisher = msg => {
             console.log('finisher', msg)
-            function readVarInt(data) {
-              console.log('readvarint', data)
-              let n = 0
-              let x = 0
-              while ((data[n] & 0x80) !== 0) {
-                console.log('while x,n,d', x,n,data[n])
-                x = x * 128 + (data[n] & 0x7f)
-                n++
-              }
-              console.log('x,n,d', x,n,data[n])
-              x = x * 128 + (data[n] & 0x7f)
-              n++
-              data.splice(0, n)
-              return x
-            }
-            function readBuf(data, len) {
-              console.log('readbuf', data)
-              return data.splice(0, len)
-            }
-            function readType(data, type) {
-              console.log('readtype', type, data)
-              switch (type) {
-                case 0:
-                  return readVarInt(data)
-                case 2:
-                  let len = readVarInt(data)
-                  return readBuf(data, len)
-                default: console.error('unhandled case')
-              }
-            }
-            function readTLV(data) {
-              console.log('readtlv', data)
-              let tag = readVarInt(data)
-              let param = tag >> 3
-              let type = tag & 0x7
-              let value = readType(data, type)
-              return { param, type, value }
-            }
             switch (msgType) {
               case OUT_Failure: resolve({ msgType, ...msgFailure(msg) }); break
             }
@@ -164,6 +126,48 @@ export function trezorAction() {
         }
       })
     })
+  }
+
+  function readVarInt(data) {
+    console.log('readvarint', data)
+    let n = 0
+    let x = 0
+    while ((data[n] & 0x80) !== 0) {
+      console.log('while x,n,d', x,n,data[n])
+      x = x * 128 + (data[n] & 0x7f)
+      n++
+    }
+    console.log('x,n,d', x,n,data[n])
+    x = x * 128 + (data[n] & 0x7f)
+    n++
+    data.splice(0, n)
+    return x
+  }
+
+  function readBuf(data, len) {
+    console.log('readbuf', data)
+    return data.splice(0, len)
+  }
+
+  function readType(data, type) {
+    console.log('readtype', type, data)
+    switch (type) {
+      case 0:
+        return readVarInt(data)
+      case 2:
+        let len = readVarInt(data)
+        return readBuf(data, len)
+      default: console.error('unhandled case')
+    }
+  }
+  
+  function readTLV(data) {
+    console.log('readtlv', data)
+    let tag = readVarInt(data)
+    let param = tag >> 3
+    let type = tag & 0x7
+    let value = readType(data, type)
+    return { param, type, value }
   }
 
   function msgFailure(msg) {
