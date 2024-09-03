@@ -15,7 +15,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 
       const readFunc = () => {
         return new Promise((resolve, reject) => {
-          device.transferIn(1, 68).then(d => {
+          device.transferIn(1, 64).then(d => {
             console.log(new Uint8Array(d.data.buffer))
             if (d.status == 'ok') {
               resolve(readFunc(d))
@@ -35,12 +35,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       }).then(() => {
         return device.claimInterface(0)
       }).then(() => {
+        readFunc()
         return device.transferOut(1, new Uint8Array([1]))
       }).then(d => {
         console.log(`out:`, d)
-        return readFunc()
-      }).then(d => {
-        console.log(`done`, d)
       }).catch(e => {
         console.error(e)
       })
