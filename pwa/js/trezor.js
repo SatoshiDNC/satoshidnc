@@ -102,13 +102,13 @@ export function trezorAction() {
   }).then(() => {
     return device.claimInterface(0)
   }).then(() => {
-    return device.transferOut(1, new Uint8Array([1]))
+    return device.transferOut(IN_Ping, new Uint8Array([1]))
   }).then(d => {
     console.log(`out:`, d)
     return readFunc()
   }).then(d => {
     console.log(`in:`, d)
-    return device.transferOut(1, new Uint8Array([1]))
+    return device.transferOut(IN_Ping, new Uint8Array([1]))
   }).then(d => {
     console.log(`out:`, d)
     return readFunc()
