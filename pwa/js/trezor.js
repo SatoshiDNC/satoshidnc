@@ -130,7 +130,6 @@ export function trezorAction() {
   }
 
   function readVarInt(data) {
-    console.log('readvarint', data)
     let n = 0
     let x = 0
     while ((data[n] & 0x80) !== 0) {
@@ -146,7 +145,6 @@ export function trezorAction() {
   }
 
   function readBuf(data, len) {
-    console.log('readbuf', data)
     return data.splice(0, len)
   }
 
@@ -163,7 +161,6 @@ export function trezorAction() {
   }
 
   function readTLV(data) {
-    console.log('readtlv', data)
     let tag = readVarInt(data)
     let param = tag >> 3
     let type = tag & 0x7
