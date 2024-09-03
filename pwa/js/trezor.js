@@ -149,14 +149,14 @@ export function trezorAction() {
   }
 
   function readType(data, type) {
-    console.log('readtype', type, data)
     switch (type) {
       case 0:
         return readVarInt(data)
       case 2:
         let len = readVarInt(data)
         return readBuf(data, len)
-      default: console.error('unhandled case')
+      default: 
+        console.log('unhandled readtype', type, data)
     }
   }
 
