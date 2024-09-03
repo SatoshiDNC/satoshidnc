@@ -1,4 +1,4 @@
-import { drawPill, drawRoundedRect } from '../../../draw.js'
+import { drawRect, drawPill, drawRoundedRect } from '../../../draw.js'
 
 const TITLE_TOP = 120
 const BOT_SPACE = 203
@@ -90,7 +90,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
-    const index = Math.floor((y - TITLE_TOP - 41 - 79 - 33 / 2 + 126 / 2) / 126)
+    const index = Math.floor((y - TITLE_TOP - 41 - 79 - 35 / 2 + 179 / 2) / 179)
     if (index >= 0 && index < v.items.length) {
       v.index = index
       // v.items[index].handler(v.items[index])
@@ -171,6 +171,7 @@ v.renderFunc = function() {
 
   let i = 0
   for (const item of v.items) {
+    drawRect(v, colors.inactive, v.menuX, v.menuY + TITLE_TOP + 41 + 79 + 35 / 2 - 179 / 2, v.menuW, 179)
     mat4.identity(mat)
     mat4.translate(mat, mat, [v.menuX + 42, v.menuY + TITLE_TOP + 41 + 44 + 179 * i + v.menuH * f0, 0])
     mat4.scale(mat, mat, [105/32, 105/32, 1])
