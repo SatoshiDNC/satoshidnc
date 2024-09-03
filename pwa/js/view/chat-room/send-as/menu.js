@@ -174,7 +174,7 @@ v.renderFunc = function() {
   let i = 0
   for (const item of v.items) {
     if (item.hpub == v.items?.[v.index]?.hpub) {
-      drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 35 / 2 - ITEM_SIZE / 2 + v.menuH * f0, v.menuW, ITEM_SIZE)
+      drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 35 / 2 - ITEM_SIZE / 2 + ITEM_SIZE * i + v.menuH * f0, v.menuW, ITEM_SIZE)
     }
     mat4.identity(mat)
     mat4.translate(mat, mat, [v.menuX + 42, v.menuY + ITEM_TOP + 44 + ITEM_SIZE * i + v.menuH * f0, 0])
