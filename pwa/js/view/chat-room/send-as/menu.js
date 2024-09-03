@@ -173,7 +173,7 @@ v.renderFunc = function() {
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + 45, v.menuY + TITLE_TOP + 41 + 79 + i * 126 + 33 + v.menuH * f0, 0])
     mat4.scale(m,m, [33/14, 33/14, 1])
-    defaultFont.draw(0,0, item.label, v.textColor, v.mat, m)
+    defaultFont.draw(0,0, item.name, v.textColor, v.mat, m)
     i++
   }
 
