@@ -20,10 +20,21 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const pubkey = g.formView.pubkeyGad.text
     if (name && pubkey) {
       let hpub, relays
+
+      // If it's a hex key, use it verbatim
       if (pubkey.length == 64 && Array.from(pubkey.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
         hpub = pubkey.toLowerCase()
       }
+
+      // Otherwise...
       if (!hpub) {
+
+        // Strip the nostr: URL scheme, if present
+        if (pubkey.startsWith('nostr:')) {
+          pubkey = pubkey.substring(6)
+        }
+
+        // Handle Bech32-encoded formats
         try {
           const decoded = nip19.decode(pubkey)
           if (decoded?.type == 'nprofile') {
