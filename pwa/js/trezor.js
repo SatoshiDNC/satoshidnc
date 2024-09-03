@@ -209,7 +209,7 @@ export function trezorAction() {
     if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x7f, (v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
   }
   function createString(text) {
-    return [...createVarInt(text.length), ...new TextEncoder().encode(text)]
+    return [...createVarInt(text.length * 8 + 2), ...new TextEncoder().encode(text)]
   }
   
   let device
