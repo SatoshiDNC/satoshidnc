@@ -1,3 +1,5 @@
+import { trezorAction } from '../../trezor.js'
+
 let v, g
 export const barTop = v = new fg.View()
 v.name = Object.keys({barTop}).pop()
@@ -12,39 +14,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
     if (item.id == 3) {
-
-      const readFunc = () => {
-        return new Promise((resolve, reject) => {
-          device.transferIn(1, 64).then(d => {
-            console.log(new Uint8Array(d.data.buffer))
-            resolve(d)
-          })
-        })
-      }
-
-      let device
-      navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
-        device = selectedDevice
-        console.log(device)
-        return device.open()
-      }).then(() => {
-        return device.claimInterface(0)
-      }).then(() => {
-        return device.transferOut(1, new Uint8Array([1]))
-      }).then(d => {
-        console.log(`out:`, d)
-        return readFunc()
-      }).then(d => {
-        console.log(`in:`, d)
-        return device.transferOut(1, new Uint8Array([1]))
-      }).then(d => {
-        console.log(`out:`, d)
-        return readFunc()
-      }).then(d => {
-        console.log(`in:`, d)
-      }).catch(e => {
-        console.error(e)
-      })
+      trezorAction()
     }
   }
   g.items = [
