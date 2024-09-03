@@ -19,12 +19,17 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         return device.open()
       }).then(() => {
         return device.claimInterface(0)
-      }).then(d => {
-        console.log(`claim:`, d)
+      }).then(() => {
         return device.transferOut(1, new Uint8Array([1]))
       }).then(d => {
-        console.log(`out:`, d)
-        return device.transferIn(1, 1)
+        return new Promise((resolve, reject) => {
+          console.log(`out:`, d)
+          for (let i = 0; i < 100; i++) {
+            device.transferIn(1, 1).then(d => {
+              console.log(`in:`, d)
+            })
+          }
+        })
       }).then(d => {
         console.log(`in:`, d)
       }).catch(e => {
