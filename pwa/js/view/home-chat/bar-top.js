@@ -20,8 +20,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       }).then(() => {
         return device.claimInterface(0)
       }).then(() => {
-        console.log(new Uint8Array([1]))
         return device.transferOut(1, new Uint8Array([1]))
+      }).then(() => {
+        return device.transferIn(1, 1)
+      }).then(d => {
+        console.log(d)
       }).catch(e => {
         console.error(e)
       })
