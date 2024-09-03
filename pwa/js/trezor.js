@@ -172,7 +172,7 @@ export function trezorAction() {
                   console.log('code:', value)
                   break
                 case 2:
-                  console.log('msg:', new TextDecoder().decode(value))
+                  console.log('msg:', new TextDecoder().decode(value.buffer))
                   break
               }
             }
