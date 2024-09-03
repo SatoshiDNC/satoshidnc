@@ -200,6 +200,17 @@ export function trezorAction() {
   function fourByte(n) {
     return [(n / 0x1000000) & 0xff, (n / 0x10000) & 0xff, (n / 0x100) & 0xff, n & 0xff]
   }
+
+  function createVarInt(v) {
+    if (v < 128) return [v]
+    if (v < 128 * 128) return [(v >> 7) & 0x7f, v & 0x7f]
+    if (v < 128 * 128 * 128) return [(v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
+    if (v < 128 * 128 * 128 * 128) return [(v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
+    if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x7f, (v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
+  }
+  function createString(text) {
+    return [...createVarInt(text.length), ...new TextEncoder().encode(text)]
+  }
   
   let device
   navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
@@ -209,7 +220,7 @@ export function trezorAction() {
   }).then(() => {
     return device.claimInterface(0)
   }).then(() => {
-    return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Ping), ...fourByte(0)]))
+    return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Ping), ...fourByte(0), ...createString('test')]))
   }).then(d => {
     console.log(`out:`, d)
     return readFunc()
