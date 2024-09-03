@@ -13,7 +13,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     console.log(`id ${JSON.stringify(item)}`)
     if (item.id == 3) {
 
-      const readFunc = d => {
+      const readFunc = () => {
         return new Promise((resolve, reject) => {
           device.transferIn(1, 1).then(d => {
             console.log(new Uint8Array(d.data.buffer)[0])
@@ -38,7 +38,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         return device.transferOut(1, new Uint8Array([1]))
       }).then(d => {
         console.log(`out:`, d)
-        return readFunc(d)
+        return readFunc()
       }).then(d => {
         console.log(`done`, d)
       }).catch(e => {
