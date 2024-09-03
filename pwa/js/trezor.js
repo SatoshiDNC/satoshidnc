@@ -122,6 +122,14 @@ export function trezorAction() {
       let payload = []
       payload.splice(0, 0, ...d.slice(9,9 + Math.min(55, remaining)))
       remaining -= 55
+      const finisher = msg => {
+        console.log(msg)
+        switch (msgType) {
+          case OUT_Failure:
+            console.error(msg)
+            break
+        }
+      }
       const readMore = finisher => {
         readFunc().then(() => {
           if (new TextDecoder().decode(d.slice(0,1)) == '?') {
@@ -136,14 +144,6 @@ export function trezorAction() {
             console.error('protocol error while reading from Trezor')
           }
         })
-      }
-      const finisher = msg => {
-        console.log(msg)
-        switch (msgType) {
-          case OUT_Failure:
-            console.error(msg)
-            break
-        }
       }
       if (remaining > 0) {
         readMore(finisher)
