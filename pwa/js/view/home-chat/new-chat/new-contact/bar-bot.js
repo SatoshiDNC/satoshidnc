@@ -32,6 +32,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
         // Strip the nostr: URL scheme, if present
         if (pubkey.startsWith('nostr:')) {
           pubkey = pubkey.substring(6)
+          console.log(pubkey)
         }
 
         // Handle Bech32-encoded formats
