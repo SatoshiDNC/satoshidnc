@@ -98,6 +98,7 @@ export function trezorAction() {
           const finisher = msg => {
             switch (msgType) {
               case OUT_Failure: resolve({ msgType, ...msgFailure(msg) }); break
+              case OUT_Success: resolve({ msgType, ...msgSuccess(msg) }); break
               default: reject('unexpected response from Trezor')
             }
           }
@@ -178,6 +179,19 @@ export function trezorAction() {
       }
     }
     return { code, message }
+  }
+
+  function msgSuccess(msg) {
+    let message
+    while (msg.length > 0) {
+      let { param, type, value } = readTLV(msg)
+      switch (param) {
+        case 1:
+          message = new TextDecoder().decode(new Uint8Array(value).buffer)
+          break
+      }
+    }
+    return { message }
   }
 
   function twoByte(n) {
