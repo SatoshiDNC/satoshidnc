@@ -22,7 +22,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         })
       }
 
-
       let device
       navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
         device = selectedDevice
@@ -31,6 +30,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       }).then(() => {
         return device.claimInterface(0)
       }).then(() => {
+        return device.transferOut(1, new Uint8Array([1]))
+      }).then(d => {
+        console.log(`out:`, d)
+        return readFunc()
+      }).then(d => {
+        console.log(`in:`, d)
         return device.transferOut(1, new Uint8Array([1]))
       }).then(d => {
         console.log(`out:`, d)
