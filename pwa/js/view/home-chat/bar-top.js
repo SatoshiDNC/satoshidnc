@@ -14,7 +14,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     if (item.id == 3) {
       navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(device => {
         console.log(device)
-      }).catch(e => {
+        return device.open()
+      }).then(() => device.claimInterface(0)).catch(e => {
         console.error(e)
       })
     }
