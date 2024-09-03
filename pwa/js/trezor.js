@@ -88,7 +88,6 @@ export function trezorAction() {
   const readFunc = () => {
     return new Promise((resolve, reject) => {
       device.transferIn(1, 64).then(res => {
-        console.log(new Uint8Array(res.data.buffer))
         const d = new Uint8Array(res.data.buffer)
         if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
           const msgType = d[3]*256 + d[4]
