@@ -153,13 +153,13 @@ export function trezorAction() {
           let param = tag >> 3
           let type = tag & 0x7
           let value = readType(data, type)
-          return { param, type, len, value }
+          return { param, type, value }
         }
         switch (msgType) {
           case OUT_Failure:
             while (msg.length > 0) {
               console.log(msg)
-              let { param, type, len, value } = readTLV(msg)
+              let { param, type, value } = readTLV(msg)
               switch (param) {
                 case 1: console.log('code:', value)
                 case 2: console.log('msg:', value)
