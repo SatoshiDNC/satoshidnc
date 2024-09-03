@@ -12,10 +12,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
     if (item.id == 3) {
-      navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(device => {
+      let device
+      navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
+        device = selectedDevice
         console.log(device)
         return device.open()
-      }).then(device => device.claimInterface(0)).catch(e => {
+      }).then(() => device.claimInterface(0)).catch(e => {
         console.error(e)
       })
     }
