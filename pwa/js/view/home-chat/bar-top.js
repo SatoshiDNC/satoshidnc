@@ -15,7 +15,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 
       const readFunc = () => {
         return new Promise((resolve, reject) => {
-          device.transferIn(1, 1).then(d => {
+          device.transferIn(1, 64).then(d => {
             console.log(new Uint8Array(d.data.buffer)[0])
             if (d.status == 'ok') {
               resolve(readFunc(d))
