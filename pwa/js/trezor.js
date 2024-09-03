@@ -142,7 +142,7 @@ export function trezorAction() {
           return data.splice(0, len)
         }
         function readType(data, type) {
-          console.log('readtype', data)
+          console.log('readtype', type, data)
           switch (type) {
             case 0:
               return readVarInt(data)
@@ -166,8 +166,12 @@ export function trezorAction() {
               console.log(msg)
               let { param, type, value } = readTLV(msg)
               switch (param) {
-                case 1: console.log('code:', value)
-                case 2: console.log('msg:', value)
+                case 1:
+                  console.log('code:', value)
+                  break
+                case 2:
+                  console.log('msg:', value)
+                  break
               }
             }
             break
