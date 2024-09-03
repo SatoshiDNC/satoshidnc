@@ -1,7 +1,7 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../../draw.js'
 
 const TITLE_TOP = 120
-const ITEM_TOP = TITLE_TOP + 51
+const ITEM_TOP = TITLE_TOP + 61
 const BOT_SPACE = 203
 
 let v, g
