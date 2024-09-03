@@ -125,7 +125,7 @@ export function trezorAction() {
       const finisher = msg => {
         console.log(msg)
         function readVarInt(data) {
-          let n = 0
+          let n = 1
           let x = 0
           while (data[n] & 0x80 !== 0) {
             x = x * 128 + (data[n] & 0x7f)
