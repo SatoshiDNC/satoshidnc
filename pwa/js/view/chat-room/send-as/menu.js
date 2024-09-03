@@ -172,7 +172,7 @@ v.renderFunc = function() {
   let i = 0
   for (const item of v.items) {
     mat4.identity(mat)
-    mat4.translate(mat, mat, [v.menuX + 42, v.menuY + TITLE_TOP + 41 + 79 + 179 * i + v.menuH * f0, 0])
+    mat4.translate(mat, mat, [v.menuX + 42, v.menuY + TITLE_TOP + 41 + 44 + 179 * i + v.menuH * f0, 0])
     mat4.scale(mat, mat, [105/32, 105/32, 1])
     let x = -0.5, y = 8.5
     item.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
