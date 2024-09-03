@@ -117,6 +117,14 @@ export function trezorAction() {
     const d = new Uint8Array(res.data.buffer)
     if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
       console.log('magic found')
+      const msgType = d[3]*256 + d[4]
+      const msgSize = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
+      const msgPayload = new TextDecoder().decode(d.slice(9,64))
+      switch (msgType) {
+        case OUT_Failure:
+          console.error(msgPayload.substring(0,msgSize))
+          break
+      }
     }
   }).catch(e => {
     console.error(e)
