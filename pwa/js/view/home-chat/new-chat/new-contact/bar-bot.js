@@ -30,14 +30,14 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       if (!hpub) {
 
         // Strip the nostr: URL scheme, if present
+        let bech32 = pubkey
         if (pubkey.startsWith('nostr:')) {
-          pubkey = pubkey.substring(6)
-          console.log(pubkey)
+          bech32 = pubkey.substring(6)
         }
 
         // Handle Bech32-encoded formats
         try {
-          const decoded = nip19.decode(pubkey)
+          const decoded = nip19.decode(bech32)
           if (decoded?.type == 'nprofile') {
             hpub = decoded.data.pubkey
             relays = decoded.data.relays
@@ -45,16 +45,20 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
             hpub = decoded.data
           }
         } catch(e) {
-          if (pubkey.startsWith('nprofile') || pubkey.startsWith('npub')) {
+          if (bech32.startsWith('nprofile') || bech32.startsWith('npub')) {
             alert(`${e}`)
             return
           }
         }
       }
+
+      // If we couldn't recognize the key, error and return early
       if (!hpub) {
         alert(`Unrecognized public key format. Supported formats include: nprofile, npub, hex`)
         return
       }
+
+      // We have the hex public key; import the contact
       let cancel = false
       const existing = contacts.filter(c => c.hpub == hpub)?.[0]
       if (existing) {
