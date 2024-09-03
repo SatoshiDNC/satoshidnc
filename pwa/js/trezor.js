@@ -101,6 +101,7 @@ export function trezorAction() {
             console.log('finisher', msg)
             switch (msgType) {
               case OUT_Failure: resolve({ msgType, ...msgFailure(msg) }); break
+              default: reject('unexpected response from Trezor')
             }
           }
           const readMore = finisher => {
@@ -114,7 +115,7 @@ export function trezorAction() {
                   fininsher(payload)
                 }
               } else {
-                console.error('protocol error while reading from Trezor')
+                reject('protocol error while reading from Trezor')
               }
             })
           }
@@ -160,7 +161,7 @@ export function trezorAction() {
       default: console.error('unhandled case')
     }
   }
-  
+
   function readTLV(data) {
     console.log('readtlv', data)
     let tag = readVarInt(data)
