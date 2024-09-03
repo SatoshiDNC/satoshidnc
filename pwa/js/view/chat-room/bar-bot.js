@@ -38,7 +38,7 @@ v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
   g.items = []
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    if (!g.text) return
+    if (!v.msgGad.text) return
     g.items = contacts.map(c => { return {
       name: c.name,
       hpub: c.hpub,
