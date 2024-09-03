@@ -38,7 +38,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         return device.transferOut(1, new Uint8Array([1]))
       }).then(d => {
         console.log(`out:`, d)
-        readFunc()
+        return readFunc()
+      }).then(d => {
+        console.log(`in:`, d)
       }).catch(e => {
         console.error(e)
       })
