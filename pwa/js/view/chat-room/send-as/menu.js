@@ -177,7 +177,7 @@ v.renderFunc = function() {
     let x = -0.5, y = 8.5
     item.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
       mat4.copy(m, mat)
-      nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
+      nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
     })
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + 190, v.menuY + TITLE_TOP + 41 + 79 + i * 179 + 35 + v.menuH * f0, 0])
