@@ -1,4 +1,4 @@
-import { trezorAction } from '../../trezor.js'
+import { connectToTrezor } from '../../trezor.js'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -13,8 +13,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.fontSize = 11
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
-    if (item.id == 3) {
-      trezorAction()
+    if (item.id == 4) {
+      connectToTrezor()
     }
   }
   g.items = [
@@ -23,6 +23,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     { id: 3, handler: g.handler, label: 'Linked devices' },
     { id: 4, handler: g.handler, label: 'Starred messages' },
     { id: 5, handler: g.handler, label: 'Settings' },
+    { id: 6, handler: g.handler, label: 'Trezor tools' },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport

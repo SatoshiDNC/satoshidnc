@@ -84,151 +84,159 @@ export const D_OUT_DebugLinkMemory = 111
 export const D_IN_DebugLinkMemoryWrite = 112
 export const D_IN_DebugLinkFlashErase = 113
 
-export function trezorAction() {
-  const readFunc = () => {
-    return new Promise((resolve, reject) => {
-      device.transferIn(1, 64).then(res => {
-        const d = new Uint8Array(res.data.buffer)
-        if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
-          const msgType = d[3]*256 + d[4]
-          let remaining = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
-          let payload = []
-          payload.splice(0, 0, ...d.slice(9,9 + Math.min(55, remaining)))
-          remaining -= 55
-          const finisher = msg => {
-            switch (msgType) {
-              case OUT_Failure: resolve({ msgType, ...msgFailure(msg) }); break
-              case OUT_Success: resolve({ msgType, ...msgSuccess(msg) }); break
-              default: reject('unexpected response from Trezor')
-            }
-          }
-          const readMore = finisher => {
-            readFunc().then(() => {
-              if (new TextDecoder().decode(d.slice(0,1)) == '?') {
-                payload.splice(0, 0, ...d.slice(1,1 + Math.min(63, remaining)))
-                remaining -= 63
-                if (remaining > 0) {
-                  readMore(finisher)
-                } else {
-                  fininsher(payload)
-                }
-              } else {
-                reject('protocol error while reading from Trezor')
-              }
-            })
-          }
-          if (remaining > 0) {
-            readMore(finisher)
-          } else {
-            finisher(payload)
+const readFunc = () => {
+  return new Promise((resolve, reject) => {
+    device.transferIn(1, 64).then(res => {
+      const d = new Uint8Array(res.data.buffer)
+      if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
+        const msgType = d[3]*256 + d[4]
+        let remaining = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
+        let payload = []
+        payload.splice(0, 0, ...d.slice(9,9 + Math.min(55, remaining)))
+        remaining -= 55
+        const finisher = msg => {
+          switch (msgType) {
+            case OUT_Failure: resolve({ msgType, ...msgFailure(msg) }); break
+            case OUT_Success: resolve({ msgType, ...msgSuccess(msg) }); break
+            default: reject('unexpected response from Trezor')
           }
         }
-      })
+        const readMore = finisher => {
+          readFunc().then(() => {
+            if (new TextDecoder().decode(d.slice(0,1)) == '?') {
+              payload.splice(0, 0, ...d.slice(1,1 + Math.min(63, remaining)))
+              remaining -= 63
+              if (remaining > 0) {
+                readMore(finisher)
+              } else {
+                fininsher(payload)
+              }
+            } else {
+              reject('protocol error while reading from Trezor')
+            }
+          })
+        }
+        if (remaining > 0) {
+          readMore(finisher)
+        } else {
+          finisher(payload)
+        }
+      }
     })
-  }
+  })
+}
 
-  function readVarInt(data) {
-    let n = 0
-    let x = 0
-    while (n < data.length && (data[n] & 0x80) !== 0) {
-      x = x * 128 + (data[n] & 0x7f)
-      n++
-    }
+function readVarInt(data) {
+  let n = 0
+  let x = 0
+  while (n < data.length && (data[n] & 0x80) !== 0) {
     x = x * 128 + (data[n] & 0x7f)
     n++
-    data.splice(0, n)
-    return x
   }
+  x = x * 128 + (data[n] & 0x7f)
+  n++
+  data.splice(0, n)
+  return x
+}
 
-  function readBuf(data, len) {
-    return data.splice(0, len)
+function readBuf(data, len) {
+  return data.splice(0, len)
+}
+
+function readType(data, type) {
+  switch (type) {
+    case 0:
+      return readVarInt(data)
+    case 2:
+      let len = readVarInt(data)
+      return readBuf(data, len)
+    default: 
+      console.log('unhandled readtype', type, data)
   }
+}
 
-  function readType(data, type) {
-    switch (type) {
-      case 0:
-        return readVarInt(data)
+function readTLV(data) {
+  let tag = readVarInt(data)
+  let param = tag >> 3
+  let type = tag & 0x7
+  let value = readType(data, type)
+  return { param, type, value }
+}
+
+function msgFailure(msg) {
+  let code
+  let message
+  while (msg.length > 0) {
+    let { param, type, value } = readTLV(msg)
+    switch (param) {
+      case 1:
+        code = value
+        break
       case 2:
-        let len = readVarInt(data)
-        return readBuf(data, len)
-      default: 
-        console.log('unhandled readtype', type, data)
+        message = new TextDecoder().decode(new Uint8Array(value).buffer)
+        break
     }
   }
+  return { code, message }
+}
 
-  function readTLV(data) {
-    let tag = readVarInt(data)
-    let param = tag >> 3
-    let type = tag & 0x7
-    let value = readType(data, type)
-    return { param, type, value }
-  }
-
-  function msgFailure(msg) {
-    let code
-    let message
-    while (msg.length > 0) {
-      let { param, type, value } = readTLV(msg)
-      switch (param) {
-        case 1:
-          code = value
-          break
-        case 2:
-          message = new TextDecoder().decode(new Uint8Array(value).buffer)
-          break
-      }
+function msgSuccess(msg) {
+  let message
+  while (msg.length > 0) {
+    let { param, type, value } = readTLV(msg)
+    switch (param) {
+      case 1:
+        message = new TextDecoder().decode(new Uint8Array(value).buffer)
+        break
     }
-    return { code, message }
   }
+  return { message }
+}
 
-  function msgSuccess(msg) {
-    let message
-    while (msg.length > 0) {
-      let { param, type, value } = readTLV(msg)
-      switch (param) {
-        case 1:
-          message = new TextDecoder().decode(new Uint8Array(value).buffer)
-          break
-      }
-    }
-    return { message }
-  }
+function twoByte(n) {
+  return [(n / 0x100) & 0xff, n & 0xff]
+}
+function fourByte(n) {
+  return [(n / 0x1000000) & 0xff, (n / 0x10000) & 0xff, (n / 0x100) & 0xff, n & 0xff]
+}
 
-  function twoByte(n) {
-    return [(n / 0x100) & 0xff, n & 0xff]
-  }
-  function fourByte(n) {
-    return [(n / 0x1000000) & 0xff, (n / 0x10000) & 0xff, (n / 0x100) & 0xff, n & 0xff]
-  }
+function varInt(v) {
+  if (v < 128) return [v]
+  if (v < 128 * 128) return [(v >> 7) & 0x7f, v & 0x7f]
+  if (v < 128 * 128 * 128) return [(v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
+  if (v < 128 * 128 * 128 * 128) return [(v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
+  if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x7f, (v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
+}
+function paramString(param, text) {
+  return [...varInt(param * 8 + 2), varInt(text.length), ...new TextEncoder().encode(text)]
+}
 
-  function varInt(v) {
-    if (v < 128) return [v]
-    if (v < 128 * 128) return [(v >> 7) & 0x7f, v & 0x7f]
-    if (v < 128 * 128 * 128) return [(v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
-    if (v < 128 * 128 * 128 * 128) return [(v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
-    if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x7f, (v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
-  }
-  function paramString(param, text) {
-    return [...varInt(param * 8 + 2), varInt(text.length), ...new TextEncoder().encode(text)]
-  }
-  
-  let device
-  navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
-    device = selectedDevice
-    console.log(device)
-    return device.open()
-  }).then(() => {
-    return device.claimInterface(0)
-  }).then(() => {
-    const buf = paramString(1, 'test')
-    return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Ping), ...fourByte(buf.length), ...buf]))
-  }).then(d => {
-    console.log(`out:`, d)
-    return readFunc()
-  }).then(res => {
-    alert(JSON.stringify(res))
-  }).catch(e => {
-    console.error(e)
+export function connectToTrezor() {
+  return new Promise((resolve, reject) => {
+    let device
+    navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
+      device = selectedDevice
+      console.log(device)
+      return device.open()
+    }).then(() => {
+      return device.claimInterface(0)
+    }).then(() => {
+      resolve()
+    }).catch(e => {
+      reject(e)
+    })
   })
+}
 
+export function trezorPing(text) {
+  return new Promise((resolve, reject) => {
+    const buf = paramString(1, text)
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Ping), ...fourByte(buf.length), ...buf])).then(d => {
+      return readFunc()
+    }).then(json => {
+      resolve(json)
+    }).catch(e => {
+      reject(e)
+    })
+  })
 }
