@@ -38,7 +38,11 @@ v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
   g.items = []
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    g.items = contacts.map(c => { return { name: c.name, handler: g.handler } })
+    g.items = contacts.map(c => { return {
+      name: c.name,
+      hpub: c.hpub,
+      handler: g.handler,
+    } })
     if (fg.getRoot() !== g.target || g.target.easingState() == -1) {
       g.target?.easeIn?.(g.items)
     } else {

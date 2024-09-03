@@ -170,9 +170,17 @@ v.renderFunc = function() {
 
   let i = 0
   for (const item of v.items) {
+    mat4.identity(mat)
+    mat4.translate(mat, mat, [v.menuX + 42, v.menuY + TITLE_TOP + 41 + 179 * i, 0])
+    mat4.scale(mat, mat, [105/32, 105/32, 1])
+    let x = -0.5, y = 8.5
+    item.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
+      mat4.copy(m, mat)
+      nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
+    })
     mat4.identity(m)
-    mat4.translate(m,m, [v.menuX + 45, v.menuY + TITLE_TOP + 41 + 79 + i * 126 + 33 + v.menuH * f0, 0])
-    mat4.scale(m,m, [33/14, 33/14, 1])
+    mat4.translate(m,m, [v.menuX + 190, v.menuY + TITLE_TOP + 41 + 79 + i * 179 + 35 + v.menuH * f0, 0])
+    mat4.scale(m,m, [35/14, 35/14, 1])
     defaultFont.draw(0,0, item.name, v.textColor, v.mat, m)
     i++
   }
