@@ -129,11 +129,14 @@ export function trezorAction() {
           let n = 0
           let x = 0
           while (data[n] & 0x80 !== 0) {
+            console.log('x,n,d', x,n,data[n])
             x = x * 128 + (data[n] & 0x7f)
             n++
           }
+          console.log('x,n,d', x,n,data[n])
           x = x * 128 + (data[n] & 0x7f)
           n++
+          console.log('x,n,d', x,n,data[n])
           data.splice(0, n)
           return x
         }
