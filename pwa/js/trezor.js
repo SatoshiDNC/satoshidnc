@@ -203,7 +203,6 @@ export function trezorAction() {
     return readFunc()
   }).then(res => {
     console.log(`in:`, res)
-    return handlerFunc()
   }).catch(e => {
     console.error(e)
   })
