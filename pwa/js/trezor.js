@@ -201,15 +201,15 @@ export function trezorAction() {
     return [(n / 0x1000000) & 0xff, (n / 0x10000) & 0xff, (n / 0x100) & 0xff, n & 0xff]
   }
 
-  function createVarInt(v) {
+  function varInt(v) {
     if (v < 128) return [v]
     if (v < 128 * 128) return [(v >> 7) & 0x7f, v & 0x7f]
     if (v < 128 * 128 * 128) return [(v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
     if (v < 128 * 128 * 128 * 128) return [(v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
     if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x7f, (v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
   }
-  function createString(param, text) {
-    return [...createVarInt(param * 8 + 2), createVarInt(text.length), ...new TextEncoder().encode(text)]
+  function paramString(param, text) {
+    return [...varInt(param * 8 + 2), varInt(text.length), ...new TextEncoder().encode(text)]
   }
   
   let device
@@ -220,7 +220,7 @@ export function trezorAction() {
   }).then(() => {
     return device.claimInterface(0)
   }).then(() => {
-    const buf = createString(1, 'test')
+    const buf = paramString(1, 'test')
     return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Ping), ...fourByte(buf.length), ...buf]))
   }).then(d => {
     console.log(`out:`, d)
