@@ -165,9 +165,6 @@ export function trezorAction() {
                 case 2: console.log('msg:', value)
               }
             }
-            if (param == 1) {
-              console.log('code:', )
-            }
             break
         }
       }
