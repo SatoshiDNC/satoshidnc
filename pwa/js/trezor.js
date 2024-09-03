@@ -180,6 +180,12 @@ export function trezorAction() {
     return { code, message }
   }
 
+  function twoByte(n) {
+    return [(n / 0x100) & 0xff, n & 0xff]
+  }
+  function fourByte(n) {
+    return [(n / 0x1000000) & 0xff, (n / 0x10000) & 0xff, (n / 0x100) & 0xff, n & 0xff]
+  }
   
   let device
   navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
@@ -189,7 +195,7 @@ export function trezorAction() {
   }).then(() => {
     return device.claimInterface(0)
   }).then(() => {
-    return device.transferOut(IN_Ping, new Uint8Array([1]))
+    return device.transferOut(1, new Uint8Array([...new TextDecoder().encode('?##'), ...twoByte(IN_Ping), ...fourByte(0)]))
   }).then(d => {
     console.log(`out:`, d)
     return readFunc()
