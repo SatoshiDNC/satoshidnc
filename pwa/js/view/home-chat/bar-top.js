@@ -17,7 +17,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         return new Promise((resolve, reject) => {
           if (d.status == 'ok') {
             device.transferIn(1, 1).then(d => {
-              console.log(d.data.buffer[0])
+              console.log(d.data.buffer)
               resolve(readFunc(d))
             })
           } else {
