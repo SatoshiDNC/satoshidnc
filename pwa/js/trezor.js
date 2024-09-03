@@ -148,7 +148,7 @@ export function trezorAction() {
       if (remaining > 0) {
         readMore(finisher)
       } else {
-        fininsher(payload)
+        finisher(payload)
       }
     }
   }).catch(e => {
