@@ -13,7 +13,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     console.log(`id ${JSON.stringify(item)}`)
     if (item.id == 3) {
 
-      readFunc = d => {
+      const readFunc = d => {
         return new Promise((resolve, reject) => {
           if (d.status == 'ok') {
             device.transferIn(1, 1).then(d => {
