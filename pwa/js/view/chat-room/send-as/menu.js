@@ -1,6 +1,7 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../../draw.js'
 
 const TITLE_TOP = 120
+const ITEM_TOP = TITLE_TOP + 51
 const BOT_SPACE = 203
 
 let v, g
@@ -90,7 +91,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
-    const index = Math.floor((y - TITLE_TOP - 41 - 79 - 35 / 2 + 179 / 2) / 179)
+    const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + 179 / 2) / 179)
     if (index >= 0 && index < v.items.length) {
       v.index = index
       // v.items[index].handler(v.items[index])
@@ -112,7 +113,7 @@ v.prepMenu = function(items) {
 }
 v.layoutFunc = function() {
   const v = this
-  v.menuH = TITLE_TOP + 41 + 62 + 126 * v.currentItemCount + BOT_SPACE
+  v.menuH = ITEM_TOP + 62 + 179 * v.currentItemCount + BOT_SPACE
   v.menuY = v.sh - v.menuH
   v.menuW = v.sw
   let g
@@ -172,10 +173,10 @@ v.renderFunc = function() {
   let i = 0
   for (const item of v.items) {
     if (item.hpub == v.items?.[v.index]?.hpub) {
-      drawRect(v, colors.inactiveDark, v.menuX, v.menuY + TITLE_TOP + 41 + 79 + 35 / 2 - 179 / 2 + v.menuH * f0, v.menuW, 179)
+      drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 35 / 2 - 179 / 2 + v.menuH * f0, v.menuW, 179)
     }
     mat4.identity(mat)
-    mat4.translate(mat, mat, [v.menuX + 42, v.menuY + TITLE_TOP + 41 + 44 + 179 * i + v.menuH * f0, 0])
+    mat4.translate(mat, mat, [v.menuX + 42, v.menuY + ITEM_TOP + 44 + 179 * i + v.menuH * f0, 0])
     mat4.scale(mat, mat, [105/32, 105/32, 1])
     let x = -0.5, y = 8.5
     item.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
@@ -183,7 +184,7 @@ v.renderFunc = function() {
       nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
     })
     mat4.identity(m)
-    mat4.translate(m,m, [v.menuX + 190, v.menuY + TITLE_TOP + 41 + 79 + i * 179 + 35 + v.menuH * f0, 0])
+    mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 79 + i * 179 + 35 + v.menuH * f0, 0])
     mat4.scale(m,m, [35/14, 35/14, 1])
     defaultFont.draw(0,0, item.name, v.textColor, v.mat, m)
     i++
