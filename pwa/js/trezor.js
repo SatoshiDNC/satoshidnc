@@ -260,28 +260,45 @@ export function trezorPing(text) {
   })
 }
 
-export function trezorRestore() {
+const handleButtons = (json) => {
   return new Promise((resolve, reject) => {
-    const handler = (json) => {
-      if (json.msgType == OUT_ButtonRequest) {
-        device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
-          return readFunc()
-        }).then(json => {
-          handler(json)
-        }).catch(e => {
-          reject(e)
-        })
-      } else {
-        resolve(json)
-      }
+    if (json.msgType == OUT_ButtonRequest) {
+      device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
+        return readFunc()
+      }).then(json => {
+        resolve(handleButtons(json))
+      }).catch(e => {
+        reject(e)
+      })
+    } else {
+      resolve(json)
     }
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(d => {
-      return readFunc()
-    }).then(json => {
-      handler(json)
+  })
+}
+
+const handleButtonsAndResult = () => {
+  return new Promise((resolve, reject) => {
+    readFunc().then(json => {
+      resolve(handleButtons(json))
     }).catch(e => {
       reject(e)
     })
+  })
+}
+
+const handleResult = () => {
+  return new Promise((resolve, reject) => {
+    readFunc().then(json => {
+      resolve(json)
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}
+
+export function trezorRestore() {
+  return new Promise((resolve, reject) => {
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(resolve(handleButtonsAndResult))
   })
 }
 
@@ -292,32 +309,12 @@ export function trezorGetNostrPubKey() {
       ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
       ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
     ]
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(d => {
-      return readFunc()
-    }).then(json => {
-      resolve(json)
-    }).catch(e => {
-      reject(e)
-    })
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(resolve(handleResult))
   })
 }
 
 export function trezorWipe() {
   return new Promise((resolve, reject) => {
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(d => {
-      return readFunc()
-    }).then(json => {
-      if (json.msgType == OUT_ButtonRequest) {
-        device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
-          return readFunc()
-        }).then(json => {
-          resolve(json)
-        }).catch(e => {
-          reject(e)
-        })
-      }
-    }).catch(e => {
-      reject(e)
-    })
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(resolve(handleButtonsAndResult))
   })
 }
