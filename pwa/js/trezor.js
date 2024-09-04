@@ -292,7 +292,7 @@ function msgButtonRequest(msg) {
 }
 
 function msgFeatures(msg) {
-  console.log('features')
+  console.log('features', msg)
   let safetyCheckLevel
   while (msg.length > 0) {
     let { param, type, value } = readTLV(msg)
