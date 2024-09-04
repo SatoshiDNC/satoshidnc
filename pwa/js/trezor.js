@@ -253,7 +253,7 @@ function msgPublicKey(msg) {
     console.log('msgPublicKey TLV:', param, type, value)
     switch (param) {
       case 1: nodeType = readHDNodeType(value); break
-      case 2: xpub = value; break
+      case 2: xpub = new TextDecoder().decode(new Uint8Array(value).buffer); break
       case 3: rootFingerprint = value; break
       case 4: descriptor = value; break
     }
