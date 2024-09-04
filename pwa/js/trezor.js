@@ -210,10 +210,10 @@ function readVarInt(data) {
   let n = 0
   let x = 0
   while (n < data.length && (data[n] & 0x80) !== 0) {
-    x = x * 128 + (data[n] & 0x7f)
+    x += (data[n] & 0x7f) * 128 * n
     n++
   }
-  x = x * 128 + (data[n] & 0x7f)
+  x += (data[n] & 0x7f) * 128 * n
   n++
   data.splice(0, n)
   return x
