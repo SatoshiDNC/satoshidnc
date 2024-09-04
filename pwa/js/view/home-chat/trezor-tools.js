@@ -6,6 +6,10 @@ const ITEM_TOP = TITLE_TOP + 61
 const ITEM_SIZE = 179
 const BOT_SPACE = 203
 
+const ENTER_SEED = 'ENTER_SEED'
+const GEN_HPUB = 'GEN_HPUB'
+const WIPE_SEED = 'WIPE_SEED'
+
 let v, g
 export const menuView = v = new fg.View(null)
 v.name = Object.keys({menuView}).pop()
@@ -16,11 +20,22 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.items = [
-  { name: 'Enter seed words on Trezor'},
-  { name: 'Wipe Trezor'},
+  { key: ENTER_SEED, name: 'Enter seed words on Trezor'},
+  { key: GEN_HPUB,   name: 'Generate nostr public key'},
+  { key: WIPE_SEED,  name: 'Wipe seed from Trezor'},
 ]
 v.menuX = 0
 v.menuR = 32
+v.handleResult = function(result) {
+  const v = this
+  if (v.index == index) {
+    v.index = -1
+    v.setRenderFlag(true)
+  }
+  if (result.message != 'Cancelled') {
+    alert(result.message)
+  }
+}
 v.getText = (mime) => {
   return new Promise((resolve, reject) => {
     navigator.clipboard.read().then(items => {
@@ -55,17 +70,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     if (index >= 0 && index < v.items.length) {
       v.index = index
       switch (v.index) {
-        case 0:
-          trezorRestore().then(result => {
-            console.log('here', result)
-            if (v.index == index) {
-              v.index = -1
-              v.setRenderFlag(true)
-            }
-            if (result.message != 'Cancelled') {
-              alert(result.message)
-            }
-          }).catch(e => {
+        case ENTER_SEED:
+          trezorRestore().then(v.handleResult).catch(e => {
             console.error(e)
             if (v.index == index) {
               v.index = -1
@@ -73,7 +79,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
           })
           break
-        case 1:
+        case WIPE_SEED:
           trezorWipe().then(result => {
             if (v.index == index) {
               v.index = -1
