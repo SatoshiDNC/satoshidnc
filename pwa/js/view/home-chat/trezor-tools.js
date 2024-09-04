@@ -100,7 +100,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         }).catch(handleError); break
         case SIGN_MSG: trezorSign('test').then(r => {
           console.log(r)
-          console.log(bm.verify('test', r.address, sig))
+          console.log(bm.verify('test', r.address, Buffer.from(r.sig)))
           clearSelection()
         }).catch(handleError); break
         case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
