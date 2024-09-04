@@ -90,6 +90,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           const bip32 = bip32f.BIP32Factory(ecc)
           const xpubraw = bip32.fromBase58(r.xpub)
           console.log(xpubraw)
+          console.log(xpubraw.publicKey)
         }).catch(handleError); break
         case SIGN_MSG: trezorSign('test').then(handleResult).catch(handleError); break
         case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
