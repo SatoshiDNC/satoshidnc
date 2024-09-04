@@ -262,9 +262,7 @@ export function trezorPing(text) {
 
 const handleButtonsAndResult = (r) => {
   console.log('handleButtonsAndResult', r)
-  return new Promise((resolve, reject) => {
-    console.log('handleButtonsAndResult promise', r)
-    readFunc().then(json => {
+    return readFunc().then(json => {
       if (json.msgType == OUT_ButtonRequest) {
         console.log('OUT_ButtonRequest')
         device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(r => {
@@ -276,7 +274,6 @@ const handleButtonsAndResult = (r) => {
         resolve(json)
       }
     })
-  })
 }
 
 // const handleButtonsAndResult = () => {
