@@ -324,7 +324,9 @@ export function trezorGetNostrPubKey() {
 }
 
 export function trezorWipe() {
+  console.log('trezorWipe')
   return new Promise((resolve, reject) => {
+    console.log('trezorWipe promise')
     device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(r => {
       console.log('initial result', r)
       return handleButtonsAndResult(r)
