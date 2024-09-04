@@ -263,7 +263,7 @@ export function trezorWipe() {
       return readFunc()
     }).then(json => {
       if (json.msgType == OUT_ButtonRequest) {
-        device.transferOut(1, new UInt8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
+        device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
           return readFunc()
         }).then(json => {
           resolve(json)
