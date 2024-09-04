@@ -96,10 +96,13 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             pubkey: bip32.fromBase58(r.xpub).publicKey,
           })
           console.log(address)
+          clearSelection()
+        }).catch(handleError); break
+        case SIGN_MSG: trezorSign('test').then(r => {
+          console.log(r)
           console.log(bm.verify('test', address, sig))
           clearSelection()
         }).catch(handleError); break
-        case SIGN_MSG: trezorSign('test').then(handleResult).catch(handleError); break
         case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
       }
       // v.items[index].handler(v.items[index])
