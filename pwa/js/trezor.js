@@ -224,6 +224,9 @@ function varInt(v) {
   if (v < 128 * 128 * 128 * 128) return [(v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
   if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x7f, (v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
 }
+function paramVarInt(param, v) {
+  return [...varInt(param * 8 + 0), varInt(v)]
+}
 function paramString(param, text) {
   return [...varInt(param * 8 + 2), varInt(text.length), ...new TextEncoder().encode(text)]
 }
@@ -276,6 +279,23 @@ export function trezorRestore() {
       return readFunc()
     }).then(json => {
       handler(json)
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}
+
+export function trezorGetNostrPubKey() {
+  return new Promise((resolve, reject) => {
+    const buf = [
+      ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
+      ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
+      ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
+    ]
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(d => {
+      return readFunc()
+    }).then(json => {
+      resolve(json)
     }).catch(e => {
       reject(e)
     })

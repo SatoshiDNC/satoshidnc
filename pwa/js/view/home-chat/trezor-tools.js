@@ -67,26 +67,18 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         if (result.message != 'Cancelled') {
           alert(result.message)
         }
-      }      
+      }
+      const handleError = e => {
+        console.error(e)
+        if (v.index == index) {
+          v.index = -1
+          v.setRenderFlag(true)
+        }
+      }
       switch (v.items[v.index].key) {
-        case ENTER_SEED:
-          trezorRestore().then(handleResult).catch(e => {
-            console.error(e)
-            if (v.index == index) {
-              v.index = -1
-              v.setRenderFlag(true)
-            }
-          })
-          break
-        case WIPE_SEED:
-          trezorWipe().then(handleResult).catch(e => {
-            console.error(e)
-            if (v.index == index) {
-              v.index = -1
-              v.setRenderFlag(true)
-            }
-          })
-          break
+        case ENTER_SEED: trezorRestore().then(handleResult).catch(handleError); break
+        case GEN_HPUB: trezorGetNostrPubKey().then(handleResult).catch(handleError); break
+        case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
       }
       // v.items[index].handler(v.items[index])
       // menuRoot.easeOut()
