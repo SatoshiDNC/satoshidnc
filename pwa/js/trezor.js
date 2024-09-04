@@ -343,7 +343,7 @@ function msgMessageSignature(msg) {
       case 2: sig = value; break
     }
   }
-  return { nodeType, xpub, xpubRaw: decode_b58(xpub), rootFingerprint, descriptor }
+  return { address, sig }
 }
 
 function twoByte(n) {
