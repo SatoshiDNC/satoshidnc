@@ -39,48 +39,6 @@ v.getText = (mime) => {
     })  
   })
 }
-// v.items.map((item, i) => {
-//   v.gadgets.push(g = new fg.Gadget(v))
-//   g.actionFlags = fg.GAF_CLICKABLE
-//   g.label = item
-//   g.index = i
-//   v.gadgets[`index${i}`] = g
-//   g.clickFunc = function() {
-//     const g = this, v = this.viewport
-//     switch (g.index) {
-//     case SIGN_TEXT:
-//       // v.getText('text/plain').then(text => {
-//       //   const signedText = signText(text, hpub()).toString('hex')
-//       //   navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
-//       //     console.log(`signature: ${signedText}`)
-//       //     menuRoot.easeOut()
-//       //   })
-//       // })
-//       break
-//     case SIGN_EVENT:
-//       // v.getText('text/plain').then(text => {
-//       //   let event = JSON.parse(text)
-//       //   let signedEvent
-//       //   try {
-//       //     signedEvent = finalizeEvent(event, bsec())
-//       //     //signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
-//       //   } catch(e) {
-//       //     console.warn(`Unable to sign; invalid event in clipboard.`)
-//       //     return
-//       //   }
-//       //   const signedText = JSON.stringify(signedEvent)
-//       //   navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
-//       //     console.log(`signed event: ${signedText}`)
-//       //     menuRoot.easeOut()
-//       //   })
-//       // })
-//       break
-//     default:
-//       console.log(g.label)
-//       menuRoot.easeOut()
-//     }
-//   }
-// })
 v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 69, g.h = 104
@@ -212,7 +170,7 @@ v.renderFunc = function() {
 
   let i = 0
   for (const item of v.items) {
-    if (item.id == v.items?.[v.index]?.id) {
+    if (item.name == v.items?.[v.index]?.name) {
       drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 35 / 2 - ITEM_SIZE / 2 + ITEM_SIZE * i + v.menuH * f0, v.menuW, ITEM_SIZE)
     }
     mat4.identity(m)
