@@ -301,6 +301,7 @@ export function trezorRestore() {
 export function trezorGetNostrPubKey() {
   console.log('trezorGetNostrPubKey')
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
+    console.log('trezorGetNostrPubKey transferOut result')
     console.log('trezorGetNostrPubKey transferOut result', r)
     return handleResult(r)
   })
