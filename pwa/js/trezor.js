@@ -455,25 +455,29 @@ export function trezorGetNostrPubKey() {
 export function trezorSign(message) {
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
     return handleResult(r).then(msg => {
-      console.log('features:', msg)
-      const buf = [
-        ...paramVarInt(9, 1), // safety checks: prompt always
-      ]
-      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ApplySettings), ...fourByte(buf.length), ...buf])).then(r => {
-        return handleButtonsAndResult(r).then(() => {
-          const buf = [
-            ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
-            ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
-            ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
-            ...paramVarInt(1, 0), // 0 non-hardened (non-)change slot
-            ...paramVarInt(1, 0), // non-hardened address slot
-            ...paramString(2, message), // message to sign
-          ]
-          return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf])).then(r => {
-            return handleButtonsAndResult(r)
-          })
+      const postCheck = () => {
+        const buf = [
+          ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
+          ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
+          ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
+          ...paramVarInt(1, 0), // 0 non-hardened (non-)change slot
+          ...paramVarInt(1, 0), // non-hardened address slot
+          ...paramString(2, message), // message to sign
+        ]
+        return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf])).then(r => {
+          return handleButtonsAndResult(r)
         })
-      })
+      }
+      if (msg.safetyCheckLevel == 0) {
+        const buf = [
+          ...paramVarInt(9, 1), // safety checks: prompt always
+        ]
+        return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ApplySettings), ...fourByte(buf.length), ...buf])).then(r => {
+          return handleButtonsAndResult(r).then(postCheck)
+        })
+      } else {
+        postCheck()
+      }
     })
   })
 }
