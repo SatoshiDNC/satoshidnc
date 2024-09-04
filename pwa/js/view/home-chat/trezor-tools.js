@@ -2,7 +2,7 @@ import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
 import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorSign, trezorWipe } from '../../trezor.js'
 import bjs from 'bitcoinjs-lib'
 import * as ecc from '@bitcoinerlab/secp256k1'
-import * as bip32 from 'bip32'
+import * as bip32f from 'bip32'
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
@@ -87,6 +87,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         case GEN_HPUB: trezorGetNostrPubKey().then(r => {
           console.log('// DERIVE A KEY FROM XPUB')
           console.log(r)
+          const bip32 = bip32f.BIP32Factory(ecc)
           const xpubraw = bip32.fromBase58(r.xpub)
           console.log(xpubraw)
         }).catch(handleError); break
