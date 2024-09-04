@@ -242,6 +242,7 @@ function readHDNodeType(msg) {
 }
 
 function msgPublicKey(msg) {
+  console.log('msgPublicKey', msg)
   // required common.HDNodeType node = 1;        // BIP-32 public node
   // required string xpub = 2;                   // serialized form of public node
   // optional uint32 root_fingerprint = 3;       // master root node fingerprint
