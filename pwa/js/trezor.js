@@ -261,16 +261,22 @@ export function trezorPing(text) {
 }
 
 const handleButtonsAndResult = (json) => {
+  console.log('handleButtonsAndResult', json)
   return new Promise((resolve, reject) => {
+    console.log('handleButtonsAndResult promise', json)
     if (json.msgType == OUT_ButtonRequest) {
+      console.log('OUT_ButtonRequest')
       device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
+        console.log('transferOut complete')
         return readFunc()
       }).then(json => {
+        console.log('transferOut response')
         return handleButtonsAndResult(json)
       }).catch(e => {
         reject(e)
       })
     } else {
+      console.log('done')
       resolve(json)
     }
   })
@@ -320,6 +326,7 @@ export function trezorGetNostrPubKey() {
 export function trezorWipe() {
   return new Promise((resolve, reject) => {
     device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(r => {
+      console.log('initial result', r)
       return handleButtonsAndResult(r)
     })
   })
