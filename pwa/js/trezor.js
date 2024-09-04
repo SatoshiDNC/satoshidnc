@@ -100,6 +100,7 @@ const readFunc = () => {
             case OUT_Success: resolve({ msgType, ...msgSuccess(msg) }); break
             case OUT_ButtonRequest: resolve({ msgType, ...msgButtonRequest(msg) }); break
             case OUT_Features: resolve({ msgType, ...msgFeatures(msg) }); break
+            case OUT_PublicKey: resolve({ msgType, ...msgPublicKey(msg) }); break
             default: reject(`unexpected response from Trezor: ${msgType}`)
           }
         }
@@ -217,6 +218,48 @@ function msgFeatures(msg) {
   return { }
 }
 
+function readHDNodeType(msg) {
+  // required uint32 depth = 1;
+  // required uint32 fingerprint = 2;
+  // required uint32 child_num = 3;
+  // required bytes chain_code = 4;
+  // optional bytes private_key = 5;
+  // required bytes public_key = 6;
+  let depth, fingerprint, child, chainCode, privateKey, publicKey
+  while (msg.length > 0) {
+    let { param, type, value } = readTLV(msg)
+    console.log('readHDNodeType TLV:', param, type, value)
+    switch (param) {
+      case 1: depth = value; break
+      case 2: fingerprint = value; break
+      case 3: child = value; break
+      case 4: chainCode = value; break
+      case 5: privateKey = value; break
+      case 6: publicKey = value; break
+    }
+  }
+  return { depth, fingerprint, child, chainCode, privateKey, publicKey }
+}
+
+function msgPublicKey(msg) {
+  // required common.HDNodeType node = 1;        // BIP-32 public node
+  // required string xpub = 2;                   // serialized form of public node
+  // optional uint32 root_fingerprint = 3;       // master root node fingerprint
+  // optional string descriptor = 4;             // BIP-380 descriptor
+  let nodeType, xpub, rootFingerprint, descriptor
+  while (msg.length > 0) {
+    let { param, type, value } = readTLV(msg)
+    console.log('msgPublicKey TLV:', param, type, value)
+    switch (param) {
+      case 1: nodeType = readHDNodeType(value); break
+      case 2: xpub = value; break
+      case 3: rootFingerprint = value; break
+      case 4: descriptor = value; break
+    }
+  }
+  return { nodeType, xpub, rootFingerprint, descriptor }
+}
+
 function twoByte(n) {
   return [(n / 0x100) & 0xff, n & 0xff]
 }
@@ -280,16 +323,6 @@ const handleButtonsAndResult = r => {
     }
   })
 }
-
-// const handleButtonsAndResult = () => {
-//   return new Promise((resolve, reject) => {
-//     readFunc().then(json => {
-//       resolve(handleButtons(json))
-//     }).catch(e => {
-//       reject(e)
-//     })
-//   })
-// }
 
 const handleResult = r => {
   return readFunc().then(json => {
