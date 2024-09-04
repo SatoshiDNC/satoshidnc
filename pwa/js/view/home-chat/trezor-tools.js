@@ -81,7 +81,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       }
       switch (v.items[v.index].key) {
         case ENTER_SEED: trezorRestore().then(handleResult).catch(handleError); break
-        case GEN_HPUB: trezorGetNostrPubKey().then(handleResult).catch(handleError); break
+        case GEN_HPUB: trezorGetNostrPubKey().then(r => {
+          console.log('// DERIVE A KEY FROM XPUB')
+          console.log(r)
+        }).catch(handleError); break
         case SIGN_MSG: trezorSign('test').then(handleResult).catch(handleError); break
         case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
       }
