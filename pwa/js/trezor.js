@@ -261,22 +261,17 @@ export function trezorPing(text) {
 }
 
 const handleButtonsAndResult = (r) => {
-  console.log('handleButtonsAndResult', r)
-    return readFunc().then(json => {
-      if (json.msgType == OUT_ButtonRequest) {
-        console.log('OUT_ButtonRequest')
-        return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(r => {
-          console.log('transferOut complete')
-          return handleButtonsAndResult(r)
-        })
-      } else {
-        console.log('done', json)
-        return new Promise((resolve, reject) => {
-          console.log('handleButtonsAndResult promise', r)
-              resolve(json)
-            })
-          }
-    })
+  return readFunc().then(json => {
+    if (json.msgType == OUT_ButtonRequest) {
+      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(r => {
+        return handleButtonsAndResult(r)
+      })
+    } else {
+      return new Promise((resolve, reject) => {
+        resolve(json)
+      })
+    }
+  })
 }
 
 // const handleButtonsAndResult = () => {
@@ -300,32 +295,24 @@ const handleResult = () => {
 }
 
 export function trezorRestore() {
-  return new Promise((resolve, reject) => {
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(r => {
-      return handleButtonsAndResult(r)
-    })
+  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(r => {
+    return handleButtonsAndResult(r)
   })
 }
 
 export function trezorGetNostrPubKey() {
-  return new Promise((resolve, reject) => {
-    const buf = [
-      ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
-      ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
-      ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
-    ]
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(r => {
-      return handleResult(r)
-    })
+  const buf = [
+    ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
+    ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
+    ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
+  ]
+  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(r => {
+    return handleResult(r)
   })
 }
 
 export function trezorWipe() {
-  console.log('trezorWipe')
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(r => {
-      console.log('initial result', r)
-      const p = handleButtonsAndResult(r)
-      console.log('initial return', p)
-      return p
-    })
+    return handleButtonsAndResult(r)
+  })
 }
