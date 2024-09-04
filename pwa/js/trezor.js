@@ -212,11 +212,11 @@ function readVarInt(data) {
   let x = 0
   while (n < data.length && (data[n] & 0x80) !== 0) {
     console.log(x.toString(16), '->', (data[n] & 0x7f) * (128 ** n))
-    x += (data[n] & 0x7f) * (128 ^ n)
+    x += (data[n] & 0x7f) * (128 ** n)
     n++
   }
   console.log(x.toString(16), '->', (data[n] & 0x7f) * (128 ** n))
-  x += (data[n] & 0x7f) * (128 ^ n)
+  x += (data[n] & 0x7f) * (128 ** n)
   n++
   data.splice(0, n)
   return x
