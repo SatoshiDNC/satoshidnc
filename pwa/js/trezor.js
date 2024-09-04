@@ -207,6 +207,7 @@ const readFunc = () => {
 }
 
 function readVarInt(data) {
+  console.log('readVarInt', data)
   let n = 0
   let x = 0
   while (n < data.length && (data[n] & 0x80) !== 0) {
