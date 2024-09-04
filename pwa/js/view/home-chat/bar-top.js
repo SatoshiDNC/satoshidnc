@@ -1,4 +1,4 @@
-import { connectToTrezor } from '../../trezor.js'
+import { trezorConnect, trezorPing } from '../../trezor.js'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -14,7 +14,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
     if (item.id == 4) {
-      connectToTrezor()
+      connectToTrezor().then(() => {
+        trezorPing('test').then(result => console.log(result)).catch(e => console.error(e))
+      })
     }
   }
   g.items = [

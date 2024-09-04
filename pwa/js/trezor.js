@@ -211,7 +211,7 @@ function paramString(param, text) {
   return [...varInt(param * 8 + 2), varInt(text.length), ...new TextEncoder().encode(text)]
 }
 
-export function connectToTrezor() {
+export function trezorConnect() {
   return new Promise((resolve, reject) => {
     let device
     navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
