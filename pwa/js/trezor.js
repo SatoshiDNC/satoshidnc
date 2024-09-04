@@ -345,7 +345,7 @@ function varInt(v) {
   if (v < 128 * 128) return [(v >> 7) & 0x7f | 0x80, v & 0x7f]
   if (v < 128 * 128 * 128) return [(v >> 14) & 0x7f | 0x80, (v >> 7) & 0x7f | 0x80, v & 0x7f]
   if (v < 128 * 128 * 128 * 128) return [(v >> 21) & 0x7f | 0x80, (v >> 14) & 0x7f | 0x80, (v >> 7) & 0x7f | 0x80, v & 0x7f]
-  if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x7f | 0x80, (v >> 21) & 0x7f | 0x80, (v >> 14) & 0x7f | 0x80, (v >> 7) & 0x7f | 0x80, v & 0x7f]
+  if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x0f | 0x80, (v >> 21) & 0x7f | 0x80, (v >> 14) & 0x7f | 0x80, (v >> 7) & 0x7f | 0x80, v & 0x7f]
 }
 function paramVarInt(param, v) {
   return [...varInt(param * 8 + 0), varInt(v)]
