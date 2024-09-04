@@ -356,7 +356,9 @@ function paramString(param, text) {
 
 const handleButtonsAndResult = r => {
   return readFunc().then(json => {
+    console.log('read', json)
     if (json.msgType == OUT_ButtonRequest) {
+      console.log('out IN_ButtonAck_TINY')
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(r => {
         return handleButtonsAndResult(r)
       })
@@ -370,6 +372,7 @@ const handleButtonsAndResult = r => {
 
 const handleResult = r => {
   return readFunc().then(json => {
+    console.log('read', json)
     return new Promise((resolve, reject) => {
       resolve(json)
     })
@@ -428,6 +431,7 @@ export function trezorGetNostrPubKey() {
 }
 
 export function trezorSign(message) {
+  console.log('out IN_Initialize')
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
     return handleResult(r).then(() => {
       const buf = [
@@ -436,6 +440,7 @@ export function trezorSign(message) {
         ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
         ...paramString(2, message), // message to sign
       ]
+      console.log('out IN_SignMessage')
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf])).then(r => {
         return handleButtonsAndResult(r)
       })
