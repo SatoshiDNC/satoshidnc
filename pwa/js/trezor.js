@@ -87,8 +87,8 @@ export const D_IN_DebugLinkFlashErase = 113
 const readFunc = () => {
   return new Promise((resolve, reject) => {
     device.transferIn(1, 64).then(res => {
-      console.log('in:', res)
       const d = new Uint8Array(res.data.buffer)
+      console.log('in:', d)
       if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
         const msgType = d[3]*256 + d[4]
         let remaining = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
@@ -107,8 +107,8 @@ const readFunc = () => {
         }
         const readMore = finisher => {
           device.transferIn(1, 64).then(res => {
-            console.log('in:', res)
             const d = new Uint8Array(res.data.buffer)
+            console.log('in:', d)
             if (new TextDecoder().decode(d.slice(0,1)) == '?') {
               payload.splice(0, 0, ...d.slice(1,1 + Math.min(63, remaining)))
               remaining -= 63
