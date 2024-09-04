@@ -98,10 +98,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       if (v.index == 0) {
         trezorWipe().then(result => {
           console.log(result)
-          v.index = -1
+          if (v.index == index) v.index = -1
         }).catch(e => {
           console.error(e)
-          v.index = -1
+          if (v.index == index) v.index = -1
         })
       }
       // v.items[index].handler(v.items[index])
