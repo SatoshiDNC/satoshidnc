@@ -439,7 +439,7 @@ export function trezorSign(message) {
         ...paramVarInt(9, 1), // safety checks: prompt always
       ]
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ApplySettings), ...fourByte(buf.length), ...buf])).then(r => {
-        return handleResult(r).then(() => {
+        return handleButtonsAndResult(r).then(() => {
           const buf = [
             ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
             ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
