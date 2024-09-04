@@ -26,8 +26,8 @@ v.items = [
 ]
 v.menuX = 0
 v.menuR = 32
-v.handleResult = function(result) {
-  const v = this
+handleResult = result => {
+  const v = menuView
   if (v.index == index) {
     v.index = -1
     v.setRenderFlag(true)
@@ -71,7 +71,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       v.index = index
       switch (v.items[v.index].key) {
         case ENTER_SEED:
-          trezorRestore().then(v.handleResult).catch(e => {
+          trezorRestore().then(handleResult).catch(e => {
             console.error(e)
             if (v.index == index) {
               v.index = -1
@@ -80,7 +80,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           })
           break
         case WIPE_SEED:
-          trezorWipe().then(v.handleResult).catch(e => {
+          trezorWipe().then(handleResult).catch(e => {
             console.error(e)
             if (v.index == index) {
               v.index = -1
