@@ -98,12 +98,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       if (v.index == 0) {
         trezorWipe().then(result => {
           console.log(result)
-          if (result.message != 'Cancelled') {
-            alert(result.message)
-          }
           if (v.index == index) {
             v.index = -1
             v.setRenderFlag(true)
+          }
+          if (result.message != 'Cancelled') {
+            alert(result.message)
           }
         }).catch(e => {
           console.error(e)
