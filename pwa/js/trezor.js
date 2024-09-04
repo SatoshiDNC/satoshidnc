@@ -349,7 +349,7 @@ export function trezorGetNostrPubKey() {
         ...paramVarInt(3, 1), // show on display
       ]
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(r => {
-        return handleResult(r)
+        return handleButtonsAndResult(r)
       })
     })
   })
