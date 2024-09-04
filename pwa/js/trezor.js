@@ -260,25 +260,27 @@ export function trezorPing(text) {
   })
 }
 
-const handleButtonsAndResult = (json) => {
-  console.log('handleButtonsAndResult', json)
+const handleButtonsAndResult = (r) => {
+  console.log('handleButtonsAndResult', r)
   return new Promise((resolve, reject) => {
-    console.log('handleButtonsAndResult promise', json)
-    if (json.msgType == OUT_ButtonRequest) {
-      console.log('OUT_ButtonRequest')
-      device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
-        console.log('transferOut complete')
-        return readFunc()
-      }).then(json => {
-        console.log('transferOut response')
-        return handleButtonsAndResult(json)
-      }).catch(e => {
-        reject(e)
-      })
-    } else {
-      console.log('done')
-      resolve(json)
-    }
+    console.log('handleButtonsAndResult promise', r)
+    readFunc().then(json => {
+      if (json.msgType == OUT_ButtonRequest) {
+        console.log('OUT_ButtonRequest')
+        device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
+          console.log('transferOut complete')
+          return readFunc()
+        }).then(json => {
+          console.log('transferOut response')
+          return handleButtonsAndResult(json)
+        }).catch(e => {
+          reject(e)
+        })
+      } else {
+        console.log('done')
+        resolve(json)
+      }
+    })
   })
 }
 
