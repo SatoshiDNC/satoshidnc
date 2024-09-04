@@ -257,6 +257,18 @@ export function trezorPing(text) {
   })
 }
 
+export function trezorReset() {
+  return new Promise((resolve, reject) => {
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ResetDevice), ...fourByte(0)])).then(d => {
+      return readFunc()
+    }).then(json => {
+      resolve(json)
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}
+
 export function trezorWipe() {
   return new Promise((resolve, reject) => {
     device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(d => {

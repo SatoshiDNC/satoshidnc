@@ -24,13 +24,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       }).catch(e => console.error(e))
     }
   }
-  g.handler2 = function(item) {
-    const g = barTop.menuGad
-    console.log(`trezor item ${JSON.stringify(item)}`)
-    if (item.id == 1) {
-      trezorWipe().then(result => console.log(result)).catch(e => console.error(e))
-    }
-  }
   g.items = [
     { id: 1, handler: g.handler, label: 'New group' },
     { id: 2, handler: g.handler, label: 'New broadcast' },

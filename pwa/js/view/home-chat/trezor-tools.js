@@ -1,5 +1,5 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
-import { trezorConnect, trezorPing, trezorWipe } from '../../trezor.js'
+import { trezorConnect, trezorPing, trezorReset, trezorWipe } from '../../trezor.js'
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
@@ -16,7 +16,8 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.items = [
-  { id: 1, name: 'Wipe device'},
+  { name: 'Load Trezor'},
+  { name: 'Wipe Trezor'},
 ]
 v.menuX = 0
 v.menuR = 32
@@ -95,23 +96,43 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
     if (index >= 0 && index < v.items.length) {
       v.index = index
-      if (v.index == 0) {
-        trezorWipe().then(result => {
-          console.log(result)
-          if (v.index == index) {
-            v.index = -1
-            v.setRenderFlag(true)
-          }
-          if (result.message != 'Cancelled') {
-            alert(result.message)
-          }
-        }).catch(e => {
-          console.error(e)
-          if (v.index == index) {
-            v.index = -1
-            v.setRenderFlag(true)
-          }
-        })
+      switch (v.index) {
+        case 1:
+          trezorReset().then(result => {
+            console.log(result)
+            if (v.index == index) {
+              v.index = -1
+              v.setRenderFlag(true)
+            }
+            if (result.message != 'Cancelled') {
+              alert(result.message)
+            }
+          }).catch(e => {
+            console.error(e)
+            if (v.index == index) {
+              v.index = -1
+              v.setRenderFlag(true)
+            }
+          })
+          break
+        case 0:
+          trezorWipe().then(result => {
+            console.log(result)
+            if (v.index == index) {
+              v.index = -1
+              v.setRenderFlag(true)
+            }
+            if (result.message != 'Cancelled') {
+              alert(result.message)
+            }
+          }).catch(e => {
+            console.error(e)
+            if (v.index == index) {
+              v.index = -1
+              v.setRenderFlag(true)
+            }
+          })
+          break
       }
       // v.items[index].handler(v.items[index])
       // menuRoot.easeOut()
