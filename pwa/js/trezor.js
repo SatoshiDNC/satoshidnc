@@ -272,7 +272,7 @@ const handleButtonsAndResult = (r) => {
           return handleButtonsAndResult(json)
         })
       } else {
-        console.log('done')
+        console.log('done', json)
         resolve(json)
       }
     })
