@@ -93,7 +93,7 @@ const readFunc = () => {
         const msgType = d[3]*256 + d[4]
         let remaining = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
         let payload = []
-        payload.splice(0, 0, ...d.slice(9,9 + Math.min(55, remaining)))
+        payload.splice(payload.length, 0, ...d.slice(9,9 + Math.min(55, remaining)))
         remaining -= 55
         const finisher = msg => {
           switch (msgType) {
