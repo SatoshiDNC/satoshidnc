@@ -1,6 +1,7 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
 import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorSign, trezorWipe } from '../../trezor.js'
 import bjs from 'bitcoinjs-lib'
+import bm from 'bitcoinjs-message'
 import * as ecc from '@bitcoinerlab/secp256k1'
 import * as bip32f from 'bip32'
 
@@ -95,6 +96,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             pubkey: bip32.fromBase58(r.xpub).publicKey,
           })
           console.log(address)
+          console.log(bm.verify('test', address, sig))
           clearSelection()
         }).catch(handleError); break
         case SIGN_MSG: trezorSign('test').then(handleResult).catch(handleError); break
