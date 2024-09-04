@@ -342,10 +342,10 @@ function fourByte(n) {
 
 function varInt(v) {
   if (v < 128) return [v]
-  if (v < 128 * 128) return [(v >> 7) & 0x7f, v & 0x7f]
-  if (v < 128 * 128 * 128) return [(v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
-  if (v < 128 * 128 * 128 * 128) return [(v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
-  if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x7f, (v >> 21) & 0x7f, (v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
+  if (v < 128 * 128) return [(v >> 7) & 0x7f | 0x80, v & 0x7f]
+  if (v < 128 * 128 * 128) return [(v >> 14) & 0x7f | 0x80, (v >> 7) & 0x7f | 0x80, v & 0x7f]
+  if (v < 128 * 128 * 128 * 128) return [(v >> 21) & 0x7f | 0x80, (v >> 14) & 0x7f | 0x80, (v >> 7) & 0x7f | 0x80, v & 0x7f]
+  if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x7f | 0x80, (v >> 21) & 0x7f | 0x80, (v >> 14) & 0x7f | 0x80, (v >> 7) & 0x7f | 0x80, v & 0x7f]
 }
 function paramVarInt(param, v) {
   return [...varInt(param * 8 + 0), varInt(v)]
@@ -442,6 +442,7 @@ export function trezorSign(message) {
         return handleButtonsAndResult(r).then(() => {
           console.log((44 | 0x80000000) >>> 0)
           console.log(varInt((44 | 0x80000000) >>> 0))
+          console.log(varInt(-44))
           const buf = [
             ...paramVarInt(1, 44 | 0x80000000), // 44' hardened purpose code (BIP 43/44)
             ...paramString(2, message), // message to sign
