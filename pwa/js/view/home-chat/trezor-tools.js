@@ -176,14 +176,6 @@ v.renderFunc = function() {
     if (item.hpub == v.items?.[v.index]?.hpub) {
       drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 35 / 2 - ITEM_SIZE / 2 + ITEM_SIZE * i + v.menuH * f0, v.menuW, ITEM_SIZE)
     }
-    mat4.identity(mat)
-    mat4.translate(mat, mat, [v.menuX + 42, v.menuY + ITEM_TOP + 44 + ITEM_SIZE * i + v.menuH * f0, 0])
-    mat4.scale(mat, mat, [105/32, 105/32, 1])
-    let x = -0.5, y = 8.5
-    item.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
-      mat4.copy(m, mat)
-      nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
-    })
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
     mat4.scale(m,m, [35/14, 35/14, 1])
