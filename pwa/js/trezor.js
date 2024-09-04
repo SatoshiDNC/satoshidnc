@@ -225,11 +225,12 @@ function readBuf(data, len) {
 
 function readType(data, type) {
   switch (type) {
-    case 0:
-      return readVarInt(data)
+    case 0: return readVarInt(data)
+    case 1: return readBuf(data, 8)
     case 2:
       let len = readVarInt(data)
       return readBuf(data, len)
+    case 5: return readBuf(data, 4)
     default: 
       console.log('unhandled readtype', type, data)
   }
