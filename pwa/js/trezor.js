@@ -92,6 +92,7 @@ const readFunc = () => {
       console.log('transderIn', res)
       const d = new Uint8Array(res.data.buffer)
       if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
+        console.log('detected frame 1', res)
         const msgType = d[3]*256 + d[4]
         let remaining = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
         let payload = []
@@ -108,6 +109,7 @@ const readFunc = () => {
         const readMore = finisher => {
           readFunc().then(() => {
             if (new TextDecoder().decode(d.slice(0,1)) == '?') {
+              console.log('detected frame N', res)
               payload.splice(0, 0, ...d.slice(1,1 + Math.min(63, remaining)))
               remaining -= 63
               if (remaining > 0) {
@@ -121,8 +123,10 @@ const readFunc = () => {
           })
         }
         if (remaining > 0) {
+          console.log('readMore')
           readMore(finisher)
         } else {
+          console.log('finisher', payload)
           finisher(payload)
         }
       }
