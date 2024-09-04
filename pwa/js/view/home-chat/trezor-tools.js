@@ -96,7 +96,13 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     if (index >= 0 && index < v.items.length) {
       v.index = index
       if (v.index == 0) {
-        trezorWipe().then(result => console.log(result)).catch(e => console.error(e))
+        trezorWipe().then(result => {
+          console.log(result)
+          v.index = -1
+        }).catch(e => {
+          console.error(e)
+          v.index = -1
+        })
       }
       // v.items[index].handler(v.items[index])
       // menuRoot.easeOut()
