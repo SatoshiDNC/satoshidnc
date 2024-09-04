@@ -301,14 +301,18 @@ export function trezorRestore() {
 }
 
 export function trezorGetNostrPubKey() {
-  const buf = [
-    ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
-    ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
-    ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
-  ]
-  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(r => {
+  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(GetECDHSessionKey), ...fourByte(0)])).then(r => {
     return handleResult(r)
   })
+  
+  // const buf = [
+  //   ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
+  //   ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
+  //   ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
+  // ]
+  // return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(GetECDHSessionKey), ...fourByte(buf.length), ...buf])).then(r => {
+  //   return handleResult(r)
+  // })
 }
 
 export function trezorWipe() {
