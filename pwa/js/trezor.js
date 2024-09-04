@@ -103,6 +103,7 @@ const readFunc = () => {
             case OUT_Failure: resolve({ msgType, ...msgFailure(msg) }); break
             case OUT_Success: resolve({ msgType, ...msgSuccess(msg) }); break
             case OUT_ButtonRequest: resolve({ msgType, ...msgButtonRequest(msg) }); break
+            case OUT_Features: resolve({ msgType, ...msgFeatures(msg) }); break
             default: reject(`unexpected response from Trezor: ${msgType}`)
           }
         }
@@ -217,6 +218,11 @@ function msgButtonRequest(msg) {
     }
   }
   return { pages, name }
+}
+
+function msgFeatures(msg) {
+  // Not yet implemented
+  return { }
 }
 
 function twoByte(n) {
