@@ -110,7 +110,7 @@ const readFunc = () => {
             const d = new Uint8Array(res.data.buffer)
             console.log('in:', d)
             if (new TextDecoder().decode(d.slice(0,1)) == '?') {
-              payload.splice(0, 0, ...d.slice(1,1 + Math.min(63, remaining)))
+              payload.splice(payload.length, 0, ...d.slice(1,1 + Math.min(63, remaining)))
               remaining -= 63
               if (remaining > 0) {
                 readMore(finisher)
