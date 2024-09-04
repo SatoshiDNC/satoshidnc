@@ -266,7 +266,7 @@ const handleButtons = (json) => {
       device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
         return readFunc()
       }).then(json => {
-        resolve(handleButtons(json))
+        return handleButtons(json)
       }).catch(e => {
         reject(e)
       })
@@ -279,7 +279,7 @@ const handleButtons = (json) => {
 const handleButtonsAndResult = () => {
   return new Promise((resolve, reject) => {
     readFunc().then(json => {
-      resolve(handleButtons(json))
+      return handleButtons(json)
     }).catch(e => {
       reject(e)
     })
