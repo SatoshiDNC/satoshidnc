@@ -85,14 +85,10 @@ export const D_IN_DebugLinkMemoryWrite = 112
 export const D_IN_DebugLinkFlashErase = 113
 
 const readFunc = () => {
-  console.log('readFunc')
   return new Promise((resolve, reject) => {
-    console.log('readFunc promise')
     device.transferIn(1, 64).then(res => {
-      console.log('transferIn', res)
       const d = new Uint8Array(res.data.buffer)
       if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
-        console.log('detected frame 1', res)
         const msgType = d[3]*256 + d[4]
         let remaining = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
         let payload = []
@@ -109,10 +105,8 @@ const readFunc = () => {
         }
         const readMore = finisher => {
           device.transferIn(1, 64).then(res => {
-            console.log('readMore transferIn', res)
             const d = new Uint8Array(res.data.buffer)
             if (new TextDecoder().decode(d.slice(0,1)) == '?') {
-              console.log('detected frame N', res)
               payload.splice(0, 0, ...d.slice(1,1 + Math.min(63, remaining)))
               remaining -= 63
               if (remaining > 0) {
@@ -126,10 +120,8 @@ const readFunc = () => {
           })
         }
         if (remaining > 0) {
-          console.log('readMore')
           readMore(finisher)
         } else {
-          console.log('finisher', payload)
           finisher(payload)
         }
       }
@@ -300,9 +292,7 @@ const handleButtonsAndResult = r => {
 // }
 
 const handleResult = r => {
-  console.log('handleResult')
   return readFunc().then(json => {
-    console.log('handleResult readFunc', json)
     return new Promise((resolve, reject) => {
       resolve(json)
     })
@@ -316,20 +306,18 @@ export function trezorRestore() {
 }
 
 export function trezorGetNostrPubKey() {
-  console.log('trezorGetNostrPubKey')
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
-    console.log('trezorGetNostrPubKey transferOut result', r)
-    return handleResult(r)
+    return handleResult(r).then(() => {
+      const buf = [
+        ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
+        ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
+        ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
+      ]
+      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(r => {
+        return handleResult(r)
+      })
+    })
   })
-  
-  // const buf = [
-  //   ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
-  //   ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
-  //   ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
-  // ]
-  // return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(r => {
-  //   return handleResult(r)
-  // })
 }
 
 export function trezorWipe() {
