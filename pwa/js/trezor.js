@@ -260,13 +260,13 @@ export function trezorPing(text) {
   })
 }
 
-const handleButtons = (json) => {
+const handleButtonsAndResult = (json) => {
   return new Promise((resolve, reject) => {
     if (json.msgType == OUT_ButtonRequest) {
       device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
         return readFunc()
       }).then(json => {
-        return handleButtons(json)
+        resolve(handleButtons(json))
       }).catch(e => {
         reject(e)
       })
@@ -276,15 +276,15 @@ const handleButtons = (json) => {
   })
 }
 
-const handleButtonsAndResult = () => {
-  return new Promise((resolve, reject) => {
-    readFunc().then(json => {
-      return handleButtons(json)
-    }).catch(e => {
-      reject(e)
-    })
-  })
-}
+// const handleButtonsAndResult = () => {
+//   return new Promise((resolve, reject) => {
+//     readFunc().then(json => {
+//       resolve(handleButtons(json))
+//     }).catch(e => {
+//       reject(e)
+//     })
+//   })
+// }
 
 const handleResult = () => {
   return new Promise((resolve, reject) => {
@@ -298,7 +298,7 @@ const handleResult = () => {
 
 export function trezorRestore() {
   return new Promise((resolve, reject) => {
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(handleButtonsAndResult)
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(resolve(handleButtonsAndResult))
   })
 }
 
@@ -309,12 +309,12 @@ export function trezorGetNostrPubKey() {
       ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
       ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
     ]
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(handleResult)
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(resolve(handleResult))
   })
 }
 
 export function trezorWipe() {
   return new Promise((resolve, reject) => {
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(handleButtonsAndResult)
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(resolve(handleButtonsAndResult))
   })
 }
