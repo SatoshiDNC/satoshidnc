@@ -64,12 +64,15 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
     if (index >= 0 && index < v.items.length) {
       v.index = index
-      const handleResult = result => {
-        console.log('menu handleResult', result)
+      const closeToolbox = () => {
         if (v.index == index) {
           v.index = -1
           v.setRenderFlag(true)
         }
+      }
+      const handleResult = result => {
+        console.log('menu handleResult', result)
+        closeToolbox()
         if (result.message != 'Cancelled') {
           alert(result.message || result.xpub || result.address)
         }
@@ -77,10 +80,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       const handleError = e => {
         console.log('menu handleError', e)
         //console.error(e)
-        if (v.index == index) {
-          v.index = -1
-          v.setRenderFlag(true)
-        }
+        closeToolbox()
       }
       switch (v.items[v.index].key) {
         case ENTER_SEED: trezorRestore().then(handleResult).catch(handleError); break
