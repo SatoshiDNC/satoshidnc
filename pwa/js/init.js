@@ -13,8 +13,10 @@ import { barBot as homeChat_newChat_newContact_bot } from './view/home-chat/new-
 import { contentView as homeChat_newChat_newContact_content } from './view/home-chat/new-chat/new-contact/content.js'
 import { barBot as chatRoom_bot } from './view/chat-room/bar-bot.js'
 import { menuRoot as chatRoom_sendAs_root } from './view/chat-room/send-as/menu.js'
+import { menuRoot as homeChat_trezorTools_root } from './view/home-chat/trezor-tools.js'
 
 homeChatTop.menuGad.target = menuRoot
+homeChatTop.menuGad.target2 = homeChat_trezorTools_root
 newChatTop.backGad.root = homeChat_newChat_root, newChatTop.backGad.target = homeChat_root
 chatRoomBar.backGad.root = chatRoom_root, chatRoomBar.backGad.target = homeChat_root
 chatRoomBar.menuGad.target = menuRoot

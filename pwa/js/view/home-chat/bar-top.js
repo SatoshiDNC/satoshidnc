@@ -12,11 +12,25 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.font = iconFont
   g.fontSize = 11
   g.handler = function(item) {
+    const g = barTop.menuGad
     console.log(`id ${JSON.stringify(item)}`)
     if (item.id == 6) {
       trezorConnect().then(() => {
-        trezorWipe().then(result => console.log(result)).catch(e => console.error(e))
+        if (fg.getRoot() !== g.target2 || g.target2.easingState() == -1) {
+          g.target2?.easeIn?.([
+            { id: 1, handler: g.handler2, label: 'Wipe device' },
+          ])
+        } else {
+          g.target2?.easeOut?.()
+        }
       }).catch(e => console.error(e))
+    }
+  }
+  g.handler2 = function(item) {
+    const g = barTop.menuGad
+    console.log(`trezor item ${JSON.stringify(item)}`)
+    if (item.id == 1) {
+      trezorWipe().then(result => console.log(result)).catch(e => console.error(e))
     }
   }
   g.items = [
