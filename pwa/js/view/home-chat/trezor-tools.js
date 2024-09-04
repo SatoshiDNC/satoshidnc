@@ -86,7 +86,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         case GEN_HPUB: trezorGetNostrPubKey().then(r => {
           console.log('// DERIVE A KEY FROM XPUB')
           console.log(r)
-          const bip32 = require('bip32')
           const xpubraw = bip32.fromBase58(r.xpub)
           console.log(xpubraw)
         }).catch(handleError); break
