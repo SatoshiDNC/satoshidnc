@@ -154,7 +154,7 @@ function decode_b58(b58_string) {
   var byte_encoded_buffer = []
   while (num > 0) {
     remainder = num % BigInt(256)
-    byte_encoded_buffer.splice(0,0,remainder)
+    byte_encoded_buffer.splice(0,0,Number(remainder))
     num = num/BigInt(256)
   }
   return byte_encoded_buffer
