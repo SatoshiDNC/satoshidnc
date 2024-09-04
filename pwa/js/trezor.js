@@ -94,6 +94,7 @@ const readFunc = () => {
         let remaining = d[5]*16777216 + d[6]*65536 + d[7]*256 + d[8]
         let payload = []
         payload.splice(payload.length, 0, ...d.slice(9,9 + Math.min(55, remaining)))
+        console.log('accum:', payload)
         remaining -= 55
         const finisher = msg => {
           switch (msgType) {
@@ -111,6 +112,7 @@ const readFunc = () => {
             console.log('in:', d)
             if (new TextDecoder().decode(d.slice(0,1)) == '?') {
               payload.splice(payload.length, 0, ...d.slice(1,1 + Math.min(63, remaining)))
+              console.log('accum:', payload)
               remaining -= 63
               if (remaining > 0) {
                 readMore(finisher)
