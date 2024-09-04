@@ -463,6 +463,8 @@ export function trezorSign(message) {
             ...paramVarInt(1, (0 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
             ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
             ...paramVarInt(1, 0), // 0 non-hardened slot
+            ...paramVarInt(1, 0), // 0 non-hardened slot
+            ...paramVarInt(1, 0), // 0 non-hardened slot
             ...paramString(2, message), // message to sign
           ]
           console.log('out IN_SignMessage')
