@@ -334,7 +334,7 @@ function msgPublicKey(msg) {
       case 4: descriptor = value; break
     }
   }
-  return { nodeType, xpub, xpubRaw: b58_decode(xpub), rootFingerprint, descriptor }
+  return { nodeType, xpub, xpubRaw: decode_b58(xpub), rootFingerprint, descriptor }
 }
 
 function twoByte(n) {
