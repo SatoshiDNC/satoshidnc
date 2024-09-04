@@ -26,7 +26,7 @@ v.items = [
 ]
 v.menuX = 0
 v.menuR = 32
-handleResult = result => {
+const handleResult = result => {
   const v = menuView
   if (v.index == index) {
     v.index = -1
