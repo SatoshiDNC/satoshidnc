@@ -401,14 +401,6 @@ const handleResult = r => {
 let device
 export function trezorConnect() {
   return new Promise((resolve, reject) => {
-    if (!device) {
-      navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
-        device = selectedDevice
-        finish()
-      })
-    } else {
-      finish()
-    }
     const finish = () => {
       device.open().then(() => {
         return device.claimInterface(0)
@@ -417,6 +409,14 @@ export function trezorConnect() {
       }).catch(e => {
         reject(e)
       })
+    }
+    if (!device) {
+      navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
+        device = selectedDevice
+        finish()
+      })
+    } else {
+      finish()
     }
   })
 }
