@@ -298,7 +298,7 @@ const handleResult = () => {
 
 export function trezorRestore() {
   return new Promise((resolve, reject) => {
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(r=>handleButtonsAndResult(r))
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(r=>resolve(handleButtonsAndResult(r)))
   })
 }
 
@@ -309,12 +309,12 @@ export function trezorGetNostrPubKey() {
       ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
       ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
     ]
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(r=>handleResult(r))
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(r=>resolve(handleResult(r)))
   })
 }
 
 export function trezorWipe() {
   return new Promise((resolve, reject) => {
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(r=>handleButtonsAndResult(r))
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(r=>resolve(handleButtonsAndResult(r)))
   })
 }
