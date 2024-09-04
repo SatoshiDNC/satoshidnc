@@ -285,7 +285,7 @@ const handleButtonsAndResult = r => {
 // }
 
 const handleResult = r => {
-  readFunc().then(json => {
+  return readFunc().then(json => {
     return new Promise((resolve, reject) => {
       resolve(json)
     })
