@@ -144,7 +144,7 @@ function encode_b58(hex_number) {
 function decode_b58(b58_string) {
   // Set of base58 chars (Note: there is no '0','O','I' or 'l').
   const base58 = [1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-  b58_array = b58_string.split('').map(c => base58.indexOf(c))
+  const b58_array = b58_string.split('').map(c => base58.indexOf(c))
   let num = BigInt(0)
   while (b58_array.length > 0) {
     num = num * BigInt(58) + BigInt(b58_array.splice(0,1)[0])
