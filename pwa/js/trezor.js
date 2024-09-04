@@ -285,7 +285,9 @@ const handleButtonsAndResult = r => {
 // }
 
 const handleResult = r => {
+  console.log('handleResult')
   return readFunc().then(json => {
+    console.log('handleResult readFunc', json)
     return new Promise((resolve, reject) => {
       resolve(json)
     })
@@ -301,7 +303,6 @@ export function trezorRestore() {
 export function trezorGetNostrPubKey() {
   console.log('trezorGetNostrPubKey')
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
-    console.log('trezorGetNostrPubKey transferOut result')
     console.log('trezorGetNostrPubKey transferOut result', r)
     return handleResult(r)
   })
