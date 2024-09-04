@@ -266,7 +266,15 @@ export function trezorRestore() {
         device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
           return readFunc()
         }).then(json => {
-          resolve(json)
+          if (json.msgType == OUT_ButtonRequest) {
+            device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
+              return readFunc()
+            }).then(json => {
+              resolve(json)
+            }).catch(e => {
+              reject(e)
+            })
+          }
         }).catch(e => {
           reject(e)
         })
