@@ -84,6 +84,82 @@ export const D_OUT_DebugLinkMemory = 111
 export const D_IN_DebugLinkMemoryWrite = 112
 export const D_IN_DebugLinkFlashErase = 113
 
+function encode_b58(hex_number) {
+  // Set of base58 chars (Note: there is no '0','O','I' or 'l').
+  const base58 = [1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+  //Take input string of hexadecimal bytes and convert it to a base 10
+  //decimal number. BigInt needed as regular JS numbers don't represent enough significant digits.
+  var num = BigInt('0x' + hex_number)
+  //Our very large number will be repeatedly divided by 58.
+  const fifty8 = BigInt(58)
+  //The remainder of this division will be a number (0-57).
+  var remainder
+  //Each remainder's value maps to a character in our base58 array, and
+  //the string of these characters becomes our Base58 encoded output.
+  var b58_encoded_buffer = ''
+  //We move from: Hex Bytes -> Decimal Number -> Base58 Encoded string.
+  //To move through each place value of a base58 number, we continue to
+  //divide by 58, until the integer number rounds down to 0.
+  while (num > 0) {
+      //The modulus operator returns our remainder, which depends on
+      //the least significant digit in our BigInt converted input.
+      //For example: if we were doing modulo 2 division, all odd
+      //numbers - regardless of how long they are - would return a
+      //remainder of 1, because the least significant digit is odd.
+      remainder = num % fifty8
+
+      //Thus, we're encoding the right most (lowest place value)
+      //digits first, and so each subsequently encoded character
+      //needs to be added to the left of our encoded buffer
+      //so that the beginning & end of our input string/bytes aligns
+      //with the beginning & end of our Base58 encoded output.
+      b58_encoded_buffer = base58[remainder] + b58_encoded_buffer
+
+      //Dividing by 58 gives us our quotient (rounded down to the
+      //nearest integer), and moves us over one base58 place value,
+      //ready for the next round of b58 division/mapping/encoding.
+      num = num/BigInt(58)
+  }
+
+  //When we convert our byte-based hex input into a base 10 number, we
+  //lose the leading zero bytes in the converted decimal number.
+  //For example, if our hex input converted into the decimal number
+  //000017, this number would be reduced automatically to 17 in base10,
+  //and so we'd lose the leading zeros, which aren't important
+  //when doing base 10 math, but are important in preserving the
+  //information held in our original input value. So, in order to not
+  //lose the leading zeros, we count them, and then prepend them (as
+  //1's, which is their corresponding base58 value) to the beginning
+  //of our Base58 encoded output string.
+  while ( hex_number.match(/^00/) ) {
+      //For each leading zero byte, add a '1' to the encoded output.
+      b58_encoded_buffer = '1' + b58_encoded_buffer
+      //And remove the leading zero byte, and test for another.
+      hex_number = hex_number.substring(2)
+  }
+
+  return b58_encoded_buffer
+}
+
+function decode_b58(b58_string) {
+  // Set of base58 chars (Note: there is no '0','O','I' or 'l').
+  const base58 = [1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+  b58_array = b58_string.split('').map(c => base58.indexOf(c))
+  let num = BigInt(0)
+  while (b58_array.length > 0) {
+    num = num * BigInt(58) + BigInt(b58_array.splice(0,1)[0])
+  }
+  console.log(num)
+  var remainder
+  var byte_encoded_buffer = []
+  while (num > 0) {
+    remainder = num % 256
+    byte_encoded_buffer.splice(0,0,remainder)
+    num = num/BigInt(256)
+  }
+  return byte_encoded_buffer
+}
+
 const readFunc = () => {
   return new Promise((resolve, reject) => {
     device.transferIn(1, 64).then(res => {
@@ -258,7 +334,7 @@ function msgPublicKey(msg) {
       case 4: descriptor = value; break
     }
   }
-  return { nodeType, xpub, rootFingerprint, descriptor }
+  return { nodeType, xpub, xpubRaw: b58_decode(xpub), rootFingerprint, descriptor }
 }
 
 function twoByte(n) {
