@@ -80,15 +80,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           })
           break
         case WIPE_SEED:
-          trezorWipe().then(result => {
-            if (v.index == index) {
-              v.index = -1
-              v.setRenderFlag(true)
-            }
-            if (result.message != 'Cancelled') {
-              alert(result.message)
-            }
-          }).catch(e => {
+          trezorWipe().then(v.handleResult).catch(e => {
             console.error(e)
             if (v.index == index) {
               v.index = -1
