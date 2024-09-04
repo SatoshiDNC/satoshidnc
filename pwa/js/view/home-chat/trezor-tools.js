@@ -26,16 +26,6 @@ v.items = [
 ]
 v.menuX = 0
 v.menuR = 32
-v.handleResult = result => {
-  const v = menuView
-  if (v.index == index) {
-    v.index = -1
-    v.setRenderFlag(true)
-  }
-  if (result.message != 'Cancelled') {
-    alert(result.message)
-  }
-}
 v.getText = (mime) => {
   return new Promise((resolve, reject) => {
     navigator.clipboard.read().then(items => {
@@ -69,9 +59,18 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
     if (index >= 0 && index < v.items.length) {
       v.index = index
+      const handleResult = result => {
+        if (v.index == index) {
+          v.index = -1
+          v.setRenderFlag(true)
+        }
+        if (result.message != 'Cancelled') {
+          alert(result.message)
+        }
+      }      
       switch (v.items[v.index].key) {
         case ENTER_SEED:
-          trezorRestore().then(v.handleResult).catch(e => {
+          trezorRestore().then(handleResult).catch(e => {
             console.error(e)
             if (v.index == index) {
               v.index = -1
@@ -80,7 +79,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           })
           break
         case WIPE_SEED:
-          trezorWipe().then(v.handleResult).catch(e => {
+          trezorWipe().then(handleResult).catch(e => {
             console.error(e)
             if (v.index == index) {
               v.index = -1
