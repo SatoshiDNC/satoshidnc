@@ -85,8 +85,11 @@ export const D_IN_DebugLinkMemoryWrite = 112
 export const D_IN_DebugLinkFlashErase = 113
 
 const readFunc = () => {
+  console.log('readFunc')
   return new Promise((resolve, reject) => {
+    console.log('readFunc promise')
     device.transferIn(1, 64).then(res => {
+      console.log('transderIn', res)
       const d = new Uint8Array(res.data.buffer)
       if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
         const msgType = d[3]*256 + d[4]
