@@ -290,8 +290,14 @@ function msgButtonRequest(msg) {
 }
 
 function msgFeatures(msg) {
-  // Not yet implemented
-  return { }
+  let safetyCheckLevel
+  while (msg.length > 0) {
+    let { param, type, value } = readTLV(msg)
+    switch (param) {
+      case 37: safetyCheckLevel = value; break
+    }
+  }
+  return { safetyCheckLevel }
 }
 
 function readHDNodeType(msg) {
@@ -446,7 +452,8 @@ export function trezorGetNostrPubKey() {
 
 export function trezorSign(message) {
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
-    return handleResult(r).then(() => {
+    return handleResult(r).then(msg => {
+      console.log('features:', msg)
       const buf = [
         ...paramVarInt(9, 1), // safety checks: prompt always
       ]
