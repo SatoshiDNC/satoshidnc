@@ -224,6 +224,7 @@ function readBuf(data, len) {
 }
 
 function readType(data, type) {
+  console.log('reading type', type)
   switch (type) {
     case 0: return readVarInt(data)
     case 1: return readBuf(data, 8)
@@ -291,6 +292,7 @@ function msgButtonRequest(msg) {
 }
 
 function msgFeatures(msg) {
+  console.log('features')
   let safetyCheckLevel
   while (msg.length > 0) {
     let { param, type, value } = readTLV(msg)
