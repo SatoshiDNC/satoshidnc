@@ -269,12 +269,7 @@ const handleButtonsAndResult = (r) => {
         console.log('OUT_ButtonRequest')
         device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
           console.log('transferOut complete')
-          return readFunc()
-        }).then(json => {
-          console.log('transferOut response')
           return handleButtonsAndResult(json)
-        }).catch(e => {
-          reject(e)
         })
       } else {
         console.log('done')
