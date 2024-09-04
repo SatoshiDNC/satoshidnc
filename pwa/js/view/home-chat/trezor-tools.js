@@ -1,5 +1,5 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
-import { trezorConnect, trezorPing, trezorRestore, trezorWipe } from '../../trezor.js'
+import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorWipe } from '../../trezor.js'
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
