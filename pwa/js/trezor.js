@@ -271,8 +271,11 @@ const handleButtonsAndResult = (r) => {
         })
       } else {
         console.log('done', json)
-        resolve(json)
-      }
+        return new Promise((resolve, reject) => {
+          console.log('handleButtonsAndResult promise', r)
+              resolve(json)
+            })
+          }
     })
 }
 
