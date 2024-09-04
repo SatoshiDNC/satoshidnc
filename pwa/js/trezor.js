@@ -343,6 +343,7 @@ function fourByte(n) {
 function varInt(v) {
   const a = []
   while (v > 0x7f) {
+    console.log(v.toString(16), '->', ((v >> 7) & 0x1fffffff).toString(16), ',', 0x80 | (v & 0x7f))
     a.push(0x80 | (v & 0x7f))
     v = (v >> 7) & 0x1fffffff
   }
