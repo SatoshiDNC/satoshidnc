@@ -441,7 +441,7 @@ export function trezorSign(message) {
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ApplySettings), ...fourByte(buf.length), ...buf])).then(r => {
         return handleButtonsAndResult(r).then(() => {
           const buf = [
-            ...paramVarInt(1, 44), // 44' hardened purpose code (BIP 43/44)
+            ...paramVarInt(1, 44 | 0x80000000), // 44' hardened purpose code (BIP 43/44)
             ...paramString(2, message), // message to sign
           ]
           console.log('out IN_SignMessage')
