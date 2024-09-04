@@ -149,7 +149,6 @@ function decode_b58(b58_string) {
   while (b58_array.length > 0) {
     num = num * BigInt(58) + BigInt(b58_array.splice(0,1)[0])
   }
-  console.log(num)
   var remainder
   var byte_encoded_buffer = []
   while (num > 0) {
@@ -304,7 +303,6 @@ function readHDNodeType(msg) {
   let depth, fingerprint, child, chainCode, privateKey, publicKey
   while (msg.length > 0) {
     let { param, type, value } = readTLV(msg)
-    console.log('readHDNodeType TLV:', param, type, value)
     switch (param) {
       case 1: depth = value; break
       case 2: fingerprint = value; break
@@ -318,7 +316,6 @@ function readHDNodeType(msg) {
 }
 
 function msgPublicKey(msg) {
-  console.log('msgPublicKey', msg)
   // required common.HDNodeType node = 1;        // BIP-32 public node
   // required string xpub = 2;                   // serialized form of public node
   // optional uint32 root_fingerprint = 3;       // master root node fingerprint
@@ -326,7 +323,6 @@ function msgPublicKey(msg) {
   let nodeType, xpub, rootFingerprint, descriptor
   while (msg.length > 0) {
     let { param, type, value } = readTLV(msg)
-    console.log('msgPublicKey TLV:', param, type, value)
     switch (param) {
       case 1: nodeType = readHDNodeType(value); break
       case 2: xpub = new TextDecoder().decode(new Uint8Array(value).buffer); break
