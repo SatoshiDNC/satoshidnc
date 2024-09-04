@@ -17,9 +17,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     if (item.id == 6) {
       trezorConnect().then(() => {
         if (fg.getRoot() !== g.target2 || g.target2.easingState() == -1) {
-          g.target2?.easeIn?.([
-            { id: 1, handler: g.handler2, label: 'Wipe device' },
-          ])
+          g.target2?.easeIn?.()
         } else {
           g.target2?.easeOut?.()
         }

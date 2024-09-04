@@ -14,7 +14,9 @@ v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
-v.items = []
+v.items = [
+  { id: 1, name: 'Wipe device'},
+]
 v.menuX = 0
 v.menuR = 32
 v.getText = (mime) => {
@@ -108,7 +110,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   }
 v.prepMenu = function(items) {
   const v = this
-  v.items = items
+  v.items = items||v.items
   v.index = -1
   v.currentItemCount = items.length
 }
@@ -165,7 +167,7 @@ v.renderFunc = function() {
   drawPill(v, colors.inactive, v.menuX + (v.menuW - 84) / 2, v.menuY + 26 + v.menuH * f0, 84, 11)
 
   mat4.identity(m)
-  let str = 'Identify in this chat as'
+  let str = 'Trezor tools'
   let s = 41/14
   mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + TITLE_TOP + 41 + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
@@ -173,7 +175,7 @@ v.renderFunc = function() {
 
   let i = 0
   for (const item of v.items) {
-    if (item.hpub == v.items?.[v.index]?.hpub) {
+    if (item.id == v.items?.[v.index]?.id) {
       drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 35 / 2 - ITEM_SIZE / 2 + ITEM_SIZE * i + v.menuH * f0, v.menuW, ITEM_SIZE)
     }
     mat4.identity(m)
@@ -186,7 +188,7 @@ v.renderFunc = function() {
   let g = v.sendGad
   drawPill(v, colors.accent, g.x, g.y + v.menuH * f0, g.w, g.h)
   mat4.identity(m)
-  str = 'Send'
+  str = 'Close'
   s = 29/14
   mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(str) * s) / 2, g.y + 66 + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
