@@ -452,7 +452,7 @@ export function trezorSign(message) {
           console.log(varInt((44 | 0x80000000) >>> 0))
           console.log(varInt((44 | 0x80000000)))
           const buf = [
-            ...paramVarInt(1, 44 | 0x80000000), // 44' hardened purpose code (BIP 43/44)
+            ...paramVarInt(1, (44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
             ...paramString(2, message), // message to sign
           ]
           console.log('out IN_SignMessage')
