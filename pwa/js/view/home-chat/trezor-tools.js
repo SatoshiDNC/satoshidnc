@@ -112,7 +112,7 @@ v.prepMenu = function(items) {
   const v = this
   v.items = items||v.items
   v.index = -1
-  v.currentItemCount = items.length
+  v.currentItemCount = v.items.length
 }
 v.layoutFunc = function() {
   const v = this
