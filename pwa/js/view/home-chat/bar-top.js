@@ -13,10 +13,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.fontSize = 11
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
-    if (item.id == 4) {
-      connectToTrezor().then(() => {
+    if (item.id == 6) {
+      trezorConnect().then(() => {
         trezorPing('test').then(result => console.log(result)).catch(e => console.error(e))
-      })
+      }).catch(e => console.error(e))
     }
   }
   g.items = [
