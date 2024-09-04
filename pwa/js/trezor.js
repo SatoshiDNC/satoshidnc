@@ -436,6 +436,7 @@ export function trezorSign(message) {
         ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
         ...paramVarInt(1, (   0 | 0x00000000) >>> 0), // 0' non-hardened slot
         ...paramVarInt(1, (   0 | 0x00000000) >>> 0), // 0' non-hardened slot
+        ...paramVarInt(1, (   0 | 0x00000000) >>> 0), // 0' non-hardened slot
         ...paramString(2, message), // message to sign
       ]
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf])).then(r => {
