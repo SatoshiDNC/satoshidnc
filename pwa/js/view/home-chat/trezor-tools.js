@@ -64,7 +64,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
     if (index >= 0 && index < v.items.length) {
       v.index = index
-      const closeToolbox = () => {
+      const clearSelection = () => {
         if (v.index == index) {
           v.index = -1
           v.setRenderFlag(true)
@@ -72,7 +72,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       }
       const handleResult = result => {
         console.log('menu handleResult', result)
-        closeToolbox()
+        clearSelection()
         if (result.message != 'Cancelled') {
           alert(result.message || result.xpub || result.address)
         }
@@ -80,7 +80,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       const handleError = e => {
         console.log('menu handleError', e)
         //console.error(e)
-        closeToolbox()
+        clearSelection()
       }
       switch (v.items[v.index].key) {
         case ENTER_SEED: trezorRestore().then(handleResult).catch(handleError); break
@@ -92,10 +92,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           console.log(xpubraw)
           console.log(xpubraw.publicKey)
           const { address } = bjs.payments.p2pkh({
-            pubkey: bip32.fromBase58(r.xpub).derive(0).derive(0).derive(0).publicKey,
+            pubkey: bip32.fromBase58(r.xpub).derive(0).derive(0).publicKey,
           })
           console.log(address)
-          closeToolbox()
+          clearSelection()
         }).catch(handleError); break
         case SIGN_MSG: trezorSign('test').then(handleResult).catch(handleError); break
         case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
