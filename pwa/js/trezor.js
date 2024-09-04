@@ -377,9 +377,7 @@ function paramString(param, text) {
 
 const handleButtonsAndResult = r => {
   return readFunc().then(json => {
-    console.log('read', json)
     if (json.msgType == OUT_ButtonRequest) {
-      console.log('out IN_ButtonAck_TINY')
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(r => {
         return handleButtonsAndResult(r)
       })
@@ -393,7 +391,6 @@ const handleButtonsAndResult = r => {
 
 const handleResult = r => {
   return readFunc().then(json => {
-    console.log('read', json)
     return new Promise((resolve, reject) => {
       resolve(json)
     })
