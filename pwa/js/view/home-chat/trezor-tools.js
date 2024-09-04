@@ -1,5 +1,7 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
 import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorSign, trezorWipe } from '../../trezor.js'
+import { bjs } from 'bitcoinjs-lib'
+import { bip32 } from 'bip32'
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
