@@ -16,7 +16,7 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.items = [
-  { name: 'Load Trezor'},
+  { name: 'Enter seed words on Trezor'},
   { name: 'Wipe Trezor'},
 ]
 v.menuX = 0
