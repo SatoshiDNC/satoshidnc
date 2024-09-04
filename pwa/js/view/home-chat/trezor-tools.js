@@ -95,6 +95,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             pubkey: bip32.fromBase58(r.xpub).derive(0).derive(0).derive(0).publicKey,
           })
           console.log(address)
+          closeToolbox()
         }).catch(handleError); break
         case SIGN_MSG: trezorSign('test').then(handleResult).catch(handleError); break
         case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
