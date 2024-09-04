@@ -1,4 +1,4 @@
-import { trezorConnect, trezorPing } from '../../trezor.js'
+import { trezorConnect, trezorPing, trezorWipe } from '../../trezor.js'
 
 let v, g
 export const barTop = v = new fg.View()
