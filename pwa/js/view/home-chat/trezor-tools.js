@@ -1,5 +1,5 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
-import { trezorConnect, trezorPing, trezorReset, trezorWipe } from '../../trezor.js'
+import { trezorConnect, trezorPing, trezorRestore, trezorWipe } from '../../trezor.js'
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
@@ -56,8 +56,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       v.index = index
       switch (v.index) {
         case 0:
-          trezorReset().then(result => {
-            console.log(result)
+          trezorRestore().then(result => {
+            console.log('here', result)
             if (v.index == index) {
               v.index = -1
               v.setRenderFlag(true)
@@ -75,7 +75,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           break
         case 1:
           trezorWipe().then(result => {
-            console.log(result)
             if (v.index == index) {
               v.index = -1
               v.setRenderFlag(true)

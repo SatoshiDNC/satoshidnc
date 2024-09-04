@@ -257,7 +257,7 @@ export function trezorPing(text) {
   })
 }
 
-export function trezorReset() {
+export function trezorRestore() {
   return new Promise((resolve, reject) => {
     device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(d => {
       return readFunc()
