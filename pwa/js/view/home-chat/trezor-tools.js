@@ -1,4 +1,4 @@
-import { drawRect, drawPill, drawRoundedRect } from '../../../draw.js'
+import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
