@@ -66,7 +66,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           v.setRenderFlag(true)
         }
         if (result.message != 'Cancelled') {
-          alert(result.message)
+          alert(result.message || new TextDecoder.decode(result.xpub))
         }
       }
       const handleError = e => {
