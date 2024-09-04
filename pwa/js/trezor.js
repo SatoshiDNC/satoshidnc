@@ -267,9 +267,9 @@ const handleButtonsAndResult = (r) => {
     readFunc().then(json => {
       if (json.msgType == OUT_ButtonRequest) {
         console.log('OUT_ButtonRequest')
-        device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(d => {
+        device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(r => {
           console.log('transferOut complete')
-          return handleButtonsAndResult(json)
+          return handleButtonsAndResult(r)
         })
       } else {
         console.log('done', json)
