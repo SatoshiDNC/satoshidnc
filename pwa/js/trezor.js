@@ -224,7 +224,6 @@ function readBuf(data, len) {
 }
 
 function readType(data, type) {
-  console.log('reading type', type)
   switch (type) {
     case 0: return readVarInt(data)
     case 1: return readBuf(data, 8)
@@ -242,7 +241,6 @@ function readTLV(data) {
   let param = tag >> 3
   let type = tag & 0x7
   let value = readType(data, type)
-  console.log('TLV', param, type, value )
   return { param, type, value }
 }
 
