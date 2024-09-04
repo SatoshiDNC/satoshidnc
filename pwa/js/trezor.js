@@ -241,6 +241,7 @@ function readTLV(data) {
   let tag = readVarInt(data)
   let param = tag >> 3
   let type = tag & 0x7
+  console.log('TLV', param, type, value )
   let value = readType(data, type)
   return { param, type, value }
 }
