@@ -97,7 +97,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     if (index >= 0 && index < v.items.length) {
       v.index = index
       switch (v.index) {
-        case 1:
+        case 0:
           trezorReset().then(result => {
             console.log(result)
             if (v.index == index) {
@@ -115,7 +115,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
           })
           break
-        case 0:
+        case 1:
           trezorWipe().then(result => {
             console.log(result)
             if (v.index == index) {
