@@ -216,7 +216,6 @@ export function trezorConnect() {
   return new Promise((resolve, reject) => {
     navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
       device = selectedDevice
-      console.log(device)
       return device.open()
     }).then(() => {
       return device.claimInterface(0)
