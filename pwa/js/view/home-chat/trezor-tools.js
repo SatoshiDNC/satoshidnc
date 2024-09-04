@@ -1,4 +1,5 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
+import { trezorConnect, trezorPing, trezorWipe } from '../../trezor.js'
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
@@ -84,11 +85,8 @@ v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
   g.x = 69, g.h = 104
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    if (v.index >= 0 && v.index < v.items.length) {
-      v.items[v.index].handler(v.items[v.index])
-      menuRoot.easeOut()
-    }
-}
+    menuRoot.easeOut()
+  }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
@@ -97,6 +95,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
     if (index >= 0 && index < v.items.length) {
       v.index = index
+      if (index == 1) {
+        trezorWipe().then(result => console.log(result)).catch(e => console.error(e))
+      }
       // v.items[index].handler(v.items[index])
       // menuRoot.easeOut()
     } else {
