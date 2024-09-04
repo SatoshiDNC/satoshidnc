@@ -98,7 +98,7 @@ const readFunc = () => {
           switch (msgType) {
             case OUT_Failure: resolve({ msgType, ...msgFailure(msg) }); break
             case OUT_Success: resolve({ msgType, ...msgSuccess(msg) }); break
-            default: reject('unexpected response from Trezor')
+            default: reject(`unexpected response from Trezor: ${msgType}`)
           }
         }
         const readMore = finisher => {
