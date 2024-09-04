@@ -176,6 +176,7 @@ const readFunc = () => {
             case OUT_ButtonRequest: resolve({ msgType, ...msgButtonRequest(msg) }); break
             case OUT_Features: resolve({ msgType, ...msgFeatures(msg) }); break
             case OUT_PublicKey: resolve({ msgType, ...msgPublicKey(msg) }); break
+            case OUT_MessageSignature: resolve({ msgType, ...msgMessageSignature(msg) }); break
             default: reject(`unexpected response from Trezor: ${msgType}`)
           }
         }
@@ -328,6 +329,18 @@ function msgPublicKey(msg) {
       case 2: xpub = new TextDecoder().decode(new Uint8Array(value).buffer); break
       case 3: rootFingerprint = value; break
       case 4: descriptor = value; break
+    }
+  }
+  return { nodeType, xpub, xpubRaw: decode_b58(xpub), rootFingerprint, descriptor }
+}
+
+function msgMessageSignature(msg) {
+  let address, sig
+  while (msg.length > 0) {
+    let { param, type, value } = readTLV(msg)
+    switch (param) {
+      case 1: address = new TextDecoder().decode(new Uint8Array(value).buffer); break
+      case 2: sig = value; break
     }
   }
   return { nodeType, xpub, xpubRaw: decode_b58(xpub), rootFingerprint, descriptor }
