@@ -15,7 +15,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     console.log(`id ${JSON.stringify(item)}`)
     if (item.id == 6) {
       trezorConnect().then(() => {
-        trezorPing('test').then(result => console.log(result)).catch(e => console.error(e))
+        trezorWipe().then(result => console.log(result)).catch(e => console.error(e))
       }).catch(e => console.error(e))
     }
   }
