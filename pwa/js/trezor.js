@@ -324,6 +324,8 @@ export function trezorWipe() {
   console.log('trezorWipe')
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_WipeDevice), ...fourByte(0)])).then(r => {
       console.log('initial result', r)
-      return handleButtonsAndResult(r)
+      const p = handleButtonsAndResult(r)
+      console.log('initial return', p)
+      return p
     })
 }
