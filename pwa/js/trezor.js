@@ -344,7 +344,7 @@ function varInt(v) {
   const a = []
   while (v > 0x7f) {
     a.push(0x80 | (v & 0x7f))
-    v = v >> 7
+    v = (v >> 7) & 0x1fffffff
   }
   a.push(v)
   return a
