@@ -446,7 +446,7 @@ export function trezorSign(message) {
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
     return handleResult(r).then(() => {
       const buf = [
-        ...paramVarInt(9, 1), // safety checks: prompt always
+        ...paramVarInt(9, 0), // safety checks: prompt always
       ]
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ApplySettings), ...fourByte(buf.length), ...buf])).then(r => {
         return handleButtonsAndResult(r).then(() => {
