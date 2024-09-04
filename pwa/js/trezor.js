@@ -356,17 +356,11 @@ function fourByte(n) {
 function varInt(v) {
   const a = []
   while (v > 0x7f) {
-    console.log(v.toString(16), '->', (v >>> 7).toString(16), ',', 0x80 | (v & 0x7f))
     a.push(0x80 | (v & 0x7f))
     v = (v >>> 7)
   }
   a.push(v)
   return a
-  // if (v < 128) return [v]
-  // if (v < 128 * 128) return [(v >> 7) & 0x7f, v & 0x7f]
-  // if (v < 128 * 128 * 128) return [(v >> 14) & 0x7f, (v >> 7) & 0x7f, v & 0x7f]
-  // if (v < 128 * 128 * 128 * 128) return [(v >> 21) & 0x7f | 0x80, (v >> 14) & 0x7f | 0x80, (v >> 7) & 0x7f | 0x80, v & 0x7f]
-  // if (v < 128 * 128 * 128 * 128 * 128) return [(v >> 28) & 0x0f | 0x80, (v >> 21) & 0x7f | 0x80, (v >> 14) & 0x7f | 0x80, (v >> 7) & 0x7f | 0x80, v & 0x7f]
 }
 function paramVarInt(param, v) {
   return [...varInt(param * 8 + 0), ...varInt(v)]
@@ -449,10 +443,8 @@ export function trezorGetNostrPubKey() {
 }
 
 export function trezorSign(message) {
-  console.log('out IN_Initialize')
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
     return handleResult(r).then(() => {
-      console.log('out IN_ApplySettings')
       const buf = [
         ...paramVarInt(9, 1), // safety checks: prompt always
       ]
@@ -462,11 +454,10 @@ export function trezorSign(message) {
             ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
             ...paramVarInt(1, (0 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
             ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
-            ...paramVarInt(1, 1456), // 0 non-hardened slot
+            ...paramVarInt(1, 2), // 0 non-hardened slot
             ...paramVarInt(1, 134), // 0 non-hardened slot
             ...paramString(2, message), // message to sign
           ]
-          console.log('out IN_SignMessage')
           return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf])).then(r => {
             return handleButtonsAndResult(r)
           })
