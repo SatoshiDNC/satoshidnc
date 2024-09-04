@@ -98,6 +98,7 @@ const readFunc = () => {
           switch (msgType) {
             case OUT_Failure: resolve({ msgType, ...msgFailure(msg) }); break
             case OUT_Success: resolve({ msgType, ...msgSuccess(msg) }); break
+            case OUT_ButtonRequest: resolve({ msgType, ...msgButtonRequest(msg) }); break
             default: reject(`unexpected response from Trezor: ${msgType}`)
           }
         }
@@ -191,6 +192,22 @@ function msgSuccess(msg) {
     }
   }
   return { message }
+}
+
+function msgButtonRequest(msg) {
+  let pages, name
+  while (msg.length > 0) {
+    let { param, type, value } = readTLV(msg)
+    switch (param) {
+      case 2:
+        pages = value
+        break
+      case 4:
+        name = new TextDecoder().decode(new Uint8Array(value).buffer)
+        break
+    }
+  }
+  return { pages, name }
 }
 
 function twoByte(n) {
