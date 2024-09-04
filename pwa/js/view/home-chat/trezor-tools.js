@@ -1,5 +1,5 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
-import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorWipe } from '../../trezor.js'
+import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorSign, trezorWipe } from '../../trezor.js'
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
@@ -8,6 +8,7 @@ const BOT_SPACE = 203
 
 const ENTER_SEED = 'ENTER_SEED'
 const GEN_HPUB = 'GEN_HPUB'
+const SIGN_MSG = 'SIGN_MSG'
 const WIPE_SEED = 'WIPE_SEED'
 
 let v, g
@@ -22,6 +23,7 @@ v.easingRate = 0.033
 v.items = [
   { key: ENTER_SEED, name: 'Enter seed words on Trezor'},
   { key: GEN_HPUB,   name: 'Generate nostr public key'},
+  { key: SIGN_MSG,   name: 'Sign message'},
   { key: WIPE_SEED,  name: 'Wipe seed from Trezor'},
 ]
 v.menuX = 0

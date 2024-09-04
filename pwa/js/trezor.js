@@ -354,6 +354,28 @@ function paramString(param, text) {
   return [...varInt(param * 8 + 2), varInt(text.length), ...new TextEncoder().encode(text)]
 }
 
+const handleButtonsAndResult = r => {
+  return readFunc().then(json => {
+    if (json.msgType == OUT_ButtonRequest) {
+      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(r => {
+        return handleButtonsAndResult(r)
+      })
+    } else {
+      return new Promise((resolve, reject) => {
+        resolve(json)
+      })
+    }
+  })
+}
+
+const handleResult = r => {
+  return readFunc().then(json => {
+    return new Promise((resolve, reject) => {
+      resolve(json)
+    })
+  })
+}
+
 let device
 export function trezorConnect() {
   return new Promise((resolve, reject) => {
@@ -383,28 +405,6 @@ export function trezorPing(text) {
   })
 }
 
-const handleButtonsAndResult = r => {
-  return readFunc().then(json => {
-    if (json.msgType == OUT_ButtonRequest) {
-      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(r => {
-        return handleButtonsAndResult(r)
-      })
-    } else {
-      return new Promise((resolve, reject) => {
-        resolve(json)
-      })
-    }
-  })
-}
-
-const handleResult = r => {
-  return readFunc().then(json => {
-    return new Promise((resolve, reject) => {
-      resolve(json)
-    })
-  })
-}
-
 export function trezorRestore() {
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(r => {
     return handleButtonsAndResult(r)
@@ -421,6 +421,22 @@ export function trezorGetNostrPubKey() {
         ...paramVarInt(3, 1), // show on display
       ]
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_GetPublicKey), ...fourByte(buf.length), ...buf])).then(r => {
+        return handleButtonsAndResult(r)
+      })
+    })
+  })
+}
+
+export function trezorSign(message) {
+  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
+    return handleResult(r).then(() => {
+      const buf = [
+        ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
+        ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
+        ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
+        ...paramString(3, message), // message to sign
+      ]
+      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf])).then(r => {
         return handleButtonsAndResult(r)
       })
     })
