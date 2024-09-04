@@ -259,7 +259,7 @@ export function trezorPing(text) {
 
 export function trezorReset() {
   return new Promise((resolve, reject) => {
-    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_LoadDevice), ...fourByte(0)])).then(d => {
+    device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_RecoveryDevice), ...fourByte(0)])).then(d => {
       return readFunc()
     }).then(json => {
       if (json.msgType == OUT_ButtonRequest) {
