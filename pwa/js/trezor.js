@@ -117,7 +117,7 @@ const readFunc = () => {
               if (remaining > 0) {
                 readMore(finisher)
               } else {
-                fininsher(payload)
+                finisher(payload)
               }
             } else {
               reject('protocol error while reading from Trezor')
