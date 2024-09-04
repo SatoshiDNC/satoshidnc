@@ -476,7 +476,7 @@ export function trezorSign(message) {
           return handleButtonsAndResult(r).then(postCheck)
         })
       } else {
-        postCheck()
+        return postCheck()
       }
     })
   })
