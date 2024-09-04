@@ -89,7 +89,7 @@ const readFunc = () => {
   return new Promise((resolve, reject) => {
     console.log('readFunc promise')
     device.transferIn(1, 64).then(res => {
-      console.log('transderIn', res)
+      console.log('transferIn', res)
       const d = new Uint8Array(res.data.buffer)
       if (new TextDecoder().decode(d.slice(0,3)) == '?##') {
         console.log('detected frame 1', res)
@@ -107,7 +107,9 @@ const readFunc = () => {
           }
         }
         const readMore = finisher => {
-          readFunc().then(() => {
+          device.transferIn(1, 64).then(res => {
+            console.log('readMore transferIn', res)
+            const d = new Uint8Array(res.data.buffer)
             if (new TextDecoder().decode(d.slice(0,1)) == '?') {
               console.log('detected frame N', res)
               payload.splice(0, 0, ...d.slice(1,1 + Math.min(63, remaining)))
