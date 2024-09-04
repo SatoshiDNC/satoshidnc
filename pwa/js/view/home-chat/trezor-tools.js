@@ -91,6 +91,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           const xpubraw = bip32.fromBase58(r.xpub)
           console.log(xpubraw)
           console.log(xpubraw.publicKey)
+          const { address } = bjs.payments.p2pkh({
+            pubkey: bip32.fromBase58(r.xpub).derive(0).derive(0).publicKey,
+          })
+          console.log(address)
         }).catch(handleError); break
         case SIGN_MSG: trezorSign('test').then(handleResult).catch(handleError); break
         case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
