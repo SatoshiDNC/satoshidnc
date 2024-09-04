@@ -60,6 +60,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     if (index >= 0 && index < v.items.length) {
       v.index = index
       const handleResult = result => {
+        console.log('menu handleResult')
         if (v.index == index) {
           v.index = -1
           v.setRenderFlag(true)
@@ -69,6 +70,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         }
       }
       const handleError = e => {
+        console.log('menu handleError')
         console.error(e)
         if (v.index == index) {
           v.index = -1
