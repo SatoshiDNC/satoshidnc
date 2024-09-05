@@ -159,7 +159,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             tags: [
               ['z', 'test'],
             ],
-            pubkey: `4e820be97ea4c87fba065db7cd3ad731f3e3d45811663f477aaab08c403da156`,
+            pubkey: `${pk}`,
           }
           console.log(testEvent)
           const serEvent = serializeEvent(testEvent)
