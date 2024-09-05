@@ -487,7 +487,7 @@ export function trezorGetNostrPubKey() {
 }
 
 export function trezorSign(messagex) {
-  const message = `[0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"]`
+  const message = `[0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"]`
   return writeFunc(IN_Initialize, []).then(r => {
     return handleResult(r).then(msg => {
       const postCheck = () => {
