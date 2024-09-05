@@ -8,6 +8,20 @@ import * as bip32f from 'bip32'
 import { Buffer } from 'buffer'
 import { serializeEvent, finalizeEvent, verifyEvent } from 'nostr-tools'
 
+import { getPublicKey } from 'nostr-tools'
+import * as nip19 from 'nostr-tools/nip19'
+import { Buffer } from 'buffer'
+import { db } from './db.js'
+
+/* secret key should not leave this file */
+function hsec() { return Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex') }
+function bsec() { return Buffer.from(hsec(), 'hex') }
+function nsec() { return nip19.nsecEncode(bsec()) }
+
+export function hpub() { return getPublicKey(bsec()) }
+export function bpub() { return Buffer.from(hpub(), 'hex') }
+export function npub() { return nip19.npubEncode(hpub()) }
+
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
 const ITEM_SIZE = 179
@@ -137,6 +151,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           break
 
         case SIGN_MSG:
+          const sk = hsec()
+          const pk = hpub()
           const testEvent = {
             kind: 1,
             created_at: Math.floor(Date.now() / 1000),
@@ -144,12 +160,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             tags: [
               ['z', 'test'],
             ],
-            pubkey: '4e820be97ea4c87fba065db7cd3ad731f3e3d45811663f477aaab08c403da156',
+            pubkey: `${pk}`,
           }
           console.log(testEvent)
           const serEvent = serializeEvent(testEvent)
           console.log(serEvent)
-          const signedEvent = finalizeEvent(testEvent)
+          const signedEvent = finalizeEvent(testEvent, sk)
           console.log(signedEvent)
           console.log(verifyEvent(testEvent, signedEvent.sig))
           trezorSign(0, 'test').then(r => {
