@@ -11,7 +11,6 @@ import { serializeEvent, finalizeEvent, verifyEvent } from 'nostr-tools'
 import { getPublicKey } from 'nostr-tools'
 import * as nip19 from 'nostr-tools/nip19'
 import { Buffer } from 'buffer'
-import { db } from './db.js'
 
 /* secret key should not leave this file */
 function hsec() { return Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex') }
