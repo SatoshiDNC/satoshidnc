@@ -90,6 +90,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           let a, n = -1
           while (!(n >= 0 && n < 2 ** 31)) {
             a = prompt("Account number (0 and up):")
+            console.log(a)
             if (a === null) break
             n = +a
           }
