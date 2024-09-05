@@ -159,6 +159,27 @@ function decode_b58(b58_string) {
   return byte_encoded_buffer
 }
 
+const writeFunc = (msgCode, buffer) => {
+  const looper = (r, remainder) => {
+    if (remainder.length > 0) {
+      const remainder = buffer.splice(0,63)
+      console.log('send', [...new TextEncoder().encode('?'), ...buffer])
+      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?'), ...buffer])).then(r => {
+        return looper(remainder)
+      })
+    } else {
+      return new Promise((resolve, reject) => {
+        resolve(r)
+      })
+    }
+  }
+  const remainder = buffer.splice(0,55)
+  console.log('send', [...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(buffer.length), ...buffer])
+  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(buffer.length), ...buffer])).then(r => {
+    return looper(r, remainder)
+  })
+}
+
 const readFunc = () => {
   return new Promise((resolve, reject) => {
     device.transferIn(1, 64).then(res => {
@@ -479,8 +500,7 @@ export function trezorSign(messagex) {
           ...paramVarInt(1, 0), // non-hardened address slot
           ...paramString(2, message), // message to sign
         ]
-        console.log('length', [...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf].length)
-        return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf])).then(r => {
+        return writeFunc(IN_SignMessage, buf).then(r => {
           return handleButtonsAndResult(r)
         })
       }
