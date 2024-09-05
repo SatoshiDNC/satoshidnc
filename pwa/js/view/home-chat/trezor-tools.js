@@ -166,7 +166,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           console.log('serEvent:', serEvent)
           const signedEvent = finalizeEvent(JSON.parse(JSON.stringify(testEvent)), sk)
           console.log('nostr-tools signedEvent:', signedEvent)
-          console.log('nostr-tools verifyEvent() returns:', verifyEvent(JSON.parse(JSON.stringify(testEvent)), signedEvent.sig))
+          console.log('nostr-tools verifyEvent() returns:', verifyEvent(JSON.parse(JSON.stringify(signedEvent))))
           trezorSign(0, serEvent).then(r => {
             console.log('trezor returns:', r)
             const trezorSig = Buffer.from(r.sig).toString('hex')
