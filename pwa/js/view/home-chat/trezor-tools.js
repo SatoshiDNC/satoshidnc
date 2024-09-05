@@ -139,7 +139,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         case SIGN_MSG:
           const testEvent = {
             kind: 1,
-            created_at: Date.now(),
+            created_at: Date.now() / 1000,
             content: 'test',
             tags: [
             ],
