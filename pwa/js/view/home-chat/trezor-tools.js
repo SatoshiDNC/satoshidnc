@@ -1,5 +1,6 @@
 import { drawRect, drawPill, drawRoundedRect } from '../../draw.js'
 import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorSign, trezorWipe } from '../../trezor.js'
+import { contentView as newContactForm } from './new-chat/new-contact/content.js'
 import bjs from 'bitcoinjs-lib'
 import bm from 'bitcoinjs-message'
 import * as ecc from '@bitcoinerlab/secp256k1'
@@ -109,9 +110,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           })
           console.log(address)
           clearSelection()
-          console.log('c')
           menuRoot.followUp = () => {
-            console.log('followUp', g.newContactRoot)
+            newContactForm.nameGad.text = ''
+            newContactForm.pubkeyGad.text = 'tbd'
             fg.getRoot().easeOut(g.newContactRoot)
           }
           menuRoot.easeOut()
@@ -179,9 +180,7 @@ v.renderFunc = function() {
         v.easingValue = 0
         v.easingState = 0
         menuRoot.out()
-        console.log('a')
         if (menuRoot.followUp) {
-          console.log('b')
           setTimeout(menuRoot.followUp)
           menuRoot.followUp = undefined
         }
