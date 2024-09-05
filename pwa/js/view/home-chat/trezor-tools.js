@@ -173,11 +173,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             trezorSign(0, serEvent).then(r => {
               console.log('trezor returns:', r)
               const trezorSig = Buffer.from(r.sig).toString('hex')
+              console.log('trezorSig:', trezorSig)
               console.log('bitcoin-message verify() returns:', bm.verify(serEvent, r.address, Buffer.from(r.sig)))
               const trezorEvent = JSON.parse(JSON.stringify(testEvent))
               trezorEvent.id = hash
+              trezorEvent.sig = trezorSig
               console.log('trezorEvent:', trezorEvent)
-              console.log('trezorSig:', trezorSig)
               console.log('nostr-tools verifyEvent() returns:', verifyEvent(JSON.parse(JSON.stringify(trezorEvent))))
               clearSelection()
             }).catch(handleError)
