@@ -179,6 +179,12 @@ v.renderFunc = function() {
         v.easingValue = 0
         v.easingState = 0
         menuRoot.out()
+        console.log('a')
+        if (menuRoot.followUp) {
+          console.log('b')
+          setTimeout(menuRoot.followUp)
+          menuRoot.followUp = undefined
+        }
       }
     }
     menuRoot.ghostOpacity = v.easingValue * 0.5
