@@ -81,8 +81,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         }
       }
       const handleError = e => {
-        console.log('menu handleError', e)
-        //console.error(e)
+        alert(e)
         clearSelection()
       }
       switch (v.items[v.index].key) {
