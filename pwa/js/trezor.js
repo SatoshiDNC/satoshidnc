@@ -420,6 +420,7 @@ const handleResult = r => {
 
 let device
 export function trezorConnect() {
+  console.log('trezorConnect', device)
   return new Promise((resolve, reject) => {
     const finish = () => {
       device.open().then(() => {
