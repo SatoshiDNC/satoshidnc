@@ -109,11 +109,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           })
           console.log(address)
           clearSelection()
-          menuRoot.easeOut()
+          console.log('c')
           menuRoot.followUp = () => {
             console.log('followUp', g.newContactRoot)
             fg.getRoot().easeOut(g.newContactRoot)
           }
+          menuRoot.easeOut()
         }).catch(handleError); break
         case SIGN_MSG: trezorSign(0, 'test').then(r => {
           console.log(r)
