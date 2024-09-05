@@ -99,24 +99,24 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             break
           }
           trezorGetNostrPubKey(n).then(r => {
-          console.log('// DERIVE A KEY FROM XPUB')
-          console.log(r)
-          const bip32 = bip32f.BIP32Factory(ecc)
-          const xpubraw = bip32.fromBase58(r.xpub)
-          console.log(xpubraw)
-          console.log(xpubraw.publicKey)
-          const { address } = bjs.payments.p2pkh({
-            pubkey: bip32.fromBase58(r.xpub).publicKey,
-          })
-          console.log(address)
-          clearSelection()
-          menuRoot.followUp = () => {
-            newContactForm.nameGad.text = ''
-            newContactForm.pubkeyGad.text = 'tbd'
-            fg.getRoot().easeOut(g.newContactRoot)
-          }
-          menuRoot.easeOut()
-        }).catch(handleError); break
+            console.log('// DERIVE A KEY FROM XPUB')
+            console.log(r.nodeType.publicKey)
+            const bip32 = bip32f.BIP32Factory(ecc)
+            const xpubraw = bip32.fromBase58(r.xpub)
+            console.log(xpubraw)
+            console.log(xpubraw.publicKey)
+            const { address } = bjs.payments.p2pkh({
+              pubkey: bip32.fromBase58(r.xpub).publicKey,
+            })
+            console.log(address)
+            clearSelection()
+            menuRoot.followUp = () => {
+              newContactForm.nameGad.text = ''
+              newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
+              fg.getRoot().easeOut(g.newContactRoot)
+            }
+            menuRoot.easeOut()
+          }).catch(handleError); break
         case SIGN_MSG: trezorSign(0, 'test').then(r => {
           console.log(r)
           console.log(bm.verify('test', r.address, Buffer.from(r.sig)))
