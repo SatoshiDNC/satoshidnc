@@ -421,7 +421,6 @@ const handleResult = r => {
 let device
 export function trezorConnect() {
   let retry = true
-  console.log('trezorConnect', device)
   return new Promise((resolve, reject) => {
     const claim = () => {
       device.open().then(() => {

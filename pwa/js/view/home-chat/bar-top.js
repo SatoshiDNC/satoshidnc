@@ -22,20 +22,15 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           g.target2?.easeOut?.()
         }
       }
-      const tryConnection = () => {
-        trezorConnect().then(() => {
-          if (fg.getRoot() === g.target) {
-            g.target.followUp = openTrezorPanel
-          } else {
-            openTrezorPanel()
-          }
-        }).catch(e => {
-          if (confirm(`${e}\nRetry?`)) {
-            tryConnection()
-          }
-        })
-      }
-      tryConnection()
+      trezorConnect().then(() => {
+        if (fg.getRoot() === g.target) {
+          g.target.followUp = openTrezorPanel
+        } else {
+          openTrezorPanel()
+        }
+      }).catch(e => {
+        alert(e)
+      })
     }
   }
   g.items = [
