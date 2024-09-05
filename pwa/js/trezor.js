@@ -467,6 +467,7 @@ export function trezorGetNostrPubKey() {
 }
 
 export function trezorSign(message) {
+  console.log('length', [...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)].length)
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
     return handleResult(r).then(msg => {
       const postCheck = () => {
