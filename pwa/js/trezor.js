@@ -446,7 +446,7 @@ export function trezorConnect() {
     } else {
       setTimeout(() => {
         finish()
-      }, 1000)
+      })
     }
   })
 }
