@@ -169,7 +169,9 @@ const writeFunc = (msgCode, buffer) => {
         return looper(r)
       })
     } else {
+      console.log('done')
       return new Promise((resolve, reject) => {
+        console.log('done promise')
         resolve(r)
       })
     }
