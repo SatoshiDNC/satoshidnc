@@ -51,7 +51,7 @@ v.getText = (mime) => {
     })  
   })
 }
-v.gadgets.push(g = v.sendGad = new fg.Gadget(v))
+v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 69, g.h = 104
   g.clickFunc = function(e) {
@@ -90,7 +90,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           let a, n = -1
           while (!(n >= 0 && n < 2 ** 31)) {
             a = prompt("Account number (0 and up):")
-            console.log(a)
             if (a === null) break
             n = +a
           }
@@ -110,6 +109,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           })
           console.log(address)
           clearSelection()
+          menuRoot.easeOut()
+          menuRoot.followUp = () => {
+            fg.getRoot().easeOut(g.newContactRoot)
+          }
         }).catch(handleError); break
         case SIGN_MSG: trezorSign(0, 'test').then(r => {
           console.log(r)
@@ -141,7 +144,7 @@ v.layoutFunc = function() {
   v.menuY = v.sh - v.menuH
   v.menuW = v.sw
   let g
-  g = v.sendGad
+  g = v.closeGad
   g.y = v.sh - 147
   g.w = v.sw - 2 * g.x
   g.autoHull()
@@ -206,7 +209,7 @@ v.renderFunc = function() {
     i++
   }
 
-  let g = v.sendGad
+  let g = v.closeGad
   drawPill(v, colors.accent, g.x, g.y + v.menuH * f0, g.w, g.h)
   mat4.identity(m)
   str = 'Close'
