@@ -163,23 +163,19 @@ const writeFunc = (msgCode, buffer) => {
   const looper = r => {
     if (buffer.length > 0) {
       const chunk = buffer.splice(0,63)
-      console.log('send', [...new TextEncoder().encode('?'), ...chunk, ...Array(63 - chunk.length).fill(0)])
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?'), ...chunk, ...Array(63 - chunk.length).fill(0)])).then(r => {
         console.log(r)
         return looper(r)
       })
     } else {
-      console.log('done')
       return new Promise((resolve, reject) => {
-        console.log('done promise')
         resolve(r)
       })
     }
   }
   const len = buffer.length
   const chunk = buffer.splice(0,55)
-  console.log('send', [...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(len), ...chunk])
-  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(len), ...chunk])).then(r => {
+  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(len), ...chunk, ...Array(55 - chunk.length).fill(0)])).then(r => {
     console.log(r)
     return looper(r)
   })
