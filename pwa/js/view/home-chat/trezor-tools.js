@@ -111,6 +111,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           clearSelection()
           menuRoot.easeOut()
           menuRoot.followUp = () => {
+            console.log('followUp', g.newContactRoot)
             fg.getRoot().easeOut(g.newContactRoot)
           }
         }).catch(handleError); break
