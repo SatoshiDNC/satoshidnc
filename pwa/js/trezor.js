@@ -399,7 +399,7 @@ function paramString(param, text) {
 const handleButtonsAndResult = r => {
   return readFunc().then(json => {
     if (json.msgType == OUT_ButtonRequest) {
-      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_ButtonAck_TINY), ...fourByte(0)])).then(r => {
+      return writeFunc(IN_ButtonAck_TINY, []).then(r => {
         return handleButtonsAndResult(r)
       })
     } else {
@@ -486,9 +486,7 @@ export function trezorGetNostrPubKey() {
   })
 }
 
-export function trezorSign(messagex) {
-  const message = `[0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"][0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"]`
-  console.log(message.length)
+export function trezorSign(message) {
   return writeFunc(IN_Initialize, []).then(r => {
     return handleResult(r).then(msg => {
       const postCheck = () => {
