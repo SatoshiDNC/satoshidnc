@@ -63,7 +63,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       const existing = contacts.filter(c => c.hpub == hpub)?.[0]
       if (existing) {
         if (name != existing.name) {
-          if (!confirm(`You already have this contact with the name '${existing.name}'. Overwrite it?`)) {
+          if (!confirm(`Contact exists as '${existing.name}'. Overwrite?`)) {
             cancel = true
           }
         }
