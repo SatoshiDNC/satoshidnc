@@ -167,9 +167,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           const signedEvent = finalizeEvent(testEvent, sk)
           console.log(signedEvent)
           console.log(verifyEvent(testEvent, signedEvent.sig))
-          trezorSign(0, 'test').then(r => {
+          trezorSign(0, serEvent).then(r => {
             console.log(r)
-            console.log(bm.verify('test', r.address, Buffer.from(r.sig)))
+            console.log(bm.verify(serEvent, r.address, Buffer.from(r.sig)))
             clearSelection()
           }).catch(handleError)
           break
