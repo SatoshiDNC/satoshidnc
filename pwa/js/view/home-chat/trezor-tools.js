@@ -161,17 +161,19 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             ],
             pubkey: `${pk}`,
           }
-          console.log(testEvent)
+          console.log('testEvent:', testEvent)
           const serEvent = serializeEvent(testEvent)
-          console.log(serEvent)
+          console.log('serEvent:', serEvent)
           const signedEvent = finalizeEvent(testEvent, sk)
-          console.log(signedEvent)
-          console.log(verifyEvent(testEvent, signedEvent.sig))
+          console.log('nostr-tools signedEvent:', signedEvent)
+          console.log('nostr-tools verifyEvent() returns:', verifyEvent(testEvent, signedEvent.sig))
           trezorSign(0, serEvent).then(r => {
-            console.log(r)
+            console.log('trezor returns:', r)
             const trezorSig = Buffer.from(r.sig).toString('hex')
-            console.log(bm.verify(serEvent, r.address, Buffer.from(r.sig)))
-            console.log(verifyEvent(testEvent, trezorSig))
+            console.log('bitcoin-message verify() returns:', bm.verify(serEvent, r.address, Buffer.from(r.sig)))
+            console.log('testEvent:', testEvent)
+            console.log('trezorSig:', trezorSig)
+            console.log('verifyEvent() returns:', verifyEvent(testEvent, trezorSig))
             clearSelection()
           }).catch(handleError)
           break
