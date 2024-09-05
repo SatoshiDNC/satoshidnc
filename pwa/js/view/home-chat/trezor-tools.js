@@ -162,7 +162,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             pubkey: `${pk}`,
           }
           console.log('testEvent:', testEvent)
-          const serEvent = serializeEvent(testEvent)
+          const serEvent = serializeEvent(JSON.parse(JSON.stringify(testEvent)))
           console.log('serEvent:', serEvent)
           const signedEvent = finalizeEvent(JSON.parse(JSON.stringify(testEvent)), sk)
           console.log('nostr-tools signedEvent:', signedEvent)
