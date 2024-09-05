@@ -28,7 +28,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         } else {
           openTrezorPanel()
         }
-      }).catch(e => prompt(`${e}\nRetry?`)
+      }).catch(e => prompt(`${e}\nRetry?`))
     }
   }
   g.items = [
