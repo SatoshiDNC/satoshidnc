@@ -23,6 +23,25 @@ v.name = Object.keys({menuView}).pop()
 v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
+v.invoker = function(item, menuRoot) {
+  const v = this
+  const openTrezorPanel = () => {
+    if (fg.getRoot() !== v.rootRef || v.rootRef.easingState() == -1) {
+      v.rootRef.easeIn?.()
+    } else {
+      v.rootRef.easeOut?.()
+    }
+  }
+  trezorConnect().then(() => {
+    if (fg.getRoot() === menuRoot) {
+      menuRoot.followUp = openTrezorPanel
+    } else {
+      openTrezorPanel()
+    }
+  }).catch(e => {
+    console.warn(e)
+  })
+}
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
@@ -225,34 +244,33 @@ v.renderFunc = function() {
   defaultFont.draw(0,0, str, v.bgColor, v.mat, m)
 }
 
-export const menuShim = v = new fg.OverlayView(null)
-v.name = Object.keys({menuShim}).pop()
+export const menuRoot = v = new fg.OverlayView(null)
+v.name = Object.keys({menuRoot}).pop()
 v.a = menuView; menuView.parent = v
-// v.b = chatRoot; chatRoot.parent = v
-
-export const menuRoot = menuShim
-menuRoot.ghostOpacity = 0
-menuRoot.easeIn = function(items) {
+menuView.rootRef = v
+v.ghostOpacity = 0
+v.easeIn = function(items) {
   const v = this
   menuView.prepMenu(items)
   menuView.easingState = 1
   menuView.easingRate = 0.06
   const r = fg.getRoot()
   if (r !== v) {
-    menuShim.b = r; r.parent = menuShim
+    v.b = r; r.parent = v
     v.ghostView = r
     fg.setRoot(v)
   }
 }
-menuRoot.easeOut = function() {
+v.easeOut = function() {
   const v = this
   menuView.easingState = -1
   menuView.easingRate = 0.1
   v.setRenderFlag(true)
 }
-menuRoot.easingState = function() {
+v.easingState = function() {
   return menuView.easingState
 }
-menuRoot.out = function() {
-  fg.setRoot(menuRoot.ghostView)
+v.out = function() {
+  const v = this
+  fg.setRoot(v.ghostView)
 }

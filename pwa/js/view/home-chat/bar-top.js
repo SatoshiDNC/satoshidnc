@@ -1,4 +1,5 @@
 import { trezorConnect, trezorPing, trezorWipe } from '../../trezor.js'
+import { menuView as trezorTools } from './trezor-tools.js'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -12,26 +13,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.font = iconFont
   g.fontSize = 11
   g.handler = function(item) {
-    const g = barTop.menuGad
     console.log(`id ${JSON.stringify(item)}`)
-    if (item.id == 6) {
-      const openTrezorPanel = () => {
-        if (fg.getRoot() !== g.target2 || g.target2.easingState() == -1) {
-          g.target2?.easeIn?.()
-        } else {
-          g.target2?.easeOut?.()
-        }
-      }
-      trezorConnect().then(() => {
-        if (fg.getRoot() === g.target) {
-          g.target.followUp = openTrezorPanel
-        } else {
-          openTrezorPanel()
-        }
-      }).catch(e => {
-        console.warn(e)
-      })
-    }
   }
   g.items = [
     { id: 1, handler: g.handler, label: 'New group' },
@@ -39,7 +21,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     { id: 3, handler: g.handler, label: 'Linked devices' },
     { id: 4, handler: g.handler, label: 'Starred messages' },
     { id: 5, handler: g.handler, label: 'Settings' },
-    { id: 6, handler: g.handler, label: 'Trezor tools' },
+    { id: 6, handler: trezorTools.invoker, label: 'Trezor tools' },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
