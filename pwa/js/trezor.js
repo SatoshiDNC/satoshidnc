@@ -160,11 +160,12 @@ function decode_b58(b58_string) {
 }
 
 const writeFunc = (msgCode, buffer) => {
-  const looper = (r) => {
+  const looper = r => {
     if (buffer.length > 0) {
       const chunk = buffer.splice(0,63)
       console.log('send', [...new TextEncoder().encode('?'), ...chunk])
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?'), ...chunk])).then(r => {
+        console.log(r)
         return looper(r)
       })
     } else {
@@ -176,6 +177,7 @@ const writeFunc = (msgCode, buffer) => {
   const chunk = buffer.splice(0,55)
   console.log('send', [...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(chunk.length), ...chunk])
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(chunk.length), ...chunk])).then(r => {
+    console.log(r)
     return looper(r)
   })
 }
@@ -501,6 +503,7 @@ export function trezorSign(messagex) {
           ...paramString(2, message), // message to sign
         ]
         return writeFunc(IN_SignMessage, buf).then(r => {
+          console.log('finished', r)
           return handleButtonsAndResult(r)
         })
       }
