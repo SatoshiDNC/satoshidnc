@@ -117,16 +117,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             break
           }
           trezorGetNostrPubKey(n).then(r => {
-            console.log('// DERIVE A KEY FROM XPUB')
-            console.log(r.nodeType.publicKey)
             const bip32 = bip32f.BIP32Factory(ecc)
-            const xpubraw = bip32.fromBase58(r.xpub)
-            console.log(xpubraw)
-            console.log(xpubraw.publicKey)
             const { address } = bjs.payments.p2pkh({
               pubkey: bip32.fromBase58(r.xpub).publicKey,
             })
-            console.log(address)
             clearSelection()
             menuRoot.followUp = () => {
               newContactForm.nameGad.text = ''
