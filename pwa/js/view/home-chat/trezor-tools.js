@@ -227,14 +227,14 @@ v.renderFunc = function() {
   for (const item of v.items) {
     if (item.name == v.items?.[v.index]?.name) {
       drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 35 / 2 - ITEM_SIZE / 2 + ITEM_SIZE * i + v.menuH * f0, v.menuW, ITEM_SIZE)
-    }
-    if (v.busy) {
-      mat4.identity(m)
-      mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
-      mat4.scale(m,m, [35/14, 35/14, 1])
-      iconFont.draw(0,0, 'T', v.flash? v.textColor: colors.inactiveDark, v.mat, m)
-      v.flash = !v.flash
-      setTimeout(() => { v.setRenderFlag(true) }, 500)
+      if (v.busy) {
+        mat4.identity(m)
+        mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
+        mat4.scale(m,m, [35/14, 35/14, 1])
+        iconFont.draw(0,0, 'T', v.flash? v.textColor: colors.inactiveDark, v.mat, m)
+        v.flash = !v.flash
+        setTimeout(() => { v.setRenderFlag(true) }, 500)
+      }  
     }
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
