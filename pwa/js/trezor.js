@@ -468,15 +468,15 @@ export function trezorRestore() {
   })
 }
 
-export function trezorGetNostrPubKey() {
+export function trezorGetNostrPubKey(i) {
   return writeFunc(IN_Initialize, []).then(r => {
     return handleResult(r).then(() => {
       const buf = [
         ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
         ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
-        ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
-        ...paramVarInt(1, 0), // 0 non-hardened (non-)change slot
-        ...paramVarInt(1, 0), // non-hardened address slot
+        ...paramVarInt(1, (   i | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
+        // ...paramVarInt(1, 0), // 0 non-hardened (non-)change slot [nostr device slot?]
+        // ...paramVarInt(1, 0), // non-hardened address slot [nostr message slot?]
         ...paramVarInt(3, 1), // show on display
       ]
       return writeFunc(IN_GetPublicKey, buf).then(r => {

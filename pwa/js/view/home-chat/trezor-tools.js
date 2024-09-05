@@ -86,7 +86,14 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       }
       switch (v.items[v.index].key) {
         case ENTER_SEED: trezorRestore().then(handleResult).catch(handleError); break
-        case GEN_HPUB: trezorGetNostrPubKey().then(r => {
+        case GEN_HPUB:
+          let a, n = -1
+          while (!(n >= 0 && n < 2 ** 31)) {
+            a = prompt("Account number (0 and up):")
+            if (a === null) break
+            n = +a
+          }
+          trezorGetNostrPubKey(n).then(r => {
           console.log('// DERIVE A KEY FROM XPUB')
           console.log(r)
           const bip32 = bip32f.BIP32Factory(ecc)
@@ -99,7 +106,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           console.log(address)
           clearSelection()
         }).catch(handleError); break
-        case SIGN_MSG: trezorSign('test').then(r => {
+        case SIGN_MSG: trezorSign(0, 'test').then(r => {
           console.log(r)
           console.log(bm.verify('test', r.address, Buffer.from(r.sig)))
           clearSelection()
