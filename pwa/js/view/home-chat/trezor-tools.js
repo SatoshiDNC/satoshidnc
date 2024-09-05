@@ -165,7 +165,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           const serEvent = serializeEvent(JSON.parse(JSON.stringify(testEvent)))
           console.log('serEvent:', serEvent)
           window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(serEvent)).then(hash => {
-            console.log('hash:', Array.prototype.map.call(new Uint8Array(hash), n => byteToHex[n]).join(""))
+            console.log('hash:', Array.prototype.map.call(new Uint8Array(hash), n => n.toString(16).padStart(2, "0")).join(""))
           })
           const signedEvent = finalizeEvent(JSON.parse(JSON.stringify(testEvent)), sk)
           console.log('nostr-tools signedEvent:', signedEvent)
