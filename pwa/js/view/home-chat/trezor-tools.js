@@ -142,6 +142,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             created_at: Math.floor(Date.now() / 1000),
             content: 'test',
             tags: [
+              ['z', 'test'],
             ],
           }
           console.log(testEvent)
