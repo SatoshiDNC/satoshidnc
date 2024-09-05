@@ -163,7 +163,7 @@ const writeFunc = (msgCode, buffer) => {
   const looper = r => {
     if (buffer.length > 0) {
       const chunk = buffer.splice(0,63)
-      console.log('send', [...new TextEncoder().encode('?'), ...chunk])
+      console.log('send', [...new TextEncoder().encode('?'), ...chunk, ...Array(63 - chunk.length).fill(0)])
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?'), ...chunk])).then(r => {
         console.log(r)
         return looper(r)
