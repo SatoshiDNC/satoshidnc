@@ -169,7 +169,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           console.log(verifyEvent(testEvent, signedEvent.sig))
           trezorSign(0, serEvent).then(r => {
             console.log(r)
-            const trezorSig = Buffer.from(r.sig).toString(16)
+            const trezorSig = Buffer.from(r.sig).toString('hex')
             console.log(bm.verify(serEvent, r.address, Buffer.from(r.sig)))
             console.log(verifyEvent(testEvent, trezorSig))
             clearSelection()
