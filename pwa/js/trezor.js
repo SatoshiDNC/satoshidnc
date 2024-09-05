@@ -420,28 +420,24 @@ const handleResult = r => {
 
 let device
 export function trezorConnect() {
-  console.log('trezorConnect')
   return new Promise((resolve, reject) => {
-    console.log('trezorConnect promise')
     const finish = () => {
-      console.log('trezorConnect finish')
       device.open().then(() => {
-        console.log('trezorConnect open')
         return device.claimInterface(0)
       }).then(() => {
-        console.log('resolve')
         resolve()
       }).catch(e => {
-        console.log('reject', e)
+        device = undefined
         reject(e)
       })
     }
     if (!device) {
-      console.log('trezorConnect requestDevice')
       navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
-        console.log('trezorConnect device')
         device = selectedDevice
         finish()
+      }).catch(e => {
+        device = undefined
+        reject(e)
       })
     } else {
       finish()
@@ -486,16 +482,16 @@ export function trezorGetNostrPubKey(i) {
   })
 }
 
-export function trezorSign(message) {
+export function trezorSign(i, message) {
   return writeFunc(IN_Initialize, []).then(r => {
     return handleResult(r).then(msg => {
       const postCheck = () => {
         const buf = [
           ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
           ...paramVarInt(1, (1237 | 0x80000000) >>> 0), // 1237' hardened wallet type = Nostr (BIP 44/SLIP 44)
-          ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
-          ...paramVarInt(1, 0), // 0 non-hardened (non-)change slot
-          ...paramVarInt(1, 0), // non-hardened address slot
+          ...paramVarInt(1, (   i | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
+          // ...paramVarInt(1, 0), // 0 non-hardened (non-)change slot
+          // ...paramVarInt(1, 0), // non-hardened address slot
           ...paramString(2, message), // message to sign
         ]
         return writeFunc(IN_SignMessage, buf).then(r => {
