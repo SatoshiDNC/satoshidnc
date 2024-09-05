@@ -160,12 +160,12 @@ function decode_b58(b58_string) {
 }
 
 const writeFunc = (msgCode, buffer) => {
-  const looper = (r, remainder) => {
-    if (remainder.length > 0) {
-      const remainder = buffer.splice(0,63)
-      console.log('send', [...new TextEncoder().encode('?'), ...buffer])
-      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?'), ...buffer])).then(r => {
-        return looper(remainder)
+  const looper = (r) => {
+    if (buffer.length > 0) {
+      const chunk = buffer.splice(0,63)
+      console.log('send', [...new TextEncoder().encode('?'), ...chunk])
+      return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?'), ...chunk])).then(r => {
+        return looper(r)
       })
     } else {
       return new Promise((resolve, reject) => {
@@ -173,10 +173,10 @@ const writeFunc = (msgCode, buffer) => {
       })
     }
   }
-  const remainder = buffer.splice(0,55)
-  console.log('send', [...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(buffer.length), ...buffer])
-  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(buffer.length), ...buffer])).then(r => {
-    return looper(r, remainder)
+  const chunk = buffer.splice(0,55)
+  console.log('send', [...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(chunk.length), ...chunk])
+  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(chunk.length), ...chunk])).then(r => {
+    return looper(r)
   })
 }
 
