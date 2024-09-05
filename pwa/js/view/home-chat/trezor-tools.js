@@ -23,18 +23,18 @@ v.name = Object.keys({menuView}).pop()
 v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
-v.invoker = function(item, menuRoot) {
+v.invoker = function(item, parentRoot) {
   const v = this
   const openTrezorPanel = () => {
-    if (fg.getRoot() !== v.rootRef || v.rootRef.easingState() == -1) {
-      v.rootRef.easeIn?.()
+    if (fg.getRoot() !== menuRoot || menuRoot.easingState() == -1) {
+      menuRoot.easeIn?.()
     } else {
-      v.rootRef.easeOut?.()
+      menuRoot.easeOut?.()
     }
   }
   trezorConnect().then(() => {
-    if (fg.getRoot() === menuRoot) {
-      menuRoot.followUp = openTrezorPanel
+    if (fg.getRoot() === parentRoot) {
+      parentRoot.followUp = openTrezorPanel
     } else {
       openTrezorPanel()
     }
@@ -247,7 +247,6 @@ v.renderFunc = function() {
 export const menuRoot = v = new fg.OverlayView(null)
 v.name = Object.keys({menuRoot}).pop()
 v.a = menuView; menuView.parent = v
-menuView.rootRef = v
 v.ghostOpacity = 0
 v.easeIn = function(items) {
   const v = this
