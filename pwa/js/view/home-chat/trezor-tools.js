@@ -94,7 +94,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             if (a === null) break
             n = +a
           }
-          if (a === null) break
+          if (a === null) {
+            clearSelection()
+            break
+          }
           trezorGetNostrPubKey(n).then(r => {
           console.log('// DERIVE A KEY FROM XPUB')
           console.log(r)
