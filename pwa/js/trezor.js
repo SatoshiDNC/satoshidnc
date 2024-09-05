@@ -164,7 +164,6 @@ const writeFunc = (msgCode, buffer) => {
     if (buffer.length > 0) {
       const chunk = buffer.splice(0,63)
       return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?'), ...chunk, ...Array(63 - chunk.length).fill(0)])).then(r => {
-        console.log(r)
         return looper(r)
       })
     } else {
@@ -176,7 +175,6 @@ const writeFunc = (msgCode, buffer) => {
   const len = buffer.length
   const chunk = buffer.splice(0,55)
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(len), ...chunk, ...Array(55 - chunk.length).fill(0)])).then(r => {
-    console.log(r)
     return looper(r)
   })
 }
@@ -502,7 +500,6 @@ export function trezorSign(messagex) {
           ...paramString(2, message), // message to sign
         ]
         return writeFunc(IN_SignMessage, buf).then(r => {
-          console.log('finished', r)
           return handleButtonsAndResult(r)
         })
       }
