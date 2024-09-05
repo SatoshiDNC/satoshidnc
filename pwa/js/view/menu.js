@@ -139,10 +139,10 @@ v.renderFunc = function() {
         v.easingValue = 0
         v.easingState = 0
         menuRoot.out()
-        if (v.followUp) {
+        if (menuRoot.followUp) {
           console.log('followUp')
-          setTimeout(v.followUp)
-          v.followUp = undefined
+          setTimeout(menuRoot.followUp)
+          menuRoot.followUp = undefined
         }
       }
     }
