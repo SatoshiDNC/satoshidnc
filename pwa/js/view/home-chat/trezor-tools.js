@@ -6,14 +6,14 @@ import bm from 'bitcoinjs-message'
 import * as ecc from '@bitcoinerlab/secp256k1'
 import * as bip32f from 'bip32'
 //import { Buffer } from 'buffer'
-import { serializeEvent, finalizeEvent, verifyEvent } from 'nostr-tools'
+import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-tools'
 
-import { getPublicKey } from 'nostr-tools'
 import * as nip19 from 'nostr-tools/nip19'
 import { Buffer } from 'buffer'
 
 /* secret key should not leave this file */
-function hsec() { return Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex') }
+const my_hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
+function hsec() { return my_hsec }
 function bsec() { return Buffer.from(hsec(), 'hex') }
 function nsec() { return nip19.nsecEncode(bsec()) }
 
@@ -159,7 +159,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             tags: [
               ['z', 'test'],
             ],
-            pubkey: ``,
+            pubkey: `${pk}`,
           }
           console.log(testEvent)
           const serEvent = serializeEvent(testEvent)
