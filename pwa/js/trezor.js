@@ -420,29 +420,34 @@ const handleResult = r => {
 
 let device
 export function trezorConnect() {
+  let retry = true
   console.log('trezorConnect', device)
   return new Promise((resolve, reject) => {
-    const finish = () => {
+    const claim = () => {
       device.open().then(() => {
         return device.claimInterface(0)
       }).then(() => {
         resolve()
       }).catch(e => {
         device = undefined
-        reject(e)
+        if (retry) {
+          retry = false
+          request()
+        } else {
+          reject(e)
+        }
       })
     }
-    if (!device) {
+    const request = () => {
       navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
         device = selectedDevice
-        finish()
+        claim()
       }).catch(e => {
         device = undefined
         reject(e)
       })
-    } else {
-      finish()
     }
+    device? claim(): request()
   })
 }
 
