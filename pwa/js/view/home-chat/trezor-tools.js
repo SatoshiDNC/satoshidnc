@@ -104,7 +104,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         clearSelection()
       }
       switch (v.items[v.index].key) {
-        case ENTER_SEED: v.busy = true; trezorRestore().then(handleResult).catch(handleError); break
+        case ENTER_SEED: trezorRestore().then(handleResult).catch(handleError); break
         case GEN_HPUB:
           let a, n = -1
           while (!(n >= 0 && n < 2 ** 31)) {
@@ -116,7 +116,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             clearSelection()
             break
           }
-          v.busy = true
           trezorGetNostrPubKey(n).then(r => {
             console.log('// DERIVE A KEY FROM XPUB')
             console.log(r.nodeType.publicKey)
@@ -136,12 +135,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
             menuRoot.easeOut()
           }).catch(handleError); break
-        case SIGN_MSG: v.busy = true; trezorSign(0, 'test').then(r => {
+        case SIGN_MSG: trezorSign(0, 'test').then(r => {
           console.log(r)
           console.log(bm.verify('test', r.address, Buffer.from(r.sig)))
           clearSelection()
         }).catch(handleError); break
-        case WIPE_SEED: v.busy = true; trezorWipe().then(handleResult).catch(handleError); break
+        case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
       }
       // v.items[index].handler(v.items[index])
       // menuRoot.easeOut()
@@ -227,14 +226,12 @@ v.renderFunc = function() {
   for (const item of v.items) {
     if (item.name == v.items?.[v.index]?.name) {
       drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 35 / 2 - ITEM_SIZE / 2 + ITEM_SIZE * i + v.menuH * f0, v.menuW, ITEM_SIZE)
-      if (v.busy) {
-        mat4.identity(m)
-        mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
-        mat4.scale(m,m, [35/14, 35/14, 1])
-        iconFont.draw(0,0, 'T', v.flash? v.textColor: colors.inactiveDark, v.mat, m)
-        v.flash = !v.flash
-        setTimeout(() => { v.setRenderFlag(true) }, 500)
-      }  
+      mat4.identity(m)
+      mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
+      mat4.scale(m,m, [35/14, 35/14, 1])
+      iconFont.draw(0,0, 'T', v.flash? v.textColor: colors.inactiveDark, v.mat, m)
+      v.flash = !v.flash
+      setTimeout(() => { v.setRenderFlag(true) }, 500)
     }
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
