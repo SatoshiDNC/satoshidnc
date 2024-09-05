@@ -176,9 +176,10 @@ const writeFunc = (msgCode, buffer) => {
       })
     }
   }
+  const len = buffer.length
   const chunk = buffer.splice(0,55)
-  console.log('send', [...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(chunk.length), ...chunk])
-  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(chunk.length), ...chunk])).then(r => {
+  console.log('send', [...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(len), ...chunk])
+  return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(msgCode), ...fourByte(len), ...chunk])).then(r => {
     console.log(r)
     return looper(r)
   })
