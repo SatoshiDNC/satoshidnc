@@ -5,7 +5,7 @@ import bjs from 'bitcoinjs-lib'
 import bm from 'bitcoinjs-message'
 import * as ecc from '@bitcoinerlab/secp256k1'
 import * as bip32f from 'bip32'
-import { Buffer } from 'buffer'
+//import { Buffer } from 'buffer'
 import { serializeEvent, finalizeEvent, verifyEvent } from 'nostr-tools'
 
 import { getPublicKey } from 'nostr-tools'
