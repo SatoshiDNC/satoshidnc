@@ -15,11 +15,18 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const g = barTop.menuGad
     console.log(`id ${JSON.stringify(item)}`)
     if (item.id == 6) {
-      trezorConnect().then(() => {
+      const openTrezorPanel = () => {
         if (fg.getRoot() !== g.target2 || g.target2.easingState() == -1) {
           g.target2?.easeIn?.()
         } else {
           g.target2?.easeOut?.()
+        }
+      }
+      trezorConnect().then(() => {
+        if (fg.getRoot() === g.target) {
+          g.target.followUp = openTrezorPanel
+        } else {
+          openTrezorPanel()
         }
       }).catch(e => console.error(e))
     }
