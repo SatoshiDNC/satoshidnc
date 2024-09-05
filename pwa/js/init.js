@@ -27,4 +27,4 @@ homeChat_newChat_newContact_top.backGad.root = homeChat_newChat_newContact_root,
 homeChat_newChat_newContact_bot.saveGad.formView = homeChat_newChat_newContact_content
 homeChat_newChat_newContact_bot.saveGad.root = homeChat_newChat_newContact_root, homeChat_newChat_newContact_bot.saveGad.target = homeChat_newChat_root
 chatRoom_bot.sendGad.root = chatRoom_root, chatRoom_bot.sendGad.target = chatRoom_sendAs_root
-homeChat_trezorToolsView.menuGad.target = homeChat_newChat_newContact_root
+homeChat_trezorToolsView.menuGad.newContactRoot = homeChat_newChat_newContact_root
