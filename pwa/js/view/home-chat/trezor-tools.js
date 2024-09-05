@@ -148,7 +148,6 @@ v.layoutFunc = function() {
 }
 v.renderFunc = function() {
   const v = this
-  console.log(v.easingState, v.easingValue)
   if (v.easingState) {
     if (v.easingState == 1) {
       v.easingValue += v.easingRate
