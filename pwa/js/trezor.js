@@ -436,7 +436,7 @@ export function trezorConnect() {
         reject(e)
       })
     }
-    if (!device || true) {
+    if (!device) {
       console.log('trezorConnect requestDevice')
       navigator.usb.requestDevice({ filters: [{ vendorId: 4617 }] }).then(selectedDevice => {
         console.log('trezorConnect device')
