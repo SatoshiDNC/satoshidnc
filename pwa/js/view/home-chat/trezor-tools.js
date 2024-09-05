@@ -164,22 +164,24 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           console.log('testEvent:', testEvent)
           const serEvent = serializeEvent(JSON.parse(JSON.stringify(testEvent)))
           console.log('serEvent:', serEvent)
-          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(serEvent)).then(hash => {
-            console.log('hash:', Array.prototype.map.call(new Uint8Array(hash), n => n.toString(16).padStart(2, "0")).join(""))
-          })
           const signedEvent = finalizeEvent(JSON.parse(JSON.stringify(testEvent)), sk)
           console.log('nostr-tools signedEvent:', signedEvent)
           console.log('nostr-tools verifyEvent() returns:', verifyEvent(JSON.parse(JSON.stringify(signedEvent))))
-          trezorSign(0, serEvent).then(r => {
-            console.log('trezor returns:', r)
-            const trezorSig = Buffer.from(r.sig).toString('hex')
-            console.log('bitcoin-message verify() returns:', bm.verify(serEvent, r.address, Buffer.from(r.sig)))
-            const trezorEvent = JSON.parse(JSON.stringify(testEvent)) 
-            console.log('trezorEvent:', trezorEvent)
-            console.log('trezorSig:', trezorSig)
-            console.log('nostr-tools verifyEvent() returns:', verifyEvent(JSON.parse(JSON.stringify(trezorEvent))))
-            clearSelection()
-          }).catch(handleError)
+          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(serEvent)).then(h => {
+            const hash = Array.prototype.map.call(new Uint8Array(h), n => n.toString(16).padStart(2, "0")).join("")
+            console.log('hash:', hash)
+            trezorSign(0, serEvent).then(r => {
+              console.log('trezor returns:', r)
+              const trezorSig = Buffer.from(r.sig).toString('hex')
+              console.log('bitcoin-message verify() returns:', bm.verify(serEvent, r.address, Buffer.from(r.sig)))
+              const trezorEvent = JSON.parse(JSON.stringify(testEvent))
+              trezorEvent.id = hash
+              console.log('trezorEvent:', trezorEvent)
+              console.log('trezorSig:', trezorSig)
+              console.log('nostr-tools verifyEvent() returns:', verifyEvent(JSON.parse(JSON.stringify(trezorEvent))))
+              clearSelection()
+            }).catch(handleError)
+          })
           break
 
         case WIPE_SEED:
