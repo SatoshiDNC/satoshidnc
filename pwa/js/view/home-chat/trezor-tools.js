@@ -6,6 +6,7 @@ import bm from 'bitcoinjs-message'
 import * as ecc from '@bitcoinerlab/secp256k1'
 import * as bip32f from 'bip32'
 import { Buffer } from 'buffer'
+import { serializeEvent, finalizeEvent, verifyEvent } from 'nostr-tools'
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
@@ -104,7 +105,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         clearSelection()
       }
       switch (v.items[v.index].key) {
-        case ENTER_SEED: trezorRestore().then(handleResult).catch(handleError); break
+
+        case ENTER_SEED:
+          trezorRestore().then(handleResult).catch(handleError)
+          break
+
         case GEN_HPUB:
           let a, n = -1
           while (!(n >= 0 && n < 2 ** 31)) {
@@ -128,13 +133,33 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               fg.getRoot().easeOut(g.newContactRoot)
             }
             menuRoot.easeOut()
-          }).catch(handleError); break
-        case SIGN_MSG: trezorSign(0, 'test').then(r => {
-          console.log(r)
-          console.log(bm.verify('test', r.address, Buffer.from(r.sig)))
-          clearSelection()
-        }).catch(handleError); break
-        case WIPE_SEED: trezorWipe().then(handleResult).catch(handleError); break
+          }).catch(handleError)
+          break
+
+        case SIGN_MSG:
+          const testEvent = {
+            kind: 1,
+            content: 'test',
+            tags: [
+            ],
+          }
+          console.log(testEvent)
+          const serEvent = serializeEvent(testEvent)
+          console.log(serEvent)
+          const signedEvent = finalizeEvent(testEvent)
+          console.log(signedEvent)
+          console.log(verifyEvent(testEvent, signedEvent.sig))
+          trezorSign(0, 'test').then(r => {
+            console.log(r)
+            console.log(bm.verify('test', r.address, Buffer.from(r.sig)))
+            clearSelection()
+          }).catch(handleError)
+          break
+
+        case WIPE_SEED:
+          trezorWipe().then(handleResult).catch(handleError)
+          break
+
       }
       // v.items[index].handler(v.items[index])
       // menuRoot.easeOut()
