@@ -468,7 +468,6 @@ export function trezorGetNostrPubKey() {
 
 export function trezorSign(messagex) {
   const message = `[0,"<pubkey, as a lowercase hex string>",<created_at, as a number>,<kind, as a number>,[["<tags, as an array of arrays of non-null strings>"]],"<content, as a string>"]`
-  console.log('length', [...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)].length)
   return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_Initialize), ...fourByte(0)])).then(r => {
     return handleResult(r).then(msg => {
       const postCheck = () => {
@@ -480,6 +479,7 @@ export function trezorSign(messagex) {
           ...paramVarInt(1, 0), // non-hardened address slot
           ...paramString(2, message), // message to sign
         ]
+        console.log('length', [...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf].length)
         return device.transferOut(1, new Uint8Array([...new TextEncoder().encode('?##'), ...twoByte(IN_SignMessage), ...fourByte(buf.length), ...buf])).then(r => {
           return handleButtonsAndResult(r)
         })
