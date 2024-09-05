@@ -167,6 +167,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           const signedEvent = finalizeEvent(JSON.parse(JSON.stringify(testEvent)), sk)
           console.log('nostr-tools signedEvent:', signedEvent)
           console.log('nostr-tools verifyEvent() returns:', verifyEvent(JSON.parse(JSON.stringify(signedEvent))))
+          // const bmsig = bm.sign(serEvent)
           window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(serEvent)).then(h => {
             const hash = Array.prototype.map.call(new Uint8Array(h), n => n.toString(16).padStart(2, "0")).join("")
             console.log('hash:', hash)
@@ -174,7 +175,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               console.log('trezor returns:', r)
               const trezorSig = Buffer.from(r.sig).toString('hex')
               console.log('trezorSig:', trezorSig)
-              console.log('bitcoin-message verify() returns:', bm.verify(serEvent, r.address, Buffer.from(r.sig)))
+              console.log('bitcoin-message verify() returns:', bm.verify(serEvent, r.address, Buffer.from(r.sig), 'test'))
               const trezorEvent = JSON.parse(JSON.stringify(testEvent))
               trezorEvent.id = hash
               trezorEvent.sig = trezorSig
