@@ -140,6 +140,7 @@ v.renderFunc = function() {
         v.easingState = 0
         menuRoot.out()
         if (v.followUp) {
+          console.log('followUp')
           setTimeout(v.followUp)
           v.followUp = undefined
         }
