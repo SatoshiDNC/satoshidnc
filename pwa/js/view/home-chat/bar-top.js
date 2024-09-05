@@ -29,7 +29,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           openTrezorPanel()
         }
       }).catch(e => {
-        alert(e)
+        console.warn(e)
       })
     }
   }
