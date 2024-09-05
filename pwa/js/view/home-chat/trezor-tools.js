@@ -47,7 +47,7 @@ v.easingValue = 0
 v.easingRate = 0.033
 v.items = [
   { key: ENTER_SEED, name: 'Enter seed words on Trezor'},
-  { key: GEN_HPUB,   name: 'Select nostr public key'},
+  { key: GEN_HPUB,   name: 'Select Nostor public key'},
   { key: SIGN_MSG,   name: 'Sign message'},
   { key: WIPE_SEED,  name: 'Wipe seed from Trezor'},
 ]
