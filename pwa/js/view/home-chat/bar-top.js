@@ -18,18 +18,20 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.delayedHandler = function(item, handler) {
   }
   g.sha256 = function(item) {
-    const handleAction = () => {
-      prompt(item.label)
-      const hash = 'tbd'
-      if (confirm(`${hash}\nCopy to clipboard?`)) {
-        navigator.clipboard.writeText(hash)
+    setTimeout(() => {
+      const handleAction = () => {
+        prompt(item.label)
+        const hash = 'tbd'
+        if (confirm(`${hash}\nCopy to clipboard?`)) {
+          navigator.clipboard.writeText(hash)
+        }
       }
-    }
-    if (fg.getRoot() === g.target) {
-      parentRoot.followUp = handleAction
-    } else {
-      handleAction()
-    }
+      if (fg.getRoot() === g.target) {
+        parentRoot.followUp = handleAction
+      } else {
+        handleAction()
+      }
+    })
   }
   g.items = [
     { id: 1, handler: g.handler, label: 'New group' },
