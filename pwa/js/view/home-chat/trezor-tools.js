@@ -161,6 +161,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 navigator.clipboard.writeText(item.passwd)
                 item.passwd = undefined
                 item.subtitle = undefined
+                clearSelection()
                 break
               }
 
