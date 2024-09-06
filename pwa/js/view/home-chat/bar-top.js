@@ -18,7 +18,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
   g.copyResult = function(item, parentRoot) {
     navigator.clipboard.writeText(barTop.menuGad.computationResult)
-    console.log(barTop.menuGad.computationResult)
   }
   g.sha256 = function(item, parentRoot) {
     const g = this
@@ -29,10 +28,26 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
             const hash = Buffer.from(bytes).toString('hex')
             barTop.menuGad.computationResult = hash
-            console.log(barTop.menuGad.computationResult)
-            // if (confirm(`${hash}\nCopy to clipboard?`)) {
-            //   navigator.clipboard.writeText(hash)
-            // }
+          })
+        }
+      }
+      if (fg.getRoot() === parentRoot) {
+        parentRoot.followUp = handleAction
+      } else {
+        handleAction()
+      }
+    },10)
+  }
+  g.indexHash = function(item, parentRoot) {
+    const g = this
+    setTimeout(() => {
+      const handleAction = () => {
+        const text = prompt(item.label)
+        if (text !== null) {
+          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
+            const hash = Buffer.from(bytes).toString('hex')
+            const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
+            barTop.menuGad.computationResult = index
           })
         }
       }
@@ -50,8 +65,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     { id: 4, handler: g.handler, label: 'Starred messages' },
     { id: 5, handler: g.handler, label: 'Settings' },
     { id: 6, label: 'Compute SHA-256', handler: g.sha256 },
-    { id: 7, label: 'Copy result', handler: g.copyResult },
-    { id: 8, label: 'Trezor tools', handler: trezorTools.invoker },
+    { id: 7, label: 'Compute index hash', handler: g.indexHash },
+    { id: 8, label: 'Copy result', handler: g.copyResult },
+    { id: 9, label: 'Trezor tools', handler: trezorTools.invoker },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
