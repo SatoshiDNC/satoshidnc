@@ -22,7 +22,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       const handleAction = () => {
         const text = prompt(item.label)
         if (text !== null) {
-          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(hash => {
+          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
+            const hash = Buffer.from(bytes).toString('hex')
             if (confirm(`${hash}\nCopy to clipboard?`)) {
               navigator.clipboard.writeText(hash)
             }
