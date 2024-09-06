@@ -17,9 +17,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     console.log(`id ${JSON.stringify(item)}`)
   }
   g.copyResult = function(item, parentRoot) {
-    const g = this
-    navigator.clipboard.writeText(g.computationResult)
-    console.log(g.computationResult)
+    navigator.clipboard.writeText(barTop.menuGad.computationResult)
+    console.log(barTop.menuGad.computationResult)
   }
   g.sha256 = function(item, parentRoot) {
     const g = this
@@ -29,8 +28,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         if (text !== null) {
           window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
             const hash = Buffer.from(bytes).toString('hex')
-            g.computationResult = hash
-            console.log(g.computationResult)
+            barTop.menuGad.computationResult = hash
+            console.log(barTop.menuGad.computationResult)
             // if (confirm(`${hash}\nCopy to clipboard?`)) {
             //   navigator.clipboard.writeText(hash)
             // }
