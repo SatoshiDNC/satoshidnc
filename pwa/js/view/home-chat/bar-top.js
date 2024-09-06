@@ -23,12 +23,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         if (text !== null) {
           window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
             const hash = Buffer.from(bytes).toString('hex')
-            if (confirm(`${hash}\nCopy to clipboard?`)) {
-              var end_time = Date.now() + 500;
-              while ( Date.now() < end_time )
-                { }
-              navigator.clipboard.writeText(hash)
-            }
+            navigator.clipboard.writeText(hash)
+            // if (confirm(`${hash}\nCopy to clipboard?`)) {
+            //   navigator.clipboard.writeText(hash)
+            // }
           })
         }
       }
