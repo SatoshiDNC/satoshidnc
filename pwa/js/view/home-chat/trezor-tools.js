@@ -62,6 +62,7 @@ v.easingRate = 0.033
 v.items = [
   { key: ENTER_SEED, name: 'Enter seed words on Trezor'},
   { key: GEN_HPUB,   name: 'Select Nostor public key'},
+  { key: GEN_PW,     name: 'Select password'},
   { key: SIGN_MSG,   name: 'Sign message'},
   { key: WIPE_SEED,  name: 'Wipe seed from Trezor'},
 ]
@@ -124,32 +125,63 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           break
 
         case GEN_HPUB:
-          let a, n = -1
-          while (!(n >= 0 && n < 2 ** 31)) {
-            a = prompt("Account number (0 and up):")
-            if (a === null) break
-            n = +a
-          }
-          if (a === null) {
-            clearSelection()
-            break
-          }
-          trezorGetNostrPubKey(n).then(r => {
-            const bip32 = bip32f.BIP32Factory(ecc)
-            const { address } = bjs.payments.p2pkh({
-              pubkey: bip32.fromBase58(r.xpub).publicKey,
-            })
-            clearSelection()
-            menuRoot.followUp = () => {
-              newContactForm.nameGad.text = ''
-              newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
-              fg.getRoot().easeOut(g.newContactRoot)
+          {
+            let a, n = -1
+            while (!(n >= 0 && n < 2 ** 31)) {
+              a = prompt("Account number (0 and up):")
+              if (a === null) break
+              n = +a
             }
-            menuRoot.easeOut()
-          }).catch(handleError)
+            if (a === null) {
+              clearSelection()
+              break
+            }
+            trezorGetNostrPubKey(n).then(r => {
+              const bip32 = bip32f.BIP32Factory(ecc)
+              const { address } = bjs.payments.p2pkh({
+                pubkey: bip32.fromBase58(r.xpub).publicKey,
+              })
+              clearSelection()
+              menuRoot.followUp = () => {
+                newContactForm.nameGad.text = ''
+                newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
+                fg.getRoot().easeOut(g.newContactRoot)
+              }
+              menuRoot.easeOut()
+            }).catch(handleError)
+            }
           break
 
-        case SIGN_MSG:
+          case GEN_PW:
+            {
+              let a, n = -1
+              while (!(n >= 0 && n < 2 ** 31)) {
+                a = prompt("Account number (0 and up):")
+                if (a === null) break
+                n = +a
+              }
+              if (a === null) {
+                clearSelection()
+                break
+              }
+              trezorGetNostrPubKey(n).then(r => {
+                const bip32 = bip32f.BIP32Factory(ecc)
+                const { address } = bjs.payments.p2pkh({
+                  pubkey: bip32.fromBase58(r.xpub).publicKey,
+                })
+                clearSelection()
+                menuRoot.followUp = () => {
+                  newContactForm.nameGad.text = ''
+                  //newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
+                  newContactForm.pubkeyGad.text = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
+                  fg.getRoot().easeOut(g.newContactRoot)
+                }
+                menuRoot.easeOut()
+              }).catch(handleError)
+            }
+            break
+  
+          case SIGN_MSG:
           const sk = hsec()
           const pk = hpub()
           const testEvent = {
