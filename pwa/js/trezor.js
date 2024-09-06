@@ -478,7 +478,7 @@ export function trezorGetNostrPubKey(i) {
         ...paramVarInt(1, (   i | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
         // ...paramVarInt(1, 0), // 0 non-hardened (non-)change slot [nostr device slot?]
         // ...paramVarInt(1, 0), // non-hardened address slot [nostr message slot?]
-        ...paramVarInt(3, 1), // show on display
+        // ...paramVarInt(3, 1), // show on display
       ]
       return writeFunc(IN_GetPublicKey, buf).then(r => {
         return handleButtonsAndResult(r)
