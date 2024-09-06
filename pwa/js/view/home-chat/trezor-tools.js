@@ -155,6 +155,15 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 
           case GEN_PW:
             {
+              const item = v.items.filter(item => item.key == GEN_PW)[0]
+
+              if (item.passwd) {
+                navigator.clipboard.writeText(item.passwd)
+                item.passwd = undefined
+                item.subtitle = undefined
+                break
+              }
+
               const text = prompt('Name of account:')
               if (text === null) {
                 clearSelection()
@@ -169,7 +178,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     pubkey: bip32.fromBase58(r.xpub).publicKey,
                   })
                   clearSelection()
-                  v.items.filter(item => item.key == GEN_PW)[0].subtitle = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
+                  item.passwd = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
+                  item.subtitle = '********************************'
                   v.setRenderFlag(true)
                 }).catch(handleError)    
               })
