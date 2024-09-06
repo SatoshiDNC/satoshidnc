@@ -175,7 +175,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               console.log('trezor returns:', r)
               const trezorSig = Buffer.from(r.sig).toString('hex')
               console.log('trezorSig:', trezorSig)
-              console.log('bitcoin-message verify() returns:', bm.verify(hash, r.address, Buffer.from(r.sig), 'test'))
+              console.log('bitcoin-message verify() returns:', bm.verify(hash, r.address, Buffer.from(r.sig)))
               const trezorEvent = JSON.parse(JSON.stringify(testEvent))
               trezorEvent.id = hash
               trezorEvent.sig = trezorSig
