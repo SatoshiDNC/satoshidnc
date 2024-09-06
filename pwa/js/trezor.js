@@ -487,15 +487,14 @@ export function trezorGetNostrPubKey(i) {
   })
 }
 
-export function trezorGetPassword(i) {
+export function trezorGetPassword(i, j = 0) {
   return writeFunc(IN_Initialize, []).then(r => {
     return handleResult(r).then(() => {
       const buf = [
         ...paramVarInt(1, (  44 | 0x80000000) >>> 0), // 44' hardened purpose code (BIP 43/44)
         ...paramVarInt(1, 3235826193), // hardened wallet type = hereby introduced password wallet
         ...paramVarInt(1, (   i | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
-        ...paramVarInt(1, 0), // 0 non-hardened (non-)change slot [password slot]
-        // ...paramVarInt(3, 1), // show on display
+        ...paramVarInt(1, (   j & 0x7fffffff) >>> 0), // 0 non-hardened (non-)change slot [password slot]
       ]
       return writeFunc(IN_GetPublicKey, buf).then(r => {
         return handleButtonsAndResult(r)
