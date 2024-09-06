@@ -315,8 +315,8 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, item.name, v.textColor, v.mat, m)
     if (item.subtitle) {
       mat4.identity(m)
-      mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 110 + i * ITEM_SIZE + 29 + v.menuH * f0, 0])
-      mat4.scale(m,m, [29/14, 29/14, 1])
+      mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
+      mat4.scale(m,m, [25/14, 25/14, 1])
       defaultFont.draw(0,0, item.subtitle, colors.inactive, v.mat, m)
     }
     i++
