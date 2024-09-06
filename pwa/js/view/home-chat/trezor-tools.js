@@ -171,11 +171,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(serEvent)).then(h => {
             const hash = Array.prototype.map.call(new Uint8Array(h), n => n.toString(16).padStart(2, "0")).join("")
             console.log('hash:', hash)
-            trezorSign(0, serEvent).then(r => {
+            trezorSign(0, hash).then(r => {
               console.log('trezor returns:', r)
               const trezorSig = Buffer.from(r.sig).toString('hex')
               console.log('trezorSig:', trezorSig)
-              console.log('bitcoin-message verify() returns:', bm.verify(serEvent, r.address, Buffer.from(r.sig), 'test'))
+              console.log('bitcoin-message verify() returns:', bm.verify(hash, r.address, Buffer.from(r.sig), 'test'))
               const trezorEvent = JSON.parse(JSON.stringify(testEvent))
               trezorEvent.id = hash
               trezorEvent.sig = trezorSig
