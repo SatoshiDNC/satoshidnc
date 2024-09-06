@@ -16,14 +16,19 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
   }
+  g.copyResult = function(item, parentRoot) {
+    const g = this
+    navigator.clipboard.writeText(g.computationResult)
+  }
   g.sha256 = function(item, parentRoot) {
+    const g = this
     setTimeout(() => {
       const handleAction = () => {
         const text = prompt(item.label)
         if (text !== null) {
           window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
             const hash = Buffer.from(bytes).toString('hex')
-            navigator.clipboard.writeText(hash)
+            g.computationResult = hash
             // if (confirm(`${hash}\nCopy to clipboard?`)) {
             //   navigator.clipboard.writeText(hash)
             // }
@@ -43,8 +48,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     { id: 3, handler: g.handler, label: 'Linked devices' },
     { id: 4, handler: g.handler, label: 'Starred messages' },
     { id: 5, handler: g.handler, label: 'Settings' },
-    { id: 5, label: 'Compute SHA-256', handler: g.sha256 },
-    { id: 6, label: 'Trezor tools', handler: trezorTools.invoker },
+    { id: 6, label: 'Compute SHA-256', handler: g.sha256 },
+    { id: 7, label: 'Copy result', handler: g.copyResult },
+    { id: 8, label: 'Trezor tools', handler: trezorTools.invoker },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
