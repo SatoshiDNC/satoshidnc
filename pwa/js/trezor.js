@@ -495,7 +495,7 @@ export function trezorGetPassword(i) {
         ...paramVarInt(1, 3235826193), // hardened wallet type = hereby introduced password wallet
         ...paramVarInt(1, (   i | 0x80000000) >>> 0), // 0' hardened account number (BIP 44)
         ...paramVarInt(1, 0), // 0 non-hardened (non-)change slot [password slot]
-        ...paramVarInt(3, 1), // show on display
+        // ...paramVarInt(3, 1), // show on display
       ]
       return writeFunc(IN_GetPublicKey, buf).then(r => {
         return handleButtonsAndResult(r)
