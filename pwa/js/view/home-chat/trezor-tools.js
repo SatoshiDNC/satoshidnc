@@ -165,7 +165,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 clearSelection()
                 break
               }
-              trezorGetNostrPubKey(n).then(r => {
+              trezorGetPassword(n).then(r => {
                 const bip32 = bip32f.BIP32Factory(ecc)
                 const { address } = bjs.payments.p2pkh({
                   pubkey: bip32.fromBase58(r.xpub).publicKey,
