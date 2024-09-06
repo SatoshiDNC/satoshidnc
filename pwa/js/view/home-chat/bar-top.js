@@ -64,9 +64,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     { id: 3, handler: g.handler, label: 'Linked devices' },
     { id: 4, handler: g.handler, label: 'Starred messages' },
     { id: 5, handler: g.handler, label: 'Settings' },
-    { id: 6, label: 'Compute SHA-256', handler: g.sha256 },
-    { id: 7, label: 'Compute index hash', handler: g.indexHash },
-    { id: 8, label: 'Copy result', handler: g.copyResult },
+    // { id: 6, label: 'Compute SHA-256', handler: g.sha256 },
+    // { id: 7, label: 'Compute index hash', handler: g.indexHash },
+    // { id: 8, label: 'Copy result', handler: g.copyResult },
     { id: 9, label: 'Trezor tools', handler: trezorTools.invoker },
   ]
   g.clickFunc = function() {
