@@ -17,7 +17,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
   g.delayedHandler = function(item, handler) {
   }
-  g.sha256 = function(item) {
+  g.sha256 = function(item, parentRoot) {
     setTimeout(() => {
       const handleAction = () => {
         if (prompt(item.label) !== null) {
@@ -27,7 +27,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           }
         }
       }
-      if (fg.getRoot() === g.target) {
+      if (fg.getRoot() === parentRoot) {
         parentRoot.followUp = handleAction
       } else {
         handleAction()
