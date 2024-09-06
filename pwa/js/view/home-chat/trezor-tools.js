@@ -28,6 +28,7 @@ const BOT_SPACE = 203
 
 const ENTER_SEED = 'ENTER_SEED'
 const GEN_HPUB = 'GEN_HPUB'
+const GEN_PW = 'GEN_PW'
 const SIGN_MSG = 'SIGN_MSG'
 const WIPE_SEED = 'WIPE_SEED'
 
