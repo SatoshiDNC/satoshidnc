@@ -1,5 +1,6 @@
 import { trezorConnect, trezorPing, trezorWipe } from '../../trezor.js'
 import { menuView as trezorTools } from './trezor-tools.js'
+import { Buffer } from 'buffer'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -14,8 +15,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.fontSize = 11
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
-  }
-  g.delayedHandler = function(item, handler) {
   }
   g.sha256 = function(item, parentRoot) {
     setTimeout(() => {
