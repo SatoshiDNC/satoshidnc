@@ -20,10 +20,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.sha256 = function(item) {
     setTimeout(() => {
       const handleAction = () => {
-        prompt(item.label)
-        const hash = 'tbd'
-        if (confirm(`${hash}\nCopy to clipboard?`)) {
-          navigator.clipboard.writeText(hash)
+        if (prompt(item.label) !== null) {
+          const hash = 'tbd'
+          if (confirm(`${hash}\nCopy to clipboard?`)) {
+            navigator.clipboard.writeText(hash)
+          }
         }
       }
       if (fg.getRoot() === g.target) {
@@ -31,7 +32,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       } else {
         handleAction()
       }
-    })
+    },1000)
   }
   g.items = [
     { id: 1, handler: g.handler, label: 'New group' },
