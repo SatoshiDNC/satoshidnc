@@ -15,11 +15,20 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
   }
+  g.delayedHandler = function(item, handler) {
+  }
   g.sha256 = function(item) {
-    prompt(item.label)
-    const hash = 'tbd'
-    if (confirm(`${hash}\nCopy to clipboard?`)) {
-      navigator.clipboard.writeText(hash)
+    const handleAction = () => {
+      prompt(item.label)
+      const hash = 'tbd'
+      if (confirm(`${hash}\nCopy to clipboard?`)) {
+        navigator.clipboard.writeText(hash)
+      }
+    }
+    if (fg.getRoot() === parentRoot) {
+      parentRoot.followUp = handleAction
+    } else {
+      handleAction()
     }
   }
   g.items = [
