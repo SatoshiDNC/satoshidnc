@@ -22,10 +22,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       const handleAction = () => {
         const text = prompt(item.label)
         if (text !== null) {
-          const hash = window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))
-          if (confirm(`${hash}\nCopy to clipboard?`)) {
-            navigator.clipboard.writeText(hash)
-          }
+          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(hash => {
+            if (confirm(`${hash}\nCopy to clipboard?`)) {
+              navigator.clipboard.writeText(hash)
+            }
+          })
         }
       }
       if (fg.getRoot() === parentRoot) {
