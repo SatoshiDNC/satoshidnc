@@ -32,7 +32,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       } else {
         handleAction()
       }
-    },1000)
+    },10)
   }
   g.items = [
     { id: 1, handler: g.handler, label: 'New group' },
