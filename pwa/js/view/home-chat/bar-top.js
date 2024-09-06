@@ -15,13 +15,21 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
   }
+  g.sha256 = function(item) {
+    prompt(item.label)
+    const hash = 'tbd'
+    if (confirm(`${hash}\nCopy to clipboard?`)) {
+      navigator.clipboard.writeText(hash)
+    }
+  }
   g.items = [
     { id: 1, handler: g.handler, label: 'New group' },
     { id: 2, handler: g.handler, label: 'New broadcast' },
     { id: 3, handler: g.handler, label: 'Linked devices' },
     { id: 4, handler: g.handler, label: 'Starred messages' },
     { id: 5, handler: g.handler, label: 'Settings' },
-    { id: 6, handler: trezorTools.invoker, label: 'Trezor tools' },
+    { id: 5, label: 'Compute SHA-256', handler: g.sha256 },
+    { id: 6, label: 'Trezor tools', handler: trezorTools.invoker },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
