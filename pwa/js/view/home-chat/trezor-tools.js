@@ -169,13 +169,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     pubkey: bip32.fromBase58(r.xpub).publicKey,
                   })
                   clearSelection()
-                  menuRoot.followUp = () => {
-                    newContactForm.nameGad.text = ''
-                    //newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
-                    newContactForm.pubkeyGad.text = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
-                    fg.getRoot().easeOut(g.newContactRoot)
-                  }
-                  menuRoot.easeOut()
+                  v.items.filter(item => item.key == GEN_PW)[0].subtitle = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
+                  v.setRenderFlag(true)
                 }).catch(handleError)    
               })
             }
@@ -318,6 +313,12 @@ v.renderFunc = function() {
     mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
     mat4.scale(m,m, [35/14, 35/14, 1])
     defaultFont.draw(0,0, item.name, v.textColor, v.mat, m)
+    if (item.subtitle) {
+      mat4.identity(m)
+      mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 110 + i * ITEM_SIZE + 29 + v.menuH * f0, 0])
+      mat4.scale(m,m, [29/14, 29/14, 1])
+      defaultFont.draw(0,0, item.subtitle, colors.inactive, v.mat, m)
+    }
     i++
   }
 
