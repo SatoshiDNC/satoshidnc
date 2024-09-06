@@ -329,6 +329,10 @@ v.renderFunc = function() {
       mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
       mat4.scale(m,m, [25/14, 25/14, 1])
       defaultFont.draw(0,0, item.subtitle, colors.inactive, v.mat, m)
+      mat4.identity(m)
+      mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
+      mat4.scale(m,m, [35/18, 35/18, 1])
+      iconFont.draw(0,0, '@', v.flash? v.textColor: colors.inactiveDark, v.mat, m)
     }
     i++
   }
