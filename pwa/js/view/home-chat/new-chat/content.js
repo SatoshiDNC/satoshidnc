@@ -159,7 +159,7 @@ v.renderFunc = function() {
   mat4.translate(m,m, [x, y, 0])
   const s3 = 29/14
   mat4.scale(m,m, [s3, s3, 1])
-  defaultFont.draw(0,0, 'Contacts on Nostr', v.subtitleColor, v.mat, m)
+  defaultFont.draw(0,0, 'Contacts on Nostor', v.subtitleColor, v.mat, m)
 
   i = 0
   for (const c of contacts) {
