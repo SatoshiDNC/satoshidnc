@@ -25,7 +25,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         navigator.clipboard.writeText(hash)
       }
     }
-    if (fg.getRoot() === parentRoot) {
+    if (fg.getRoot() === g.target) {
       parentRoot.followUp = handleAction
     } else {
       handleAction()
