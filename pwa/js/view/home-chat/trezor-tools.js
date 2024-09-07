@@ -39,7 +39,6 @@ v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
 v.flashAnim = 0
-v.copyAnim = 0
 v.invoker = function(item, parentRoot) {
   const v = this
   const openTrezorPanel = () => {
@@ -63,11 +62,11 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.items = [
-  { key: ENTER_SEED, name: 'Enter seed words on Trezor'},
-  { key: GEN_HPUB,   name: 'Select Nostor public key'},
-  { key: GEN_PW,     name: 'Select password'},
-  { key: SIGN_MSG,   name: 'Sign message'},
-  { key: WIPE_SEED,  name: 'Wipe seed from Trezor'},
+  { key: ENTER_SEED, copyAnim: 0, name: 'Enter seed words on Trezor'},
+  { key: GEN_HPUB,   copyAnim: 0, name: 'Select Nostor public key'},
+  { key: GEN_PW,     copyAnim: 0, name: 'Select password'},
+  { key: SIGN_MSG,   copyAnim: 0, name: 'Sign message'},
+  { key: WIPE_SEED,  copyAnim: 0, name: 'Wipe seed from Trezor'},
 ]
 v.menuX = 0
 v.menuR = 32
@@ -339,17 +338,17 @@ v.renderFunc = function() {
       defaultFont.draw(0,0, item.subtitle, colors.inactive, v.mat, m)
       goal = 1
     }
-    if (v.copyAnim != goal) {
-      v.copyAnim -= 0.02
-      if (v.copyAnim < goal) {
-        v.copyAnim = goal
+    if (item.copyAnim != goal) {
+      item.copyAnim -= 0.02
+      if (item.copyAnim < goal) {
+        item.copyAnim = goal
       }
       v.setRenderFlag(true)
     }
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
     mat4.scale(m,m, [35/18, 35/18, 1])
-    iconFont.draw(0,0, '@', alpha(v.textColor, v.copyAnim), v.mat, m)
+    iconFont.draw(0,0, '@', alpha(v.textColor, item.copyAnim), v.mat, m)
 
     i++
   }
