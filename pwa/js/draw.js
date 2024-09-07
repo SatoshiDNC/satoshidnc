@@ -1,3 +1,7 @@
+export function alpha(color, alpha) {
+  return [color[0], color[1], color[2], alpha]
+}
+
 export function blend(color1, color2, factor) {
   const f1 = Math.max(0, Math.min(1, 1 - factor))
   const f2 = Math.max(0, Math.min(1, factor))
