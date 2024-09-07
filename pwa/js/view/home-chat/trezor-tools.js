@@ -155,7 +155,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               })
               clearSelection()
               item.hpub = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
-              item.subtitle = hpub
+              item.subtitle = item.hpub
               v.setRenderFlag(true)
               // menuRoot.followUp = () => {
               //   newContactForm.nameGad.text = ''
