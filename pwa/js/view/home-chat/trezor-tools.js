@@ -224,7 +224,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             console.log('hash:', hash)
             trezorSign(0, hash).then(r => {
               console.log('trezor returns:', r)
-              if (!r.sig) return
+              if (!r.sig) {
+                clearSelection()
+                return
+              }
               const trezorSig = Buffer.from(r.sig).toString('hex')
               console.log('trezorSig:', trezorSig)
               console.log('bitcoin-message verify() returns:', bm.verify(hash, r.address, Buffer.from(r.sig)))
