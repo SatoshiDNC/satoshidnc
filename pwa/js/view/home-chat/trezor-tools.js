@@ -345,24 +345,7 @@ v.renderFunc = function() {
       goal = 1
       item.subtitleCached = item.subtitle
     }
-    mat4.identity(m)
-    mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
-    s = 25/14
-    mat4.scale(m,m, [s, s, 1])
-    const w = v.menuW - 190 - 35
-    let str
-    if (defaultFont.calcWidth(item.subtitleCached) * s > w) {
-      let l = item.subtitleCached.length
-      while (defaultFont.calcWidth(item.subtitleCached.substring(0,l)+'...') * s > w) {
-        l--
-      }
-      str = item.subtitleCached.substring(0,l)+'...'
-    } else {
-      str = item.subtitleCached
-    }
-    defaultFont.draw(0,0, str, alpha(colors.inactive, item.copyAnim), v.mat, m)
-
-
+    
     if (item.copyAnim != goal) {
       item.copyAnim -= 0.02
       if (item.copyAnim < goal) {
@@ -370,6 +353,26 @@ v.renderFunc = function() {
       }
       v.setRenderFlag(true)
     }
+
+    if (item.subtitleCached) {
+      mat4.identity(m)
+      mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
+      s = 25/14
+      mat4.scale(m,m, [s, s, 1])
+      const w = v.menuW - 190 - 35
+      let str
+      if (defaultFont.calcWidth(item.subtitleCached) * s > w) {
+        let l = item.subtitleCached.length
+        while (defaultFont.calcWidth(item.subtitleCached.substring(0,l)+'...') * s > w) {
+          l--
+        }
+        str = item.subtitleCached.substring(0,l)+'...'
+      } else {
+        str = item.subtitleCached
+      }
+      defaultFont.draw(0,0, str, alpha(colors.inactive, item.copyAnim), v.mat, m)
+    }
+
     mat4.identity(m)
     s = 35/18
     mat4.translate(m,m, [v.menuX + v.menuW - 190 + 7*s, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0 - 9*s, 0])
