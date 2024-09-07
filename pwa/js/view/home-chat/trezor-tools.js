@@ -1,4 +1,4 @@
-import { drawRect, drawPill, drawRoundedRect, blend, alpha } from '../../draw.js'
+import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../draw.js'
 import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorGetPassword, trezorSign, trezorWipe } from '../../trezor.js'
 import { contentView as newContactForm } from './new-chat/new-contact/content.js'
 import bjs from 'bitcoinjs-lib'
@@ -39,6 +39,7 @@ v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
 v.flashAnim = 0
+v.copyAnim = 0
 v.invoker = function(item, parentRoot) {
   const v = this
   const openTrezorPanel = () => {
