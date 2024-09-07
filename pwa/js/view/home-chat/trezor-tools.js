@@ -154,7 +154,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 pubkey: bip32.fromBase58(r.xpub).publicKey,
               })
               clearSelection()
-              item.hpub = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
+              item.hpub = nip19.npubEncode(r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join(''))
               item.subtitle = item.hpub
               v.setRenderFlag(true)
               // menuRoot.followUp = () => {
