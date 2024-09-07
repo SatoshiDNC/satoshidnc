@@ -361,7 +361,7 @@ v.renderFunc = function() {
 
     if (item.subtitleCached) {
       mat4.identity(m)
-      mat4.translate(m,m, [v.menuX + ITEM_LEFT, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
+      mat4.translate(m,m, [v.menuX + ITEM_LEFT, v.menuY + ITEM_TOP + 134 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
       s = 25/14
       mat4.scale(m,m, [s, s, 1])
       const w = v.menuW - ITEM_LEFT - 135
