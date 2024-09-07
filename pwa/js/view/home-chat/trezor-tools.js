@@ -38,6 +38,7 @@ v.name = Object.keys({menuView}).pop()
 v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
+v.flashAnim = 0
 v.invoker = function(item, parentRoot) {
   const v = this
   const openTrezorPanel = () => {
@@ -316,9 +317,13 @@ v.renderFunc = function() {
       mat4.identity(m)
       mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
       mat4.scale(m,m, [35/14, 35/14, 1])
-      iconFont.draw(0,0, 'T', v.flash? v.textColor: colors.inactiveDark, v.mat, m)
-      v.flash = !v.flash
-      setTimeout(() => { v.setRenderFlag(true) }, 500)
+      iconFont.draw(0,0, 'T', v.flash? v.textColor: colors.inactive, v.mat, m)
+      v.flashAnim += 0.2
+      if (v.flashAnim >= 1) {
+        v.flashAnim = 0
+        v.flash = !v.flash
+      }
+      setTimeout(() => { v.setRenderFlag(true) }, 100)
     }
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
