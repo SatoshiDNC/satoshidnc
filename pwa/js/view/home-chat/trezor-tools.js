@@ -323,7 +323,7 @@ v.renderFunc = function() {
       if (v.flashAnim >= 1) {
         v.flashAnim -= 1
       }
-      setTimeout(() => { v.setRenderFlag(true) }, 100)
+      setTimeout(() => { v.setRenderFlag(true) }, 50)
     }
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
