@@ -162,7 +162,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               if (item.passwd) {
                 navigator.clipboard.writeText(item.passwd)
                 item.passwd = undefined
-                item.subtitle = 'Copied'
+                item.subtitle = undefined
                 clearSelection()
                 break
               }
