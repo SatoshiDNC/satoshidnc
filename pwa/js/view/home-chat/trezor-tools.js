@@ -343,11 +343,12 @@ v.renderFunc = function() {
       if (v.copyAnim < goal) {
         v.copyAnim = goal
       }
+      v.setRenderFlag(true)
     }
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
     mat4.scale(m,m, [35/18, 35/18, 1])
-    iconFont.draw(0,0, '@', alpha(v.textColor, 1 - v.copyAnim), v.mat, m)
+    iconFont.draw(0,0, '@', alpha(v.textColor, v.copyAnim), v.mat, m)
 
     i++
   }
