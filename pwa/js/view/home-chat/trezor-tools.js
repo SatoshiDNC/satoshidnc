@@ -347,8 +347,22 @@ v.renderFunc = function() {
     }
     mat4.identity(m)
     mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
-    mat4.scale(m,m, [25/14, 25/14, 1])
-    defaultFont.draw(0,0, item.subtitleCached, alpha(colors.inactive, item.copyAnim), v.mat, m)
+    s = 25/14
+    mat4.scale(m,m, [s, s, 1])
+    const w = v.menuW - 190 - 35
+    let str
+    if (defaultFont.calcWidth(item.subtitleCached) * s > w) {
+      let l = item.subtitleCached.length
+      while (defaultFont.calcWidth(item.subtitleCached.substring(0,l)+'...') * s > w) {
+        l--
+      }
+      str = item.subtitleCached.substring(0,l)+'...'
+    } else {
+      str = item.subtitleCached
+    }
+    defaultFont.draw(0,0, str, alpha(colors.inactive, item.copyAnim), v.mat, m)
+
+
     if (item.copyAnim != goal) {
       item.copyAnim -= 0.02
       if (item.copyAnim < goal) {
