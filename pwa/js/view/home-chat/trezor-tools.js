@@ -23,6 +23,7 @@ export function npub() { return nip19.npubEncode(hpub()) }
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
+const ITEM_LEFT = 90
 const ITEM_SIZE = 179
 const BOT_SPACE = 203
 
@@ -336,7 +337,7 @@ v.renderFunc = function() {
       v.setRenderFlag(true)
     }
     mat4.identity(m)
-    mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
+    mat4.translate(m,m, [v.menuX + ITEM_LEFT, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
     mat4.scale(m,m, [35/14, 35/14, 1])
     defaultFont.draw(0,0, item.name, v.textColor, v.mat, m)
     let goal
@@ -345,7 +346,7 @@ v.renderFunc = function() {
       goal = 1
       item.subtitleCached = item.subtitle
     }
-    
+
     if (item.copyAnim != goal) {
       item.copyAnim -= 0.02
       if (item.copyAnim < goal) {
@@ -356,10 +357,10 @@ v.renderFunc = function() {
 
     if (item.subtitleCached) {
       mat4.identity(m)
-      mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
+      mat4.translate(m,m, [v.menuX + ITEM_LEFT, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
       s = 25/14
       mat4.scale(m,m, [s, s, 1])
-      const w = v.menuW - 190 - 35
+      const w = v.menuW - ITEM_LEFT - 135
       let str
       if (defaultFont.calcWidth(item.subtitleCached) * s > w) {
         let l = item.subtitleCached.length
