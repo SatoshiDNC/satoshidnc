@@ -332,12 +332,13 @@ v.renderFunc = function() {
     let goal
     goal = 0
     if (item.subtitle) {
-      mat4.identity(m)
-      mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
-      mat4.scale(m,m, [25/14, 25/14, 1])
-      defaultFont.draw(0,0, item.subtitle, colors.inactive, v.mat, m)
       goal = 1
+      item.subtitleCached = item.subtitle
     }
+    mat4.identity(m)
+    mat4.translate(m,m, [v.menuX + 190, v.menuY + ITEM_TOP + 124 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
+    mat4.scale(m,m, [25/14, 25/14, 1])
+    defaultFont.draw(0,0, item.subtitleCached, alpha(colors.inactive, item.copyAnim), v.mat, m)
     if (item.copyAnim != goal) {
       item.copyAnim -= 0.02
       if (item.copyAnim < goal) {
