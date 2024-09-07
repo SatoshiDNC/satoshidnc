@@ -121,7 +121,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         alert(e)
         clearSelection()
       }
-      switch (v.items[v.index].key) {
+      const item = v.items[v.index]
+      switch (item.key) {
 
         case ENTER_SEED:
           trezorRestore().then(handleResult).catch(handleError)
@@ -129,6 +130,14 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 
         case GEN_HPUB:
           {
+            if (item.hpub) {
+              navigator.clipboard.writeText(item.hpub)
+              item.hpub = undefined
+              item.subtitle = undefined
+              clearSelection()
+              break
+            }
+
             let a, n = -1
             while (!(n >= 0 && n < 2 ** 31)) {
               a = prompt("Account number (0 and up):")
@@ -145,20 +154,21 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 pubkey: bip32.fromBase58(r.xpub).publicKey,
               })
               clearSelection()
-              menuRoot.followUp = () => {
-                newContactForm.nameGad.text = ''
-                newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
-                fg.getRoot().easeOut(g.newContactRoot)
-              }
-              menuRoot.easeOut()
+              item.hpub = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
+              item.subtitle = hpub
+              v.setRenderFlag(true)
+              // menuRoot.followUp = () => {
+              //   newContactForm.nameGad.text = ''
+              //   newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
+              //   fg.getRoot().easeOut(g.newContactRoot)
+              // }
+              // menuRoot.easeOut()
             }).catch(handleError)
             }
           break
 
           case GEN_PW:
             {
-              const item = v.items.filter(item => item.key == GEN_PW)[0]
-
               if (item.passwd) {
                 navigator.clipboard.writeText(item.passwd)
                 item.passwd = undefined
