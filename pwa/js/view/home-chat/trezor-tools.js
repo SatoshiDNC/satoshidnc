@@ -318,7 +318,7 @@ v.renderFunc = function() {
       mat4.identity(m)
       mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
       mat4.scale(m,m, [35/14, 35/14, 1])
-      iconFont.draw(0,0, 'T', blend(v.textColor, colors.inactiveDark, (Math.sin(v.flashAnim*2*Math.PI)+1)/2), v.mat, m)
+      iconFont.draw(0,0, 'T', blend(v.textColor, colors.inactiveDark, (Math.cos(v.flashAnim*2*Math.PI)+1)/2), v.mat, m)
       v.flashAnim += 0.1
       if (v.flashAnim >= 1) {
         v.flashAnim -= 1
