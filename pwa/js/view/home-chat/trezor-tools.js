@@ -103,6 +103,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
     if (index >= 0 && index < v.items.length) {
       v.index = index
+      v.flashAnim = 0
       const clearSelection = () => {
         if (v.index == index) {
           v.index = -1
@@ -317,11 +318,10 @@ v.renderFunc = function() {
       mat4.identity(m)
       mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
       mat4.scale(m,m, [35/14, 35/14, 1])
-      iconFont.draw(0,0, 'T', v.flash? v.textColor: colors.inactive, v.mat, m)
-      v.flashAnim += 0.2
+      iconFont.draw(0,0, 'T', blend(v.textColor, colors.inactiveDark, (Math.cos(v.flashAnim*2*Math.PI)+1)/2), v.mat, m)
+      v.flashAnim += 0.1
       if (v.flashAnim >= 1) {
-        v.flashAnim = 0
-        v.flash = !v.flash
+        v.flashAnim -= 1
       }
       setTimeout(() => { v.setRenderFlag(true) }, 100)
     }

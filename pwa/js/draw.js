@@ -1,3 +1,9 @@
+export function blend(color1, color2, factor) {
+  const f1 = Math.max(0, Math.min(1, 1 - factor))
+  const f2 = Math.max(0, Math.min(1, factor))
+  return [color1[0]*f1+color2[0]*f2, color1[1]*f1+color2[1]*f2, color1[2]*f1+color2[2]*f2, color1[3]*f1+color2[3]*f2]
+}
+
 export function drawRect(v, color, x,y,w,h) {
   mainShapes.useProg2()
   const m = mat4.create()
