@@ -346,8 +346,8 @@ v.renderFunc = function() {
       v.setRenderFlag(true)
     }
     mat4.identity(m)
-    mat4.translate(m,m, [v.menuX + v.menuW - 190 + 7, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0 - 9, 0])
     s = 35/18*(1+(1-item.copyAnim))
+    mat4.translate(m,m, [v.menuX + v.menuW - 190 + 7*s, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0 - 9*s, 0])
     mat4.scale(m,m, [s, s, 1])
     iconFont.draw(-7,9, '@', alpha(v.textColor, item.copyAnim), v.mat, m)
 
