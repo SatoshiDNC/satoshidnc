@@ -1,7 +1,7 @@
 import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../draw.js'
 import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorGetPassword, trezorSign, trezorWipe } from '../../trezor.js'
 import { contentView as newContactForm } from './new-chat/new-contact/content.js'
-//import bjs from 'bitcoinjs-lib'
+import bjs from 'bitcoinjs-lib'
 import bm from 'bitcoinjs-message'
 import * as ecc from '@bitcoinerlab/secp256k1'
 import * as bip32f from 'bip32'
