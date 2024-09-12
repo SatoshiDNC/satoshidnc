@@ -19,7 +19,7 @@ import { settingsRoot } from './view/settings/root.js'
 homeChatTop.menuGad.root = homeChat_root
 homeChatTop.menuGad.target = menuRoot
 homeChatTop.menuGad.target2 = homeChat_trezorTools_root
-//homeChatTop.menuGad.targetSettings = settingsRoot
+homeChatTop.menuGad.targetSettings = settingsRoot
 newChatTop.backGad.root = homeChat_newChat_root, newChatTop.backGad.target = homeChat_root
 chatRoomBar.backGad.root = chatRoom_root, chatRoomBar.backGad.target = homeChat_root
 chatRoomBar.menuGad.target = menuRoot
