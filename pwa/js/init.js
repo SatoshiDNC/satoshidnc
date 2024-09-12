@@ -14,12 +14,13 @@ import { contentView as homeChat_newChat_newContact_content } from './view/home-
 import { barBot as chatRoom_bot } from './view/chat-room/bar-bot.js'
 import { menuRoot as chatRoom_sendAs_root } from './view/chat-room/send-as/menu.js'
 import { menuRoot as homeChat_trezorTools_root, menuView as homeChat_trezorToolsView } from './view/home-chat/trezor-tools.js'
-import { settingsRoot } from './view/settings/root.js'
+import { settingsRoot as settings_root } from './view/settings/root.js'
+import { barTop as settings_top } from './view/settings/bar-top.js'
 
 homeChatTop.menuGad.root = homeChat_root
 homeChatTop.menuGad.target = menuRoot
 homeChatTop.menuGad.target2 = homeChat_trezorTools_root
-homeChatTop.menuGad.targetSettings = settingsRoot
+homeChatTop.menuGad.targetSettings = settings_root
 newChatTop.backGad.root = homeChat_newChat_root, newChatTop.backGad.target = homeChat_root
 chatRoomBar.backGad.root = chatRoom_root, chatRoomBar.backGad.target = homeChat_root
 chatRoomBar.menuGad.target = menuRoot
@@ -31,3 +32,4 @@ homeChat_newChat_newContact_bot.saveGad.formView = homeChat_newChat_newContact_c
 homeChat_newChat_newContact_bot.saveGad.root = homeChat_newChat_newContact_root, homeChat_newChat_newContact_bot.saveGad.target = homeChat_newChat_root
 chatRoom_bot.sendGad.root = chatRoom_root, chatRoom_bot.sendGad.target = chatRoom_sendAs_root
 homeChat_trezorToolsView.menuGad.newContactRoot = homeChat_newChat_newContact_root
+settings_top.backGad.root = homeChat_root, settings_top.backGad.target = homeChat_root
