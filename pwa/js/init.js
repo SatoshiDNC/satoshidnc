@@ -14,7 +14,7 @@ import { contentView as homeChat_newChat_newContact_content } from './view/home-
 import { barBot as chatRoom_bot } from './view/chat-room/bar-bot.js'
 import { menuRoot as chatRoom_sendAs_root } from './view/chat-room/send-as/menu.js'
 import { menuRoot as homeChat_trezorTools_root, menuView as homeChat_trezorToolsView } from './view/home-chat/trezor-tools.js'
-import { settingsRoot } from './view/settings/root.js'
+//import { settingsRoot } from './view/settings/root.js'
 
 homeChatTop.menuGad.root = homeChat_root
 homeChatTop.menuGad.target = menuRoot
