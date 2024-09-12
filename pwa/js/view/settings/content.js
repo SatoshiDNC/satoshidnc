@@ -1,4 +1,3 @@
-// import { hpub, npub } from '../../keys.js'
 import { contacts, contactViewDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 import { contentView as chatRoomView } from '../chat-room/content.js'
