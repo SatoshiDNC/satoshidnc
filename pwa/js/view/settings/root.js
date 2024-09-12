@@ -2,7 +2,7 @@
 // import { contentView } from './content.js'
 // import { setEasingParameters } from '../util.js'
 
-// export const settingsRoot = v = new fg.DualSliceView(null, 'v', 147, 0)
+export const settingsRoot = v = new fg.DualSliceView(null, 'v', 147, 0)
 // v.name = Object.keys({settingsRoot}).pop()
 // v.designSize = 1080 * 2183
 // v.bgColor = [0,0,0,1]
