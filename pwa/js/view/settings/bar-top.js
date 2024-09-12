@@ -133,10 +133,10 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
   mat4.identity(m)
-  mat4.translate(m, m, [42, 97, 0])
+  mat4.translate(m, m, [139, 97, 0])
   mat4.scale(m, m, [1/14*44, 1/14*44, 1])
   let x = 0, y = 0
-  defaultFont.draw(x,y, 'Satoshi, D.N.C.', v.textColor, v.mat, m)
+  defaultFont.draw(x,y, 'Settings', v.textColor, v.mat, m)
 
   for (g of v.gadgets) {
     mat4.identity(m)
