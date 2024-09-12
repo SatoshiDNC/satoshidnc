@@ -3,7 +3,7 @@ import * as nip19 from 'nostr-tools/nip19'
 
 export const contactViewDependencies = []
 
-export const device = { hpub: '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef', name: 'Device' }
+export const device = { hpub: '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef', name: 'Device', statusText: 'Come into Nostor!' }
 
 export const contacts = []
 
