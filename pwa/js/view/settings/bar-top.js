@@ -1,5 +1,4 @@
-import { trezorConnect, trezorPing, trezorWipe } from '../../trezor.js'
-import { menuView as trezorTools } from './trezor-tools.js'
+import { menuView as addAccount } from './add-account.js'
 import { Buffer } from 'buffer'
 
 let v, g
@@ -58,28 +57,16 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       }
     },10)
   }
-  g.handleSettings = function(item, parentRoot) {
-    const g = this, v = this.viewport
-    console.log(`id ${JSON.stringify(item)}`)
-    const handleAction = () => {
-      g.root.easeOut(g.targetSettings)
-    }
-    if (fg.getRoot() === parentRoot) {
-      parentRoot.followUp = handleAction
-    } else {
-      handleAction()
-    }
-  }
   g.items = [
     { id: 1, handler: g.handler, label: 'New group' },
     { id: 2, handler: g.handler, label: 'New broadcast' },
     { id: 3, handler: g.handler, label: 'Linked devices' },
     { id: 4, handler: g.handler, label: 'Starred messages' },
-    { id: 5, label: 'Settings', handler: g.handleSettings },
+    { id: 5, handler: g.handler, label: 'Settings' },
     // { id: 6, label: 'Compute SHA-256', handler: g.sha256 },
     // { id: 7, label: 'Compute index hash', handler: g.indexHash },
     // { id: 8, label: 'Copy result', handler: g.copyResult },
-    { id: 9, label: 'Trezor tools', handler: trezorTools.invoker },
+    { id: 9, label: 'Trezor tools', handler: addAccount.invoker },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
