@@ -38,6 +38,7 @@ v.renderFunc = function() {
   const m = mat4.create()
   const mat = mat4.create()
   let c = device
+  let str
 
   mat4.identity(mat)
   mat4.translate(mat, mat, [42, 189, 0])
