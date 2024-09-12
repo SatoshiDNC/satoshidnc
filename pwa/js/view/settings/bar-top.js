@@ -7,6 +7,18 @@ v.name = Object.keys({barTop}).pop()
 v.designHeight = 147
 v.bgColor = [0.043,0.078,0.106,1]
 v.textColor = [1,1,1,1]
+v.gadgets.push(g = v.backGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = '\x08'
+  g.x = 23, g.y = 52
+  g.w = 42, g.h = 42
+  g.font = iconFont
+  g.fontSize = 13
+  g.autoHull()
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    g.root.easeOut(g.target)
+  }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = ':'
