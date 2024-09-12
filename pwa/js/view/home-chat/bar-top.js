@@ -60,7 +60,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
   g.handleSettings = function(item, parentRoot) {
     const g = this, v = this.viewport
-    console.log(`id ${JSON.stringify(item)}`)
+    console.log(`settings ${JSON.stringify(item)}`)
     const handleAction = () => {
       g.root.easeOut(g.targetSettings)
     }
