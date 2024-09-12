@@ -1,4 +1,4 @@
-import { contacts, contactViewDependencies } from '../../contacts.js'
+import { device, contacts, contactViewDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 import { contentView as chatRoomView } from '../chat-room/content.js'
 
@@ -37,15 +37,32 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   const mat = mat4.create()
+  let c = device
 
   mat4.identity(mat)
-  mat4.translate(mat, mat, [42, 189 + 200 * i, 0])
+  mat4.translate(mat, mat, [42, 189, 0])
   mat4.scale(mat, mat, [168/32, 168/32, 1])
   let x = -0.5, y = 8.5
   c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.copy(m, mat)
     nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
   })
+
+  mat4.identity(m)
+  mat4.translate(m,m, [256, 263, 0])
+  const s1 = 39/14
+  mat4.scale(m,m, [s1, s1, 1])
+  const w1 = v.sw - 256 - 256
+  if (defaultFont.calcWidth(c.name) * s1 > w1) {
+    let l = c.name.length
+    while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w3) {
+      l--
+    }
+    str = c.name.substring(0,l)+'...'
+  } else {
+    str = c.name
+  }
+  defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
 
   let i = 0
   for (const c of [    
