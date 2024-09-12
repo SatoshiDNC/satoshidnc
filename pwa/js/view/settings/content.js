@@ -65,18 +65,19 @@ v.renderFunc = function() {
   }
   defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
 
+  let rawText = c.statusText || 'I’m using Nostor!'
   mat4.identity(m)
   mat4.translate(m,m, [255, 185, 0])
   const s2 = 28/14
   mat4.scale(m,m, [s2, s2, 1])
-  if (defaultFont.calcWidth(c.xmitText) * s2 > w1) {
-    let l = c.xmitText.length
-    while (defaultFont.calcWidth(c.xmitText.substring(0,l)+'...') * s2 > w1) {
+  if (defaultFont.calcWidth(rawText) * s2 > w1) {
+    let l = rawText.length
+    while (defaultFont.calcWidth(rawText.substring(0,l)+'...') * s2 > w1) {
       l--
     }
-    str = c.statusText.substring(0,l)+'...'
+    str = rawText.substring(0,l)+'...'
   } else {
-    str = c.statusText
+    str = rawText
   }
   defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
 
