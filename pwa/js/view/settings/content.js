@@ -41,7 +41,7 @@ v.renderFunc = function() {
   let str
 
   mat4.identity(mat)
-  mat4.translate(mat, mat, [42, 189, 0])
+  mat4.translate(mat, mat, [42, 42, 0])
   mat4.scale(mat, mat, [168/32, 168/32, 1])
   let x = -0.5, y = 8.5
   c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
@@ -50,7 +50,7 @@ v.renderFunc = function() {
   })
 
   mat4.identity(m)
-  mat4.translate(m,m, [256, 263, 0])
+  mat4.translate(m,m, [256, 116, 0])
   const s1 = 39/14
   mat4.scale(m,m, [s1, s1, 1])
   const w1 = v.sw - 256 - 256
