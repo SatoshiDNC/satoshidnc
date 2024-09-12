@@ -62,7 +62,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     console.log(`settings ${JSON.stringify(item)}`)
     const handleAction = () => {
-      g.root.easeOut(g.targetSettings)
+      barTop.menuGad.root.easeOut(g.targetSettings)
     }
     if (fg.getRoot() === parentRoot) {
       parentRoot.followUp = handleAction
