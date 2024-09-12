@@ -10,7 +10,7 @@ v.textColor = [1,1,1,1]
 v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = '\x08'
-  g.x = 23, g.y = 52
+  g.x = 42, g.y = 52
   g.w = 42, g.h = 42
   g.font = iconFont
   g.fontSize = 13
