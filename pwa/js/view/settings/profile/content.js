@@ -103,19 +103,19 @@ v.renderFunc = function() {
   const drawTile = (yoffset, icon, label, value, desc, last = false) => {
 
     mat4.identity(m)
-    mat4.translate(m,m, [74, 650 + yoffset, 0])
+    mat4.translate(m,m, [74, 120 + yoffset, 0])
     const s3 = 42/iconFont.calcWidth(icon)
     mat4.scale(m,m, [s3, s3, 1])
     iconFont.draw(0,0, icon, v.iconColor, v.mat, m)
 
     mat4.identity(m)
-    mat4.translate(m,m, [192, 615 + yoffset, 0])
+    mat4.translate(m,m, [192, 85 + yoffset, 0])
     const s4 = 28/14
     mat4.scale(m,m, [s4, s4, 1])
     defaultFont.draw(0,0, label, v.labelColor, v.mat, m)
 
     mat4.identity(m)
-    mat4.translate(m,m, [192, 675 + yoffset, 0])
+    mat4.translate(m,m, [192, 145 + yoffset, 0])
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
     const w1 = v.sw - 192 - 192
@@ -137,7 +137,7 @@ v.renderFunc = function() {
       const w5 = v.sw - 192 - 70
       while (buf.length > 0) {
         mat4.identity(m)
-        mat4.translate(m,m, [192, 750 + yoffset + y, 0])
+        mat4.translate(m,m, [192, 220 + yoffset + y, 0])
         mat4.scale(m,m, [s5, s5, 1])
         if (defaultFont.calcWidth(buf) * s5 > w5) {
           let l = buf.split(' ').length
@@ -163,7 +163,7 @@ v.renderFunc = function() {
       gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
       gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
       mat4.identity(m)
-      mat4.translate(m,m, [192, 804 + yoffset + y - 1, 0])
+      mat4.translate(m,m, [192, 274 + yoffset + y - 1, 0])
       mat4.scale(m,m, [v.sw, 1, 1])
       gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
       mainShapes.drawArrays2('rect')
@@ -173,7 +173,7 @@ v.renderFunc = function() {
   }
 
   let h
-  y = 0
+  y = 530
   g = v.nameEditGad
   h = drawTile(y, '\x00', 'Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
   y += h
