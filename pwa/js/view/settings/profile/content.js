@@ -172,16 +172,31 @@ v.renderFunc = function() {
     return 217 + y + 57
   }
 
+  let h
   y = 0
-  y += drawTile(y, '\x00', 'Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
-
-  if (y + 605 != v.aboutEditGad.y) {
-    v.aboutEditGad.y = y + 605
-    v.aboutEditGad.autoHull()
+  g = v.nameEditGad
+  h = drawTile(y, '\x00', 'Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
+  y += h
+  if (y != g.y || h != g.h) {
+    g.y = y
+    g.h = h
+    g.autoHull()
   }
 
+  // if (y + 605 != v.aboutEditGad.y) {
+  //   v.aboutEditGad.y = y + 605
+  //   v.aboutEditGad.autoHull()
+  // }
+
   let rawText = c.statusText || 'I’m using Nostor!'
-  y += drawTile(y, 'i', 'About', rawText)
+  g = v.aboutEditGad
+  h = drawTile(y, 'i', 'About', rawText)
+  y += h
+  if (y != g.y || h != g.h) {
+    g.y = y
+    g.h = h
+    g.autoHull()
+  }
 
   y += drawTile(y, '\x06', 'Nostor public key', nip19.npubEncode(c.hpub), undefined, true)
 
