@@ -30,6 +30,12 @@ export const keyViewDependencies = []
 
 export const keys = []
 
+export function initDefaultKey() {
+  hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
+  hpub = getPublicKey(Buffer.from(hsec, 'hex'))
+  addSecretKey(hpub, hsec)
+}
+
 export function addSecretKey(hpub, hsec) {
   const tr = db.transaction('keys', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('keys')
@@ -49,24 +55,27 @@ export function addTrezorKey(hpub, derPath) {
 }
 
 export function reloadKeys() {
-  const tr = db.transaction('keys', 'readonly')
-  const os = tr.objectStore('keys')
-  const req = os.openCursor()
-  req.onerror = function(e) {
-     console.err(e)
-  }
-  const newList = []
-  req.onsuccess = function(e) {
-    let cursor = e.target.result
-    if (cursor) {
-      let v = cursor.value
-      console.log(JSON.stringify(v))
-      newList.push({ hpub: v.hpub, keyType: v.keyType })
-      cursor.continue()
-    } else {
-      keys.length = 0
-      keys.push(...newList)
-      keyViewDependencies.map(v => v.setRenderFlag(true))
+  return new Promise((resolve, reject) => {
+    const tr = db.transaction('keys', 'readonly')
+    const os = tr.objectStore('keys')
+    const req = os.openCursor()
+    req.onerror = function(e) {
+       console.err(e)
     }
-  }
+    const newList = []
+    req.onsuccess = function(e) {
+      let cursor = e.target.result
+      if (cursor) {
+        let v = cursor.value
+        console.log(JSON.stringify(v))
+        newList.push({ hpub: v.hpub, keyType: v.keyType })
+        cursor.continue()
+      } else {
+        keys.length = 0
+        keys.push(...newList)
+        keyViewDependencies.map(v => v.setRenderFlag(true))
+        resolve()
+      }
+    }
+  })
 }
