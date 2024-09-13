@@ -1,6 +1,7 @@
 import { device, contacts, contactViewDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 import { contentView as chatRoomView } from '../chat-room/content.js'
+import { colors } from '../../globals.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -10,6 +11,30 @@ v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+v.gadgets.push(g = v.addGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = '*'
+  g.color = colors.accent
+  g.font = iconFont
+  g.fontSize = 18
+  g.y = 100
+  g.w = 53, g.h = 53
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log(`click '${g.label}'`)
+  }
+v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = '\x04'
+  g.color = colors.accent
+  g.font = iconFont
+  g.fontSize = 18
+  g.y = 103
+  g.w = 47, g.h = 47
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log(`click 'scan'`)
+  }
 v.gadgets.push(g = v.listGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
@@ -25,6 +50,12 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
 v.layoutFunc = function() {
   const v = this
   let g
+  g = v.addGad
+  g.x = v.sw - 105
+  g.autoHull()
+  g = v.scanGad
+  g.x = v.sw - 202
+  g.autoHull()
   g = v.listGad
   g.x = 0, g.y = 0
   g.w = v.sw, g.h = v.sh
@@ -80,6 +111,13 @@ v.renderFunc = function() {
     str = rawText
   }
   defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
+
+  for (g of v.gadgets) if (g.label) {
+    mat4.identity(m)
+    mat4.translate(m, m, [g.x, g.y+g.h, 0])
+    mat4.scale(m, m, [g.h/g.fontSize, g.h/g.fontSize, 1])
+    g.font.draw(0,0, g.label, g.color, v.mat, m)
+  }
 
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
