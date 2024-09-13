@@ -123,6 +123,8 @@ v.renderFunc = function() {
           buf = ''
         }
       }
+    } else {
+      y = -73
     }
 
     if (!last) {
@@ -137,7 +139,7 @@ v.renderFunc = function() {
       mainShapes.drawArrays2('rect')
     }
 
-    return 217 + yoffset + y
+    return 217 + yoffset + y + 57
   }
 
   y = 0
