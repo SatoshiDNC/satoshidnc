@@ -245,6 +245,7 @@
     import { init as dbInit } from './js/db.js'
     import { homeRoot } from './js/view/home-chat/root.js'
     import { reloadContacts } from './js/contacts.js'
+    import { keys, initDefaultKey } from './js/keys.js'
 
     // This module demonstrates use of Fireglass and Rune.
     document.addEventListener("DOMContentLoaded", (event) => {
@@ -322,6 +323,11 @@
         dbInit().then(() => {
           clearStatus('initializing_db')
           reloadContacts()
+          reloadKeys().then(() => {
+            if (keys.length == 0) {
+              initDefaultKey()
+            }
+          })
         }).catch(e => {
           splash.setText(e)
         })
