@@ -2,6 +2,7 @@ import { device, contacts, contactViewDependencies } from '../../../contacts.js'
 import { drawPill } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { defaultKey } from '../../../keys.js'
+import * as nip19 from 'nostr-tools/nip19'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -146,7 +147,7 @@ v.renderFunc = function() {
   let rawText = c.statusText || 'I’m using Nostor!'
   y += drawTile(y, 'i', 'About', rawText)
 
-  y += drawTile(y, '\x06', 'Nostor public key', c.hpub, undefined, true)
+  y += drawTile(y, '\x06', 'Nostor public key', nip19.npubEncode(c.hpub), undefined, true)
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
