@@ -54,6 +54,7 @@ v.gadgets.push(g = v.aboutEditGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     getKeyboardInput('About', personalData.filter(pd => pd.hpub == v.hpub && pd.key == 'about')?.[0]?.value || '', newValue => {
+      console.log(newValue)
       setPersonalData(v.hpub, 'about', newValue)
     })
   }

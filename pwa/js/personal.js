@@ -6,6 +6,7 @@ export const personalDataViewDependencies = []
 export const personalData = []
 
 export function setPersonalData(hpub, key, value) {
+  console.log('value:', value)
   const tr = db.transaction('personal', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('personal')
   const req = os.put({ hpub, key, value })
