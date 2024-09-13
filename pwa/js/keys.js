@@ -67,7 +67,6 @@ export function reloadKeys() {
       let cursor = e.target.result
       if (cursor) {
         let v = cursor.value
-        console.log(JSON.stringify(v))
         newList.push({ hpub: v.hpub, keyType: v.keyType })
         cursor.continue()
       } else {
