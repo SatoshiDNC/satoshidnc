@@ -202,7 +202,7 @@ v.renderFunc = function() {
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
-    mat4.translate(m, m, [v.sw - 119, g.y+75, 0])
+    mat4.translate(m, m, [v.sw - 119, g.y+75+48, 0])
     mat4.scale(m, m, [48/g.fontSize, 48/g.fontSize, 1])
     g.font.draw(0,0, g.label, g.color, v.mat, m)
   }
