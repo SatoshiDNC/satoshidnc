@@ -29,11 +29,17 @@ import { db } from './db.js'
 export const keyViewDependencies = []
 
 export const keys = []
+export let defaultKey = window.localStorage.getItem('hsec')
+
+export function getKeyInfo(hpub) {
+  return keys.filter(k => k.hpub == hpub)?.[0]
+}
 
 export function initDefaultKey() {
   const hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
   const hpub = getPublicKey(Buffer.from(hsec, 'hex'))
   addSecretKey(hpub, hsec)
+  defaultKey = window.localStorage.setItem('hsec', hsec)||window.localStorage.getItem('hsec')
 }
 
 export function addSecretKey(hpub, hsec) {

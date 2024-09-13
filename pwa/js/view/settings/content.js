@@ -1,6 +1,7 @@
 import { device, contacts, contactViewDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 import { contentView as chatRoomView } from '../chat-room/content.js'
+import { defaultKey } from '../../keys.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -67,7 +68,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   const mat = mat4.create()
-  let c = device
+  let c = { hpub: defaultKey, name: 'Name TBD' }
   let str
 
   mat4.identity(mat)
