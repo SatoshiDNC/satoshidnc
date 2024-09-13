@@ -35,6 +35,13 @@ export function getKeyInfo(hpub) {
   return keys.filter(k => k.hpub == hpub)?.[0]
 }
 
+export function getDefaultKeyInfo() {
+  return (
+    keys.filter(k => k.hpub == defaultKey)?.[0] ||
+    keys?.[0]
+  )
+}
+
 export function initDefaultKey() {
   const hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
   const hpub = getPublicKey(Buffer.from(hsec, 'hex'))
@@ -78,6 +85,14 @@ export function reloadKeys() {
       } else {
         keys.length = 0
         keys.push(...newList)
+        if (!getKeyInfo(defaultKey)) {
+          let info = getDefaultKeyInfo()
+          if (info) {
+            defaultKey = info.hpub
+          } else {
+            initDefaultKey()
+          }
+        }
         keyViewDependencies.map(v => v.setRenderFlag(true))
         resolve()
       }
