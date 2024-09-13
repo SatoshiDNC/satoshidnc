@@ -41,6 +41,7 @@ v.gadgets.push(g = v.nameEditGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     getKeyboardInput('Name', personalData.filter(pd => pd.hpub == v.hpub && pd.key == 'name')?.[0]?.value || '', newValue => {
+      if (newValue == null) return
       setPersonalData(v.hpub, 'name', newValue)
     })
   }
@@ -54,7 +55,7 @@ v.gadgets.push(g = v.aboutEditGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     getKeyboardInput('About', personalData.filter(pd => pd.hpub == v.hpub && pd.key == 'about')?.[0]?.value || '', newValue => {
-      console.log(newValue)
+      if (newValue == null) return
       setPersonalData(v.hpub, 'about', newValue)
     })
   }
