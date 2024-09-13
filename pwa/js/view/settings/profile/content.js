@@ -58,7 +58,12 @@ v.renderFunc = function() {
   })
 
   g = v.cameraGad
+  mat4.identity(m)
+  mat4.translate(m,m, [37, 87, 0])
+  const s2 = 53/20
+  mat4.scale(m,m, [s2, s2, 1])
   drawPill(v, colors.accent, g.x, g.y, g.w, g.h)
+  iconFont.draw(37,87, 'C', v.bgColor, v.mat, m)
 
   mat4.identity(m)
   mat4.translate(m,m, [192, 610, 0])
