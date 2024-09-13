@@ -31,6 +31,20 @@ v.gadgets.push(g = v.picGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     console.log(`click 'photo'`)
   }
+v.gadgets.push(g = v.nameEditGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.w = 48, g.h = 48
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log(`click 'name edit'`)
+  }
+v.gadgets.push(g = v.aboutEditGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.w = 48, g.h = 48
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log(`click 'about edit'`)
+  }
 v.layoutFunc = function() {
   const v = this
   let g
@@ -39,6 +53,14 @@ v.layoutFunc = function() {
   g.autoHull()
   g = v.cameraGad
   g.x = v.picGad.x + 291, g.y = v.picGad.y + 297
+  g.autoHull()
+  g = v.nameEditGad
+  g.y = 605
+  g.x = v.sw - 71 - g.w
+  g.autoHull()
+  g = v.aboutEditGad
+  g.y = 605
+  g.x = v.sw - 71 - g.w
   g.autoHull()
 }
 contactViewDependencies.push(v)
@@ -71,6 +93,7 @@ v.renderFunc = function() {
   iconFont.draw(0,0, 'C', v.bgColor, v.mat, m)
 
   const drawTile = (yoffset, icon, label, value, desc, last = false) => {
+
     mat4.identity(m)
     mat4.translate(m,m, [74, 650 + yoffset, 0])
     const s3 = 42/iconFont.calcWidth(icon)
@@ -143,6 +166,11 @@ v.renderFunc = function() {
 
   y = 0
   y += drawTile(y, '\x00', 'Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
+
+  if (y + 605 != v.aboutEditGad.y) {
+    v.aboutEditGad.y = y + 605
+    v.aboutEditGad.autoHull()
+  }
 
   let rawText = c.statusText || 'I’m using Nostor!'
   y += drawTile(y, 'i', 'About', rawText)
