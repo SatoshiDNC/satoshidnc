@@ -37,7 +37,7 @@ v.renderFunc = function() {
   let str
   let g
 
-  g = picGad
+  g = v.picGad
   mat4.identity(mat)
   mat4.translate(mat, mat, [g.x, g.y, 0])
   mat4.scale(mat, mat, [g.w/32, g.h/32, 1])
