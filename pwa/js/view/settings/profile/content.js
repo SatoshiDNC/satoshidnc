@@ -70,7 +70,6 @@ v.renderFunc = function() {
   iconFont.draw(0,0, 'C', v.bgColor, v.mat, m)
 
   const drawTile = (yoffset, icon, label, value, desc, last = false) => {
-    // user icon
     mat4.identity(m)
     mat4.translate(m,m, [74, 650 + yoffset, 0])
     const s3 = 42/iconFont.calcWidth(icon)
@@ -128,7 +127,6 @@ v.renderFunc = function() {
     }
 
     if (!last) {
-      // horizontal line
       mainShapes.useProg2()
       gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
       gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
@@ -148,7 +146,7 @@ v.renderFunc = function() {
   let rawText = c.statusText || 'I’m using Nostor!'
   y += drawTile(y, 'i', 'About', rawText)
 
-  y += drawTile(y, '\x01', 'Nostor public key', c.hpub, undefined, true)
+  y += drawTile(y, '\x06', 'Nostor public key', c.hpub, undefined, true)
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
