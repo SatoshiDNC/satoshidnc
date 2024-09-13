@@ -11,9 +11,20 @@ v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+v.gadgets.push(g = v.picGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.y = 65
+  g.w = 416, g.h = 416
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log(`click 'scan'`)
+  }
 v.layoutFunc = function() {
   const v = this
   let g
+  g = v.picGad
+  g.x = (v.sw - g.w) / 2
+  g.autoHull()
 }
 contactViewDependencies.push(v)
 v.renderFunc = function() {
@@ -24,10 +35,12 @@ v.renderFunc = function() {
   const mat = mat4.create()
   let c = { hpub: defaultKey, name: 'Unnamed' }
   let str
+  let g
 
+  g = picGad
   mat4.identity(mat)
-  mat4.translate(mat, mat, [332, 65, 0])
-  mat4.scale(mat, mat, [416/32, 416/32, 1])
+  mat4.translate(mat, mat, [g.x, g.y, 0])
+  mat4.scale(mat, mat, [g.w/32, g.h/32, 1])
   let x = -0.5, y = 8.5
   c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.copy(m, mat)
