@@ -69,13 +69,13 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s2, s2, 1])
   iconFont.draw(0,0, 'C', v.bgColor, v.mat, m)
 
-  const drawTile = (yoffset, label, value, desc, last = false) => {
+  const drawTile = (yoffset, icon, label, value, desc, last = false) => {
     // user icon
     mat4.identity(m)
     mat4.translate(m,m, [74, 650 + yoffset, 0])
-    const s3 = 42/21
+    const s3 = 42/iconFont.calcWidth(icon)
     mat4.scale(m,m, [s3, s3, 1])
-    iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
+    iconFont.draw(0,0, icon, v.iconColor, v.mat, m)
 
     mat4.identity(m)
     mat4.translate(m,m, [192, 615 + yoffset, 0])
@@ -143,12 +143,12 @@ v.renderFunc = function() {
   }
 
   y = 0
-  y += drawTile(y, 'Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
+  y += drawTile(y, '\x00', 'Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
 
   let rawText = c.statusText || 'I’m using Nostor!'
-  y += drawTile(y, 'About', rawText)
+  y += drawTile(y, 'i', 'About', rawText)
 
-  y += drawTile(y, 'Nostor public key', c.hpub, undefined, true)
+  y += drawTile(y, '\x01', 'Nostor public key', c.hpub, undefined, true)
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
