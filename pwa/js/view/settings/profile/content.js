@@ -11,19 +11,29 @@ v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+v.gadgets.push(g = v.cameraGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.w = 127, g.h = 127
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log(`click 'camera'`)
+  }
 v.gadgets.push(g = v.picGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.y = 65
   g.w = 416, g.h = 416
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log(`click 'scan'`)
+    console.log(`click 'photo'`)
   }
 v.layoutFunc = function() {
   const v = this
   let g
   g = v.picGad
   g.x = (v.sw - g.w) / 2
+  g.autoHull()
+  g = v.cameraGad
+  g.x = v.picGad.x + 291, g.y = v.picGad.y + 297
   g.autoHull()
 }
 contactViewDependencies.push(v)
@@ -46,6 +56,9 @@ v.renderFunc = function() {
     mat4.copy(m, mat)
     nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
   })
+
+  g = v.cameraGad
+  drawPill(v, colors.accent, g.x, g.y, g.w, g.h)
 
   mat4.identity(m)
   mat4.translate(m,m, [192, 610, 0])
