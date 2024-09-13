@@ -99,27 +99,29 @@ v.renderFunc = function() {
     }
     defaultFont.draw(0,0, str, v.dataTitleColor, v.mat, m)
 
-    let buf = desc
-    const s5 = 27/14
-    const w5 = v.sw - 192 - 70
-    y = 0
-    while (buf.length > 0) {
-      mat4.identity(m)
-      mat4.translate(m,m, [192, 750 + y, 0])
-      mat4.scale(m,m, [s5, s5, 1])
-      if (defaultFont.calcWidth(buf) * s5 > w5) {
-        let l = buf.split(' ').length
-        while (defaultFont.calcWidth(buf.split(' ').slice(0,l).join(' ')) * s5 > w5) {
-          l--
+    if (desc) {
+      let buf = desc
+      const s5 = 27/14
+      const w5 = v.sw - 192 - 70
+      y = 0
+      while (buf.length > 0) {
+        mat4.identity(m)
+        mat4.translate(m,m, [192, 750 + y, 0])
+        mat4.scale(m,m, [s5, s5, 1])
+        if (defaultFont.calcWidth(buf) * s5 > w5) {
+          let l = buf.split(' ').length
+          while (defaultFont.calcWidth(buf.split(' ').slice(0,l).join(' ')) * s5 > w5) {
+            l--
+          }
+          str = buf.split(' ').slice(0,l).join(' ')
+          defaultFont.draw(0,0, str, v.descColor, v.mat, m)
+          buf = buf.split(' ').slice(l).join(' ')
+          y += 44
+        } else {
+          str = buf
+          defaultFont.draw(0,0, str, v.descColor, v.mat, m)
+          buf = ''
         }
-        str = buf.split(' ').slice(0,l).join(' ')
-        defaultFont.draw(0,0, str, v.descColor, v.mat, m)
-        buf = buf.split(' ').slice(l).join(' ')
-        y += 44
-      } else {
-        str = buf
-        defaultFont.draw(0,0, str, v.descColor, v.mat, m)
-        buf = ''
       }
     }
 
@@ -139,19 +141,21 @@ v.renderFunc = function() {
   drawTile('Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
 
   let rawText = c.statusText || 'I’m using Nostor!'
-  mat4.identity(m)
-  mat4.translate(m,m, [192, 993, 0])
-  mat4.scale(m,m, [s1, s1, 1])
-  if (defaultFont.calcWidth(rawText) * s1 > w1) {
-    let l = rawText.length
-    while (defaultFont.calcWidth(rawText.substring(0,l)+'...') * s1 > w1) {
-      l--
-    }
-    str = rawText.substring(0,l)+'...'
-  } else {
-    str = rawText
-  }
-  defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
+  drawTile('About', rawText)
+
+  // mat4.identity(m)
+  // mat4.translate(m,m, [192, 993, 0])
+  // mat4.scale(m,m, [s1, s1, 1])
+  // if (defaultFont.calcWidth(rawText) * s1 > w1) {
+  //   let l = rawText.length
+  //   while (defaultFont.calcWidth(rawText.substring(0,l)+'...') * s1 > w1) {
+  //     l--
+  //   }
+  //   str = rawText.substring(0,l)+'...'
+  // } else {
+  //   str = rawText
+  // }
+  // defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
