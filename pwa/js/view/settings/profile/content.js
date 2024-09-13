@@ -73,7 +73,13 @@ v.renderFunc = function() {
   iconFont.draw(0,0, '\x00', colors.inactive, v.mat, m)
 
   mat4.identity(m)
-  mat4.translate(m,m, [192, 610, 0])
+  mat4.translate(m,m, [192, 615, 0])
+  const s4 = 28/14
+  mat4.scale(m,m, [s4, s4, 1])
+  defaultFont.draw(0,0, 'Name', colors.inactive, v.mat, m)
+
+  mat4.identity(m)
+  mat4.translate(m,m, [192, 675, 0])
   const s1 = 33/14
   mat4.scale(m,m, [s1, s1, 1])
   const w1 = v.sw - 192 - 192
