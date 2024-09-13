@@ -99,11 +99,11 @@ v.renderFunc = function() {
     }
     defaultFont.draw(0,0, str, v.dataTitleColor, v.mat, m)
 
+    let y = 0
     if (desc) {
       let buf = desc
       const s5 = 27/14
       const w5 = v.sw - 192 - 70
-      let y = 0
       while (buf.length > 0) {
         mat4.identity(m)
         mat4.translate(m,m, [192, 750 + yoffset + y, 0])
