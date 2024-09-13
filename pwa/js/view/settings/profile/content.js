@@ -176,12 +176,12 @@ v.renderFunc = function() {
   y = 530
   g = v.nameEditGad
   h = drawTile(y, '\x00', 'Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
-  y += h
   if (y != g.y || h != g.h) {
     g.y = y
     g.h = h
     g.autoHull()
   }
+  y += h
 
   // if (y + 605 != v.aboutEditGad.y) {
   //   v.aboutEditGad.y = y + 605
@@ -191,12 +191,12 @@ v.renderFunc = function() {
   let rawText = c.statusText || 'I’m using Nostor!'
   g = v.aboutEditGad
   h = drawTile(y, 'i', 'About', rawText)
-  y += h
   if (y != g.y || h != g.h) {
     g.y = y
     g.h = h
     g.autoHull()
   }
+  y += h
 
   y += drawTile(y, '\x06', 'Nostor public key', nip19.npubEncode(c.hpub), undefined, true)
 
