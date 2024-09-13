@@ -34,6 +34,10 @@ v.gadgets.push(g = v.picGad = new fg.Gadget(v))
 v.gadgets.push(g = v.nameEditGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.w = 48, g.h = 48
+  g.font = iconFont
+  g.fontSize = 12
+  g.color = colors.accent
+  g.label = '\x07'
   g.clickFunc = function() {
     const g = this, v = this.viewport
     console.log(`click 'name edit'`)
@@ -41,6 +45,10 @@ v.gadgets.push(g = v.nameEditGad = new fg.Gadget(v))
 v.gadgets.push(g = v.aboutEditGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.w = 48, g.h = 48
+  g.font = iconFont
+  g.fontSize = 12
+  g.color = colors.accent
+  g.label = '\x07'
   g.clickFunc = function() {
     const g = this, v = this.viewport
     console.log(`click 'about edit'`)
