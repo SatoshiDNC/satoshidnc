@@ -29,7 +29,7 @@ v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
 v.layoutFunc = function() {
   const v = this
   g = v.lawGad
-  g.x = v.searchGad.x - 114
+  g.x = v.sw - 114
   g.y = 51
   g.w = 45
   g.h = 45
