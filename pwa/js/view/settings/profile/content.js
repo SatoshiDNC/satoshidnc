@@ -148,7 +148,7 @@ v.renderFunc = function() {
   let rawText = c.statusText || 'I’m using Nostor!'
   y += drawTile(y, 'About', rawText)
 
-  y += drawTile(y, 'Nostor public key', c.hpub, true)
+  y += drawTile(y, 'Nostor public key', c.hpub, undefined, true)
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
