@@ -11,6 +11,10 @@ v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+v.iconColor = colors.inactive
+v.labelColor = colors.inactive
+v.dataTitleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
+v.descColor = colors.inactive
 v.gadgets.push(g = v.cameraGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.w = 127, g.h = 127
@@ -70,13 +74,13 @@ v.renderFunc = function() {
   mat4.translate(m,m, [74, 650, 0])
   const s3 = 42/21
   mat4.scale(m,m, [s3, s3, 1])
-  iconFont.draw(0,0, '\x00', colors.inactive, v.mat, m)
+  iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
 
   mat4.identity(m)
   mat4.translate(m,m, [192, 615, 0])
   const s4 = 28/14
   mat4.scale(m,m, [s4, s4, 1])
-  defaultFont.draw(0,0, 'Name', colors.inactive, v.mat, m)
+  defaultFont.draw(0,0, 'Name', v.labelColor, v.mat, m)
 
   mat4.identity(m)
   mat4.translate(m,m, [192, 675, 0])
@@ -92,7 +96,31 @@ v.renderFunc = function() {
   } else {
     str = c.name
   }
-  defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
+  defaultFont.draw(0,0, str, v.dataTitleColor, v.mat, m)
+
+  let buf = 'This is not a username or pin. Changes to this name only affect this device.'
+  const s5 = 27/14
+  const w5 = v.sw - 192 - 70
+  y = 0
+  while (buf.length > 0) {
+    mat4.identity(m)
+    mat4.translate(m,m, [192, 750 + y, 0])
+    mat4.scale(m,m, [s5, s5, 1])
+    if (defaultFont.calcWidth(buf) * s5 > w5) {
+      let l = buf.split(' ').length
+      while (defaultFont.calcWidth(buf.split(' ').slice(0,l).join(' ')) * s5 > w5) {
+        l--
+      }
+      str = buf.split(' ').slice(0,l).join(' ')
+      defaultFont.draw(0,0, str, v.descColor, v.mat, m)
+      buf = buf.split(' ').slice(l).join(' ')
+    } else {
+      str = c.name
+      defaultFont.draw(0,0, str, v.descColor, v.mat, m)
+      buf = ''
+    }
+    y += 44
+  }
 
   let rawText = c.statusText || 'I’m using Nostor!'
   mat4.identity(m)
