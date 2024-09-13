@@ -68,7 +68,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   const mat = mat4.create()
-  let c = { hpub: defaultKey, name: 'Name TBD' }
+  let c = { hpub: defaultKey, name: 'Unnamed' }
   let str
 
   mat4.identity(mat)
