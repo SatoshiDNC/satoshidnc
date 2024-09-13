@@ -69,68 +69,74 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s2, s2, 1])
   iconFont.draw(0,0, 'C', v.bgColor, v.mat, m)
 
-  // user icon
-  mat4.identity(m)
-  mat4.translate(m,m, [74, 650, 0])
-  const s3 = 42/21
-  mat4.scale(m,m, [s3, s3, 1])
-  iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
-
-  mat4.identity(m)
-  mat4.translate(m,m, [192, 615, 0])
-  const s4 = 28/14
-  mat4.scale(m,m, [s4, s4, 1])
-  defaultFont.draw(0,0, 'Name', v.labelColor, v.mat, m)
-
-  mat4.identity(m)
-  mat4.translate(m,m, [192, 675, 0])
-  const s1 = 33/14
-  mat4.scale(m,m, [s1, s1, 1])
-  const w1 = v.sw - 192 - 192
-  if (defaultFont.calcWidth(c.name) * s1 > w1) {
-    let l = c.name.length
-    while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w1) {
-      l--
-    }
-    str = c.name.substring(0,l)+'...'
-  } else {
-    str = c.name
-  }
-  defaultFont.draw(0,0, str, v.dataTitleColor, v.mat, m)
-
-  let buf = 'This is not a username or pin. Changes to this name only affect this device.'
-  const s5 = 27/14
-  const w5 = v.sw - 192 - 70
-  y = 0
-  while (buf.length > 0) {
+  const drawTile = (label, value, desc, last = false) => {
+    // user icon
     mat4.identity(m)
-    mat4.translate(m,m, [192, 750 + y, 0])
-    mat4.scale(m,m, [s5, s5, 1])
-    if (defaultFont.calcWidth(buf) * s5 > w5) {
-      let l = buf.split(' ').length
-      while (defaultFont.calcWidth(buf.split(' ').slice(0,l).join(' ')) * s5 > w5) {
+    mat4.translate(m,m, [74, 650, 0])
+    const s3 = 42/21
+    mat4.scale(m,m, [s3, s3, 1])
+    iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
+
+    mat4.identity(m)
+    mat4.translate(m,m, [192, 615, 0])
+    const s4 = 28/14
+    mat4.scale(m,m, [s4, s4, 1])
+    defaultFont.draw(0,0, label, v.labelColor, v.mat, m)
+
+    mat4.identity(m)
+    mat4.translate(m,m, [192, 675, 0])
+    const s1 = 33/14
+    mat4.scale(m,m, [s1, s1, 1])
+    const w1 = v.sw - 192 - 192
+    if (defaultFont.calcWidth(value) * s1 > w1) {
+      let l = value.length
+      while (defaultFont.calcWidth(value.substring(0,l)+'...') * s1 > w1) {
         l--
       }
-      str = buf.split(' ').slice(0,l).join(' ')
-      defaultFont.draw(0,0, str, v.descColor, v.mat, m)
-      buf = buf.split(' ').slice(l).join(' ')
-      y += 44
+      str = value.substring(0,l)+'...'
     } else {
-      str = buf
-      defaultFont.draw(0,0, str, v.descColor, v.mat, m)
-      buf = ''
+      str = value
+    }
+    defaultFont.draw(0,0, str, v.dataTitleColor, v.mat, m)
+
+    let buf = desc
+    const s5 = 27/14
+    const w5 = v.sw - 192 - 70
+    y = 0
+    while (buf.length > 0) {
+      mat4.identity(m)
+      mat4.translate(m,m, [192, 750 + y, 0])
+      mat4.scale(m,m, [s5, s5, 1])
+      if (defaultFont.calcWidth(buf) * s5 > w5) {
+        let l = buf.split(' ').length
+        while (defaultFont.calcWidth(buf.split(' ').slice(0,l).join(' ')) * s5 > w5) {
+          l--
+        }
+        str = buf.split(' ').slice(0,l).join(' ')
+        defaultFont.draw(0,0, str, v.descColor, v.mat, m)
+        buf = buf.split(' ').slice(l).join(' ')
+        y += 44
+      } else {
+        str = buf
+        defaultFont.draw(0,0, str, v.descColor, v.mat, m)
+        buf = ''
+      }
+    }
+
+    if (!last) {
+      // horizontal line
+      mainShapes.useProg2()
+      gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
+      gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+      mat4.identity(m)
+      mat4.translate(m,m, [192, 804 + y - 1, 0])
+      mat4.scale(m,m, [v.sw, 1, 1])
+      gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+      mainShapes.drawArrays2('rect')
     }
   }
 
-  // horizontal line
-  mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  mat4.identity(m)
-  mat4.translate(m,m, [192, 804 + y - 1, 0])
-  mat4.scale(m,m, [v.sw, 1, 1])
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('rect')
+  drawTile('Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
 
   let rawText = c.statusText || 'I’m using Nostor!'
   mat4.identity(m)
