@@ -41,7 +41,7 @@ v.gadgets.push(g = v.profileGad = new fg.Gadget(v))
   g.h = 265
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log(`click 'profile'`)
+    g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.listGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
