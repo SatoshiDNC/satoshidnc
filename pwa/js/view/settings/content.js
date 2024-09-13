@@ -92,11 +92,15 @@ v.renderFunc = function() {
 
   let i = 0
   for (const c of [    
-    { name: 'Account', xmitText: 'Security notifications' },
+    { name: 'Account', xmitText: 'Security notifications, change number' },
+    { name: 'Privacy', xmitText: 'Block contacts, disappearing messages' },
   ]) {
 
+    // icon x = 65
+    // icon w = 60
+
     mat4.identity(m)
-    mat4.translate(m,m, [190, 367 + 200 * i, 0])
+    mat4.translate(m,m, [190, 367 + 210 * i, 0])
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 190 - 65
@@ -112,7 +116,7 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
 
     mat4.identity(m)
-    mat4.translate(m,m, [190, 433 + 200 * i, 0])
+    mat4.translate(m,m, [190, 433 + 210 * i, 0])
     const s3 = 29/14
     mat4.scale(m,m, [s3, s3, 1])
     const w4 = v.sw - 190 - 65
@@ -129,7 +133,4 @@ v.renderFunc = function() {
     
     i++
   }
-
-  // item spacing: 200
-  // photo x=31, w=127, h=127
 }
