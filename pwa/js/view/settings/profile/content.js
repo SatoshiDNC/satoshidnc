@@ -148,19 +148,7 @@ v.renderFunc = function() {
   let rawText = c.statusText || 'I’m using Nostor!'
   y += drawTile(y, 'About', rawText)
 
-  // mat4.identity(m)
-  // mat4.translate(m,m, [192, 993, 0])
-  // mat4.scale(m,m, [s1, s1, 1])
-  // if (defaultFont.calcWidth(rawText) * s1 > w1) {
-  //   let l = rawText.length
-  //   while (defaultFont.calcWidth(rawText.substring(0,l)+'...') * s1 > w1) {
-  //     l--
-  //   }
-  //   str = rawText.substring(0,l)+'...'
-  // } else {
-  //   str = rawText
-  // }
-  // defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
+  y += drawTile(y, 'Nostor public key', c.hpub)
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
