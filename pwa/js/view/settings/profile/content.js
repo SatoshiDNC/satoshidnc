@@ -53,6 +53,13 @@ v.gadgets.push(g = v.aboutEditGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     console.log(`click 'about edit'`)
   }
+v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 0, g.h = 48
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log(`click 'npub'`)
+  }
 v.layoutFunc = function() {
   const v = this
   let g
@@ -67,6 +74,10 @@ v.layoutFunc = function() {
   g.w = v.sw
   g.autoHull()
   g = v.aboutEditGad
+  g.y = 605
+  g.w = v.sw
+  g.autoHull()
+  g = v.npubGad
   g.y = 605
   g.w = v.sw
   g.autoHull()
@@ -183,11 +194,6 @@ v.renderFunc = function() {
   }
   y += h
 
-  // if (y + 605 != v.aboutEditGad.y) {
-  //   v.aboutEditGad.y = y + 605
-  //   v.aboutEditGad.autoHull()
-  // }
-
   let rawText = c.statusText || 'I’m using Nostor!'
   g = v.aboutEditGad
   h = drawTile(y, 'i', 'About', rawText)
@@ -198,7 +204,14 @@ v.renderFunc = function() {
   }
   y += h
 
-  y += drawTile(y, '\x06', 'Nostor public key', nip19.npubEncode(c.hpub), undefined, true)
+  g = v.npubGad
+  h = drawTile(y, '\x06', 'Nostor public key', nip19.npubEncode(c.hpub), undefined, true)
+  if (y != g.y || h != g.h) {
+    g.y = y
+    g.h = h
+    g.autoHull()
+  }
+  y += h
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
