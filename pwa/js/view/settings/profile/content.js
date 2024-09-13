@@ -139,7 +139,7 @@ v.renderFunc = function() {
       mainShapes.drawArrays2('rect')
     }
 
-    return 217 + yoffset + y + 57
+    return 217 + y + 57
   }
 
   y = 0
@@ -148,7 +148,7 @@ v.renderFunc = function() {
   let rawText = c.statusText || 'I’m using Nostor!'
   y += drawTile(y, 'About', rawText)
 
-  y += drawTile(y, 'Nostor public key', c.hpub)
+  y += drawTile(y, 'Nostor public key', c.hpub, true)
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
