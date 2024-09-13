@@ -35,14 +35,6 @@ v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     console.log(`click 'scan'`)
   }
-v.gadgets.push(g = v.profileGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 0, g.y = 0
-  g.h = 265
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    console.log(`click 'profile'`)
-  }
 v.gadgets.push(g = v.listGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
@@ -63,9 +55,6 @@ v.layoutFunc = function() {
   g.autoHull()
   g = v.scanGad
   g.x = v.sw - 202
-  g.autoHull()
-  g = v.profileGad
-  g.w = v.sw
   g.autoHull()
   g = v.listGad
   g.x = 0, g.y = 0
