@@ -1,9 +1,9 @@
 import { barTop } from './bar-top.js'
 import { contentView } from './content.js'
-import { setEasingParameters } from '../util.js'
+import { setEasingParameters } from '../../util.js'
 
-export const settingsRoot = v = new fg.DualSliceView(null, 'v', 147, 0)
-v.name = Object.keys({settingsRoot}).pop()
+export const profileRoot = v = new fg.DualSliceView(null, 'v', 147, 0)
+v.name = Object.keys({profileRoot}).pop()
 v.designSize = 1080 * 2183
 v.bgColor = [0,0,0,1]
 v.a = barTop; barTop.parent = v
