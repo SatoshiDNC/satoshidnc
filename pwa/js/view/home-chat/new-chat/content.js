@@ -80,22 +80,12 @@ v.renderFunc = function() {
   const npubRender = (c, x, y) => {
     mat4.identity(mat)
     mat4.translate(mat, mat, [x, y, 0])
-    mat4.scale(mat, mat, [127/32, 127/32, 1])
+    mat4.scale(mat, mat, [105/32, 105/32, 1])
     let ox = -0.5, oy = 8.5
     c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
       mat4.copy(m, mat)
       nybbleFont.draw(ox,oy + i*8, str, v.titleColor, v.mat, m)
     })  
-  }
-  const dateRender = (c, x, y) => {
-    mat4.identity(m)
-    mat4.translate(m,m, [x,y, 0])
-    const s2 = 25/14
-    mat4.scale(m,m, [s2, s2, 1])
-    const str = c.xmitDate.toLocaleTimeString(undefined, { hour12: true, hourCycle: 'h11', hour: 'numeric', minute: 'numeric' })
-    const w1 = defaultFont.calcWidth(str)
-    defaultFont.draw(-w1,0, str, v.subtitleColor, v.mat, m)
-    return { text: str, width: w1, scale: s2 }
   }
   const titleRender = (title, x, y, w1, s2) => {
     mat4.identity(m)
@@ -167,10 +157,9 @@ v.renderFunc = function() {
 
   i = 0
   for (const c of [ ...keys.map(k => { return { hpub: k.hpub, name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed') + ' (You)' }}), ...contacts ]) {
-    npubRender(c, 31, 686 + 200 * i) // 482
-    const { text: str, width: w1, scale: s2 } = dateRender(c, v.sw - 45, 729 + 200 * i)
-    titleRender(c.name, 192, 735 + 200 * i, w1, s2)
-    subtitleRender(c, 195, 800 + 200 * i)
+    npubRender(c, 42, 686 + 179 * i) // 482
+    titleRender(c.name, 190, 728 + 179 * i, w1, s2)
+    subtitleRender(c, 192, 788 + 179 * i)
     i++
   }
 
