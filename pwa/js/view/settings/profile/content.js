@@ -1,8 +1,8 @@
-import { device, contacts, contactViewDependencies } from '../../../contacts.js'
+import { personalData, setPersonalData, personalDataViewDependencies } from '../../../personal.js'
 import { drawPill } from '../../../draw.js'
-import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { defaultKey } from '../../../keys.js'
 import * as nip19 from 'nostr-tools/nip19'
+import { getKeyboardInput } from '../../util.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -40,7 +40,9 @@ v.gadgets.push(g = v.nameEditGad = new fg.Gadget(v))
   g.label = '\x07'
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log(`click 'name edit'`)
+    getKeyboardInput('Name', personalData.filter(pd => pd.hpub == v.hpub && pd.key == 'name')?.[0]?.value || '', newValue => {
+      setPersonalData(v.hpub, 'name', newValue)
+    })
   }
 v.gadgets.push(g = v.aboutEditGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -51,14 +53,16 @@ v.gadgets.push(g = v.aboutEditGad = new fg.Gadget(v))
   g.label = '\x07'
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log(`click 'about edit'`)
+    getKeyboardInput('About', personalData.filter(pd => pd.hpub == v.hpub && pd.key == 'about')?.[0]?.value || '', newValue => {
+      setPersonalData(v.hpub, 'about', newValue)
+    })
   }
 v.gadgets.push(g = v.npubGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 0, g.h = 48
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    console.log(`click 'npub'`)
+    navigator.clipboard.writeText(nip19.npubEncode(v.hpub))
   }
 v.layoutFunc = function() {
   const v = this
@@ -82,14 +86,14 @@ v.layoutFunc = function() {
   g.w = v.sw
   g.autoHull()
 }
-contactViewDependencies.push(v)
+personalDataViewDependencies.push(v)
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   const mat = mat4.create()
-  let c = { hpub: defaultKey, name: 'Unnamed' }
+  v.hpub = defaultKey
   let str
   let g
 
@@ -98,7 +102,7 @@ v.renderFunc = function() {
   mat4.translate(mat, mat, [g.x, g.y, 0])
   mat4.scale(mat, mat, [g.w/32, g.h/32, 1])
   let x = -0.5, y = 8.5
-  c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
+  v.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.copy(m, mat)
     nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
   })
@@ -186,7 +190,8 @@ v.renderFunc = function() {
   let h
   y = 530
   g = v.nameEditGad
-  h = drawTile(y, '\x00', 'Name', c.name, 'This is not a username or pin. Changes to this name only affect this device.')
+  str = personalData.filter(pd => pd.hpub == v.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed'
+  h = drawTile(y, '\x00', 'Name', str, 'This is not a username or pin. Changes to this name only affect this device.')
   if (y != g.y || h != g.h) {
     g.y = y
     g.h = h
@@ -194,9 +199,9 @@ v.renderFunc = function() {
   }
   y += h
 
-  let rawText = c.statusText || 'I’m using Nostor!'
   g = v.aboutEditGad
-  h = drawTile(y, 'i', 'About', rawText)
+  str = personalData.filter(pd => pd.hpub == v.hpub && pd.key == 'about')?.[0]?.value || 'I’m using Nostor!'
+  h = drawTile(y, 'i', 'About', str)
   if (y != g.y || h != g.h) {
     g.y = y
     g.h = h
@@ -205,7 +210,7 @@ v.renderFunc = function() {
   y += h
 
   g = v.npubGad
-  h = drawTile(y, '\x06', 'Nostor public key', nip19.npubEncode(c.hpub), undefined, true)
+  h = drawTile(y, '\x06', 'Nostor public key', nip19.npubEncode(v.hpub), undefined, true)
   if (y != g.y || h != g.h) {
     g.y = y
     g.h = h
