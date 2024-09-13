@@ -137,7 +137,7 @@ v.renderFunc = function() {
       mainShapes.drawArrays2('rect')
     }
 
-    return 217 + y
+    return 217 + yoffset + y
   }
 
   y = 0
