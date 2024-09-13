@@ -56,7 +56,7 @@ v.renderFunc = function() {
   const w1 = v.sw - 256 - 256
   if (defaultFont.calcWidth(c.name) * s1 > w1) {
     let l = c.name.length
-    while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w3) {
+    while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w1) {
       l--
     }
     str = c.name.substring(0,l)+'...'
