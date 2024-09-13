@@ -166,7 +166,7 @@ v.renderFunc = function() {
   defaultFont.draw(0,0, 'Contacts on Nostor', v.subtitleColor, v.mat, m)
 
   i = 0
-  for (const c of [ ...keys.map(k => { return { hpub: k.hpub, name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0].value || 'Unnamed') + ' (You)' }}), ...contacts ]) {
+  for (const c of [ ...keys.map(k => { return { hpub: k.hpub, name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed') + ' (You)' }}), ...contacts ]) {
     npubRender(c, 31, 686 + 200 * i) // 482
     const { text: str, width: w1, scale: s2 } = dateRender(c, v.sw - 45, 729 + 200 * i)
     titleRender(c.name, 192, 735 + 200 * i, w1, s2)
