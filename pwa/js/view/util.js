@@ -55,6 +55,7 @@ export function getKeyboardInput(title, defaultValue, handler) {
       s = s.replace('  ', ' ')
     }
     handler(s.trim())
+    return
   }
   handler()
 }
