@@ -1,4 +1,6 @@
 import { contacts, contactViewDependencies } from '../../../contacts.js'
+import { keys, keyViewDependencies } from '../../../keys.js'
+import { personalData, personalDataViewDependencies } from '../../../personal.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -55,6 +57,8 @@ v.layoutFunc = function() {
   g.autoHull()
 }
 contactViewDependencies.push(v)
+keyViewDependencies.push(v)
+personalDataViewDependencies.push(v)
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
