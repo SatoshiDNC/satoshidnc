@@ -33,7 +33,7 @@ v.gadgets.push(g = v.picGad = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.nameEditGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.w = 48, g.h = 48
+  g.x = 0, g.h = 48
   g.font = iconFont
   g.fontSize = 12
   g.color = colors.accent
@@ -44,7 +44,7 @@ v.gadgets.push(g = v.nameEditGad = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.aboutEditGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.w = 48, g.h = 48
+  g.x = 0, g.h = 48
   g.font = iconFont
   g.fontSize = 12
   g.color = colors.accent
@@ -64,11 +64,11 @@ v.layoutFunc = function() {
   g.autoHull()
   g = v.nameEditGad
   g.y = 605
-  g.x = v.sw - 71 - g.w
+  g.w = v.sw
   g.autoHull()
   g = v.aboutEditGad
   g.y = 605
-  g.x = v.sw - 71 - g.w
+  g.w = v.sw
   g.autoHull()
 }
 contactViewDependencies.push(v)
@@ -202,8 +202,8 @@ v.renderFunc = function() {
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
-    mat4.translate(m, m, [g.x, g.y+g.h, 0])
-    mat4.scale(m, m, [g.h/g.fontSize, g.h/g.fontSize, 1])
+    mat4.translate(m, m, [v.sw - 119, g.y+75, 0])
+    mat4.scale(m, m, [48/g.fontSize, 48/g.fontSize, 1])
     g.font.draw(0,0, g.label, g.color, v.mat, m)
   }
 }
