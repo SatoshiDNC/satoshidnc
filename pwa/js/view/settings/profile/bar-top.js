@@ -1,5 +1,3 @@
-import { menuView as addAccount } from './add-account.js'
-import { Buffer } from 'buffer'
 
 let v, g
 export const barTop = v = new fg.View()
