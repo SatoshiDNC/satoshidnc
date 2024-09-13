@@ -114,13 +114,23 @@ v.renderFunc = function() {
       str = buf.split(' ').slice(0,l).join(' ')
       defaultFont.draw(0,0, str, v.descColor, v.mat, m)
       buf = buf.split(' ').slice(l).join(' ')
+      y += 44
     } else {
       str = buf
       defaultFont.draw(0,0, str, v.descColor, v.mat, m)
       buf = ''
     }
-    y += 44
   }
+
+  // horizontal line
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [192, 804 + y - 1, 0])
+  mat4.scale(m,m, [v.sw, 1, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
 
   let rawText = c.statusText || 'I’m using Nostor!'
   mat4.identity(m)
