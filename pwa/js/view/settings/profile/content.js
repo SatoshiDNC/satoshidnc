@@ -115,7 +115,7 @@ v.renderFunc = function() {
       defaultFont.draw(0,0, str, v.descColor, v.mat, m)
       buf = buf.split(' ').slice(l).join(' ')
     } else {
-      str = c.name
+      str = buf
       defaultFont.draw(0,0, str, v.descColor, v.mat, m)
       buf = ''
     }
