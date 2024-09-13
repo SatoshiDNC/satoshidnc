@@ -31,15 +31,15 @@ export const keyViewDependencies = []
 export const keys = []
 
 export function initDefaultKey() {
-  hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
-  hpub = getPublicKey(Buffer.from(hsec, 'hex'))
+  const hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
+  const hpub = getPublicKey(Buffer.from(hsec, 'hex'))
   addSecretKey(hpub, hsec)
 }
 
 export function addSecretKey(hpub, hsec) {
   const tr = db.transaction('keys', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('keys')
-  const req = os.put({ hpub, keyType: 'literal', hsec })
+  const req = os.put({ hpub, keyType: 'secret', hsec })
   req.onsuccess = (e) => {
     reloadKeys()
   }
