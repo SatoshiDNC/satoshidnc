@@ -58,10 +58,10 @@ export function addSecretKey(hpub, hsec) {
   }
 }
 
-export function addTrezorKey(hpub, derPath) {
+export function addTrezorKey(hpub, account) {
   const tr = db.transaction('keys', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('keys')
-  const req = os.put({ hpub, keyType: 'trezor', derivation: derPath })
+  const req = os.put({ hpub, keyType: 'trezor', account })
   req.onsuccess = (e) => {
     reloadKeys()
   }
