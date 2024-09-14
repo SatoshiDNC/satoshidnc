@@ -5,9 +5,9 @@ export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
 v.bgColor = [0x09/0xff, 0x14/0xff, 0x1a/0xff, 1]
 v.setContact = function(hpub) {
-  console.log(`contact: ${JSON.stringify(contact)}`)
   const v = this
   v.contact = { hpub, name: personalData.filter(pd => pd.hpub == hpub && pd.key == 'name')?.[0]?.value || 'Unnamed' }
+  console.log(`contact: ${JSON.stringify(v.contact)}`)
   barTop.contact = v.contact
   v.messages = []
   v.messages.push({
