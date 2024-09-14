@@ -87,7 +87,7 @@ v.renderFunc = function() {
       nybbleFont.draw(ox,oy + i*8, str, v.titleColor, v.mat, m)
     })  
   }
-  const titleRender = (title, x, y, w1, s2) => {
+  const titleRender = (title, x, y) => {
     mat4.identity(m)
     mat4.translate(m,m, [x, y, 0])
     const s1 = 35/14
@@ -158,7 +158,7 @@ v.renderFunc = function() {
   i = 0
   for (const c of [ ...keys.map(k => { return { hpub: k.hpub, name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed') + ' (You)' }}), ...contacts ]) {
     npubRender(c, 42, 686 + 179 * i) // 482
-    titleRender(c.name, 190, 728 + 179 * i, w1, s2)
+    titleRender(c.name, 190, 728 + 179 * i)
     subtitleRender(c, 192, 788 + 179 * i)
     i++
   }
