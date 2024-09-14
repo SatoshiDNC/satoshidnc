@@ -14,6 +14,10 @@ export function setPersonalData(hpub, key, value) {
   }
 }
 
+export function getPersonalData(hpub, key) {
+  return personalData.filter(pd => pd.hpub == hpub && pd.key == key)?.[0]?.value
+}
+
 export function reloadPersonalData() {
   const tr = db.transaction('personal', 'readonly')
   const os = tr.objectStore('personal')
