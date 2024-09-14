@@ -4,11 +4,11 @@ import { drawRoundedRect } from '../../draw.js'
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
 v.bgColor = [0x09/0xff, 0x14/0xff, 0x1a/0xff, 1]
-v.setContact = function(contact) {
+v.setContact = function(hpub) {
   console.log(`contact: ${JSON.stringify(contact)}`)
   const v = this
-  v.contact = contact
-  barTop.contact = contact
+  v.contact = { hpub, name: personalData.filter(pd => pd.hpub == hpub && pd.key == 'name')?.[0]?.value || 'Unnamed' }
+  barTop.contact = v.contact
   v.messages = []
   v.messages.push({
     type: 'date marker',
