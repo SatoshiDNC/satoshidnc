@@ -51,12 +51,11 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
     const index = Math.floor((y - 649) / 179)
-    console.log('item:', index)
-    // const c = contacts?.[index]
-    // if (c) {
-    //   chatRoomView.setContact(c)
-    //   g.root.easeOut(g.target)
-    // }
+    const hpub = g.itemList?.[index]
+    if (hpub) {
+      chatRoomView.setContact(c)
+      g.root.easeOut(g.target)
+    }
   }
 v.layoutFunc = function() {
   const v = this
@@ -173,6 +172,7 @@ v.renderFunc = function() {
   defaultFont.draw(0,0, 'Contacts on Nostor', v.subtitleColor, v.mat, m)
 
   i = 0
+  const index = []
   for (const c of [ ...keys.map(k => { return {
     hpub: k.hpub,
     name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed') + ' (You)',
@@ -182,12 +182,11 @@ v.renderFunc = function() {
     name: c.name,
     about: c.xmitText || '',
   }}) ]) {
+    index.push(c.hpub)
     npubRender(c, 42, 686 + 179 * i) // 482
     titleRender(c.name, 190, 728 + 179 * i)
     subtitleRender(c, 192, 788 + 179 * i)
     i++
   }
-
-  // item spacing: 200
-  // photo x=31, w=127, h=127
+  v.listGad.itemList = index
 }
