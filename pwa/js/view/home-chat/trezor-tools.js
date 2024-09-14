@@ -158,6 +158,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               item.hpub = nip19.npubEncode(r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join(''))
               item.subtitle = item.hpub
               v.setRenderFlag(true)
+              if (!getKeyInfo(item.hpub)) {
+                addTrezorKey(item.hpub, n)
+              }
+              if (!getPersonalData(item.hpub, 'name')) setPersonalData(item.hpub, 'name', `Trezor Account ${n}`)
               // menuRoot.followUp = () => {
               //   newContactForm.nameGad.text = ''
               //   newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
