@@ -104,13 +104,12 @@ v.renderFunc = function() {
       nybbleFont.draw(ox,oy + i*8, str, v.titleColor, v.mat, m)
     })  
   }
-  const titleRender = (c, x, y) => {
+  const titleRender = (title, x, y) => {
     mat4.identity(m)
-    mat4.translate(m,m, [x, y + (c.about?0:29), 0])
+    mat4.translate(m,m, [x, y, 0])
     const s1 = 35/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 192 - 45 - 25
-    const title = c.name
     let str
     if (defaultFont.calcWidth(title) * s1 > w3) {
       let l = title.length
@@ -186,7 +185,7 @@ v.renderFunc = function() {
   }}) ]) {
     index.push(c.hpub)
     npubRender(c, 42, 686 + 179 * i) // 482
-    titleRender(c.name, 190, 728 + 179 * i)
+    titleRender(c.name, 190, 728 + 179 * i + (c.about?0:29))
     subtitleRender(c, 192, 788 + 179 * i)
     i++
   }
