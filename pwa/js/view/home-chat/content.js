@@ -2,6 +2,7 @@
 import { contacts, contactViewDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 import { contentView as chatRoomView } from '../chat-room/content.js'
+import { getPersonalData as getAttr } from '../../personal.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
