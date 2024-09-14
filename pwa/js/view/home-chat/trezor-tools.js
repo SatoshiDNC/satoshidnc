@@ -10,6 +10,8 @@ import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-
 
 import * as nip19 from 'nostr-tools/nip19'
 import { Buffer } from 'buffer'
+import { getKeyInfo, addTrezorKey } from '../../keys.js'
+import { getPersonalData, setPersonalData } from '../../personal.js'
 
 /* secret key should not leave this file */
 const my_hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
