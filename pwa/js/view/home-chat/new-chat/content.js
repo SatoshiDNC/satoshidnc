@@ -1,6 +1,6 @@
 import { contacts, contactViewDependencies } from '../../../contacts.js'
 import { keys, keyViewDependencies } from '../../../keys.js'
-import { personalData, personalDataViewDependencies } from '../../../personal.js'
+import { getPersonalData as getAttr, personalData, personalDataViewDependencies } from '../../../personal.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 
 let v, g
@@ -176,12 +176,12 @@ v.renderFunc = function() {
   const index = []
   for (const c of [ ...keys.map(k => { return {
     hpub: k.hpub,
-    name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed') + ' (You)',
+    name: (getAttr(k.hpub, 'name') || 'Unnamed') + ' (You)',
     about: 'Message yourself',
   }}), ...contacts.map(c => { return {
     hpub: c.hpub,
-    name: c.name,
-    about: c.xmitText || '',
+    name: getAttr(k.hpub, 'name'),
+    about: getAttr(k.hpub, 'about') || '',
   }}) ]) {
     index.push(c.hpub)
     npubRender(c, 42, 686 + 179 * i) // 482
