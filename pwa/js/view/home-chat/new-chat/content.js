@@ -45,6 +45,19 @@ v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
     //g.root.easeOut(g.target)
     console.log('scanGad click')
   }
+v.gadgets.push(g = v.listGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function(e) {
+    const g = this, v = this.viewport
+    const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
+    const index = Math.floor((y - 167.5) / 179)
+    console.log('item:', index)
+    // const c = contacts?.[index]
+    // if (c) {
+    //   chatRoomView.setContact(c)
+    //   g.root.easeOut(g.target)
+    // }
+  }
 v.layoutFunc = function() {
   const v = this
   let g
@@ -157,14 +170,14 @@ v.renderFunc = function() {
 
   i = 0
   for (const c of [ ...keys.map(k => { return {
-      hpub: k.hpub,
-      name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed') + ' (You)',
-      about: 'Message yourself',
-    }}), ...contacts.map(c => { return {
-      hpub: c.hpub,
-      name: c.name,
-      about: c.xmitText || '',
-    }}) ]) {
+    hpub: k.hpub,
+    name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed') + ' (You)',
+    about: 'Message yourself',
+  }}), ...contacts.map(c => { return {
+    hpub: c.hpub,
+    name: c.name,
+    about: c.xmitText || '',
+  }}) ]) {
     npubRender(c, 42, 686 + 179 * i) // 482
     titleRender(c.name, 190, 728 + 179 * i)
     subtitleRender(c, 192, 788 + 179 * i)
