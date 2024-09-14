@@ -1,6 +1,7 @@
 import { contacts, contactViewDependencies } from '../../../contacts.js'
 import { keys, keyViewDependencies } from '../../../keys.js'
 import { personalData, personalDataViewDependencies } from '../../../personal.js'
+import { contentView as chatRoomView } from '../../chat-room/content.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
