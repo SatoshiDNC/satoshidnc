@@ -112,14 +112,14 @@ v.renderFunc = function() {
     mat4.scale(m,m, [s3, s3, 1])
     const w4 = v.sw - 192 - 45 - 25
     let str
-    if (defaultFont.calcWidth(c.xmitText) * s3 > w4) {
-      let l = c.xmitText.length
-      while (defaultFont.calcWidth(c.xmitText.substring(0,l)+'...') * s3 > w4) {
+    if (defaultFont.calcWidth(c.about) * s3 > w4) {
+      let l = c.about.length
+      while (defaultFont.calcWidth(c.about.substring(0,l)+'...') * s3 > w4) {
         l--
       }
-      str = c.xmitText.substring(0,l)+'...'
+      str = c.about.substring(0,l)+'...'
     } else {
-      str = c.xmitText
+      str = c.about
     }
     defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
   }
@@ -156,7 +156,15 @@ v.renderFunc = function() {
   defaultFont.draw(0,0, 'Contacts on Nostor', v.subtitleColor, v.mat, m)
 
   i = 0
-  for (const c of [ ...keys.map(k => { return { hpub: k.hpub, name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed') + ' (You)' }}), ...contacts ]) {
+  for (const c of [ ...keys.map(k => { return {
+      hpub: k.hpub,
+      name: (personalData.filter(pd => pd.hpub == k.hpub && pd.key == 'name')?.[0]?.value || 'Unnamed') + ' (You)',
+      about: 'Message yourself',
+    }}), ...contacts.map(c => { return {
+      hpub: c.hpub,
+      name: c.name,
+      about: c.xmitText || '',
+    }}) ]) {
     npubRender(c, 42, 686 + 179 * i) // 482
     titleRender(c.name, 190, 728 + 179 * i)
     subtitleRender(c, 192, 788 + 179 * i)
