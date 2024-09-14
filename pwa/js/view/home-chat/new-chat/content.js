@@ -50,7 +50,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
-    const index = Math.floor((y - 167.5) / 179)
+    const index = Math.floor((y - 649) / 179)
     console.log('item:', index)
     // const c = contacts?.[index]
     // if (c) {
