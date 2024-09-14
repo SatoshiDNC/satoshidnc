@@ -133,9 +133,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 
         case GEN_HPUB:
           {
-            if (item.hpub) {
-              navigator.clipboard.writeText(item.hpub)
+            if (item.npub) {
+              navigator.clipboard.writeText(item.npub)
               item.hpub = undefined
+              item.npub = undefined
               item.subtitle = undefined
               clearSelection()
               break
@@ -157,8 +158,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 pubkey: bip32.fromBase58(r.xpub).publicKey,
               })
               clearSelection()
-              item.hpub = nip19.npubEncode(r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join(''))
-              item.subtitle = item.hpub
+              item.hpub = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
+              item.npub = nip19.npubEncode(item.hpub)
+              item.subtitle = item.npub
               v.setRenderFlag(true)
               if (!getKeyInfo(item.hpub)) {
                 addTrezorKey(item.hpub, n)
