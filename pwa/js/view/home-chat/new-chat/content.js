@@ -106,7 +106,7 @@ v.renderFunc = function() {
   }
   const titleRender = (c, x, y) => {
     mat4.identity(m)
-    mat4.translate(m,m, [x, y + (c.about? 29:0), 0])
+    mat4.translate(m,m, [x, y + (c.about?0:29), 0])
     const s1 = 35/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 192 - 45 - 25
