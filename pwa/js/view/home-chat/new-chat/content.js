@@ -68,6 +68,10 @@ v.layoutFunc = function() {
   g.x = v.sw - 220, g.y = 261
   g.w = 47, g.h = 47
   g.autoHull()
+  g = v.listGad
+  g.x = 0, g.y = 0
+  g.w = v.sw, g.h = v.sh
+  g.autoHull()
 }
 contactViewDependencies.push(v)
 keyViewDependencies.push(v)
