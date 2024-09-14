@@ -1,5 +1,6 @@
 import { barTop } from './bar-top.js'
 import { drawRoundedRect } from '../../draw.js'
+import { personalData } from '../../personal.js'
 
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
