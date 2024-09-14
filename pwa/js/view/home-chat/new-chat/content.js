@@ -180,8 +180,8 @@ v.renderFunc = function() {
     about: 'Message yourself',
   }}), ...contacts.map(c => { return {
     hpub: c.hpub,
-    name: getAttr(k.hpub, 'name'),
-    about: getAttr(k.hpub, 'about') || '',
+    name: getAttr(c.hpub, 'name'),
+    about: getAttr(c.hpub, 'about') || '',
   }}) ]) {
     index.push(c.hpub)
     npubRender(c, 42, 686 + 179 * i) // 482
