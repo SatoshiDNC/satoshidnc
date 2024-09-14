@@ -246,6 +246,7 @@
     import { homeRoot } from './js/view/home-chat/root.js'
     import { reloadContacts } from './js/contacts.js'
     import { keys, reloadKeys, initDefaultKey } from './js/keys.js'
+    import { reloadPersonalData } from './js/personal.js'
 
     // This module demonstrates use of Fireglass and Rune.
     document.addEventListener("DOMContentLoaded", (event) => {
@@ -328,6 +329,7 @@
               initDefaultKey()
             }
           })
+          reloadPersonalData()
         }).catch(e => {
           splash.setText(e)
         })
