@@ -91,7 +91,8 @@ v.renderFunc = function() {
   for (const c of [ ...contacts.map(c => { return {
     hpub: c.hpub,
     name: getAttr(k.hpub, 'name'),
-    about: getAttr(k.hpub, 'about') || '',
+    xmitText: getAttr(k.hpub, 'about') || '',
+    xmitDate: new Date()
   }}) ]) {
 
     mat4.identity(mat)
