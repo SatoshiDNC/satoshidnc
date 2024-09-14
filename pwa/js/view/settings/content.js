@@ -80,7 +80,11 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   const mat = mat4.create()
-  let c = { hpub: defaultKey, name: getAttr(defaultKey, 'name') || 'Unnamed' }
+  let c = {
+    hpub: defaultKey,
+    name: getAttr(defaultKey, 'name') || 'Unnamed',
+    about: getAttr(defaultKey, 'about') || 'I’m using Nostor!',
+  }
   let str
 
   mat4.identity(mat)
@@ -108,7 +112,7 @@ v.renderFunc = function() {
   }
   defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
 
-  let rawText = c.statusText || 'I’m using Nostor!'
+  let rawText = c.about || ''
   mat4.identity(m)
   mat4.translate(m,m, [255, 185, 0])
   const s2 = 28/14
