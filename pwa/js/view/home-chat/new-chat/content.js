@@ -110,7 +110,7 @@ v.renderFunc = function() {
     const s1 = 35/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 192 - 45 - 25
-    const title = c.title
+    const title = c.name
     let str
     if (defaultFont.calcWidth(title) * s1 > w3) {
       let l = title.length
