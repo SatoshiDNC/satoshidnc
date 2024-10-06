@@ -29,11 +29,7 @@ const ITEM_LEFT = 90
 const ITEM_SIZE = 179
 const BOT_SPACE = 203
 
-const ENTER_SEED = 'ENTER_SEED'
-const GEN_HPUB = 'GEN_HPUB'
-const GEN_PW = 'GEN_PW'
-const SIGN_MSG = 'SIGN_MSG'
-const WIPE_SEED = 'WIPE_SEED'
+const DEL_EVENT = 'DEL_EVENT'
 
 let v, g
 export const menuView = v = new fg.View(null)
@@ -59,11 +55,7 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.items = [
-  { key: ENTER_SEED, copyAnim: 0, name: 'Enter seed words on Trezor'},
-  { key: GEN_HPUB,   copyAnim: 0, name: 'Select Nostor public key'},
-  { key: GEN_PW,     copyAnim: 0, name: 'Select password'},
-  { key: SIGN_MSG,   copyAnim: 0, name: 'Sign message'},
-  { key: WIPE_SEED,  copyAnim: 0, name: 'Wipe seed from Trezor'},
+  { key: DEL_EVENT, copyAnim: 0, name: 'Delete an event'},
 ]
 v.menuX = 0
 v.menuR = 32
@@ -103,130 +95,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       const item = v.items[v.index]
       switch (item.key) {
 
-        case ENTER_SEED:
-          trezorRestore().then(handleResult).catch(handleError)
-          break
-
-        case GEN_HPUB:
-          {
-            if (item.npub) {
-              navigator.clipboard.writeText(item.npub)
-              item.hpub = undefined
-              item.npub = undefined
-              item.subtitle = undefined
-              clearSelection()
-              break
-            }
-
-            let a, n = -1
-            while (!(n >= 0 && n < 2 ** 31)) {
-              a = prompt("Account number (0 and up):")
-              if (a === null) break
-              n = +a
-            }
-            if (a === null) {
-              clearSelection()
-              break
-            }
-            trezorGetNostrPubKey(n).then(r => {
-              const bip32 = bip32f.BIP32Factory(ecc)
-              const { address } = bjs.payments.p2pkh({
-                pubkey: bip32.fromBase58(r.xpub).publicKey,
-              })
-              clearSelection()
-              item.hpub = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
-              item.npub = nip19.npubEncode(item.hpub)
-              item.subtitle = item.npub
-              v.setRenderFlag(true)
-              if (!getKeyInfo(item.hpub)) {
-                addTrezorKey(item.hpub, n)
-              }
-              if (!getPersonalData(item.hpub, 'name')) setPersonalData(item.hpub, 'name', `Trezor Account ${n}`)
-              // menuRoot.followUp = () => {
-              //   newContactForm.nameGad.text = ''
-              //   newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
-              //   fg.getRoot().easeOut(g.newContactRoot)
-              // }
-              // menuRoot.easeOut()
-            }).catch(handleError)
-            }
-          break
-
-          case GEN_PW:
-            {
-              if (item.passwd) {
-                navigator.clipboard.writeText(item.passwd)
-                item.passwd = undefined
-                item.subtitle = undefined
-                clearSelection()
-                break
-              }
-
-              const text = prompt('Name of account:')
-              if (text === null) {
-                clearSelection()
-                break
-              }
-              window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
-                const hash = Buffer.from(bytes).toString('hex')
-                const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
-                trezorGetPassword(index).then(r => {
-                  const bip32 = bip32f.BIP32Factory(ecc)
-                  const { address } = bjs.payments.p2pkh({
-                    pubkey: bip32.fromBase58(r.xpub).publicKey,
-                  })
-                  clearSelection()
-                  item.passwd = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
-                  item.subtitle = '********************************************'
-                  v.setRenderFlag(true)
-                }).catch(handleError)    
-              })
-            }
-            break
-  
-          case SIGN_MSG:
-          const sk = hsec()
-          const pk = hpub()
-          const testEvent = {
-            kind: 1,
-            created_at: Math.floor(Date.now() / 1000),
-            content: 'test',
-            tags: [
-              ['z', 'test'],
-            ],
-            pubkey: `4e820be97ea4c87fba065db7cd3ad731f3e3d45811663f477aaab08c403da156`,
-          }
-          console.log('testEvent:', testEvent)
-          const serEvent = serializeEvent(JSON.parse(JSON.stringify(testEvent)))
-          console.log('serEvent:', serEvent)
-          const signedEvent = finalizeEvent(JSON.parse(JSON.stringify(testEvent)), sk)
-          console.log('nostr-tools signedEvent:', signedEvent)
-          console.log('nostr-tools verifyEvent() returns:', verifyEvent(JSON.parse(JSON.stringify(signedEvent))))
-          // const bmsig = bm.sign(serEvent)
-          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(serEvent)).then(h => {
-            const hash = Array.prototype.map.call(new Uint8Array(h), n => n.toString(16).padStart(2, "0")).join("")
-            console.log('hash:', hash)
-            trezorSign(0, hash).then(r => {
-              console.log('trezor returns:', r)
-              if (!r.sig) {
-                clearSelection()
-                return
-              }
-              const trezorSig = Buffer.from(r.sig).toString('hex')
-              console.log('trezorSig:', trezorSig)
-              console.log('bitcoin-message verify() returns:', bm.verify(hash, r.address, Buffer.from(r.sig)))
-              const trezorEvent = JSON.parse(JSON.stringify(testEvent))
-              trezorEvent.id = hash
-              trezorEvent.sig = trezorSig
-              console.log('trezorEvent:', trezorEvent)
-              console.log('nostr-tools verifyEvent() returns:', verifyEvent(JSON.parse(JSON.stringify(trezorEvent))))
-              clearSelection()
-            }).catch(handleError)
-          })
-          break
-
-        case WIPE_SEED:
-          trezorWipe().then(handleResult).catch(handleError)
+        case DEL_EVENT:
+          console.log(DEL_EVENT)
           break
 
       }
