@@ -44,22 +44,14 @@ v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
 v.flashAnim = 0
 v.invoker = function(item, parentRoot) {
   const v = this
-  const openTrezorPanel = () => {
+  const openNostorPanel = () => {
     if (fg.getRoot() !== menuRoot || menuRoot.easingState() == -1) {
       menuRoot.easeIn?.()
     } else {
       menuRoot.easeOut?.()
     }
   }
-  trezorConnect().then(() => {
-    if (fg.getRoot() === parentRoot) {
-      parentRoot.followUp = openTrezorPanel
-    } else {
-      openTrezorPanel()
-    }
-  }).catch(e => {
-    console.warn(e)
-  })
+  openNostorPanel()
 }
 v.easingState = 1
 v.easingValue = 0
