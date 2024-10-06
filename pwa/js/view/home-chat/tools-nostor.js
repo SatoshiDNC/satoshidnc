@@ -97,7 +97,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 
         case DEL_EVENT:
           let id = prompt(`Event id:`)
-          console.log(DEL_EVENT, id)
+          let rel = prompt(`Relay:`)
+          console.log(DEL_EVENT, id, rel)
           break
 
       }
