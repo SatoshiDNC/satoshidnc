@@ -99,9 +99,14 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         case DEL_EVENT:
           setTimeout(() => {
             let id = prompt(`Event id:`)
-            let rel = prompt(`Relay:`)
-            console.log(DEL_EVENT, id, rel)
-            clearSelection()
+            if (id.length !== 64) {
+              alert(`Invalid event id`)
+              clearSelection()
+            } else {
+              let rel = prompt(`Relay:`)
+              console.log(DEL_EVENT, id, rel)
+              clearSelection()
+            }
           }, 100)
           break
 
