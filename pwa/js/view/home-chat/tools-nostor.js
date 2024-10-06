@@ -74,6 +74,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
     if (index >= 0 && index < v.items.length) {
       v.index = index
+      v.setRenderFlag(true)
       v.flashAnim = 0
       const clearSelection = () => {
         if (v.index == index) {
