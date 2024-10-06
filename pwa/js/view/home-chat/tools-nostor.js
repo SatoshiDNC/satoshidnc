@@ -96,10 +96,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       switch (item.key) {
 
         case DEL_EVENT:
-          let id = prompt(`Event id:`)
-          let rel = prompt(`Relay:`)
-          console.log(DEL_EVENT, id, rel)
-          //clearSelection()
+          setTimeout(() => {
+            let id = prompt(`Event id:`)
+            let rel = prompt(`Relay:`)
+            console.log(DEL_EVENT, id, rel)
+            clearSelection()
+          })
           break
 
       }
