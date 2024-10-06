@@ -99,6 +99,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           let id = prompt(`Event id:`)
           let rel = prompt(`Relay:`)
           console.log(DEL_EVENT, id, rel)
+          v.index = -1
+          v.setRenderFlag(true)
           break
 
       }
