@@ -71,6 +71,18 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       handleAction()
     }
   }
+  g.handleSerial = function(item, parentRoot) {
+    const g = this, v = this.viewport
+    console.log(`serial item ${JSON.stringify(item)}`)
+    const handleAction = () => {
+      item.subhandler()
+    }
+    if (fg.getRoot() === parentRoot) {
+      parentRoot.followUp = handleAction
+    } else {
+      handleAction()
+    }
+  }
   g.items = [
     { id: 1, handler: g.handler, label: 'New group' },
     { id: 2, handler: g.handler, label: 'New broadcast' },
@@ -80,7 +92,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     // { id: 6, label: 'Compute SHA-256', handler: g.sha256 },
     // { id: 7, label: 'Compute index hash', handler: g.indexHash },
     // { id: 8, label: 'Copy result', handler: g.copyResult },
-    { id: 8, label: 'Nostor tools', handler: nostorTools.invoker },
+    { id: 8, label: 'Nostor tools', handler: g.handleSerial, subhandler: nostorTools.invoker },
     { id: 9, label: 'Trezor tools', handler: trezorTools.invoker },
   ]
   g.clickFunc = function() {

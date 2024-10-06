@@ -1,8 +1,3 @@
-import { schnorr } from '@noble/curves/secp256k1'
-// import { hpub, signText } from './keys.js'
-import { Buffer } from 'buffer'
-import { serializeEvent } from 'nostr-tools'
-import { finalizeEvent } from 'nostr-tools/pure'
 import { drawRoundedRect } from '../draw.js'
 
 let v, g
@@ -15,73 +10,11 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.items = []
-// const SIGN_TEXT = 0; v.items[SIGN_TEXT] = 'Sign Text'
-// const SIGN_EVENT = 1; v.items[SIGN_EVENT] = 'Sign Event'
 v.menuX = 482
 v.menuY = 137
 v.menuW = 588
 v.menuH = 62 + 126 * v.currentItemCount
 v.menuR = 32
-v.getText = (mime) => {
-  return new Promise((resolve, reject) => {
-    navigator.clipboard.read().then(items => {
-      if (items.length == 1) {
-        const item = items[0]
-        if (item.types.includes(mime)) {
-          item.getType(mime).then(blob => blob.text()).then(text => {
-            resolve(text)
-          })
-        } else {
-          reject(`To sign what is in the clipboard, the clipboard must contain ${mime}.`)
-        }
-      } else {
-        reject(`To sign what is in the clipboard, the clipboard must contain only one item.`)
-      }
-    })  
-  })
-}
-// v.items.map((item, i) => {
-//   v.gadgets.push(g = new fg.Gadget(v))
-//   g.actionFlags = fg.GAF_CLICKABLE
-//   g.label = item
-//   g.index = i
-//   v.gadgets[`index${i}`] = g
-//   g.clickFunc = function() {
-//     const g = this, v = this.viewport
-//     switch (g.index) {
-//     case SIGN_TEXT:
-//       // v.getText('text/plain').then(text => {
-//       //   const signedText = signText(text, hpub()).toString('hex')
-//       //   navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
-//       //     console.log(`signature: ${signedText}`)
-//       //     menuRoot.easeOut()
-//       //   })
-//       // })
-//       break
-//     case SIGN_EVENT:
-//       // v.getText('text/plain').then(text => {
-//       //   let event = JSON.parse(text)
-//       //   let signedEvent
-//       //   try {
-//       //     signedEvent = finalizeEvent(event, bsec())
-//       //     //signedText = Buffer.from(schnorr.sign(Buffer.from(serializeEvent(event), 'hex'), bsec())).toString('hex')
-//       //   } catch(e) {
-//       //     console.warn(`Unable to sign; invalid event in clipboard.`)
-//       //     return
-//       //   }
-//       //   const signedText = JSON.stringify(signedEvent)
-//       //   navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([signedText], { type: 'text/plain' }) })]).then(() => {
-//       //     console.log(`signed event: ${signedText}`)
-//       //     menuRoot.easeOut()
-//       //   })
-//       // })
-//       break
-//     default:
-//       console.log(g.label)
-//       menuRoot.easeOut()
-//     }
-//   }
-// })
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {

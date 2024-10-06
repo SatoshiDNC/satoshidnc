@@ -52,7 +52,7 @@ v.invoker = function(item, parentRoot) {
     }
   }
   setTimeout(() => {
-    openTrezorPanel()
+    openNostorPanel()
   })
 }
 v.easingState = 1
@@ -67,24 +67,6 @@ v.items = [
 ]
 v.menuX = 0
 v.menuR = 32
-v.getText = (mime) => {
-  return new Promise((resolve, reject) => {
-    navigator.clipboard.read().then(items => {
-      if (items.length == 1) {
-        const item = items[0]
-        if (item.types.includes(mime)) {
-          item.getType(mime).then(blob => blob.text()).then(text => {
-            resolve(text)
-          })
-        } else {
-          reject(`To sign what is in the clipboard, the clipboard must contain ${mime}.`)
-        }
-      } else {
-        reject(`To sign what is in the clipboard, the clipboard must contain only one item.`)
-      }
-    })  
-  })
-}
 v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 69, g.h = 104
