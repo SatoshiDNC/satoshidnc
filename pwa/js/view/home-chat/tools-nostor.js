@@ -51,7 +51,9 @@ v.invoker = function(item, parentRoot) {
       menuRoot.easeOut?.()
     }
   }
-  openNostorPanel()
+  setTimeout(() => {
+    openTrezorPanel()
+  })
 }
 v.easingState = 1
 v.easingValue = 0
