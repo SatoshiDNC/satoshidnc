@@ -102,7 +102,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             let rel = prompt(`Relay:`)
             console.log(DEL_EVENT, id, rel)
             clearSelection()
-          })
+          }, 100)
           break
 
       }
