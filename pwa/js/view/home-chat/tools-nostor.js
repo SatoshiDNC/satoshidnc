@@ -134,8 +134,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 checksInProgress = []
                 let input = prompt(`Found ${
                   pubkeys.length
-                } event on ${hits} of ${allRelays.length} relays, owned by ${
-                  pubkeys.map(hpub => `${hpub} / ${npub(hpub)}`).join(', ')
+                } event on ${hits} of ${allRelays.length} relays. Owned by ${
+                  pubkeys.map(hpub => {
+                    let np = npub(hpub)
+                    return `${hpub.substring(0,4)}···${hpub.substring(hpub.length-4)} / ${np.substring(0,9)}···${np.substring(np.length-4)}`
+                  }).join(', ')
                 }. Enter additional relay(s) or continue:`)
                 if (!input) {
                   finish()
