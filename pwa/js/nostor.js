@@ -9,3 +9,14 @@ export function bech32_noteId(bech32) {
   } catch(e) {
   }
 }
+
+export function relayUrl(input) {
+  if (input.includes('.')) {
+    if (input.includes('://')) {
+      return input
+    } else {
+      return `wss://${input}`
+    }
+  }
+}
+
