@@ -12,6 +12,10 @@ export function bech32_noteId(bech32) {
   }
 }
 
+export function npub(hpub) {
+  return nip19.npubEncode(hpub)
+}
+
 export function relayUrl(input) {
   if (input.includes('.')) {
     if (input.includes('://')) {
