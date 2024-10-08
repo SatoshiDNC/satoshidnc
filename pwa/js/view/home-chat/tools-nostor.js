@@ -189,7 +189,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 }
                 console.log(allRelays)
                 console.log(JSON.stringify(deletionEvent))
-                if (confirm(`Publish deletion event to ${allRelays.length} relays?`)) {
+                if (confirm(`Publish deletion event to ${allRelays.length} relay${allRelays.length != 1?'s':''}?`)) {
                   console.log('pub')
                 }
               }
