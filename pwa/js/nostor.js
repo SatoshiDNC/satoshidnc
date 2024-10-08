@@ -20,6 +20,7 @@ export function nsecDecode(bech32) {
       return bytesToHex(decoded.data)
     }
   } catch(e) {
+    console.log(e)
   }
 }
 
