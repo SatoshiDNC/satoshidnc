@@ -147,8 +147,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                       return `${np.substring(0,9)}···${np.substring(np.length-4)} (hex ${hpub.substring(0,4)}···${hpub.substring(hpub.length-4)})`
                     }).join(', ')
                   }.` : ``
-                } Enter${
-                  allRelays.length > 0 ? ` additional relay(s) or continue` : ` relay(s)`
+                } Enter ${
+                  allRelays.length > 0 ? `additional relay(s) or continue` : `relay(s)`
                 }:`)
                 if (input === null) {
                   clearSelection()
