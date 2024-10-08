@@ -147,7 +147,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   }).join(', ')
                 }. Enter additional relay(s) or continue:`)
                 if (input === null) {
-                  // canceled
+                  clearSelection()
                 } else if (!input) {
                   finish()
                 } else {
