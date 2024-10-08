@@ -121,33 +121,29 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               console.log('checking relay', relay)
               checksInProgress.push(findEvent(id, relay))
             }
-            relays.map(queryRelayForNote)
-            Promise.allSettled(checksInProgress).then(results => {
-              hits += results.reduce((a, c) => result.status == 'fulfilled'? a + 1 : a, 0)
-              checksInProgress = []
-            })
-            let input
-            do {
-              input = prompt(`Found event on ${hits} of ${allRelays.length} relays. Enter additional relay(s) or continue:`)
-              if (!input) {
-                break
-              }
-              input.split(',').map(element => {
-                let relay = relayUrl(element)
-                if (!relay) {
-                  // alert(`Invalid relay name or url`)
-                } else if (allRelays.includes(relay)) {
-                  // alert(`Relay was already checked`)
-                } else {
-                  allRelays.push(relay)
-                  queryRelayForNote(relay)
-                  Promise.allSettled(checksInProgress).then(results => {
-                    hits += results.reduce((a, c) => result.status == 'fulfilled'? a + 1 : a, 0)
-                    checksInProgress = []
+            const waitForResults = () => {
+              Promise.allSettled(checksInProgress).then(results => {
+                hits += results.reduce((a, c) => result.status == 'fulfilled'? a + 1 : a, 0)
+                checksInProgress = []
+                let input = prompt(`Found event on ${hits} of ${allRelays.length} relays. Enter additional relay(s) or continue:`)
+                if (input) {
+                  input.split(',').map(element => {
+                    let relay = relayUrl(element)
+                    if (!relay) {
+                      // alert(`Invalid relay name or url`)
+                    } else if (allRelays.includes(relay)) {
+                      // alert(`Relay was already checked`)
+                    } else {
+                      allRelays.push(relay)
+                      queryRelayForNote(relay)
+                      waitForResults()
+                    }
                   })
                 }
               })
-            } while(true)
+            }
+            relays.map(queryRelayForNote)
+            waitForResults()
 
             console.log(DEL_EVENT, id, allRelays)
             clearSelection()
