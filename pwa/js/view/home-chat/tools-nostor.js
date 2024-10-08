@@ -100,7 +100,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 
         case DEL_EVENT:
           setTimeout(() => {
-            
+
             let entry = prompt(`Event id:`)
             if (!entry) {
               clearSelection()
@@ -108,7 +108,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
 
             let id = (noteId(entry) || entry)?.toLowerCase()
-            if (id?.length !== 64 || id?.reduce((a, c) => a && '0123456789abcdef'.includes(c), true)) {
+            if (id?.length !== 64 || id?.split('').reduce((a, c) => a && '0123456789abcdef'.includes(c), true)) {
               if (id?.trim()) alert(`Invalid event id`)
               clearSelection()
               return
