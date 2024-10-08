@@ -8,23 +8,23 @@ import * as bip32f from 'bip32'
 //import { Buffer } from 'buffer'
 import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-tools'
 
-import * as nip19 from 'nostr-tools/nip19'
-import { Buffer } from 'buffer'
-import { getKeyInfo, addTrezorKey } from '../../keys.js'
-import { getPersonalData, setPersonalData } from '../../personal.js'
-
 import { bech32_noteId as noteId, relayUrl, findEvent, npub } from '../../nostor.js'
 import { relays } from '../../relays.js'
 
-/* secret key should not leave this file */
-const my_hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
-function hsec() { return my_hsec }
-function bsec() { return Buffer.from(hsec(), 'hex') }
-function nsec() { return nip19.nsecEncode(bsec()) }
+// import * as nip19 from 'nostr-tools/nip19'
+// import { Buffer } from 'buffer'
+// import { getKeyInfo, addTrezorKey } from '../../keys.js'
+// import { getPersonalData, setPersonalData } from '../../personal.js'
 
-export function hpub() { return getPublicKey(bsec()) }
-export function bpub() { return Buffer.from(hpub(), 'hex') }
-export function npub() { return nip19.npubEncode(hpub()) }
+// /* secret key should not leave this file */
+// const my_hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
+// function hsec() { return my_hsec }
+// function bsec() { return Buffer.from(hsec(), 'hex') }
+// function nsec() { return nip19.nsecEncode(bsec()) }
+
+// export function hpub() { return getPublicKey(bsec()) }
+// export function bpub() { return Buffer.from(hpub(), 'hex') }
+// export function npub() { return nip19.npubEncode(hpub()) }
 
 const TITLE_TOP = 120
 const ITEM_TOP = TITLE_TOP + 61
