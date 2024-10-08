@@ -161,7 +161,17 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             relays.map(queryRelayForNote)
             waitForResults()
             const finish = () => {
-              console.log(DEL_EVENT, id, allRelays)
+              let reason = prompt(`Reason for deletion:`) || ''
+              deletionEvent = {
+                kind: 5,
+                created_at: Math.floor(Date.now() / 1000),
+                tags: [
+                  ['e', `${id}`],
+                  ['k', `${kind}`],
+                ],
+                content: `${reason}`,
+              }
+              console.log(DEL_EVENT, JSON.stringify(deletionEvent), allRelays)
               clearSelection()
             }
 
