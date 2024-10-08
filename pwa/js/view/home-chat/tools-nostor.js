@@ -123,7 +123,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
             const waitForResults = () => {
               Promise.allSettled(checksInProgress).then(results => {
-                hits += results.reduce((a, c) => result.status == 'fulfilled'? a + 1 : a, 0)
+                hits += results.reduce((a, c) => c.status == 'fulfilled'? a + 1 : a, 0)
                 checksInProgress = []
                 let input = prompt(`Found event on ${hits} of ${allRelays.length} relays. Enter additional relay(s) or continue:`)
                 if (input) {
