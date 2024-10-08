@@ -13,7 +13,7 @@ import { Buffer } from 'buffer'
 import { getKeyInfo, addTrezorKey } from '../../keys.js'
 import { getPersonalData, setPersonalData } from '../../personal.js'
 
-import { bech32_noteId as noteId } from '../../nostor.js'
+import { bech32_noteId as noteId, relayUrl } from '../../nostor.js'
 import { relays } from '../../relays.js'
 
 /* secret key should not leave this file */
@@ -115,12 +115,30 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               return
             }
 
-            relays.map(relay => {
+            let hits = 0, allRelays = [ ...relays.map(relay => relay.url) ]
+            const queryRelayForNote = relay => {
               console.log('checking relay', relay)
-            })
+              hits++
+            }
+            relays.map(queryRelayForNote)
+            let input
+            do {
+              input = prompt(`Found event on ${hits} of ${allRelays.length} relays. Enter another relay or continue:`)
+              if (!input) {
+                break
+              }
+              let relay = relayUrl(input)
+              if (!relay) {
+                alert(`Invalid relay name or url`)
+              } else if (allRelays.includes(relay)) {
+                alert(`Relay was already checked`)
+              } else {
+                allRelays.push(relay)
+                queryRelayForNote(relay)
+              }
+            } while(true)
 
-            // let rel = prompt(`Relay:`)
-            // console.log(DEL_EVENT, id, rel)
+            console.log(DEL_EVENT, id, allRelays)
             clearSelection()
           }, 100)
           break
