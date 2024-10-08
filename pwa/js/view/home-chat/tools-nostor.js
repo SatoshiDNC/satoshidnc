@@ -13,7 +13,7 @@ import { Buffer } from 'buffer'
 import { getKeyInfo, addTrezorKey } from '../../keys.js'
 import { getPersonalData, setPersonalData } from '../../personal.js'
 
-import { bech32_noteId as noteId, relayUrl } from '../../nostor.js'
+import { bech32_noteId as noteId, relayUrl, findEvent } from '../../nostor.js'
 import { relays } from '../../relays.js'
 
 /* secret key should not leave this file */
@@ -118,6 +118,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             let hits = 0, allRelays = [ ...relays.map(relay => relay.url) ]
             const queryRelayForNote = relay => {
               console.log('checking relay', relay)
+              findEvent(id, relay)
               hits++
             }
             relays.map(queryRelayForNote)

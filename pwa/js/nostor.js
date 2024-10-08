@@ -1,4 +1,6 @@
 import * as nip19 from 'nostr-tools/nip19'
+import { finalizeEvent, generateSecretKey, getPublicKey } from 'nostr-tools/pure'
+import { Relay } from 'nostr-tools/relay'
 
 export function bech32_noteId(bech32) {
   try {
@@ -20,3 +22,23 @@ export function relayUrl(input) {
   }
 }
 
+export function findEvent(id, relay) {
+  Relay.connect(relayUrl(relay)).then(relay => {
+    console.log(`connected to ${relay.url}`)
+  
+    // let's query for an event that exists
+    const sub = relay.subscribe([
+      {
+        ids: [id],
+      },
+    ], {
+      onevent(event) {
+        console.log('we got the event we wanted:', event)
+      },
+      oneose() {
+        console.log('close')
+        sub.close()
+      }
+    })
+  })
+}
