@@ -14,6 +14,7 @@ import { getKeyInfo, addTrezorKey } from '../../keys.js'
 import { getPersonalData, setPersonalData } from '../../personal.js'
 
 import { bech32_noteId as noteId } from '../../nostor.js'
+import { relays } from '../../relays.js'
 
 /* secret key should not leave this file */
 const my_hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
@@ -114,8 +115,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               return
             }
 
-            let rel = prompt(`Relay:`)
-            console.log(DEL_EVENT, id, rel)
+            relays.map(relay => {
+              console.log('checking relay', relay)
+            })
+
+            // let rel = prompt(`Relay:`)
+            // console.log(DEL_EVENT, id, rel)
             clearSelection()
           }, 100)
           break
