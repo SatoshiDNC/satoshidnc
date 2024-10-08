@@ -124,19 +124,21 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             relays.map(queryRelayForNote)
             let input
             do {
-              input = prompt(`Found event on ${hits} of ${allRelays.length} relays. Enter another relay or continue:`)
+              input = prompt(`Found event on ${hits} of ${allRelays.length} relays. Enter additional relay(s) or continue:`)
               if (!input) {
                 break
               }
-              let relay = relayUrl(input)
-              if (!relay) {
-                alert(`Invalid relay name or url`)
-              } else if (allRelays.includes(relay)) {
-                alert(`Relay was already checked`)
-              } else {
-                allRelays.push(relay)
-                queryRelayForNote(relay)
-              }
+              input.split(',').map(element => {
+                let relay = relayUrl(element)
+                if (!relay) {
+                  // alert(`Invalid relay name or url`)
+                } else if (allRelays.includes(relay)) {
+                  // alert(`Relay was already checked`)
+                } else {
+                  allRelays.push(relay)
+                  queryRelayForNote(relay)
+                }
+              })
             } while(true)
 
             console.log(DEL_EVENT, id, allRelays)
