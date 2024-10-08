@@ -7,5 +7,6 @@ export function bech32_noteId(bech32) {
       return decoded.data.id
     }
   } catch(e) {
+    console.log(e)
   }
 }
