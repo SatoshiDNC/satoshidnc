@@ -17,7 +17,7 @@ export function nsecDecode(bech32) {
     const decoded = nip19.decode(bech32)
     console.log(JSON.stringify(decoded))
     if (decoded?.type == 'nsec') {
-      return decoded.data
+      return bytesToHex(decoded.data)
     }
   } catch(e) {
   }
