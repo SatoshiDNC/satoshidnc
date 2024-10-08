@@ -13,7 +13,7 @@ import { Buffer } from 'buffer'
 import { getKeyInfo, addTrezorKey } from '../../keys.js'
 import { getPersonalData, setPersonalData } from '../../personal.js'
 
-import { bech32_noteId as noteId, relayUrl, findEvent } from '../../nostor.js'
+import { bech32_noteId as noteId, relayUrl, findEvent, npub } from '../../nostor.js'
 import { relays } from '../../relays.js'
 
 /* secret key should not leave this file */
@@ -132,7 +132,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   return c.status == 'fulfilled'? a + 1 : a
                 }, 0)
                 checksInProgress = []
-                let input = prompt(`Found ${pubkeys.length} event on ${hits} of ${allRelays.length} relays. Enter additional relay(s) or continue:`)
+                let input = prompt(`Found ${
+                  pubkeys.length
+                } event on ${hits} of ${allRelays.length} relays, owned by ${
+                  pubkeys.map(hpub => `${hpub} / ${npub(hpub)}`).join(', ')
+                }. Enter additional relay(s) or continue:`)
                 if (!input) {
                   finish()
                 } else {
