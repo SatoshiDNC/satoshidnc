@@ -38,11 +38,9 @@ export function findEvent(id, relay) {
         },
       ], {
         onevent(event) {
-          console.log('we got the event we wanted:', event)
           resolve(event)
         },
         oneose() {
-          console.log('close')
           sub.close()
           reject()
         }
