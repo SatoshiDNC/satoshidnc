@@ -136,9 +136,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   return c.status == 'fulfilled'? a + 1 : a
                 }, 0)
                 checksInProgress = []
-                let input = prompt(`Found ${
-                  pubkeys.length
-                } event on ${hits} of ${allRelays.length} relays.${
+                let input = prompt(`${
+                  pubkeys.length > 0?
+                    `Found ${pubkeys.length} event${pubkeys.length == 1? ``: `s`}`
+                  :
+                    `Not found`
+                } on ${hits} of ${allRelays.length} relays.${
                   kinds.length > 0 && pubkeys.length > 0 ? ` Kind ${
                     kinds.join(', ')
                   } owned by ${
