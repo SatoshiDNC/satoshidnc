@@ -1,3 +1,5 @@
+import * as nip19 from 'nostr-tools/nip19'
+
 export function bech32_noteId(bech32) {
   console.log('here')
   try {
