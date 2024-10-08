@@ -8,7 +8,7 @@ import * as bip32f from 'bip32'
 //import { Buffer } from 'buffer'
 import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-tools'
 
-import { bech32_noteId as noteId, relayUrl, findEvent, npub } from '../../nostor.js'
+import { noteDecode, nsecDecode, validKey, relayUrl, findEvent, npub } from '../../nostor.js'
 import { relays } from '../../relays.js'
 
 // import * as nip19 from 'nostr-tools/nip19'
@@ -108,8 +108,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               return
             }
 
-            let id = (noteId(entry) || entry)?.toLowerCase()
-            if (id?.length !== 64 || !id?.split('').reduce((a, c) => a && '0123456789abcdef'.includes(c), true)) {
+            let id = (noteDecode(entry) || entry)?.toLowerCase()
+            if (!validKey(id)) {
               if (id?.trim()) alert(`Invalid event id`)
               clearSelection()
               return
@@ -189,8 +189,17 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 }
                 console.log(allRelays)
                 console.log(JSON.stringify(deletionEvent))
-                if (confirm(`Publish deletion event to ${allRelays.length} relay${allRelays.length != 1?'s':''}?`)) {
-                  console.log('pub')
+                const secret = prompt(`Secret key (nsec) of event owner (to sign deletion event):`)
+                if (secret) {
+                  let hsec = nsecDecode(secret) || secret
+                  if (!validKey(hsec)) {
+                    alert('Invalid key')
+                  }
+                  let sk = hexToBytes(hsec)
+
+                  if (confirm(`Publish deletion event to ${allRelays.length} relay(s)?`)) {
+                    console.log('pub')
+                  }
                 }
               }
               clearSelection()
