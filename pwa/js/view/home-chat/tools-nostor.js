@@ -116,7 +116,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
 
             let hits = 0, allRelays = [ ...relays.map(relay => relay.url) ]
-            let pubkeys = []
+            let pubkeys = [], kinds = []
             let checksInProgress = []
             const queryRelayForNote = relay => {
               console.log('checking relay', relay)
@@ -129,12 +129,18 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   if (pk && !pubkeys.includes(pk)) {
                     pubkeys.push(pk)
                   }
+                  let kind = c.value?.kind
+                  if (kind && !kinds.includes(kind)) {
+                    kinds.push(kind)
+                  }
                   return c.status == 'fulfilled'? a + 1 : a
                 }, 0)
                 checksInProgress = []
                 let input = prompt(`Found ${
                   pubkeys.length
-                } event on ${hits} of ${allRelays.length} relays. Owned by ${
+                } event on ${hits} of ${allRelays.length} relays. Kind ${
+                  kinds.join(', ')
+                } owned by ${
                   pubkeys.map(hpub => {
                     let np = npub(hpub)
                     return `${np.substring(0,9)}···${np.substring(np.length-4)} (hex ${hpub.substring(0,4)}···${hpub.substring(hpub.length-4)})`
@@ -161,13 +167,14 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             relays.map(queryRelayForNote)
             waitForResults()
             const finish = () => {
-              let reason = prompt(`Reason for deletion:`) || ''
+              let reason = prompt(`Reason for deletion:`)
+              console.log('reason:', reason)
               deletionEvent = {
                 kind: 5,
                 created_at: Math.floor(Date.now() / 1000),
                 tags: [
                   ['e', `${id}`],
-                  ['k', `${kind}`],
+                  ...kinds.map(kind => ['k', `${kind}`])
                 ],
                 content: `${reason}`,
               }
