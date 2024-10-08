@@ -116,6 +116,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
 
             let hits = 0, allRelays = [ ...relays.map(relay => relay.url) ]
+            let pubkeys = []
             let checksInProgress = []
             const queryRelayForNote = relay => {
               console.log('checking relay', relay)
@@ -123,9 +124,15 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
             const waitForResults = () => {
               Promise.allSettled(checksInProgress).then(results => {
-                hits += results.reduce((a, c) => c.status == 'fulfilled'? a + 1 : a, 0)
+                hits += results.reduce((a, c) => {
+                  let pk = c.value?.pubkey
+                  if (pk && !pubkeys.includes(pk)) {
+                    pubkeys.push(pk)
+                  }
+                  return c.status == 'fulfilled'? a + 1 : a
+                }, 0)
                 checksInProgress = []
-                let input = prompt(`Found event on ${hits} of ${allRelays.length} relays. Enter additional relay(s) or continue:`)
+                let input = prompt(`Found ${pubkeys.length} event on ${hits} of ${allRelays.length} relays. Enter additional relay(s) or continue:`)
                 if (!input) {
                   finish()
                 } else {
