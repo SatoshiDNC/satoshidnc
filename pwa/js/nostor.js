@@ -1,6 +1,7 @@
 import * as nip19 from 'nostr-tools/nip19'
 import { finalizeEvent, generateSecretKey, getPublicKey } from 'nostr-tools/pure'
 import { Relay } from 'nostr-tools/relay'
+import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
 
 export function noteDecode(bech32) {
   try {
