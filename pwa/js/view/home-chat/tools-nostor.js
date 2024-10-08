@@ -13,6 +13,8 @@ import { Buffer } from 'buffer'
 import { getKeyInfo, addTrezorKey } from '../../keys.js'
 import { getPersonalData, setPersonalData } from '../../personal.js'
 
+import { bech32_noteId as noteId } from '../../nostor.js'
+
 /* secret key should not leave this file */
 const my_hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
 function hsec() { return my_hsec }
@@ -98,7 +100,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 
         case DEL_EVENT:
           setTimeout(() => {
-            let id = prompt(`Event id:`)
+            let entry = prompt(`Event id:`)
+            if (!entry) {
+              clearSelection()
+              return
+            }
+            let id = noteId(entry) || entry
             if (id?.length !== 64) {
               if (id?.trim()) alert(`Invalid event id`)
               clearSelection()
