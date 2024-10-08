@@ -116,12 +116,16 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
 
             let hits = 0, allRelays = [ ...relays.map(relay => relay.url) ]
+            let checksInProgress = []
             const queryRelayForNote = relay => {
               console.log('checking relay', relay)
-              findEvent(id, relay)
-              hits++
+              checksInProgress.push(findEvent(id, relay))
             }
             relays.map(queryRelayForNote)
+            Promise.allSettled(checksInProgress).then(results => {
+              hits += results.reduce((a, c) => result.status == 'fulfilled'? a + 1 : a, 0)
+              checksInProgress = []
+            })
             let input
             do {
               input = prompt(`Found event on ${hits} of ${allRelays.length} relays. Enter additional relay(s) or continue:`)
@@ -137,6 +141,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 } else {
                   allRelays.push(relay)
                   queryRelayForNote(relay)
+                  Promise.allSettled(checksInProgress).then(results => {
+                    hits += results.reduce((a, c) => result.status == 'fulfilled'? a + 1 : a, 0)
+                    checksInProgress = []
+                  })
                 }
               })
             } while(true)
