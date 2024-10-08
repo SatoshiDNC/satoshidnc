@@ -138,14 +138,16 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 checksInProgress = []
                 let input = prompt(`Found ${
                   pubkeys.length
-                } event on ${hits} of ${allRelays.length} relays. Kind ${
-                  kinds.join(', ')
-                } owned by ${
-                  pubkeys.map(hpub => {
-                    let np = npub(hpub)
-                    return `${np.substring(0,9)}···${np.substring(np.length-4)} (hex ${hpub.substring(0,4)}···${hpub.substring(hpub.length-4)})`
-                  }).join(', ')
-                }. Enter additional relay(s) or continue:`)
+                } event on ${hits} of ${allRelays.length} relays.${
+                  kinds.length > 0 && pubkeys.length > 0 ? ` Kind ${
+                    kinds.join(', ')
+                  } owned by ${
+                    pubkeys.map(hpub => {
+                      let np = npub(hpub)
+                      return `${np.substring(0,9)}···${np.substring(np.length-4)} (hex ${hpub.substring(0,4)}···${hpub.substring(hpub.length-4)})`
+                    }).join(', ')
+                  }.` : ``
+                } Enter additional relay(s) or continue:`)
                 if (input === null) {
                   clearSelection()
                 } else if (!input) {
