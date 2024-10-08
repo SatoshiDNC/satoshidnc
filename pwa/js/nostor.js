@@ -29,9 +29,6 @@ export function relayUrl(input) {
 export function findEvent(id, relay) {
   return new Promise((resolve, reject) => {
     Relay.connect(relayUrl(relay)).then(relay => {
-      console.log(`connected to ${relay.url}`)
-    
-      // let's query for an event that exists
       const sub = relay.subscribe([
         {
           ids: [id],
