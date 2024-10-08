@@ -158,9 +158,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     } else {
                       allRelays.push(relay)
                       queryRelayForNote(relay)
-                      waitForResults()
                     }
                   })
+                  waitForResults()
                 }
               })
             }
@@ -168,17 +168,18 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             waitForResults()
             const finish = () => {
               let reason = prompt(`Reason for deletion:`)
-              console.log('reason:', reason)
-              deletionEvent = {
-                kind: 5,
-                created_at: Math.floor(Date.now() / 1000),
-                tags: [
-                  ['e', `${id}`],
-                  ...kinds.map(kind => ['k', `${kind}`])
-                ],
-                content: `${reason}`,
+              if (reason !== null) {
+                const deletionEvent = {
+                  kind: 5,
+                  created_at: Math.floor(Date.now() / 1000),
+                  tags: [
+                    ['e', `${id}`],
+                    ...kinds.map(kind => ['k', `${kind}`])
+                  ],
+                  content: `${reason}`,
+                }
+                console.log(DEL_EVENT, JSON.stringify(deletionEvent), allRelays)
               }
-              console.log(DEL_EVENT, JSON.stringify(deletionEvent), allRelays)
               clearSelection()
             }
 
