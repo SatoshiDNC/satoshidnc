@@ -152,7 +152,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   finish()
                 } else {
                   input.split(',').map(element => {
-                    let relay = relayUrl(element)
+                    let relay = relayUrl(element.trim())
                     if (!relay) {
                       // alert(`Invalid relay name or url`)
                     } else if (allRelays.includes(relay)) {
@@ -180,7 +180,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   ],
                   content: `${reason}`,
                 }
-                console.log(DEL_EVENT, JSON.stringify(deletionEvent), allRelays)
+                console.log(allRelays)
+                console.log(JSON.stringify(deletionEvent))
+                if (confirm(`Publish deletion event to ${allRelays.length} relays?`)) {
+                  console.log('pub')
+                }
               }
               clearSelection()
             }
