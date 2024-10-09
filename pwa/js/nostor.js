@@ -98,7 +98,6 @@ export function findEvent(id, relay) {
         })
       }).catch(() => {
         connections--
-        relay.close()
         reject()
       })  
     }
