@@ -324,7 +324,7 @@
         if (!'serviceWorker' in navigator) {
           pushError('Service worker is required.')
         } else {
-          navigator.serviceWorker.register('/serviceworker.js').then(registration => {
+          navigator.serviceWorker.register('/serviceworker.js', { type: 'module' }).then(registration => {
             clearStatus('registering_sw')
 
             registration.sync.register('trigger').then(() => {
