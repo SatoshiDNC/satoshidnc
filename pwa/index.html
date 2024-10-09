@@ -327,11 +327,18 @@
           navigator.serviceWorker.register('/serviceworker.js').then(registration => {
             clearStatus('registering_sw')
 
-            registration.sync.register('sync-messages').then(() => {
+            registration.sync.register('trigger').then(() => {
               clearStatus('registering_sync')
             }, error => {
               pushError(`Sync registration failed: ${error}`)
             })
+
+            setInterval(() => {
+              registration.sync.register('minutely').then(() => {
+              }, error => {
+                pushError(`Sync registration failed: ${error}`)
+              })
+            }, 1000)
 
             navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
               if (status.state == 'granted' && 'periodicSync' in registration) {
