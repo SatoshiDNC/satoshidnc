@@ -175,6 +175,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             relays.map(queryRelayForNote)
             waitForResults()
             const finish = () => {
+              let busy = false
               let reason = prompt(`Reason for deletion:`)
               if (reason !== null) {
                 const secret = prompt(`Secret key (nsec) of event owner (to sign deletion event):`)
@@ -196,15 +197,19 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     console.log(JSON.stringify(deletionEvent))
 
                     if (confirm(`Publish deletion event to ${allRelays.length} relay(s)?`)) {
+                      busy = true
                       Promise.allSettled(allRelays.map(relay => publishEvent(deletionEvent, relay))).then(results => {
                         sent += results.reduce((a, c) => c.status == 'fulfilled'? a+1: a, 0)
                         alert(`Sent successfully to ${sent} of ${results.length} relays.`)
+                        clearSelection()
                       })
                     }
                   }
                 }
               }
-              clearSelection()
+              if (!busy) {
+                clearSelection()
+              }
             }
 
           }, 100)
