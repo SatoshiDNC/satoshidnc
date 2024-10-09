@@ -68,25 +68,37 @@ export function publishEvent(event, relay) {
   })
 }
 
+let connections = 0
 export function findEvent(id, relay) {
   return new Promise((resolve, reject) => {
-    Relay.connect(relayUrl(relay)).then(relay => {
-      const sub = relay.subscribe([
-        {
-          ids: [id],
-        },
-      ], {
-        onevent(event) {
-          resolve(event)
-        },
-        oneose() {
-          sub.close()
-          reject()
-        }
-      })
-    }).catch(() => {
-      reject()
-    })
+    const operator = () => {
+      if (connections > 10) {
+        setTimeout(operator, 100)
+        return
+      }
+      console.log('connecting to', relay)
+      connections++
+      Relay.connect(relayUrl(relay)).then(relay => {
+        const sub = relay.subscribe([
+          {
+            ids: [id],
+          },
+        ], {
+          onevent(event) {
+            resolve(event)
+          },
+          oneose() {
+            sub.close()
+            connections--
+            reject()
+          }
+        })
+      }).catch(() => {
+        connections--
+        reject()
+      })  
+    }
+    operator()
   })
 }
 
