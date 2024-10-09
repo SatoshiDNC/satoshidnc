@@ -8,7 +8,7 @@ import * as bip32f from 'bip32'
 //import { Buffer } from 'buffer'
 import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-tools'
 
-import { noteDecode, nsecDecode, validKey, relayUrl, findEvent, npub, sign } from '../../nostor.js'
+import { noteDecode, nsecDecode, validKey, relayUrl, findEvent, npub, signEvent, publishEvent } from '../../nostor.js'
 import { relays } from '../../relays.js'
 
 // import * as nip19 from 'nostr-tools/nip19'
