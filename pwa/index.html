@@ -326,29 +326,31 @@
         } else {
           navigator.serviceWorker.register('/serviceworker.js').then(registration => {
             clearStatus('registering_sw')
+
             registration.sync.register('sync-messages').then(() => {
               clearStatus('registering_sync')
             }, error => {
               pushError(`Sync registration failed: ${error}`)
             })
+
+            navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
+              console.log(status)
+              if (status.state != 'denied' && 'periodicSync' in registration) {
+                registration.periodicSync.register('minutely-sync', {
+                  minInterval: 24 * 60 * 60 * 1000,
+                }).then(() => {
+                  clearStatus('registering_periodic_sync')
+                }, error => {
+                  pushError(`Periodic sync registration failed: ${error}`)
+                })
+              } else {
+                console.log('note: background sync is not available (requires install)')
+                clearStatus('registering_periodic_sync')
+              }
+            })
+
           }, error => {
             pushError(`Service worker registration failed: ${error}`)
-          })
-
-          navigator.permissions.query({ name: "periodic-background-sync" }).then((status)=>{ console.log(status)})
-          
-          navigator.serviceWorker.ready.then(registration => {
-            if ('periodicSync' in registration) {
-              registration.periodicSync.register('minutely-sync', {
-                minInterval: 24 * 60 * 60 * 1000,
-              }).then(() => {
-                clearStatus('registering_periodic_sync')
-              }, error => {
-                pushError(`Periodic sync registration failed: ${error}`)
-              })
-            } else {
-              pushError('Periodic sync is required.')
-            }
           })
         }
 
