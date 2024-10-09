@@ -304,6 +304,14 @@
         }
         refreshStatuses()
 
+        if ('serviceWorker' in navigator) {
+          // navigator.serviceWorker.register("/serviceworker.js")
+        } else {
+          // abort if required feature(s) are unavailable
+        }
+        splash.setText('Service worker is required.')
+        return
+
         // wait for other fonts to load on startup
         const fontCheck = (finisher) => {
           if (
