@@ -183,7 +183,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   if (!validKey(hsec)) {
                     alert('Invalid key')
                   } else {
-                    const deletionEvent = sign(hsec, {
+                    const deletionEvent = signEvent(hsec, {
                       kind: 5,
                       created_at: Math.floor(Date.now() / 1000),
                       tags: [
