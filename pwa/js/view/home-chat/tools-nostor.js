@@ -127,14 +127,16 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               let checksInProgress = []
               const queryRelayForNote = relay => {
                 console.log('queryRelayForNote', id, relay)
-                checksInProgress.push(findEvent(id, relay))
+                checksInProgress.push({ ...findEvent(id, relay), foundOnRelay: relay })
               }
               const waitForResults = () => {
                 console.log('waitForResults', checksInProgress.length)
                 Promise.allSettled(checksInProgress).then(results => {
                   console.log('settled', results.length)
                   hits += results.reduce((a, c) => {
-                    console.log(JSON.stringify(c))
+                    if (c.status == 'fulfilled') {
+                      foundOnRelays.push(c.value?.foundOnRelay)
+                    }
                     let pk = c.value?.pubkey
                     if (pk && !pubkeys.includes(pk)) {
                       pubkeys.push(pk)
@@ -204,12 +206,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                         ],
                         content: `${reason}`,
                       })
-                      console.log(allRelays)
+                      console.log(foundOnRelays)
                       console.log(JSON.stringify(deletionEvent))
   
-                      if (confirm(`Publish deletion event to ${allRelays.length} relay(s)?`)) {
+                      if (confirm(`Publish deletion event to ${foundOnRelays.length} relay(s)?`)) {
                         busy = true
-                        Promise.allSettled(allRelays.map(relay => publishEvent(deletionEvent, relay))).then(results => {
+                        Promise.allSettled(foundOnRelays.map(relay => publishEvent(deletionEvent, relay))).then(results => {
                           sent += results.reduce((a, c) => c.status == 'fulfilled'? a+1: a, 0)
                           alert(`Sent successfully to ${sent} of ${results.length} relays.`)
                           clearSelection()
