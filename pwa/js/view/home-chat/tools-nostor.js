@@ -130,6 +130,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               const waitForResults = () => {
                 console.log('waitForResults', checksInProgress.length)
                 Promise.allSettled(checksInProgress).then(results => {
+                  console.log('settled', results.length)
                   hits += results.reduce((a, c) => {
                     let pk = c.value?.pubkey
                     if (pk && !pubkeys.includes(pk)) {
