@@ -4,3 +4,9 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   console.log('Service worker activated')
 })
+self.addEventListener('sync', event => {
+  console.log('sync', event.tag)
+  // if (event.tag === 'sync-messages') {
+  //   event.waitUntil(sendMessages())
+  // }
+})

@@ -281,6 +281,7 @@
         }
         const progress = [
           newStatus('registering_sw', 'Registering service worker...'),
+          newStatus('registering_sync', 'Registering sync event...'),
           newStatus('initializing_db', 'Initializing database...'),
           newStatus('loading_fonts', 'Loading fonts...'),
         ].sort((a, b) => a.expected_time - b.expected_time)
@@ -319,9 +320,14 @@
         }
         refreshStatuses()
 
-        if ('serviceWorker' in navigator) {
+        if (!'serviceWorker' in navigator) {
           navigator.serviceWorker.register('/serviceworker.js').then(registration => {
             clearStatus('registering_sw')
+            registration.sync.register('sync-messages').then(() => {
+              clearStatus('registering_sync')
+            }, error => {
+              pushError(`Sync registration failed: ${error}`)
+            })
           }, error => {
             pushError(`Service worker registration failed: ${error}`)
           })
