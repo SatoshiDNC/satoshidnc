@@ -124,9 +124,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               let pubkeys = [], kinds = []
               let checksInProgress = []
               const queryRelayForNote = relay => {
+                console.log('queryRelayForNote', id, relay)
                 checksInProgress.push(findEvent(id, relay))
               }
               const waitForResults = () => {
+                console.log('waitForResults', checksInProgress.length)
                 Promise.allSettled(checksInProgress).then(results => {
                   hits += results.reduce((a, c) => {
                     let pk = c.value?.pubkey
@@ -145,7 +147,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                       `Found ${pubkeys.length} event${pubkeys.length == 1? ``: `s`}`
                     :
                       `Not found`
-                  } on ${hits} of ${allRelays.length} relays.${
+                  } on ${hits?`${hits} of `:``}${allRelays.length} relays.${
                     kinds.length > 0 && pubkeys.length > 0 ? ` Kind ${
                       kinds.join(', ')
                     } owned by ${
