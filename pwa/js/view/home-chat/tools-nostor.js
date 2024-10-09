@@ -119,7 +119,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             let pubkeys = [], kinds = []
             let checksInProgress = []
             const queryRelayForNote = relay => {
-              console.log('checking relay', relay)
               checksInProgress.push(findEvent(id, relay))
             }
             const waitForResults = () => {
@@ -195,9 +194,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     })
                     console.log(allRelays)
                     console.log(JSON.stringify(deletionEvent))
-    
+
                     if (confirm(`Publish deletion event to ${allRelays.length} relay(s)?`)) {
-                      console.log('pub')
+                      Promise.allSettled(allRelays.map(relay => publishEvent(deletionEvent, relay))).then(results => {
+                        sent += results.reduce((a, c) => c.status == 'fulfilled'? a+1: a, 0)
+                        alert(`Sent successfully to ${sent} of ${results.length} relays.`)
+                      })
                     }
                   }
                 }

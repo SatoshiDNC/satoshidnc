@@ -23,7 +23,7 @@ export function nsecDecode(bech32) {
   }
 }
 
-export function sign(hsec, event) {
+export function signEvent(hsec, event) {
   return finalizeEvent(event, hexToBytes(hsec))
 }
 
@@ -47,6 +47,25 @@ export function relayUrl(input) {
       return `wss://${input}`
     }
   }
+}
+
+export function publishEvent(event, relay) {
+  return new Promise((resolve, reject) => {
+    Relay.connect(relayUrl(relay)).then(relay => {
+      relay.subscribe([
+        {
+          ids: [event.id],
+        },
+      ], {
+        onevent(event) {
+          resolve()
+        },
+      })
+      relay.publish(event).then(() => {
+        relay.close()
+      })
+    })
+  })
 }
 
 export function findEvent(id, relay) {
