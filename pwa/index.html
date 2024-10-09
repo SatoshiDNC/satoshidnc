@@ -284,6 +284,7 @@
           newStatus('initializing_db', 'Initializing database...'),
           newStatus('loading_fonts', 'Loading fonts...'),
         ].sort((a, b) => a.expected_time - b.expected_time)
+        const errors = []
         const clearStatus = key => {
           window.localStorage.setItem(key, Date.now() - startTime)
           progress.filter(p => p.key == key)[0].value = false
@@ -291,6 +292,11 @@
         }
         function refreshStatuses() {
           let todo = false
+          for (const e of errors) {
+            todo = true
+            splash.setText(e)
+            break
+          }
           for (const p of progress) {
             if (p.value) {
               todo = true
@@ -303,14 +309,20 @@
             splash.easeOut(homeRoot)
           }
         }
+        function pushError(e) {
+          errors.push(e)
+          refreshStatuses()
+        }
         refreshStatuses()
 
         if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/serviceworker.js')
-          clearStatus('registering_sw')
+          navigator.serviceWorker.register('/serviceworker.js').then(registration => {
+            clearStatus('registering_sw')
+          }, error => {
+            pushError(`Service worker registration failed: ${error}`)
+          })
         } else {
-          splash.setText('Service worker is required.')
-          return
+          pushError('Service worker is required.')
         }
 
         // wait for other fonts to load on startup
@@ -342,7 +354,7 @@
           })
           reloadPersonalData()
         }).catch(e => {
-          splash.setText(e)
+          pushError(e)
         })
       })
     })
