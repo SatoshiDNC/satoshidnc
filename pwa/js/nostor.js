@@ -67,6 +67,8 @@ export function publishEvent(event, relay) {
       relay.publish(event).then(() => {
         relay.close()
       })
+    }).catch(() => {
+      reject()
     })
   })
 }

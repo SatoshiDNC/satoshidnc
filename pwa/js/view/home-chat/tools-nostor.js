@@ -211,7 +211,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                       if (confirm(`Publish deletion event to ${foundOnRelays.length} relay(s)?`)) {
                         busy = true
                         Promise.allSettled(foundOnRelays.map(relay => publishEvent(deletionEvent, relay))).then(results => {
-                          sent += results.reduce((a, c) => c.status == 'fulfilled'? a+1: a, 0)
+                          const sent = results.reduce((a, c) => c.status == 'fulfilled'? a+1: a, 0)
                           alert(`Sent successfully to ${sent} of ${results.length} relays.`)
                           clearSelection()
                         })
