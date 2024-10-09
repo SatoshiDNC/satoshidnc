@@ -292,16 +292,20 @@
         }
         function refreshStatuses() {
           let todo = false
-          for (const e of errors) {
-            todo = true
-            splash.setText(e)
-            break
-          }
-          for (const p of progress) {
-            if (p.value) {
+          if (!todo) {
+            for (const e of errors) {
               todo = true
-              splash.setText(p.message)
+              splash.setText(e)
               break
+            }
+          }
+          if (!todo) {
+            for (const p of progress) {
+              if (p.value) {
+                todo = true
+                splash.setText(p.message)
+                break
+              }
             }
           }
           if (!todo) {
