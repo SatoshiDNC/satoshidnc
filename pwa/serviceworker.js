@@ -1,3 +1,5 @@
+import { minutelyTasks } from './js/periodic.js'
+
 self.addEventListener('install', event => {
   console.log('Service worker installed')
 })
@@ -7,19 +9,15 @@ self.addEventListener('activate', event => {
 const MINUTE = 60 * 1000
 let minutely
 self.addEventListener('sync', event => {
-  console.log('sync', event.tag)
   let now = Date.now()
-  console.log(now)
   switch (event.tag) {
     case 'minutely':
-      console.log('a')
       if (minutely && now - minutely < MINUTE) break
-      console.log('b')
       minutely = now
       minutelyTasks()
       break
     default:
-      console.log('c')
+      console.log('sync', event.tag)
   }
 })
 self.addEventListener('periodicsync', event => {
@@ -28,6 +26,3 @@ self.addEventListener('periodicsync', event => {
   //   event.waitUntil(sendMessages())
   // }
 })
-function minutelyTasks() {
-  console.log('run minutely')
-}
