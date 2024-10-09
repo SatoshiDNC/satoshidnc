@@ -127,7 +127,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               let checksInProgress = []
               const queryRelayForNote = relay => {
                 console.log('queryRelayForNote', id, relay)
-                checksInProgress.push({ ...findEvent(id, relay), foundOnRelay: relay })
+                checksInProgress.push(findEvent(id, relay))
               }
               const waitForResults = () => {
                 console.log('waitForResults', checksInProgress.length)
@@ -135,7 +135,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   console.log('settled', results.length)
                   hits += results.reduce((a, c) => {
                     if (c.status == 'fulfilled') {
-                      foundOnRelays.push(c.value?.foundOnRelay)
+                      foundOnRelays.push(c.value?._foundOnRelay)
                     }
                     let pk = c.value?.pubkey
                     if (pk && !pubkeys.includes(pk)) {

@@ -69,7 +69,7 @@ export function publishEvent(event, relay) {
 }
 
 let connections = 0
-export function findEvent(id, relay) {
+export function findEvent(id, url) {
   return new Promise((resolve, reject) => {
     const operator = () => {
       if (connections > 10) {
@@ -79,7 +79,7 @@ export function findEvent(id, relay) {
       //console.log('connecting to', relay)
       connections++
       let foundEvent
-      Relay.connect(relayUrl(relay)).then(relay => {
+      Relay.connect(relayUrl(url)).then(relay => {
         const sub = relay.subscribe([
           {
             ids: [id],
@@ -95,7 +95,7 @@ export function findEvent(id, relay) {
             } catch (e) {
             }
             if (foundEvent) {
-              resolve(foundEvent)
+              resolve({ ...foundEvent, _foundOnRelay: url })
             } else {
               reject()
             }
