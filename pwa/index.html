@@ -334,9 +334,8 @@
             })
 
             navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
-              console.log(status)
               if (status.state == 'granted' && 'periodicSync' in registration) {
-                registration.periodicSync.register('minutely-sync', {
+                registration.periodicSync.register('periodicsync', {
                   minInterval: 1 * 60 * 1000,
                 }).then(() => {
                   clearStatus('registering_periodic_sync')
