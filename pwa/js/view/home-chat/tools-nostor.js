@@ -115,7 +115,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               return
             }
 
-            let hits = 0, allRelays = [ ...relays.map(relay => relay.url) ]
+            let allRelays = []
+            allRelays.push(...relays.map(relay => relay.url))
+            nostrWatchRelays().then(onlineRelays => {
+              allRelays.push(...onlineRelays)
+            })
+            let hits = 0
             let pubkeys = [], kinds = []
             let checksInProgress = []
             const queryRelayForNote = relay => {
