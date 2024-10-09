@@ -335,13 +335,20 @@
 
             navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
               if (status.state == 'granted' && 'periodicSync' in registration) {
-                registration.periodicSync.register('periodicsync', {
-                  minInterval: 1000,
-                }).then(() => {
+                navigator.serviceWorker.ready.then(async sw => {
+                  await sw.periodicSync.register('periodicsync', {
+                    minInterval: 1000,
+                  })
                   clearStatus('registering_periodic_sync')
-                }, error => {
-                  pushError(`Periodic sync registration failed: ${error}`)
                 })
+
+                // registration.periodicSync.register('periodicsync', {
+                //   minInterval: 1000,
+                // }).then(() => {
+                //   clearStatus('registering_periodic_sync')
+                // }, error => {
+                //   pushError(`Periodic sync registration failed: ${error}`)
+                // })
               } else {
                 console.log('note: background sync is not available (requires install)')
                 clearStatus('registering_periodic_sync')
