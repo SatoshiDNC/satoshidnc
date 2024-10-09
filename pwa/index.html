@@ -335,6 +335,8 @@
             pushError(`Service worker registration failed: ${error}`)
           })
 
+          navigator.permissions.query({ name: "periodic-background-sync" }).then((status)=>{ console.log(status)})
+          
           navigator.serviceWorker.ready.then(registration => {
             if ('periodicSync' in registration) {
               registration.periodicSync.register('minutely-sync', {
