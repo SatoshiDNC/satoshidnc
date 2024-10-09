@@ -90,9 +90,11 @@ export function findEvent(id, relay) {
           },
           oneose() {
             connections--
-            try {
-              relay.close()
-            } catch (e) {
+            if (relay.connected()) {
+              try {
+                relay.close()
+              } catch (e) {
+              }
             }
             if (foundEvent) {
               resolve(foundEvent)
