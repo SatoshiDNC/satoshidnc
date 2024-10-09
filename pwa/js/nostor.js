@@ -89,9 +89,11 @@ export function findEvent(id, relay) {
             foundEvent = event
           },
           oneose() {
-            //sub.close()
             connections--
-            relay.close()
+            try {
+              relay.close()
+            } catch (e) {
+            }
             if (foundEvent) {
               resolve(foundEvent)
             } else {
