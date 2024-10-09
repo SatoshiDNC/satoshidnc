@@ -89,7 +89,7 @@ export function findEvent(id, relay) {
             foundEvent = event
           },
           oneose() {
-            sub.close()
+            //sub.close()
             connections--
             relay.close()
             if (foundEvent) {
