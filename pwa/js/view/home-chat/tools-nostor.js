@@ -119,103 +119,104 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             allRelays.push(...relays.map(relay => relay.url))
             nostrWatchRelays().then(onlineRelays => {
               allRelays.push(...onlineRelays)
-            })
-            let hits = 0
-            let pubkeys = [], kinds = []
-            let checksInProgress = []
-            const queryRelayForNote = relay => {
-              checksInProgress.push(findEvent(id, relay))
-            }
-            const waitForResults = () => {
-              Promise.allSettled(checksInProgress).then(results => {
-                hits += results.reduce((a, c) => {
-                  let pk = c.value?.pubkey
-                  if (pk && !pubkeys.includes(pk)) {
-                    pubkeys.push(pk)
-                  }
-                  let kind = c.value?.kind
-                  if (kind && !kinds.includes(kind)) {
-                    kinds.push(kind)
-                  }
-                  return c.status == 'fulfilled'? a + 1 : a
-                }, 0)
-                checksInProgress = []
-                let input = prompt(`${
-                  pubkeys.length > 0?
-                    `Found ${pubkeys.length} event${pubkeys.length == 1? ``: `s`}`
-                  :
-                    `Not found`
-                } on ${hits} of ${allRelays.length} relays.${
-                  kinds.length > 0 && pubkeys.length > 0 ? ` Kind ${
-                    kinds.join(', ')
-                  } owned by ${
-                    pubkeys.map(hpub => {
-                      let np = npub(hpub)
-                      return `${np.substring(0,9)}···${np.substring(np.length-4)} (hex ${hpub.substring(0,4)}···${hpub.substring(hpub.length-4)})`
-                    }).join(', ')
-                  }.` : ``
-                } Enter ${
-                  allRelays.length > 0 ? `additional relay(s) or continue` : `relay(s)`
-                }:`)
-                if (input === null) {
-                  clearSelection()
-                } else if (!input) {
-                  finish()
-                } else {
-                  input.split(',').map(element => {
-                    let relay = relayUrl(element.trim())
-                    if (!relay) {
-                      // alert(`Invalid relay name or url`)
-                    } else if (allRelays.includes(relay)) {
-                      // alert(`Relay was already checked`)
-                    } else {
-                      allRelays.push(relay)
-                      queryRelayForNote(relay)
+            }).then(() => {
+              let hits = 0
+              let pubkeys = [], kinds = []
+              let checksInProgress = []
+              const queryRelayForNote = relay => {
+                checksInProgress.push(findEvent(id, relay))
+              }
+              const waitForResults = () => {
+                Promise.allSettled(checksInProgress).then(results => {
+                  hits += results.reduce((a, c) => {
+                    let pk = c.value?.pubkey
+                    if (pk && !pubkeys.includes(pk)) {
+                      pubkeys.push(pk)
                     }
-                  })
-                  waitForResults()
-                }
-              })
-            }
-            relays.map(queryRelayForNote)
-            waitForResults()
-            const finish = () => {
-              let busy = false
-              let reason = prompt(`Reason for deletion:`)
-              if (reason !== null) {
-                const secret = prompt(`Secret key (nsec) of event owner (to sign deletion event):`)
-                if (secret) {
-                  let hsec = nsecDecode(secret) || secret
-                  if (!validKey(hsec)) {
-                    alert('Invalid key')
+                    let kind = c.value?.kind
+                    if (kind && !kinds.includes(kind)) {
+                      kinds.push(kind)
+                    }
+                    return c.status == 'fulfilled'? a + 1 : a
+                  }, 0)
+                  checksInProgress = []
+                  let input = prompt(`${
+                    pubkeys.length > 0?
+                      `Found ${pubkeys.length} event${pubkeys.length == 1? ``: `s`}`
+                    :
+                      `Not found`
+                  } on ${hits} of ${allRelays.length} relays.${
+                    kinds.length > 0 && pubkeys.length > 0 ? ` Kind ${
+                      kinds.join(', ')
+                    } owned by ${
+                      pubkeys.map(hpub => {
+                        let np = npub(hpub)
+                        return `${np.substring(0,9)}···${np.substring(np.length-4)} (hex ${hpub.substring(0,4)}···${hpub.substring(hpub.length-4)})`
+                      }).join(', ')
+                    }.` : ``
+                  } Enter ${
+                    allRelays.length > 0 ? `additional relay(s) or continue` : `relay(s)`
+                  }:`)
+                  if (input === null) {
+                    clearSelection()
+                  } else if (!input) {
+                    finish()
                   } else {
-                    const deletionEvent = signEvent(hsec, {
-                      kind: 5,
-                      created_at: Math.floor(Date.now() / 1000),
-                      tags: [
-                        ['e', `${id}`],
-                        ...kinds.map(kind => ['k', `${kind}`])
-                      ],
-                      content: `${reason}`,
+                    input.split(',').map(element => {
+                      let relay = relayUrl(element.trim())
+                      if (!relay) {
+                        // alert(`Invalid relay name or url`)
+                      } else if (allRelays.includes(relay)) {
+                        // alert(`Relay was already checked`)
+                      } else {
+                        allRelays.push(relay)
+                        queryRelayForNote(relay)
+                      }
                     })
-                    console.log(allRelays)
-                    console.log(JSON.stringify(deletionEvent))
-
-                    if (confirm(`Publish deletion event to ${allRelays.length} relay(s)?`)) {
-                      busy = true
-                      Promise.allSettled(allRelays.map(relay => publishEvent(deletionEvent, relay))).then(results => {
-                        sent += results.reduce((a, c) => c.status == 'fulfilled'? a+1: a, 0)
-                        alert(`Sent successfully to ${sent} of ${results.length} relays.`)
-                        clearSelection()
+                    waitForResults()
+                  }
+                })
+              }
+              relays.map(queryRelayForNote)
+              waitForResults()
+              const finish = () => {
+                let busy = false
+                let reason = prompt(`Reason for deletion:`)
+                if (reason !== null) {
+                  const secret = prompt(`Secret key (nsec) of event owner (to sign deletion event):`)
+                  if (secret) {
+                    let hsec = nsecDecode(secret) || secret
+                    if (!validKey(hsec)) {
+                      alert('Invalid key')
+                    } else {
+                      const deletionEvent = signEvent(hsec, {
+                        kind: 5,
+                        created_at: Math.floor(Date.now() / 1000),
+                        tags: [
+                          ['e', `${id}`],
+                          ...kinds.map(kind => ['k', `${kind}`])
+                        ],
+                        content: `${reason}`,
                       })
+                      console.log(allRelays)
+                      console.log(JSON.stringify(deletionEvent))
+  
+                      if (confirm(`Publish deletion event to ${allRelays.length} relay(s)?`)) {
+                        busy = true
+                        Promise.allSettled(allRelays.map(relay => publishEvent(deletionEvent, relay))).then(results => {
+                          sent += results.reduce((a, c) => c.status == 'fulfilled'? a+1: a, 0)
+                          alert(`Sent successfully to ${sent} of ${results.length} relays.`)
+                          clearSelection()
+                        })
+                      }
                     }
                   }
                 }
+                if (!busy) {
+                  clearSelection()
+                }
               }
-              if (!busy) {
-                clearSelection()
-              }
-            }
+            })
 
           }, 100)
           break
