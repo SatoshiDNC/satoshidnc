@@ -85,16 +85,20 @@ export function findEvent(id, relay) {
           },
         ], {
           onevent(event) {
+            connections--
+            relay.close()
             resolve(event)
           },
           oneose() {
             sub.close()
             connections--
+            relay.close()
             reject()
           }
         })
       }).catch(() => {
         connections--
+        relay.close()
         reject()
       })  
     }
