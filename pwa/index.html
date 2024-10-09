@@ -280,8 +280,9 @@
           return { key, value: true, expected_time: window.localStorage.getItem(key), message }          
         }
         const progress = [
-          newStatus('initializing_db', 'initializing database...'),
-          newStatus('loading_fonts', 'loading fonts...'),
+          newStatus('registering_sw', 'Registering service worker...'),
+          newStatus('initializing_db', 'Initializing database...'),
+          newStatus('loading_fonts', 'Loading fonts...'),
         ].sort((a, b) => a.expected_time - b.expected_time)
         const clearStatus = key => {
           window.localStorage.setItem(key, Date.now() - startTime)
@@ -305,12 +306,12 @@
         refreshStatuses()
 
         if ('serviceWorker' in navigator) {
-          // navigator.serviceWorker.register("/serviceworker.js")
+          navigator.serviceWorker.register('/serviceworker.js')
+          clearStatus('registering_sw')
         } else {
-          // abort if required feature(s) are unavailable
+          splash.setText('Service worker is required.')
+          return
         }
-        splash.setText('Service worker is required.')
-        return
 
         // wait for other fonts to load on startup
         const fontCheck = (finisher) => {
