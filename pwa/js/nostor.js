@@ -84,6 +84,8 @@ export function findEvent(id, relay) {
           reject()
         }
       })
+    }).catch(() => {
+      reject()
     })
   })
 }
