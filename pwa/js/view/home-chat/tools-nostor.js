@@ -72,10 +72,10 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
-    if (v.index >= 0) return
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
     const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
+    if (v.index >= 0) return
     if (index >= 0 && index < v.items.length) {
       v.index = index
       v.setRenderFlag(true)
