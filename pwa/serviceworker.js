@@ -6,6 +6,9 @@ self.addEventListener('activate', event => {
 })
 self.addEventListener('sync', event => {
   console.log('sync', event.tag)
+})
+self.addEventListener('periodicsync', event => {
+  console.log('periodicsync', event.tag)
   // if (event.tag === 'sync-messages') {
   //   event.waitUntil(sendMessages())
   // }
