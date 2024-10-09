@@ -125,7 +125,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               let checksInProgress = []
               const queryRelayForNote = relay => {
                 console.log('queryRelayForNote', id, relay)
-                checksInProgress.push(findEvent(id, relay))
+                checksInProgress.push(findEvent(id, relay).then())
               }
               const waitForResults = () => {
                 console.log('waitForResults', checksInProgress.length)
