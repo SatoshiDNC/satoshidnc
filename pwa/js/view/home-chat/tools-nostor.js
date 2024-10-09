@@ -180,7 +180,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   }
                 })
               }
-              relays.map(queryRelayForNote)
+              allRelays.map(queryRelayForNote)
               waitForResults()
               const finish = () => {
                 let busy = false
