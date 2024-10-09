@@ -72,6 +72,7 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
+    if (v.index >= 0) return
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
     const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
@@ -308,10 +309,10 @@ v.renderFunc = function() {
   let i = 0
   for (const item of v.items) {
     if (item.name == v.items?.[v.index]?.name) {
-      drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 35 / 2 - ITEM_SIZE / 2 + ITEM_SIZE * i + v.menuH * f0, v.menuW, ITEM_SIZE)
+      drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 55 / 2 - ITEM_SIZE / 2 + ITEM_SIZE * i + v.menuH * f0, v.menuW, ITEM_SIZE)
       mat4.identity(m)
-      mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
-      mat4.scale(m,m, [35/14, 35/14, 1])
+      mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 55 + v.menuH * f0, 0])
+      mat4.scale(m,m, [55/14, 55/14, 1])
       iconFont.draw(0,0, '?', blend(v.textColor, colors.inactiveDark, (Math.cos(v.flashAnim*2*Math.PI)+1)/2), v.mat, m)
       v.flashAnim += 0.02
       if (v.flashAnim >= 1) {
