@@ -117,6 +117,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
 
             let allRelays = []
+            let foundOnRelays = []
             allRelays.push(...relays.map(relay => relay.url))
             nostrWatchRelays().then(onlineRelays => {
               allRelays.push(...onlineRelays)
@@ -133,6 +134,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 Promise.allSettled(checksInProgress).then(results => {
                   console.log('settled', results.length)
                   hits += results.reduce((a, c) => {
+                    console.log(JSON.stringify(c))
                     let pk = c.value?.pubkey
                     if (pk && !pubkeys.includes(pk)) {
                       pubkeys.push(pk)
@@ -146,7 +148,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   checksInProgress = []
                   let input = prompt(`${
                     pubkeys.length > 0?
-                      `Found ${pubkeys.length} event${pubkeys.length == 1? ``: `s`}`
+                      `Found ${pubkeys.length !== 1? `${pubkeys.length} ` : ``}event${pubkeys.length == 1? ``: `s`}`
                     :
                       `Not found`
                   } on ${hits?`${hits} of `:``}${allRelays.length} relays.${
