@@ -126,7 +126,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               let pubkeys = [], kinds = []
               let checksInProgress = []
               const queryRelayForNote = relay => {
-                console.log('queryRelayForNote', id, relay)
                 checksInProgress.push(findEvent(id, relay))
               }
               const waitForResults = () => {

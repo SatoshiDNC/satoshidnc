@@ -60,6 +60,9 @@ export function publishEvent(event, relay) {
         onevent(event) {
           resolve()
         },
+        oneose() {
+          reject()
+        }
       })
       relay.publish(event).then(() => {
         relay.close()
