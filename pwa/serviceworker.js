@@ -11,7 +11,7 @@ self.addEventListener('sync', event => {
   let now = Date.now()
   switch (event.tag) {
     case 'minutely':
-      if (now - minutely < MINUTE) break
+      if (!minutely || now - minutely < MINUTE) break
       minutely = now
       minutelyTasks()
       break
