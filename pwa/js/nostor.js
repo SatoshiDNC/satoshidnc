@@ -16,13 +16,15 @@ export function noteDecode(bech32) {
 export function nsecDecode(bech32) {
   try {
     const decoded = nip19.decode(bech32)
-    console.log(JSON.stringify(decoded))
     if (decoded?.type == 'nsec') {
       return bytesToHex(decoded.data)
     }
   } catch(e) {
-    console.log(e)
   }
+}
+
+export function sign(hsec, event) {
+  return finalizeEvent(event, hexToBytes(hsec))
 }
 
 export function validKey(hex) {

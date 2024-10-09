@@ -178,27 +178,27 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             const finish = () => {
               let reason = prompt(`Reason for deletion:`)
               if (reason !== null) {
-                const deletionEvent = {
-                  kind: 5,
-                  created_at: Math.floor(Date.now() / 1000),
-                  tags: [
-                    ['e', `${id}`],
-                    ...kinds.map(kind => ['k', `${kind}`])
-                  ],
-                  content: `${reason}`,
-                }
-                console.log(allRelays)
-                console.log(JSON.stringify(deletionEvent))
                 const secret = prompt(`Secret key (nsec) of event owner (to sign deletion event):`)
                 if (secret) {
                   let hsec = nsecDecode(secret) || secret
                   if (!validKey(hsec)) {
                     alert('Invalid key')
-                  }
-                  let sk = hexToBytes(hsec)
-
-                  if (confirm(`Publish deletion event to ${allRelays.length} relay(s)?`)) {
-                    console.log('pub')
+                  } else {
+                    const deletionEvent = sign(hsec, {
+                      kind: 5,
+                      created_at: Math.floor(Date.now() / 1000),
+                      tags: [
+                        ['e', `${id}`],
+                        ...kinds.map(kind => ['k', `${kind}`])
+                      ],
+                      content: `${reason}`,
+                    })
+                    console.log(allRelays)
+                    console.log(JSON.stringify(deletionEvent))
+    
+                    if (confirm(`Publish deletion event to ${allRelays.length} relay(s)?`)) {
+                      console.log('pub')
+                    }
                   }
                 }
               }
