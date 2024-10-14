@@ -327,7 +327,7 @@
           navigator.serviceWorker.register('/serviceworker.js', { type: 'module' }).then(registration => {
             clearStatus('registering_sw')
 
-            registration.sync.register('trigger').then(() => {
+            registration.sync.register('startup-trigger').then(() => {
               clearStatus('registering_sync')
             }, error => {
               pushError(`Sync registration failed: ${error}`)
