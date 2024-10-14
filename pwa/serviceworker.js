@@ -93,12 +93,14 @@ self.addEventListener('fetch', (event) => {
     if ((!cachedResponse) || (!asOf) || (Date.now() - asOf > ONE_DAY_IN_MILLISECONDS)) {
       networkResponsePromise = fetch(event.request)
 
-      event.waitUntil(async function() {
-        const networkResponse = await networkResponsePromise
-        await cache.put(event.request, networkResponse.clone())
-        cacheDates[event.request.url] = Date.now()
-        console.log('[SW] cached', event.request.url)
-      }())  
+      if (event.request.url.startsWith('https://')) {
+        event.waitUntil(async function() {
+          const networkResponse = await networkResponsePromise
+          await cache.put(event.request, networkResponse.clone())
+          cacheDates[event.request.url] = Date.now()
+          console.log('[SW] cached', event.request.url)
+        }())  
+      }
     }
 
     // Returned the cached response if we have one, otherwise return the network response.
