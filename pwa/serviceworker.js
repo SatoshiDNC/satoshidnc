@@ -85,6 +85,9 @@ self.addEventListener('fetch', (event) => {
 
     const cache = await caches.open(offlineCache)
     const cachedResponse = await cache.match(event.request)
+
+    console.log(cachedResponse.headers)
+
     const networkResponsePromise = fetch(event.request)
 
     event.waitUntil(async function() {
