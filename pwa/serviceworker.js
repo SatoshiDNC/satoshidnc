@@ -1,4 +1,5 @@
-import { minutelyTasks } from './js/periodic.js'
+import { startupTasks } from './js/sw/starup.js'
+import { minutelyTasks } from './js/sw/periodic.js'
 
 const DOMAIN = `dev.satoshidnc.com`
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
@@ -20,6 +21,9 @@ let minutely
 self.addEventListener('sync', event => {
   let now = Date.now()
   switch (event.tag) {
+    case 'startup-trigger':
+      startupTasks()
+      break
     case 'minutely':
       if (minutely && now - minutely < MINUTE) break
       minutely = now

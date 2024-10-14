@@ -1,3 +1,3 @@
 export function minutelyTasks() {
-  console.log('run minutely')
+  console.log('run minutely tasks')
 }
