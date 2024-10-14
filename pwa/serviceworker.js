@@ -1,6 +1,7 @@
 import { minutelyTasks } from './js/periodic.js'
 
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
+const cacheDates = {}
 const offlineCache = 'oc-2024101401'
 const appShellFiles = [
   '/',
@@ -86,7 +87,7 @@ self.addEventListener('fetch', (event) => {
 
     const cache = await caches.open(offlineCache)
     const cachedResponse = await cache.match(event.request)
-    const asOf = localStorage.getItem(event.request.url)
+    const asOf = cacheDates[event.request.url]
 
     let networkResponsePromise
     if ((!cachedResponse) || (!asOf) || (Date.now() - asOf > ONE_DAY_IN_MILLISECONDS)) {
@@ -95,7 +96,7 @@ self.addEventListener('fetch', (event) => {
       event.waitUntil(async function() {
         const networkResponse = await networkResponsePromise
         await cache.put(event.request, networkResponse.clone())
-        localStorage.setItem(event.request.url, Date.now())
+        cacheDates[event.request.url] = Date.now()
         console.log('[SW] cached', event.request.url)
       }())  
     }
