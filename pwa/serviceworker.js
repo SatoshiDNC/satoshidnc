@@ -81,6 +81,8 @@ self.addEventListener('periodicsync', event => {
   //   event.waitUntil(sendMessages())
   // }
 })
+let numCached = 0
+let logTimer
 self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
   event.respondWith(async function() {
@@ -98,7 +100,14 @@ self.addEventListener('fetch', (event) => {
           const networkResponse = await networkResponsePromise
           await cache.put(event.request, networkResponse.clone())
           cacheDates[event.request.url] = Date.now()
-          console.log('[SW] cached', event.request.url)
+          numCached++
+          if (logTimer) {
+            clearTimeout(logTimer)
+          }
+          logTimer = setTimeout(() => {
+            console.log(`[SW] cached ${numCached} files`)
+            numCached = 0
+          }, 1000)
         }())  
       }
     }
