@@ -1,5 +1,5 @@
+import { startupTasks } from './js/sw/startup.js'
 import { minutelyTasks } from './js/sw/periodic.js'
-import { startupTasks } from './js/sw/starup.js'
 
 const DOMAIN = `dev.satoshidnc.com`
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
@@ -22,12 +22,12 @@ self.addEventListener('sync', event => {
   let now = Date.now()
   switch (event.tag) {
     case 'startup-trigger':
-//      startupTasks()
+      startupTasks()
       break
     case 'minutely':
       if (minutely && now - minutely < MINUTE) break
       minutely = now
-//      minutelyTasks()
+      minutelyTasks()
       break
     default:
       console.log('[SW] sync', event.tag)
