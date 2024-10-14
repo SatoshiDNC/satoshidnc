@@ -67,7 +67,7 @@ self.addEventListener('fetch', (event) => {
           logTimer = setTimeout(() => {
             console.log(`[SW] cached ${numCached} files`)
             numCached = 0
-          }, 1000)
+          }, 1000) 
         }())  
       }
     }
