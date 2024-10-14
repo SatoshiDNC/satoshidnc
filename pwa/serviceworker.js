@@ -80,17 +80,17 @@ self.addEventListener('periodicsync', event => {
   // }
 })
 self.addEventListener('fetch', (event) => {
-  console.log('[SW] fetch', event.request)
+  console.log('[SW] fetch', event.request.url)
   event.respondWith(async function() {
 
-    const cache = await caches.open(cacheName)
+    const cache = await caches.open(offlineCache)
     const cachedResponse = await cache.match(event.request)
     const networkResponsePromise = fetch(event.request)
 
     event.waitUntil(async function() {
       const networkResponse = await networkResponsePromise
       await cache.put(event.request, networkResponse.clone())
-      console.log('[SW] cached', event.request)
+      console.log('[SW] cached', event.request.url)
     }())
 
     // Returned the cached response if we have one, otherwise return the network response.
