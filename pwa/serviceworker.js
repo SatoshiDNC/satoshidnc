@@ -87,9 +87,10 @@ self.addEventListener('fetch', (event) => {
     const cache = await caches.open(offlineCache)
     const cachedResponse = await cache.match(event.request)
     const asOf = localStorage.getItem(event.request.url)
-    
+
+    let networkResponsePromise
     if ((!cachedResponse) || (!asOf) || (Date.now() - asOf > ONE_DAY_IN_MILLISECONDS)) {
-      const networkResponsePromise = fetch(event.request)
+      networkResponsePromise = fetch(event.request)
 
       event.waitUntil(async function() {
         const networkResponse = await networkResponsePromise
