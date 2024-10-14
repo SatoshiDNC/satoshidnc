@@ -1,5 +1,5 @@
-//import { startupTasks } from './js/sw/starup.js'
-//import { minutelyTasks } from './js/sw/periodic.js'
+import { startupTasks } from './js/sw/starup.js'
+import { minutelyTasks } from './js/sw/periodic.js'
 
 const DOMAIN = `dev.satoshidnc.com`
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
