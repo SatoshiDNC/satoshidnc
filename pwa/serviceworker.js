@@ -53,9 +53,10 @@ const appShellFiles = [
 ];
 self.addEventListener('install', event => {
   console.log('[SW] installed')
+  self.skipWaiting()
 })
 self.addEventListener('activate', event => {
-  console.log('[SW ] activated')
+  console.log('[SW] activated')
   return self.clients.claim()
 })
 const MINUTE = 60 * 1000
@@ -69,7 +70,7 @@ self.addEventListener('sync', event => {
       minutelyTasks()
       break
     default:
-      console.log('sync', event.tag)
+      console.log('[SW] sync', event.tag)
   }
 })
 self.addEventListener('periodicsync', event => {
