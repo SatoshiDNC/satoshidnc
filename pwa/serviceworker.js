@@ -82,7 +82,7 @@ self.addEventListener('periodicsync', event => {
   // }
 })
 self.addEventListener('fetch', (event) => {
-  console.log('[SW] fetch', event.request.url)
+  // console.log('[SW] fetch', event.request.url)
   event.respondWith(async function() {
 
     const cache = await caches.open(offlineCache)
