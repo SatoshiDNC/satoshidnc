@@ -88,6 +88,7 @@ self.addEventListener('fetch', (event) => {
     event.waitUntil(async function() {
       const networkResponse = await networkResponsePromise
       await cache.put(event.request, networkResponse.clone())
+      console.log('[SW] cached', event.request)
     }())
 
     // Returned the cached response if we have one, otherwise return the network response.
