@@ -44,7 +44,7 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(async function() {
 
     const cache = await caches.open(offlineCache)
-    const cachedResponse = await cache.match(event.request)
+    const cachedResponse = undefined // await cache.match(event.request)
     const asOf = cacheDates[event.request.url]
 
     let networkResponsePromise
