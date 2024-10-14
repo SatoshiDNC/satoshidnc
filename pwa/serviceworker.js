@@ -55,7 +55,7 @@ self.addEventListener('install', event => {
   console.log('[SW] installed')
 })
 self.addEventListener('activate', event => {
-  console.log('[SW] activated')
+  console.log('[SW ] activated')
   return self.clients.claim()
 })
 const MINUTE = 60 * 1000
