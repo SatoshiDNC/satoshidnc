@@ -15,6 +15,7 @@ export function setPersonalData(hpub, key, value) {
 }
 
 export function getPersonalData(hpub, key) {
+  console.log(`${hpub} ${key} ${JSON.stringify(personalData)}`)
   return personalData.filter(pd => pd.hpub == hpub && pd.key == key)?.[0]?.value
 }
 
