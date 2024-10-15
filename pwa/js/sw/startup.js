@@ -1,3 +1,5 @@
+import { nostrWatchRelays } from '../nostor.js'
+
 const TAG = 'START'
 export function startupTasks() {
   console.log(`[${TAG}] getting relay list`)
