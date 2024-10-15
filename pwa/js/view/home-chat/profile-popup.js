@@ -33,11 +33,6 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.clickFunc = function() {
     popupRoot.easeOut()
   }
-v.prepMenu = function(items) {
-  const v = this
-  v.items = items
-  v.currentItemCount = items.length
-}
 v.layoutFunc = function() {
   const v = this
   v.menuX = v.sw - v.menuW - 10
@@ -113,9 +108,8 @@ v.a = popupView; popupView.parent = v
 
 export const popupRoot = popupShim
 popupRoot.ghostOpacity = 0
-popupRoot.easeIn = function(items) {
+popupRoot.easeIn = function() {
   const v = this
-  popupView.prepMenu(items)
   popupView.easingState = 1
   popupView.easingRate = 0.06
   const r = fg.getRoot()
