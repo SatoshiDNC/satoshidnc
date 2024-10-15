@@ -1,4 +1,4 @@
-import { drawRoundedRect, drawAvatar } from '../../draw.js'
+import { drawRoundedRect, drawAvatar, alpha } from '../../draw.js'
 import { personalData } from '../../personal.js'
 
 let v, g
@@ -91,9 +91,18 @@ v.renderFunc = function() {
   mat4.scale(m,m, [v.preW * f0 + v.menuW * f1, v.preH * f0 + v.menuH * f1, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
+
   const hpub = v.contact.hpub
   drawAvatar(v, hpub, v.preX * f0 + v.menuX * f1, v.preY * f0 + v.menuY * f1, v.preW * f0 + v.menuW * f1, v.preH * f0 + v.menuW * f1)
-  //drawRoundedRect(v, v.bgColor, 32, v.menuX,v.menuY,v.menuW,v.menuH * f1)
+
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(alpha(v.bgColor, 0.2)))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [v.preX * f0 + v.menuX * f1, v.preY * f0 + v.menuY * f1, 0])
+  mat4.scale(m,m, [v.preW * f0 + v.menuW * f1, v.preH/v.menuH*90 * f0 + 90 * f1, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
 
   // let i = 0
   // for (const item of v.items) {
