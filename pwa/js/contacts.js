@@ -1,6 +1,6 @@
 import { db } from './db.js'
 import * as nip19 from 'nostr-tools/nip19'
-import { setPersonalData } from './personal.js'
+import { setPersonalData, getPersonalData } from './personal.js'
 
 export const contactViewDependencies = []
 
@@ -20,7 +20,7 @@ export const contacts = []
 export function addNewContact(hpub, name) {
   const tr = db.transaction('contacts', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('contacts')
-  const req = os.put({ hpub, addTime: Date.now() })
+  const req = os.put({ hpub, added: Date.now() })
   req.onsuccess = (e) => {
     reloadContacts()
     setPersonalData(hpub, 'name', name)
@@ -39,7 +39,7 @@ export function reloadContacts() {
     let cursor = e.target.result
     if (cursor) {
       let v = cursor.value
-      newList.push({ name: v.name, hpub: v.hpub, relays: [], xmitDate: new Date(), xmitText: 'tbd' })
+      newList.push({ name: getPersonalData(v.hpub, 'name'), hpub: v.hpub, relays: [], xmitDate: new Date(), xmitText: 'tbd' })
       cursor.continue()
     } else {
       contacts.length = 0
