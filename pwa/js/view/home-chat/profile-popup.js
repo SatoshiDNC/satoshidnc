@@ -19,9 +19,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     console.log('menu gad click')
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
-    const index = Math.floor((y - 79 - 33 / 2 + 126 / 2) / 126)
-    popupRoot.easeOut()
-    // console.log('menu', x, y, index)
+    // popupRoot.easeOut()
+    console.log('menu', x, y)
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
