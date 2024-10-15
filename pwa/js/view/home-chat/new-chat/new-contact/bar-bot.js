@@ -64,12 +64,13 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       const existing = contacts.filter(c => c.hpub == hpub)?.[0]
       if (existing) {
         if (name != getPersonalData(existing.hpub, 'name')) {
-          if (!confirm(`Contact exists as '${existing.name}'.\nOverwrite?`)) {
-            cancel = true
+          if (confirm(`Contact exists as '${existing.name}'.\nUpdate name?`)) {
+            setPersonalData(hpub, 'name', name)
+            g.root.easeOut(g.target)
+            g.formView.clear()
           }
         }
-      }
-      if (!cancel) {
+      } else {
         addNewContact(hpub, name)
         relays?.map(r => detectRelay(r))
         relays?.map(r => addRelayContactRelation(r, hpub, R_KNOWS_C))
