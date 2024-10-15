@@ -114,8 +114,8 @@ v.renderFunc = function() {
   mainShapes.drawArrays2('rect')
 
   mat4.identity(m)
-  mat4.translate(m,m, [v.menuX + 24, v.menuY + 61, 0])
-  mat4.scale(m,m, [33/14, 33/14, 1])
+  mat4.translate(m,m, [v.preX * f0 + (v.menuX + 24) * f1, v.preY * f0 + (v.menuY + 61) * f1, 0])
+  mat4.scale(m,m, [33/14 * f1, 33/14 * f1, 1])
   const c = [1,1,1,1]
   defaultFont.draw(0,0, getPersonalData(hpub, 'name'), [c[0],c[1],c[2],v.easingValue], v.mat, m)
 
