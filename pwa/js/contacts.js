@@ -44,7 +44,7 @@ export function reloadContacts() {
     } else {
       contacts.length = 0
       contacts.push(...newList)
-      console.log(`${JSON.stringify(contacts)}`)
+      console.log(`contacts: ${JSON.stringify(contacts)}`)
       contactViewDependencies.map(v => v.setRenderFlag(true))
     }
   }
