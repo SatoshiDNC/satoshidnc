@@ -20,7 +20,7 @@ export function drawRect(v, color, x,y,w,h) {
   mainShapes.drawArrays2('rect')
 }
 
-export function drawAvatar(v, x,y,w,h) {
+export function drawAvatar(v, hpub, x,y,w,h) {
   const color = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
   const mat = mat4.create()
   const m = mat4.create()
@@ -28,7 +28,7 @@ export function drawAvatar(v, x,y,w,h) {
   mat4.translate(mat, mat, [x, y, 0])
   mat4.scale(mat, mat, [w/32, h/32, 1])
   let dx = -0.5, dy = 8.5
-  c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
+  hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.copy(m, mat)
     nybbleFont.draw(dx,dy + i*8, str, color, v.mat, m)
   })

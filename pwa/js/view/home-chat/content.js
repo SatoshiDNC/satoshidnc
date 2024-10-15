@@ -107,7 +107,7 @@ v.renderFunc = function() {
     xmitDate: new Date()
   }}) ]) {
 
-    drawAvatar(v, 31, 204 + 200 * i, 127, 127)
+    drawAvatar(v, c.hpub, 31, 204 + 200 * i, 127, 127)
     // mat4.identity(mat)
     // mat4.translate(mat, mat, [31, 204 + 200 * i, 0])
     // mat4.scale(mat, mat, [127/32, 127/32, 1])
