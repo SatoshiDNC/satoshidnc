@@ -20,7 +20,7 @@ export const contacts = []
 export function addNewContact(hpub, name) {
   const tr = db.transaction('contacts', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('contacts')
-  const req = os.put({ hpub })
+  const req = os.put({ hpub, addTime: Date.now() })
   req.onsuccess = (e) => {
     reloadContacts()
     setPersonalData(hpub, 'name', name)
