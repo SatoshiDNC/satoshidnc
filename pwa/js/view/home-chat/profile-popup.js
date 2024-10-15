@@ -104,6 +104,15 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([.2,.2,.2,1]))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [v.preX * f0 + v.menuX * f1, (v.preY + v.preW) * f0 + (v.menuY + v.menuW) * f1, 0])
+  mat4.scale(m,m, [v.preW * f0 + v.menuW * f1, 3 * f1, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
+
   mat4.identity(m)
   mat4.translate(m,m, [v.menuX + 24, v.menuY + 61, 0])
   mat4.scale(m,m, [33/14, 33/14, 1])
