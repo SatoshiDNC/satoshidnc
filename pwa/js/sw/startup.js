@@ -1,4 +1,4 @@
-import { nostrWatchRelays } from '../nostor.js'
+import { nostrWatchRelays } from './nostor.js'
 
 const TAG = 'START'
 export function startupTasks() {
