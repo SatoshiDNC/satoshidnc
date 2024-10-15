@@ -20,6 +20,20 @@ export function drawRect(v, color, x,y,w,h) {
   mainShapes.drawArrays2('rect')
 }
 
+export function drawAvatar(v, x,y,w,h) {
+  const color = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
+  const mat = mat4.create()
+  const m = mat4.create()
+  mat4.identity(mat)
+  mat4.translate(mat, mat, [x, y, 0])
+  mat4.scale(mat, mat, [w/32, h/32, 1])
+  let x = -0.5, y = 8.5
+  c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
+    mat4.copy(m, mat)
+    nybbleFont.draw(x,y + i*8, str, color, v.mat, m)
+  })
+}
+
 export function drawPill(v, color, x,y,w,h) {
   mainShapes.useProg2()
   const m = mat4.create()
