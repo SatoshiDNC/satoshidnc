@@ -79,7 +79,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
         g.root.easeOut(g.target)
         g.formView.clear()
       }
-x    }
+    }
   }
 v.layoutFunc = function() {
   const v = this
