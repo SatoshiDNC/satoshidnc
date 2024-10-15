@@ -3,6 +3,7 @@ import { contacts, contactViewDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 import { contentView as chatRoomView } from '../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../personal.js'
+import { addedOn } from '../util.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -92,7 +93,7 @@ v.renderFunc = function() {
   for (const c of [ ...contacts.map(c => { return {
     hpub: c.hpub,
     name: getAttr(c.hpub, 'name'),
-    xmitText: getAttr(c.hpub, 'about') || `Added on ${c.added}`,
+    xmitText: getAttr(c.hpub, 'about') || addedOn(c.added)},
     xmitDate: new Date()
   }}) ]) {
 
