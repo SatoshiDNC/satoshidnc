@@ -39,7 +39,7 @@ export function reloadContacts() {
     let cursor = e.target.result
     if (cursor) {
       let v = cursor.value
-      newList.push({ hpub: v.hpub, relays: [], xmitDate: new Date(), xmitText: 'tbd' })
+      newList.push({ hpub: v.hpub, added: v.added, relays: [], xmitDate: new Date(), xmitText: 'tbd' })
       cursor.continue()
     } else {
       contacts.length = 0
