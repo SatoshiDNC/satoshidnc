@@ -1,5 +1,5 @@
-import { drawRoundedRect, drawAvatar, alpha } from '../../draw.js'
-import { personalData } from '../../personal.js'
+import { drawAvatar, alpha } from '../../draw.js'
+import { getPersonalData } from '../../personal.js'
 
 let v, g
 export const popupView = v = new fg.View(null)
@@ -35,7 +35,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   }
 v.setContact = function(hpub) {
   const v = this
-  v.contact = { hpub, name: personalData.filter(pd => pd.hpub == hpub && pd.key == 'name')?.[0]?.value || 'Unnamed' }
+  v.hpub = hpub
 }
 v.layoutFunc = function() {
   const v = this
@@ -92,7 +92,7 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  const hpub = v.contact.hpub
+  const hpub = v.hpub
   drawAvatar(v, hpub, v.preX * f0 + v.menuX * f1, v.preY * f0 + v.menuY * f1, v.preW * f0 + v.menuW * f1, v.preH * f0 + v.menuW * f1)
 
   mainShapes.useProg2()
@@ -108,7 +108,7 @@ v.renderFunc = function() {
   mat4.translate(m,m, [v.menuX + 24, v.menuY + 61, 0])
   mat4.scale(m,m, [33/14, 33/14, 1])
   const c = [1,1,1,1]
-  defaultFont.draw(0,0, 'TEST', [c[0],c[1],c[2],v.easingValue], v.mat, m)
+  defaultFont.draw(0,0, getPersonalData(hpub, 'name'), [c[0],c[1],c[2],v.easingValue], v.mat, m)
 
   // let i = 0
   // for (const item of v.items) {
