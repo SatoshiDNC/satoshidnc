@@ -91,7 +91,7 @@ v.renderFunc = function() {
   mat4.scale(m,m, [v.preW * f0 + v.menuW * f1, v.preH * f0 + v.menuH * f1, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
-  const hpub = contact.hpub
+  const hpub = v.contact.hpub
   drawAvatar(v, hpub, v.preX * f0 + v.menuX * f1, v.preY * f0 + v.menuY * f1, v.preW * f0 + v.menuW * f1, v.preH * f0 + v.menuW * f1)
   //drawRoundedRect(v, v.bgColor, 32, v.menuX,v.menuY,v.menuW,v.menuH * f1)
 
