@@ -34,8 +34,12 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const index = Math.floor((y - 167.5) / 200)
     const c = contacts?.[index]
     if (c) {
-      chatRoomView.setContact(c.hpub)
-      g.root.easeOut(g.target)
+      if (x < 175) {
+        console.log('profile click')
+      } else {
+        chatRoomView.setContact(c.hpub)
+        g.root.easeOut(g.target)
+      }
     }
   }
 v.activeFilter = v.filterGads[0].label
