@@ -2,7 +2,7 @@ export let db
 
 export function init() {
   return new Promise((resolve, reject) => {
-    const req = (window?.indexedDB || indexedDB).open('db', 1)
+    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 1)
     req.onsuccess = e => {
       db = req.result
       resolve()
