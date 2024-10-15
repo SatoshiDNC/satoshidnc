@@ -15,9 +15,9 @@ export function detectRelay(url) {
     if (!relay) {
       console.log(`[${TAG}] cognized new relay: ${JSON.stringify(url)}`)
       os.put({ url })
+      reloadRelays()
     }
   }
-  reloadRelays()
 }
 
 let reloadTimer
@@ -41,7 +41,7 @@ export function reloadRelays() {
         relays.length = 0
         relays.push(...newList)
         relayViewDependencies.map(v => v.setRenderFlag(true))
-        console.log(`[${TAG}] relays: ${relays.length}`)
+        console.log(`[${TAG}] total: ${relays.length}`)
       }
     }
   }
