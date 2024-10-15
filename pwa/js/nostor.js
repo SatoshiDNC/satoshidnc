@@ -2,6 +2,7 @@ import * as nip19 from 'nostr-tools/nip19'
 import { finalizeEvent, generateSecretKey, getPublicKey } from 'nostr-tools/pure'
 import { Relay } from 'nostr-tools/relay'
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
+export { nostrWatchRelays } from './sw/nostor.js'
 
 export function noteDecode(bech32) {
   try {
@@ -112,16 +113,5 @@ export function findEvent(id, url) {
       })  
     }
     operator()
-  })
-}
-
-export function nostrWatchRelays() {
-  return new Promise((resolve, reject) => {
-    fetch(`https://api.nostr.watch/v1/online`).then(resp => resp.json()).then(json => {
-      resolve(json)
-    }, rejectReason => {
-      console.log(rejectReason)
-      resolve([])
-    })
   })
 }
