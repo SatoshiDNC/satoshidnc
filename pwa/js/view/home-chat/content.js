@@ -93,7 +93,7 @@ v.renderFunc = function() {
   for (const c of [ ...contacts.map(c => { return {
     hpub: c.hpub,
     name: getAttr(c.hpub, 'name'),
-    xmitText: getAttr(c.hpub, 'about') || addedOn(c.added)},
+    xmitText: getAttr(c.hpub, 'about') || addedOn(c.added),
     xmitDate: new Date()
   }}) ]) {
 
