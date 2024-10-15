@@ -1,4 +1,4 @@
-import { drawRoundedRect } from '../../draw.js'
+import { drawRoundedRect, drawAvatar } from '../../draw.js'
 
 let v, g
 export const popupView = v = new fg.View(null)
