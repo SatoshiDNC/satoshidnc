@@ -9,11 +9,10 @@ v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
-v.menuX = 482
-v.menuY = 137
-v.menuW = 588
-v.menuH = 62 + 126
-v.menuR = 32
+v.menuX = 204
+v.menuY = 252
+v.menuW = 672
+v.menuH = 801
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
