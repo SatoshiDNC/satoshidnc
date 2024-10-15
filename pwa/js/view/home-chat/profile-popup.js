@@ -104,6 +104,12 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + 24, v.menuY + 61, 0])
+  mat4.scale(m,m, [33/14, 33/14, 1])
+  const c = [1,1,1,1]
+  defaultFont.draw(0,0, 'TEST', [c[0],c[1],c[2],v.easingValue], v.mat, m)
+
   // let i = 0
   // for (const item of v.items) {
   //   mat4.identity(m)
