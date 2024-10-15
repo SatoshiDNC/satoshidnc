@@ -88,17 +88,17 @@ v.renderFunc = function() {
   // mat4.scale(m,m, [v.menuW, v.menuH * v.easingValue, 1])
   // gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   // mainShapes.drawArrays2('rect')
-  drawRoundedRect(v, v.bgColor, 32, v.menuX,v.menuY,v.menuW,v.menuH * f1)
+  //drawRoundedRect(v, v.bgColor, 32, v.menuX,v.menuY,v.menuW,v.menuH * f1)
 
-  let i = 0
-  for (const item of v.items) {
-    mat4.identity(m)
-    mat4.translate(m,m, [v.menuX + 45, v.menuY + 79 + i * 126 + 33, 0])
-    mat4.scale(m,m, [33/14, 33/14, 1])
-    const c = v.textColor
-    defaultFont.draw(0,0, item.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
-    i++
-  }
+  // let i = 0
+  // for (const item of v.items) {
+  //   mat4.identity(m)
+  //   mat4.translate(m,m, [v.menuX + 45, v.menuY + 79 + i * 126 + 33, 0])
+  //   mat4.scale(m,m, [33/14, 33/14, 1])
+  //   const c = v.textColor
+  //   defaultFont.draw(0,0, item.label, [c[0],c[1],c[2],v.easingValue], v.mat, m)
+  //   i++
+  // }
 }
 
 export const popupShim = v = new fg.OverlayView(null)
