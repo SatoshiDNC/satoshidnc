@@ -9,6 +9,10 @@ v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
+v.preX = 31
+v.preY = 204
+v.preW = 127
+v.preH = 127
 v.menuX = 204
 v.menuY = 252
 v.menuW = 672
@@ -78,8 +82,8 @@ v.renderFunc = function() {
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)
-  mat4.translate(m,m, [v.menuX, v.menuY, 0])
-  mat4.scale(m,m, [v.menuW, v.menuH * v.easingValue, 1])
+  mat4.translate(m,m, [v.preX * f0 + v.menuX * f1, v.preY * f0 + v.menuY * f1, 0])
+  mat4.scale(m,m, [v.preW * f0 + v.menuW * f1, v.preH * f0 + v.menuH * f1, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
   //drawRoundedRect(v, v.bgColor, 32, v.menuX,v.menuY,v.menuW,v.menuH * f1)
