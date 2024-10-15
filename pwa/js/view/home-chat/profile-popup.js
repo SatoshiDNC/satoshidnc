@@ -30,8 +30,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   }
 v.layoutFunc = function() {
   const v = this
-  v.menuX = v.sw - v.menuW - 10
-  v.menuH = 62 + 126
+  v.menuX = (v.sw - v.menuW) / 2
   let g
   g = v.menuGad
   g.x = v.menuX
