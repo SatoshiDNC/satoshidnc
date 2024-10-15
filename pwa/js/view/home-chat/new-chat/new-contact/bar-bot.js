@@ -60,11 +60,14 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       }
 
       // We have the hex public key; import the contact
+      let cancel = false
       const existing = contacts.filter(c => c.hpub == hpub)?.[0]
       if (existing) {
         if (name != getPersonalData(existing.hpub, 'name')) {
           if (confirm(`Contact exists as '${existing.name}'.\nUpdate name?`)) {
             setPersonalData(hpub, 'name', name)
+          } else {
+            cancel = true
           }
         }
       } else {
@@ -72,9 +75,11 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
         relays?.map(r => detectRelay(r))
         relays?.map(r => addRelayContactRelation(r, hpub, R_KNOWS_C))
       }
-      g.root.easeOut(g.target)
-      g.formView.clear()
-    }
+      if (!cancel) {
+        g.root.easeOut(g.target)
+        g.formView.clear()
+      }
+x    }
   }
 v.layoutFunc = function() {
   const v = this
