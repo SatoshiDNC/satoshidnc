@@ -1,4 +1,5 @@
 import { contacts, addNewContact } from '../../../../contacts.js'
+import { getPersonalData} from '../../../../personal.js'
 import { detectRelay } from '../../../../relays.js'
 import { addRelayContactRelation, R_KNOWS_C } from '../../../../graph.js'
 import { drawPill } from '../../../../draw.js'
@@ -62,7 +63,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       let cancel = false
       const existing = contacts.filter(c => c.hpub == hpub)?.[0]
       if (existing) {
-        if (name != existing.name) {
+        if (name != getPersonalData(existing.hpub, 'name')) {
           if (!confirm(`Contact exists as '${existing.name}'.\nOverwrite?`)) {
             cancel = true
           }
