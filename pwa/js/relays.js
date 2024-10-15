@@ -13,7 +13,7 @@ export function detectRelay(url) {
   req.onsuccess = (e) => {
     const relay = req.result
     if (!relay) {
-      console.log(`[${TAG}] cognized new relay: ${JSON.stringify(relay)}`)
+      console.log(`[${TAG}] cognized new relay: ${JSON.stringify(url)}`)
       os.put({ url })
     }
   }
@@ -48,5 +48,5 @@ export function reloadRelays() {
   if (reloadTimer) {
     clearTimeout(reloadTimer)
   }
-  reloadTimer = setTimeout(reload, 100)
+  reloadTimer = setTimeout(reload)
 }
