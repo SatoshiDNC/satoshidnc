@@ -1,4 +1,5 @@
 import { drawRoundedRect, drawAvatar } from '../../draw.js'
+import { personalData } from '../../personal.js'
 
 let v, g
 export const popupView = v = new fg.View(null)
