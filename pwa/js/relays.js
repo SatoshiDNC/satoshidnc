@@ -1,5 +1,7 @@
 import { db } from './db.js'
 
+const TAG = 'RELAYS'
+
 export const relayViewDependencies = []
 
 export const relays = []
@@ -10,8 +12,8 @@ export function detectRelay(url) {
   const req = os.get(url)
   req.onsuccess = (e) => {
     const relay = req.result
-    console.log(relay)
     if (!relay) {
+      console.log(`[${TAG}] cognized new relay: ${JSON.stringify(relay)}`)
       os.put({ url })
     }
   }

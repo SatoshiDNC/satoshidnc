@@ -11,7 +11,6 @@ export function startupTasks() {
   }).then(onlineRelays => {
     onlineRelays.map(relay => {
       if (!relays.includes(relay)) {
-        console.log(`[${TAG}] cognized new relay: ${JSON.stringify(relay)}`)
         detectRelay(relay)
       }
     })
