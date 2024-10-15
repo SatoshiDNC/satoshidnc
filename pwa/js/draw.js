@@ -27,10 +27,10 @@ export function drawAvatar(v, x,y,w,h) {
   mat4.identity(mat)
   mat4.translate(mat, mat, [x, y, 0])
   mat4.scale(mat, mat, [w/32, h/32, 1])
-  let x = -0.5, y = 8.5
+  let dx = -0.5, dy = 8.5
   c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.copy(m, mat)
-    nybbleFont.draw(x,y + i*8, str, color, v.mat, m)
+    nybbleFont.draw(dx,dy + i*8, str, color, v.mat, m)
   })
 }
 
