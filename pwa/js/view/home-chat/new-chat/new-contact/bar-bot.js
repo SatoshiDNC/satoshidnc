@@ -63,8 +63,9 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
       let cancel = false
       const existing = contacts.filter(c => c.hpub == hpub)?.[0]
       if (existing) {
-        if (name != getPersonalData(existing.hpub, 'name')) {
-          if (confirm(`Contact exists as '${existing.name}'.\nUpdate name?`)) {
+        const existingName = getPersonalData(existing.hpub, 'name')
+        if (name != existingName) {
+          if (confirm(`Contact exists as '${existingName}'.\nUpdate name?`)) {
             setPersonalData(hpub, 'name', name)
           } else {
             cancel = true
