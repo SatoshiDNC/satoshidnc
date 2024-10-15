@@ -9,34 +9,31 @@ v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
 v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
-v.items = []
 v.menuX = 482
 v.menuY = 137
 v.menuW = 588
-v.menuH = 62 + 126 * v.currentItemCount
+v.menuH = 62 + 126
 v.menuR = 32
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
+    console.log('menu gad click')
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
     const index = Math.floor((y - 79 - 33 / 2 + 126 / 2) / 126)
-    if (index >= 0 && index < v.items.length) {
-      v.items[index].handler(v.items[index], popupRoot)
-      popupRoot.easeOut()
-    } else {
-      // console.log('menu', x, y, index)
-    }
+    popupRoot.easeOut()
+    // console.log('menu', x, y, index)
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function() {
+    console.log('screen gad click')
     popupRoot.easeOut()
   }
 v.layoutFunc = function() {
   const v = this
   v.menuX = v.sw - v.menuW - 10
-  v.menuH = 62 + 126 * v.currentItemCount
+  v.menuH = 62 + 126
   let g
   g = v.menuGad
   g.x = v.menuX
