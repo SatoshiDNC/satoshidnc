@@ -38,6 +38,7 @@ export function reloadRelays() {
       relays.length = 0
       relays.push(...newList)
       relayViewDependencies.map(v => v.setRenderFlag(true))
+      console.log(`[${TAG}] relays: ${relays.length}`)
     }
   }
 }
