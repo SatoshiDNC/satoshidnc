@@ -64,9 +64,9 @@ const ONE_DAY = 24 * 60 * 60 * 1000
 
 export function addedOn(timeStamp) {
   const now = Date.now()
-  if (new Date(timeStamp).getDate() == new Date(now).getDate()) {
+  if (Math.abs(now - timeStamp) < ONE_DAY && new Date(timeStamp).getDate() == new Date(now).getDate()) {
     return `Added today`
-  } else if (new Date(timeStamp).getDate() == new Date(now).getDate() - 1) {
+  } else if (now - timeStamp < 2 * ONE_DAY && new Date(timeStamp).getDate() == new Date(now).getDate() - 1) {
     return `Added yesterday`
   } else {
     return `Added on ${new Date(timeStamp).toString()}`
