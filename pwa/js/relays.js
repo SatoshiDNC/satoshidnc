@@ -20,25 +20,33 @@ export function detectRelay(url) {
   reloadRelays()
 }
 
+let reloadTimer
 export function reloadRelays() {
-  const tr = db.transaction('relays', 'readonly')
-  const os = tr.objectStore('relays')
-  const req = os.openCursor()
-  req.onerror = function(e) {
-     console.err(e)
-  }
-  const newList = []
-  req.onsuccess = function(e) {
-    let cursor = e.target.result
-    if (cursor) {
-      let v = cursor.value
-      newList.push({ url: v.url, contacts: [] })
-      cursor.continue()
-    } else {
-      relays.length = 0
-      relays.push(...newList)
-      relayViewDependencies.map(v => v.setRenderFlag(true))
-      console.log(`[${TAG}] relays: ${relays.length}`)
+  const reload = () => {
+    reloadTimer = undefined
+    const tr = db.transaction('relays', 'readonly')
+    const os = tr.objectStore('relays')
+    const req = os.openCursor()
+    req.onerror = function(e) {
+       console.err(e)
+    }
+    const newList = []
+    req.onsuccess = function(e) {
+      let cursor = e.target.result
+      if (cursor) {
+        let v = cursor.value
+        newList.push({ url: v.url, contacts: [] })
+        cursor.continue()
+      } else {
+        relays.length = 0
+        relays.push(...newList)
+        relayViewDependencies.map(v => v.setRenderFlag(true))
+        console.log(`[${TAG}] relays: ${relays.length}`)
+      }
     }
   }
+  if (reloadTimer) {
+    clearTimeout(reloadTimer)
+  }
+  reloadTimer = setTimeout(reload, 100)
 }
