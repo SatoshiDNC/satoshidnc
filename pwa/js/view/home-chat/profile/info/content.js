@@ -16,7 +16,7 @@ v.iconColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = '\x08'
-  g.x = 43, g.y = 52
+  g.x = 43, g.absY = 52
   g.w = 42, g.h = 42
   g.font = iconFont
   g.fontSize = 13
@@ -27,6 +27,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
+  g.absY = 51
   g.label = ':'
   g.font = iconFont
   g.fontSize = 11
@@ -54,6 +55,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
+  g.absY = 51
   g.label = '='
   g.font = iconFont
   g.fontSize = 11
@@ -72,14 +74,17 @@ v.layoutFunc = function() {
   v.minX = 0, v.maxX = v.sw
   v.minY = 0, v.maxY = v.sh*2
   let g
+  g = v.backGad
+  g.y = g.absY + v.userY
+  g.autoHull()
   g = v.menuGad
-  g.y = 51 + v.userY
+  g.y = g.absY + v.userY
   g.w = 12
   g.h = 45
   g.x = v.sw - 52 - g.w
   g.autoHull()
   g = v.lawGad
-  g.y = 51 + v.userY
+  g.y = g.absY + v.userY
   g.w = 45
   g.h = 45
   g.x = v.menuGad.x - 52 - g.w
@@ -109,7 +114,7 @@ v.renderFunc = function() {
   for (g of v.gadgets) if (g.font) {
     let gy = g.y
     if ([v.backGad, v.lawGad, v.menuGad].includes(g)) {
-      gy = g.y + v.userY
+      gy = g.absY + v.userY
     }
     mat4.identity(mat)
     mat4.translate(mat, mat, [g.x, gy+g.h, 0])
