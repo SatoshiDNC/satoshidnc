@@ -99,7 +99,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
 
-  const f1 = 1 - Math.max(0, Math.min(v.userY / 100, 1))
+  const f1 = Math.max(0, Math.min(v.userY / 100, 1))
   const f0 = 1 - f1
 
   // header background
@@ -123,7 +123,7 @@ v.renderFunc = function() {
   mainShapes.drawArrays2('rect')
 
   const hpub = v.hpub
-  drawAvatar(v, hpub, 129 * f0 + (v.sw-316)/2 * f1, 17 * f0 + 30 * f1 + v.userY, 114 * f0 + 316 * f1, 114 * f0 + 316 * f1)
+  drawAvatar(v, hpub, (v.sw-316)/2 * f0 + 129 * f1, 30 * f0 + 17 * f1 + v.userY, 316 * f0 + 114 * f1, 316 * f0 + 114 * f1)
 
   let t,tw,ts
 
@@ -132,7 +132,7 @@ v.renderFunc = function() {
   tw = defaultFont.calcWidth(t)
   ts = 45/14 * f0 + 49/14 * f1
   mat4.identity(mat)
-  mat4.translate(mat, mat, [277 * f0 + (v.sw - tw * ts) / 2 * f1, 98 * f0 + 430 * f1 + v.userY, 0])
+  mat4.translate(mat, mat, [(v.sw - tw * ts) / 2 * f0 + 277 * f1, 430 * f0 + 98 * f1 + v.userY, 0])
   mat4.scale(mat, mat, [ts, ts, 1])
   defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
 
