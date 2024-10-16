@@ -82,7 +82,10 @@ v.layoutFunc = function() {
   g.h = 45
   g.x = v.menuGad.x - 52 - g.w
   g.autoHull()
-  //v.swipeGad.layout.call(v.swipeGad)
+  g = v.swipeGad
+  g.minX = 0, g.maxX = v.sw
+  g.minY = 0, g.maxY = v.sh*2
+  g.layout.call(g)
 }
 v.renderFunc = function() {
   const v = this
