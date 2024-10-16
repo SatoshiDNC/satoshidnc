@@ -18,6 +18,15 @@ v.menuX = 204
 v.menuY = 252
 v.menuW = 672
 v.menuH = 801
+v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.w = 53, g.h = 53, g.y = v.menuH - 36 - g.h
+  g.icon = 'i'
+  g.clickFunc = function(e) {
+    const g = this, v = this.viewport
+    // popupRoot.easeOut()
+    console.log('info')
+  }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
@@ -40,6 +49,9 @@ v.layoutFunc = function() {
   const v = this
   v.menuX = (v.sw - v.menuW) / 2
   let g
+  g = v.infoGad
+  g.x = v.menuX + (v.menuW - g.w) / 2
+  g.autoHull()
   g = v.menuGad
   g.x = v.menuX
   g.y = v.menuY
@@ -131,11 +143,12 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  mat4.identity(m)
-  mat4.translate(m,m, [(v.preX + v.preW/2) * f0 + (v.menuX + v.menuW/2) * f1, (v.preY + v.preH) * f0 + (v.menuY + v.menuH - 36) * f1, 0])
-  mat4.scale(m,m, [53/18 * f1, 53/18 * f1, 1])
   c = colors.accent
-  iconFont.draw(0,0, 'i', [c[0],c[1],c[2],f1], v.mat, m)
+  let g = v.infoGad
+  mat4.identity(m)
+  mat4.translate(m,m, [(v.preX + v.preW/2) * f0 + g.x * f1, (v.preY + v.preH) * f0 + (g.y + g.h) * f1, 0])
+  mat4.scale(m,m, [g.w/18 * f1, g.h/18 * f1, 1])
+  iconFont.draw(0,0, g.icon, [c[0],c[1],c[2],f1], v.mat, m)
 
   // let i = 0
   // for (const item of v.items) {
