@@ -1,5 +1,6 @@
 import { setEasingParameters } from '../../../util.js'
 import { drawAvatar } from '../../../../draw.js'
+import { getPersonalData as get } from '../../../../personal.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -52,11 +53,11 @@ v.renderFunc = function() {
   let t,tw,ts
 
   const mat = mat4.create()
-  t = 'Info'
+  t = get(hpub, 'name')
   tw = defaultFont.calcWidth(t)
   ts = 49/14
   mat4.identity(mat)
-  mat4.translate(mat, mat, [v.sw - tw * ts, 430, 0])
+  mat4.translate(mat, mat, [(v.sw - tw * ts) / 2, 430, 0])
   mat4.scale(mat, mat, [ts, ts, 1])
   defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
 
