@@ -77,10 +77,10 @@ v.layoutFunc = function() {
   g.h = 45
   g.autoHull()
   g = v.lawGad
-  g.x = v.menuGad.x - 64
   g.y = 51
   g.w = 45
   g.h = 45
+  g.x = v.menuGad.x - 64 - g.w
   g.autoHull()
 }
 v.renderFunc = function() {
