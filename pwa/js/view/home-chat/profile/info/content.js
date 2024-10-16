@@ -49,11 +49,16 @@ v.renderFunc = function() {
   const hpub = v.hpub
   drawAvatar(v, hpub, (v.sw-316)/2, 30, 316, 316)
 
+  let t,tw,ts
+
   const mat = mat4.create()
+  t = 'Info'
+  tw = defaultFont.calcWidth(t)
+  ts = 49/14
   mat4.identity(mat)
-  mat4.translate(mat, mat, [141, 98, 0])
-  mat4.scale(mat, mat, [46/14, 46/14, 1])
-  defaultFont.draw(0,0, 'Info', v.textColor, v.mat, mat)
+  mat4.translate(mat, mat, [v.sw - tw * ts, 430, 0])
+  mat4.scale(mat, mat, [ts, ts, 1])
+  defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
 
   for (g of v.gadgets) {
     mat4.identity(mat)
