@@ -45,3 +45,4 @@ settings_top.backGad.root = settings_root, settings_top.backGad.target = homeCha
 settings_content.profileGad.root = settings_root, settings_content.profileGad.target = settings_profile_root
 settings_profile_top.backGad.root = settings_profile_root, settings_profile_top.backGad.target = settings_root
 profile_popup_content.infoGad.target = profile_info_root, profile_popup_content.infoGad.root = profile_popup_root2
+profile_info_root.backGad.target = homeChat_root, profile_info_root.backGad.root = profile_info_root
