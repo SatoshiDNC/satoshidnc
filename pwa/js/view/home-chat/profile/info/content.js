@@ -97,6 +97,7 @@ v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
+  const m = mat4.create()
 
   const f1 = 1 - Math.max(0, Math.min(v.userY / 100, 1))
   const f0 = 1 - f1
