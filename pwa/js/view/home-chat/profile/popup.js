@@ -22,6 +22,7 @@ v.menuH = 801
 v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.w = 53, g.h = 53, g.y = v.menuY + v.menuH - 36 - g.h
+  g.z = 1
   g.icon = 'i'
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
@@ -32,7 +33,6 @@ v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.z = -1
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
@@ -41,7 +41,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.z = -1
   g.clickFunc = function() {
     popupRoot.easeOut()
   }
