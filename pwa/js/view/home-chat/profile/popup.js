@@ -196,7 +196,7 @@ popupRoot.out = function() {
   fg.setRoot(popupRoot.ghostView)
 }
 
-export const popupDissolveRoot = v = new fg.View(null)
+export const popupDissolveRoot = v = new fg.OverlayView(null)
 v.name = Object.keys({popupDissolveRoot}).pop()
 v.renderFunc = function() {
   console.log('render')
