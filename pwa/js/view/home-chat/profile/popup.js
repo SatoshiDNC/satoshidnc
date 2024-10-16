@@ -202,6 +202,7 @@ v.renderFunc = function() {
   const v = this
   console.log(`${v.name} render`)
   this.a.renderAll()
+  v.renderFinish()
 }
 v.takeOver = function() {
   console.log('takeOver')
