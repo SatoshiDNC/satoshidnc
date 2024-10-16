@@ -11,7 +11,7 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.preX = 31
-v.preY = 204 + 147
+v.preY = 204 + 147 + 200 * 0
 v.preW = 127
 v.preH = 127
 v.menuX = 204
@@ -21,7 +21,6 @@ v.menuH = 801
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
-    console.log('menu gad click')
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
     // popupRoot.easeOut()
@@ -30,12 +29,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function() {
-    console.log('screen gad click')
     popupRoot.easeOut()
   }
-v.setContact = function(hpub) {
+v.setContact = function(hpub, y) {
   const v = this
   v.hpub = hpub
+  v.preY = y
 }
 v.layoutFunc = function() {
   const v = this
