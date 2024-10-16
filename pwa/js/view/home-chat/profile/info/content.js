@@ -56,5 +56,6 @@ v.renderFunc = function() {
     mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
     g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
   }
+  v.renderFinish() // kludge
 }
 setEasingParameters(v)
