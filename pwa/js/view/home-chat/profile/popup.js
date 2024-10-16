@@ -202,7 +202,7 @@ v.name = Object.keys({popupDissolveRoot}).pop()
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.renderFunc = function() {
   const v = this
-  console.log(`${v.name} render`)
+  // console.log(`${v.name} render`)
   this.a.renderAll()
   v.renderFinish() // kludge
 }
