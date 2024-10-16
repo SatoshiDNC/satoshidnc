@@ -26,6 +26,7 @@ v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     g.target.setContact(v.hpub)
+    console.log('here')
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
@@ -183,6 +184,7 @@ popupRoot.easeIn = function() {
   }
 }
 popupRoot.easeOut = function(target) {
+  console.log('easeOut')
   const v = this
   if (target) {
     v.originalEaseOut(target)
