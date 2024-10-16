@@ -10,6 +10,27 @@ v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.hintColor = [0xb5/0xff, 0xb9/0xff, 0xbc/0xff, 1]
 v.textColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.iconColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+v.gadgets.push(g = v.backGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = '\x08'
+  g.x = 43, g.y = 52
+  g.w = 42, g.h = 42
+  g.font = iconFont
+  g.fontSize = 13
+  g.autoHull()
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    g.root.easeOut(g.target)
+  }
+v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.label = '='
+  g.font = iconFont
+  g.fontSize = 11
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    console.log(`click '${g.label}'`)
+  }
 v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
@@ -22,22 +43,17 @@ v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
-  const m = mat4.create()
-  let s
-
-  mat4.identity(m)
-  mat4.translate(m,m, [73, 158, 0])
-  s = 43/iconFont.calcWidth('\x00')
-  mat4.scale(m,m, [s, s, 1])
-  iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
-
-  mat4.identity(m)
-  mat4.translate(m,m, [73, 158 + 212, 0])
-  s = 43/iconFont.calcWidth('\x06')
-  mat4.scale(m,m, [s, s, 1])
-  iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
+  const mat = mat4.create()
+  mat4.identity(mat)
+  mat4.translate(mat, mat, [141, 98, 0])
+  mat4.scale(mat, mat, [46/14, 46/14, 1])
+  defaultFont.draw(0,0, 'Info', v.textColor, v.mat, mat)
 
   for (g of v.gadgets) {
+    mat4.identity(mat)
+    mat4.translate(mat, mat, [g.x, g.y+g.h, 0])
+    mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
+    g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
   }
 }
 setEasingParameters(v)
