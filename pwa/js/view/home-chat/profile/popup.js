@@ -199,7 +199,7 @@ popupRoot.out = function() {
 export const popupDissolveRoot = v = new fg.View(null)
 v.name = Object.keys({popupDissolveRoot}).pop()
 v.renderFunc = function() {
-  this.a.renderFunc()
+  this.a?.renderFunc()
 }
 v.takeOver = function() {
   const v = this
