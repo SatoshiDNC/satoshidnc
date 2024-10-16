@@ -20,7 +20,7 @@ v.menuW = 672
 v.menuH = 801
 v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.w = 53, g.h = 53, g.y = v.menuH - 36 - g.h
+  g.w = 53, g.h = 53, g.y = v.menuY + v.menuH - 36 - g.h
   g.icon = 'i'
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
