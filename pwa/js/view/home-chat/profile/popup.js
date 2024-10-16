@@ -1,5 +1,6 @@
 import { drawAvatar, alpha } from '../../../draw.js'
 import { getPersonalData } from '../../../personal.js'
+import { setEasingParameters } from '../../util.js'
 
 let v, g
 export const popupView = v = new fg.View(null)
