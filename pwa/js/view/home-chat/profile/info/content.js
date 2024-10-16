@@ -101,6 +101,26 @@ v.renderFunc = function() {
   const f1 = 1 - Math.max(0, Math.min(v.userY / 100, 1))
   const f0 = 1 - f1
 
+  // header background
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [0, 0, 0])
+  mat4.scale(m,m, [v.sw, 147, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
+
+  // subtle divider line
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [0, 147-2, 0])
+  mat4.scale(m,m, [v.sw, 2, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
+
   const hpub = v.hpub
   drawAvatar(v, hpub, 129 * f0 + (v.sw-316)/2 * f1, 17 * f0 + 30 * f1 + v.userY, 114 * f0 + 316 * f1, 114 * f0 + 316 * f1)
 
