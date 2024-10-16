@@ -83,7 +83,7 @@ v.setContact = function(hpub) {
   }
   v.socket.addEventListener('open', event => {
     console.log(`[${TAG}] open`)
-    socket.send('Hello Server!')
+    v.socket.send('Hello Server!')
   })
   v.socket.addEventListener('close', e => {
     console.log(`[${TAG}] close`)
