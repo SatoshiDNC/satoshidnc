@@ -79,7 +79,7 @@ v.layoutFunc = function() {
   g = v.lawGad
   g.x = v.menuGad.x - 64
   g.y = 51
-  g.w = 12
+  g.w = 45
   g.h = 45
   g.autoHull()
 }
