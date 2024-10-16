@@ -107,8 +107,12 @@ v.renderFunc = function() {
   defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
 
   for (g of v.gadgets) if (g.font) {
+    let gy = g.y
+    if (g === v.backGad) {
+      gy = g.y + v.userY
+    }
     mat4.identity(mat)
-    mat4.translate(mat, mat, [g.x, g.y+g.h, 0])
+    mat4.translate(mat, mat, [g.x, gy+g.h, 0])
     mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
     g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
   }
