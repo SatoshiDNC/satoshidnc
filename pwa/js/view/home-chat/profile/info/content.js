@@ -1,4 +1,5 @@
 import { setEasingParameters } from '../../../util.js'
+import { drawAvatar } from '../../../../draw.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -43,7 +44,11 @@ v.layoutFunc = function() {
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
-  gl.clear(gl.COLOR_BUFFER_BIT)  
+  gl.clear(gl.COLOR_BUFFER_BIT)
+
+  const hpub = v.hpub
+  drawAvatar(v, hpub, (v.sw-316)/2, 30, 316, 316)
+
   const mat = mat4.create()
   mat4.identity(mat)
   mat4.translate(mat, mat, [141, 98, 0])
