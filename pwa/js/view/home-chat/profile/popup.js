@@ -200,7 +200,7 @@ export const popupDissolveRoot = v = new fg.View(null)
 v.name = Object.keys({popupDissolveRoot}).pop()
 v.renderFunc = function() {
   console.log('render')
-  this.a?.renderFunc?.()
+  this.a.renderAll()
 }
 v.takeOver = function() {
   console.log('takeOver')
