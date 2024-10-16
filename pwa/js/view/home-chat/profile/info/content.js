@@ -73,26 +73,26 @@ v.setContact = function(hpub) {
   v.hpub = hpub
   v.userY = 0
   v.requestTime = Date.now()
-  const relay = randomRelay()
+  const relay = 'wss://relay.satoshidnc.com'//randomRelay()
   console.log('random relay:', relay)
   try {
     v.socket = new WebSocket(relay)
-    console.log(`${TAG} created socket`)
+    console.log(`[${TAG}] created socket`)
   } catch (e) {
-    console.log(`${TAG} error:`, e)
+    console.log(`[${TAG}] error:`, e)
   }
   v.socket.addEventListener('open', event => {
-    console.log(`${TAG} open`)
+    console.log(`[${TAG}] open`)
     socket.send('Hello Server!')
   })
   v.socket.addEventListener('close', e => {
-    console.log(`${TAG} close`)
+    console.log(`[${TAG}] close`)
   })
   v.socket.addEventListener('error', e => {
-    console.log(`${TAG} error`)
+    console.log(`[${TAG}] error`)
   })
   v.socket.addEventListener('message', event => {
-    console.log(`${TAG} message`)
+    console.log(`[${TAG}] message`)
     console.log('Message from server ', event.data)
   })
 
