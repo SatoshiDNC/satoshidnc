@@ -1,6 +1,7 @@
 import { setEasingParameters } from '../../../util.js'
 import { drawAvatar, alpha } from '../../../../draw.js'
 import { getPersonalData as get } from '../../../../personal.js'
+import { randomRelay } from '../../../../relays.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -69,6 +70,21 @@ v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
   v.userY = 0
+  v.requestTime = Date.now()
+  const relay = randomRelay()
+  console.log('random relay:', relay)
+  // const socket = new WebSocket(relay)
+
+  // // Connection opened
+  // socket.addEventListener("open", (event) => {
+  //   socket.send("Hello Server!")
+  // })
+
+  // // Listen for messages
+  // socket.addEventListener("message", (event) => {
+  //   console.log("Message from server ", event.data)
+  // })
+
 }
 v.layoutFunc = function() {
   const v = this
