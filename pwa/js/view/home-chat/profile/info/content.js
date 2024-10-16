@@ -68,6 +68,7 @@ v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
 v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
+  v.userY = 0
 }
 v.layoutFunc = function() {
   const v = this
