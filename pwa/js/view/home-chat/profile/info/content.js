@@ -71,16 +71,16 @@ v.layoutFunc = function() {
   const v = this
   let g
   g = v.menuGad
-  g.x = v.sw - 64
   g.y = 51
   g.w = 12
   g.h = 45
+  g.x = v.sw - 52 - g.w
   g.autoHull()
   g = v.lawGad
   g.y = 51
   g.w = 45
   g.h = 45
-  g.x = v.menuGad.x - 64 - g.w
+  g.x = v.menuGad.x - 52 - g.w
   g.autoHull()
 }
 v.renderFunc = function() {
