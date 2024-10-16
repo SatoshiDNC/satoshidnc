@@ -29,6 +29,7 @@ v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
     console.log('here')
     g.root.takeOver()
     g.root.easingValue = 1
+    g.root.easingRate /= 10
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
