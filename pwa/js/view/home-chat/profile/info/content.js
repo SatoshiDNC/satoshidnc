@@ -1,5 +1,5 @@
 import { setEasingParameters } from '../../../util.js'
-import { drawAvatar } from '../../../../draw.js'
+import { drawAvatar, alpha } from '../../../../draw.js'
 import { getPersonalData as get } from '../../../../personal.js'
 
 let v, g
