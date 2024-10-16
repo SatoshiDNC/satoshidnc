@@ -20,6 +20,8 @@ import { barTop as settings_top } from './view/settings/bar-top.js'
 import { contentView as settings_content } from './view/settings/content.js'
 import { profileRoot as settings_profile_root } from './view/settings/profile/root.js'
 import { barTop as settings_profile_top } from './view/settings/profile/bar-top.js'
+import { popupView as profile_popup } from './view/home-chat/profile/popup.js'
+import { contentView as profile_info_root } from './view/home-chat/profile/info/content.js'
 
 homeChatTop.menuGad.root = homeChat_root
 homeChatTop.menuGad.target = menuRoot
@@ -42,3 +44,4 @@ homeChat_nostorToolsView.menuGad.newContactRoot = homeChat_newChat_newContact_ro
 settings_top.backGad.root = settings_root, settings_top.backGad.target = homeChat_root
 settings_content.profileGad.root = settings_root, settings_content.profileGad.target = settings_profile_root
 settings_profile_top.backGad.root = settings_profile_root, settings_profile_top.backGad.target = settings_root
+profile_popup.infoGad.target = profile_info_root
