@@ -27,6 +27,7 @@ v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     g.target.setContact(v.hpub)
     console.log('here')
+    g.root.takeOver()
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
@@ -197,6 +198,10 @@ popupRoot.out = function() {
 
 export const popupDissolveRoot = v = new fg.OverlayView(null)
 v.name = Object.keys({popupDissolveRoot}).pop()
-v.a = popupRoot; popupRoot.parent = v
-// v.b = chatRoot; chatRoot.parent = v
+v.takeOver = function() {
+  const v = this
+  v.a = popupRoot; popupRoot.parent = v
+  // v.b = popupRoot; popupRoot.parent = v
+  fg.setRoot(v)
+}
 setEasingParameters(popupDissolveRoot)
