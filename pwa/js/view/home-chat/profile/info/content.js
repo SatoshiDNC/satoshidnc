@@ -61,7 +61,7 @@ v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     console.log(`click '${g.label}'`)
   }
-v.gadgets.push(g = v.scrollGad = new fg.ScrollGadget(v))
+v.gadgets.push(g = v.scrollGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SCROLLABLE_UPDOWN
 v.setContact = function(hpub) {
   const v = this
