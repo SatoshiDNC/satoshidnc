@@ -102,7 +102,7 @@ v.renderFunc = function() {
   mat4.scale(mat, mat, [ts, ts, 1])
   defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
 
-  for (g of v.gadgets) {
+  for (g of v.gadgets) if (g.font) {
     mat4.identity(mat)
     mat4.translate(mat, mat, [g.x, g.y+g.h, 0])
     mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
