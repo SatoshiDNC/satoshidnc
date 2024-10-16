@@ -68,6 +68,12 @@ v.setContact = function(hpub) {
 v.layoutFunc = function() {
   const v = this
   let g
+  g = v.menuGad
+  g.x = v.sw - 64
+  g.y = 51
+  g.w = 12
+  g.h = 45
+  g.autoHull()
 }
 v.renderFunc = function() {
   const v = this
