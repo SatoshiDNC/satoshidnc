@@ -75,16 +75,20 @@ v.setContact = function(hpub) {
   v.requestTime = Date.now()
   const relay = randomRelay()
   console.log('random relay:', relay)
-  v.socket = new WebSocket(relay)
+  try {
+    v.socket = new WebSocket(relay)
+  } catch (e) {
+    console.log(`${TAG} error:`, e)
+  }
   v.socket.addEventListener('open', event => {
     console.log(`${TAG} open`)
     socket.send('Hello Server!')
   })
-  v.socket.addEventListener('close', event => {
-    console.log(`${TAG} close`, event)
+  v.socket.addEventListener('close', e => {
+    console.log(`${TAG} close`)
   })
-  v.socket.addEventListener('error', event => {
-    console.log(`${TAG} error`, event)
+  v.socket.addEventListener('error', e => {
+    console.log(`${TAG} error`)
   })
   v.socket.addEventListener('message', event => {
     console.log(`${TAG} message`)
