@@ -4,7 +4,7 @@ export const setEasingParameters = function(v) {
   v.easingRate = 0.033
   v.renderFinish = function() {
     const v = this
-    console.log(`${v.name} renderFinish`, v.easingValue, v.easingRate, v.easingState, v.easingTarget?.name)
+    // console.log(`${v.name} renderFinish`, v.easingValue, v.easingRate, v.easingState, v.easingTarget?.name)
     if (v.easingState) {
       if (v.easingState == 1) {
         v.easingValue += v.easingRate
@@ -40,7 +40,7 @@ export const setEasingParameters = function(v) {
   }
   v.easeOut = function(targetView) {
     const v = this
-    console.log(`${v.name} easeOut`)
+    // console.log(`${v.name} easeOut`)
     v.easingState = -1
     v.easingRate = 0.1
     v.easingTarget = targetView
