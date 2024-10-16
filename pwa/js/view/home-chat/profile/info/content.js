@@ -84,6 +84,7 @@ v.setContact = function(hpub) {
   }
   v.socket.addEventListener('open', event => {
     const deltaTime = Date.now() - v.startTime
+    v.deltaTime = ''+deltaTime
     console.log(`[${TAG}] open`, deltaTime)
     v.socket.send(JSON.stringify([
       'REQ',
@@ -169,6 +170,14 @@ v.renderFunc = function() {
   ts = 49/14 * f0 + 45/14 * f1
   mat4.identity(mat)
   mat4.translate(mat, mat, [(v.sw - tw * ts) / 2 * f0 + 277 * f1, 430 * f0 + 98 * f1 + v.userY, 0])
+  mat4.scale(mat, mat, [ts, ts, 1])
+  defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
+
+  t = ''+v.deltaTime
+  tw = defaultFont.calcWidth(t)
+  ts = 45/14
+  mat4.identity(mat)
+  mat4.translate(mat, mat, [(v.sw - tw * ts) / 2, 450, 0])
   mat4.scale(mat, mat, [ts, ts, 1])
   defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
 
