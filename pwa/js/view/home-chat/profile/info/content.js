@@ -3,6 +3,8 @@ import { drawAvatar, alpha } from '../../../../draw.js'
 import { getPersonalData as get } from '../../../../personal.js'
 import { randomRelay } from '../../../../relays.js'
 
+const TAG = 'INFO'
+
 let v, g
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
@@ -73,17 +75,21 @@ v.setContact = function(hpub) {
   v.requestTime = Date.now()
   const relay = randomRelay()
   console.log('random relay:', relay)
-  // const socket = new WebSocket(relay)
-
-  // // Connection opened
-  // socket.addEventListener("open", (event) => {
-  //   socket.send("Hello Server!")
-  // })
-
-  // // Listen for messages
-  // socket.addEventListener("message", (event) => {
-  //   console.log("Message from server ", event.data)
-  // })
+  v.socket = new WebSocket(relay)
+  v.socket.addEventListener('open', event => {
+    console.log(`${TAG} open`)
+    socket.send('Hello Server!')
+  })
+  v.socket.addEventListener('close', event => {
+    console.log(`${TAG} close`)
+  })
+  v.socket.addEventListener('error', event => {
+    console.log(`${TAG} error`)
+  })
+  v.socket.addEventListener('message', event => {
+    console.log(`${TAG} message`)
+    console.log('Message from server ', event.data)
+  })
 
 }
 v.layoutFunc = function() {
