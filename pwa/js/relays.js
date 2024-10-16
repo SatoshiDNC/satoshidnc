@@ -6,6 +6,10 @@ export const relayViewDependencies = []
 
 export const relays = []
 
+export function randomRelay() {
+  return relays[Math.floor(Math.random() * relays.length)]
+}
+
 export function detectRelay(url) {
   const tr = db.transaction('relays', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('relays')
