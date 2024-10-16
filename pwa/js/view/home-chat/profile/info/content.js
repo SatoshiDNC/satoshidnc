@@ -77,7 +77,7 @@ v.setContact = function(hpub) {
   console.log('random relay:', relay)
   try {
     v.socket = new WebSocket(relay)
-    console.log(`[${TAG}] created socket`)
+    console.log(`[${TAG}] created socket`, v.socket.readyState, WebSocket.OPEN)
   } catch (e) {
     console.log(`[${TAG}] error:`, e)
   }
