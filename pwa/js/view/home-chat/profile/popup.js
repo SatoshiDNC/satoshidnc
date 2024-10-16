@@ -167,6 +167,8 @@ v.a = popupView; popupView.parent = v
 // v.b = chatRoot; chatRoot.parent = v
 
 export const popupRoot = popupShim
+setEasingParameters(popupRoot)
+popupRoot.originalEaseOut = popupRoot.easeOut
 popupRoot.ghostOpacity = 0
 popupRoot.easeIn = function() {
   const v = this
@@ -179,11 +181,15 @@ popupRoot.easeIn = function() {
     fg.setRoot(v)
   }
 }
-popupRoot.easeOut = function() {
+popupRoot.easeOut = function(target) {
   const v = this
-  popupView.easingState = -1
-  popupView.easingRate = 0.1
-  v.setRenderFlag(true)
+  if (target) {
+    v.originalEaseOut(target)
+  } else {
+    popupView.easingState = -1
+    popupView.easingRate = 0.1
+    v.setRenderFlag(true)
+  }
 }
 popupRoot.easingState = function() {
   return popupView.easingState
