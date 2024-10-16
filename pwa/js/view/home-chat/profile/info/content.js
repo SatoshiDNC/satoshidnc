@@ -61,6 +61,8 @@ v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     console.log(`click '${g.label}'`)
   }
+v.gadgets.push(g = v.scrollGad = new fg.ScrollGadget(v))
+  g.actionFlags = fg.GAF_SCROLLABLE_UPDOWN
 v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
@@ -70,6 +72,12 @@ v.layoutFunc = function() {
   let g
   g = v.menuGad
   g.x = v.sw - 64
+  g.y = 51
+  g.w = 12
+  g.h = 45
+  g.autoHull()
+  g = v.lawGad
+  g.x = v.menuGad.x - 64
   g.y = 51
   g.w = 12
   g.h = 45
