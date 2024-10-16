@@ -82,6 +82,7 @@ v.renderFunc = function() {
   const f0 = 1 - f1
   const m = mat4.create()
 
+  // window
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
@@ -94,6 +95,17 @@ v.renderFunc = function() {
   const hpub = v.hpub
   drawAvatar(v, hpub, v.preX * f0 + v.menuX * f1, v.preY * f0 + v.menuY * f1, v.preW * f0 + v.menuW * f1, v.preH * f0 + v.menuW * f1)
 
+  // soften
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(alpha([.5,.5,.5,1], 0.5)))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [v.preX * f0 + v.menuX * f1, v.preY * f0 + v.menuY * f1, 0])
+  mat4.scale(m,m, [v.preW * f0 + v.menuW * f1, v.preH * f0 + v.menuW * f1, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
+
+  // text shadow
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(alpha(v.bgColor, 0.2)))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
@@ -103,6 +115,13 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
+  mat4.identity(m)
+  mat4.translate(m,m, [v.preX * f0 + (v.menuX + 24) * f1, v.preY * f0 + (v.menuY + 61) * f1, 0])
+  mat4.scale(m,m, [33/14 * f1, 33/14 * f1, 1])
+  const c = [1,1,1,1]
+  defaultFont.draw(0,0, getPersonalData(hpub, 'name'), [c[0],c[1],c[2],v.easingValue], v.mat, m)
+
+  // separator
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([.2,.2,.2,1]))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
@@ -111,12 +130,6 @@ v.renderFunc = function() {
   mat4.scale(m,m, [v.preW * f0 + v.menuW * f1, 3 * f1, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
-
-  mat4.identity(m)
-  mat4.translate(m,m, [v.preX * f0 + (v.menuX + 24) * f1, v.preY * f0 + (v.menuY + 61) * f1, 0])
-  mat4.scale(m,m, [33/14 * f1, 33/14 * f1, 1])
-  const c = [1,1,1,1]
-  defaultFont.draw(0,0, getPersonalData(hpub, 'name'), [c[0],c[1],c[2],v.easingValue], v.mat, m)
 
   // let i = 0
   // for (const item of v.items) {
