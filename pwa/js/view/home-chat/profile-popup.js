@@ -118,9 +118,8 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m,m, [v.preX * f0 + (v.menuX + 24) * f1, v.preY * f0 + (v.menuY + 61) * f1, 0])
   mat4.scale(m,m, [33/14 * f1, 33/14 * f1, 1])
-  const c = [1,1,1,1]
-  //defaultFont.draw(0,0, getPersonalData(hpub, 'name'), [c[0],c[1],c[2],v.easingValue], v.mat, m)
-  iconFont.draw(0,0, 'i', [c[0],c[1],c[2],v.easingValue], v.mat, m)
+  let c = [1,1,1,1]
+  defaultFont.draw(0,0, getPersonalData(hpub, 'name'), [c[0],c[1],c[2],f1], v.mat, m)
 
   // separator
   mainShapes.useProg2()
@@ -131,6 +130,12 @@ v.renderFunc = function() {
   mat4.scale(m,m, [v.preW * f0 + v.menuW * f1, 3 * f1, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
+
+  mat4.identity(m)
+  mat4.translate(m,m, [(v.preX + v.preW/2) * f0 + (v.menuX + v.menuW/2) * f1, (v.preY + v.preH) * f0 + (v.menuY + v.menuH - 36) * f1, 0])
+  mat4.scale(m,m, [53/18 * f1, 53/18 * f1, 1])
+  c = colors.accent
+  iconFont.draw(0,0, 'i', [c[0],c[1],c[2],f1], v.mat, m)
 
   // let i = 0
   // for (const item of v.items) {
