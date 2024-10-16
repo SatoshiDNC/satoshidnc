@@ -73,13 +73,13 @@ v.layoutFunc = function() {
   v.minY = 0, v.maxY = v.sh*2
   let g
   g = v.menuGad
-  g.y = 51
+  g.y = 51 + v.userY
   g.w = 12
   g.h = 45
   g.x = v.sw - 52 - g.w
   g.autoHull()
   g = v.lawGad
-  g.y = 51
+  g.y = 51 + v.userY
   g.w = 45
   g.h = 45
   g.x = v.menuGad.x - 52 - g.w
