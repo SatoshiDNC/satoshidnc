@@ -47,6 +47,7 @@ v.setContact = function(hpub, y) {
   const v = this
   v.hpub = hpub
   v.preY = y
+  v.easingValue = 0
 }
 v.layoutFunc = function() {
   const v = this
