@@ -97,8 +97,11 @@ v.renderFunc = function() {
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
 
+  const f1 = Math.max(0, Math.min(v.userY / 100, 1))
+  const f0 = 1 - f1
+
   const hpub = v.hpub
-  drawAvatar(v, hpub, (v.sw-316)/2, 30, 316, 316)
+  drawAvatar(v, hpub, 129 * f0 + (v.sw-316)/2 * f1, 30 * f0 + 17 * f1, 316 * f0 + 114 * f1, 316 * f0 + 114 * f1)
 
   let t,tw,ts
 
