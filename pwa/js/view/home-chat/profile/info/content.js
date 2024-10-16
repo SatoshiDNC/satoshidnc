@@ -69,6 +69,8 @@ v.setContact = function(hpub) {
 }
 v.layoutFunc = function() {
   const v = this
+  v.minX = 0, v.maxX = v.sw
+  v.minY = 0, v.maxY = v.sh*2
   let g
   g = v.menuGad
   g.y = 51
@@ -83,8 +85,6 @@ v.layoutFunc = function() {
   g.x = v.menuGad.x - 52 - g.w
   g.autoHull()
   g = v.swipeGad
-  g.minX = 0, g.maxX = v.sw
-  g.minY = 0, g.maxY = v.sh*2
   g.layout.call(g)
 }
 v.renderFunc = function() {
