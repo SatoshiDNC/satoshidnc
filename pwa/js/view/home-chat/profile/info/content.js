@@ -81,10 +81,10 @@ v.setContact = function(hpub) {
     socket.send('Hello Server!')
   })
   v.socket.addEventListener('close', event => {
-    console.log(`${TAG} close`)
+    console.log(`${TAG} close`, event)
   })
   v.socket.addEventListener('error', event => {
-    console.log(`${TAG} error`)
+    console.log(`${TAG} error`, event)
   })
   v.socket.addEventListener('message', event => {
     console.log(`${TAG} message`)
