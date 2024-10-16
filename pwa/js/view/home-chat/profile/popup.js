@@ -32,6 +32,7 @@ v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
+  g.z = -1
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
@@ -40,6 +41,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
+  g.z = -1
   g.clickFunc = function() {
     popupRoot.easeOut()
   }
