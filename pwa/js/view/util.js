@@ -42,7 +42,7 @@ export const setEasingParameters = function(v) {
     const v = this
     console.log(`${v.name} official easeOut`)
     v.easingState = -1
-    v.easingRate = 0.1
+    v.easingRate = 0.01
     v.easingTarget = targetView
     v.setRenderFlag(true)
   }  
