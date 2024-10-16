@@ -109,9 +109,9 @@ v.renderFunc = function() {
   const mat = mat4.create()
   t = get(hpub, 'name') || 'Unnamed'
   tw = defaultFont.calcWidth(t)
-  ts = 49/14 * f0 + 45/14 * f1
+  ts = 45/14 * f0 + 49/14 * f1
   mat4.identity(mat)
-  mat4.translate(mat, mat, [(v.sw - tw * ts) / 2 * f0 + 277 * f1, 430 * f0 + 98 * f1 + v.userY, 0])
+  mat4.translate(mat, mat, [277 * f0 + (v.sw - tw * ts) / 2 * f1, 98 * f0 + 430 * f1 + v.userY, 0])
   mat4.scale(mat, mat, [ts, ts, 1])
   defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
 
