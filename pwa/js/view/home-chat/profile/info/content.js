@@ -108,7 +108,7 @@ v.renderFunc = function() {
 
   for (g of v.gadgets) if (g.font) {
     let gy = g.y
-    if (g === v.backGad) {
+    if ([v.backGad, v.lawGad, v.menuGad].includes(g)) {
       gy = g.y + v.userY
     }
     mat4.identity(mat)
