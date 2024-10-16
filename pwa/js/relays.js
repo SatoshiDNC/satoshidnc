@@ -7,6 +7,7 @@ export const relayViewDependencies = []
 export const relays = []
 
 export function randomRelay() {
+  console.log(relays.length)
   return relays[Math.floor(Math.random() * relays.length)]
 }
 
