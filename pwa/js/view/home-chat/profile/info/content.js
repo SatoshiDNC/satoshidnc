@@ -53,7 +53,7 @@ v.renderFunc = function() {
   let t,tw,ts
 
   const mat = mat4.create()
-  t = get(hpub, 'name')
+  t = get(hpub, 'name') || 'Unnamed'
   tw = defaultFont.calcWidth(t)
   ts = 49/14
   mat4.identity(mat)
