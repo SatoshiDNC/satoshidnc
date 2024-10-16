@@ -1,5 +1,5 @@
-import { drawAvatar, alpha } from '../../draw.js'
-import { getPersonalData } from '../../personal.js'
+import { drawAvatar, alpha } from '../../../draw.js'
+import { getPersonalData } from '../../../personal.js'
 
 let v, g
 export const popupView = v = new fg.View(null)
