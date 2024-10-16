@@ -26,7 +26,6 @@ v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     g.target.setContact(v.hpub)
-    console.log('here')
     g.root.takeOver()
     g.root.easingValue = 1
     g.root.easeOut(g.target)
@@ -207,7 +206,6 @@ v.renderFunc = function() {
   v.renderFinish() // kludge
 }
 v.takeOver = function() {
-  console.log('takeOver')
   const v = this
   v.a = popupRoot; popupRoot.parent = v
   // v.b = popupRoot; popupRoot.parent = v
