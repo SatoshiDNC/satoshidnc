@@ -28,6 +28,7 @@ v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
     g.target.setContact(v.hpub)
     console.log('here')
     g.root.takeOver()
+    g.root.easingValue = 1
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
@@ -203,7 +204,7 @@ v.renderFunc = function() {
   const v = this
   console.log(`${v.name} render`)
   this.a.renderAll()
-  v.renderFinish()
+  v.renderFinish() // kludge
 }
 v.takeOver = function() {
   console.log('takeOver')
