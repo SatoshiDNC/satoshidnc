@@ -24,8 +24,8 @@ v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
   g.icon = 'i'
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    // popupRoot.easeOut()
-    console.log('info')
+    g.target.setContact(v.hpub)
+    g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
