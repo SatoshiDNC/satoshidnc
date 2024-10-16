@@ -97,7 +97,7 @@ v.renderFunc = function() {
 
   // soften
   mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(alpha([.2,.2,.2,1], 0.5)))
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(alpha([.2,.2,.2,1], 0.8)))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)
   mat4.translate(m,m, [v.preX * f0 + v.menuX * f1, v.preY * f0 + v.menuY * f1, 0])
