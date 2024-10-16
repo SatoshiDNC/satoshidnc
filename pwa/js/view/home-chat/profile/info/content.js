@@ -73,7 +73,7 @@ v.setContact = function(hpub) {
   v.hpub = hpub
   v.userY = 0
   v.requestTime = Date.now()
-  const relay = randomRelay()
+  const relay = 'wss://relay.satoshidnc.com'//randomRelay()
   console.log('random relay:', relay)
   try {
     v.startTime = Date.now()
