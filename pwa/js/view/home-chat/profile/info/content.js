@@ -102,7 +102,7 @@ v.renderFunc = function() {
   const f0 = 1 - f1
 
   const hpub = v.hpub
-  drawAvatar(v, hpub, 129 * f0 + (v.sw-316)/2 * f1, 17 * f0 + 30 * f1, 114 * f0 + 316 * f1, 114 * f0 + 316 * f1)
+  drawAvatar(v, hpub, 129 * f0 + (v.sw-316)/2 * f1, 17 * f0 + 30 * f1 + v.userY, 114 * f0 + 316 * f1, 114 * f0 + 316 * f1)
 
   let t,tw,ts
 
