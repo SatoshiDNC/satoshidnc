@@ -14,7 +14,7 @@ export function setRelayStat(relay, key, value) {
 }
 
 export function getRelayStat(relay, key) {
-  return stats.filter(s => s.relay == relay && s.key == key)?.[0]?.value
+  return relayStats.filter(s => s.relay == relay && s.key == key)?.[0]?.value
 }
 
 export function reloadRelayStats() {
