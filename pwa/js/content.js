@@ -87,6 +87,7 @@ export function getFeed(hpub) {
   return new Promise((resolve, reject) => {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
+    console.log('querying on hpub', hpub)
     const req = os.index('firstSeen').openCursor(window.IDBKeyRange.bound([hpub], [hpub + '0'], true, false), 'prev')
     req.onerror = function(e) {
       console.err(e)
@@ -96,9 +97,11 @@ export function getFeed(hpub) {
       let cursor = e.target.result
       if (cursor) {
         let v = cursor.value
+        console.log('v', v)
         posts.push(v)
         cursor.continue()
       } else {
+        console.log('end')
         resolve(posts)
       }
     }
