@@ -19,6 +19,7 @@ v.hintColor = [0xb5/0xff, 0xb9/0xff, 0xbc/0xff, 1]
 v.textColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.iconColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.gadgets.push(g = v.backGad = new fg.Gadget(v))
+  g.type = 'header'
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = '\x08'
   g.x = 43, g.absY = 52
@@ -31,6 +32,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
+  g.type = 'header'
   g.actionFlags = fg.GAF_CLICKABLE
   g.absY = 51
   g.label = ':'
@@ -59,6 +61,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     }
   }
 v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
+  g.type = 'header'
   g.actionFlags = fg.GAF_CLICKABLE
   g.absY = 51
   g.label = '='
@@ -185,16 +188,9 @@ v.renderFunc = function() {
   mat4.scale(mat, mat, [ts, ts, 1])
   defaultFont.draw(0,0, t, colors.inactive, v.mat, mat)
 
-  for (g of v.gadgets) if (g.font) {
-    let gy = g.y
-    if ([v.backGad, v.lawGad, v.menuGad].includes(g)) {
-      gy = g.absY + v.userY
-    }
-    mat4.identity(mat)
-    mat4.translate(mat, mat, [g.x, gy+g.h, 0])
-    mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
-    g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
-  } else g.renderFunc?.()
+  for (g of v.gadgets) {
+    g.renderFunc?.()
+  }
 
   // header background
   mainShapes.useProg2()
@@ -215,6 +211,17 @@ v.renderFunc = function() {
   mat4.scale(m,m, [v.sw, 2, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
+
+  for (g of v.gadgets) if (g.type == 'header') {
+    let gy = g.y
+    if ([v.backGad, v.lawGad, v.menuGad].includes(g)) {
+      gy = g.absY + v.userY
+    }
+    mat4.identity(mat)
+    mat4.translate(mat, mat, [g.x, gy+g.h, 0])
+    mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
+    g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
+  }
 
   const hpub = v.hpub
   drawAvatar(v, hpub, (v.sw-316)/2 * f0 + 129 * f1, 30 * f0 + 17 * f1 + v.userY, 316 * f0 + 114 * f1, 316 * f0 + 114 * f1)
