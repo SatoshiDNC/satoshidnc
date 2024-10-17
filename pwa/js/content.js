@@ -89,14 +89,17 @@ export function getFeed() {
     req.onerror = function(e) {
       console.err(e)
     }
+    const posts = []
     req.onsuccess = function(e) {
       let cursor = e.target.result
       if (cursor) {
         let v = cursor.value
         console.log(v)
+        posts.push(v)
         cursor.continue()
       } else {
         console.log(`end`)
+        resolve(posts)
       }
     }
   })
