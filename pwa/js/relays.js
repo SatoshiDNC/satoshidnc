@@ -72,7 +72,7 @@ export function setRelation(relayUrl, contactHpub, relation) {
 export function setHasData(relayUrl, contactHpub) {
   const tr = db.transaction('relay-contact-relations', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('relay-contact-relations')
-  const req = os.put({ relayUrl, contactHpub, HAS_DATA, asOf: Date.now() })
+  const req = os.put({ relayUrl, contactHpub, relation: HAS_DATA, asOf: Date.now() })
   req.onsuccess = (e) => {
     const req = os.delete([ relayUrl, contactHpub, HAS_NO_DATA ])
     req.onsuccess = (e) => {
@@ -84,7 +84,7 @@ export function setHasData(relayUrl, contactHpub) {
 export function setHasNoData(relayUrl, contactHpub) {
   const tr = db.transaction('relay-contact-relations', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('relay-contact-relations')
-  const req = os.put({ relayUrl, contactHpub, HAS_NO_DATA, asOf: Date.now() })
+  const req = os.put({ relayUrl, contactHpub, relation: HAS_NO_DATA, asOf: Date.now() })
   req.onsuccess = (e) => {
     // reload()
   }
