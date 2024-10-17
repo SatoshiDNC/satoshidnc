@@ -4,18 +4,18 @@ export const relayStatsViewDependencies = []
 
 export const relayStats = []
 
-export function setRelayStat(relay, key, value) {
+export function setRelayStat(relayUrl, key, value) {
   const tr = db.transaction('relay-stats', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('relay-stats')
-  console.log(relay, key, value)
-  const req = os.put({ relay, key, value })
+  console.log(relayUrl, key, value)
+  const req = os.put({ relayUrl, key, value })
   req.onsuccess = (e) => {
     reloadPersonalData()
   }
 }
 
-export function getRelayStat(relay, key) {
-  return relayStats.filter(s => s.relay == relay && s.key == key)?.[0]?.value
+export function getRelayStat(relayUrl, key) {
+  return relayStats.filter(s => s.relayUrl == relayUrl && s.key == key)?.[0]?.value
 }
 
 export function reloadRelayStats() {
@@ -30,7 +30,7 @@ export function reloadRelayStats() {
     let cursor = e.target.result
     if (cursor) {
       let v = cursor.value
-      newList.push({ relay: v.relay, key: v.key, value: v.value })
+      newList.push({ relayUrl: v.relayUrl, key: v.key, value: v.value })
       cursor.continue()
     } else {
       relayStats.length = 0
