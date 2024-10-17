@@ -68,6 +68,20 @@ v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     console.log(`click '${g.label}'`)
   }
+v.gadgets.push(g = new fg.Gadget(v))
+  g.type = '-'
+  g.y = 808, g.h = 22
+  g.renderFunc = function() {
+    const g = this, v = g.viewport
+    mainShapes.useProg2()
+    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([0,0,0,1]))
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+    mat4.identity(m)
+    mat4.translate(m,m, [0, g.y, 0])
+    mat4.scale(m,m, [v.sw, g.h, 1])
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+    mainShapes.drawArrays2('rect')
+  }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.setContact = function(hpub) {
@@ -210,7 +224,7 @@ v.renderFunc = function() {
     mat4.translate(mat, mat, [g.x, gy+g.h, 0])
     mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
     g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
-  }
+  } else g.renderFunc?.()
   v.renderFinish() // kludge
 }
 setEasingParameters(v)
