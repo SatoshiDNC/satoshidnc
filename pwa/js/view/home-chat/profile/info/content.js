@@ -3,6 +3,7 @@ import { drawAvatar, alpha } from '../../../../draw.js'
 import { getPersonalData as get } from '../../../../personal.js'
 import { getRelayStat, setRelayStat } from '../../../../stats.js'
 import { randomRelay } from '../../../../relays.js'
+import { aggregateEvent } from '../../../../nostor.js'
 
 const TAG = 'INFO'
 
@@ -119,8 +120,7 @@ v.setContact = function(hpub) {
     let m = JSON.parse(e.data)
     if (m[0] == 'EVENT' && m[1] == 'feed') {
       const event = m[2]
-      aggregate(event)
-      console.log(`[${TAG}] event`, JSON.stringify(event))
+      aggregateEvent(event)
     } else {
       console.log(`[${TAG}] message`, JSON.stringify(m))
     }
