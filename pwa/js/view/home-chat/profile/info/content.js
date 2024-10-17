@@ -111,7 +111,7 @@ v.setContact = function(hpub) {
         const mat = mat4.create()
         let t,tw,ts
 
-        t = `${g.data.kind} · ${kindInfo.filter(r=>r.kindMax?r.kind<=g.data.kind&&g.data.kind<=r.kindMax:r.kind==g.data.kind)?.[0]?.desc.toUpperCase()}`
+        t = `${g.data.kind} · ${(''+kindInfo.filter(r=>r.kindMax?r.kind<=g.data.kind&&g.data.kind<=r.kindMax:r.kind==g.data.kind)?.[0]?.desc).toUpperCase()}`
         tw = defaultFont.calcWidth(t)
         ts = 20/14
         mat4.identity(mat)
