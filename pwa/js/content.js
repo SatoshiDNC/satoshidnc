@@ -3,18 +3,18 @@ import { getRelayStat, setRelayStat } from './stats.js'
 import { randomRelay } from './relays.js'
 import { contentView as debugView } from './view/home-chat/profile/info/content.js'
 
-export function aggregateEvent(e) {
+export function aggregateEvent(hpub, e) {
   const TAG = 'aggregateEvent'
   const now = Date.now()
   return new Promise((resolve, reject) => {
     if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid event')
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
-    const req = os.get(e.id)
+    const req = os.index('id').get(e.id)
     req.onsuccess = () => {
       if (!req.result) {
         console.log(`[${TAG}] new event`, JSON.stringify(e))
-        const req = os.put({ id: e.id, firstSeen: now, data: e })
+        const req = os.put({ hpub, firstSeen: now, data: e })
         req.onsuccess = () => {
           resolve()
         }
@@ -76,7 +76,7 @@ export function pingFeed(hpub) {
     let m = JSON.parse(e.data)
     if (m[0] == 'EVENT' && m[1] == 'feed') {
       const event = m[2]
-      aggregateEvent(event)
+      aggregateEvent(hpub, event)
     } else {
       console.log(`[${TAG}] message`, JSON.stringify(m))
     }
