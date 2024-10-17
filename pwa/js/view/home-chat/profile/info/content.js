@@ -95,7 +95,6 @@ v.setContact = function(hpub) {
   pingFeed()
   getFeed().then(posts => {
     for (const post of posts) {
-      console.log(post)
       let g
 
       const g1 = g = new fg.Gadget(v)
@@ -103,8 +102,20 @@ v.setContact = function(hpub) {
       g.renderFunc = v.lastSep.renderFunc
 
       const g2 = g = new fg.Gadget(v)
-      g.type = 'post', g.y = 0, g.h = 100
-      //g.renderFunc = v.firstSep.renderFunc
+      g.type = 'post', g.y = 0, g.h = 300
+      g.data = post.data
+      g.renderFunc = function() {
+        const g = this, v = g.viewport
+        let t,tw,ts
+
+        t = ''+g.data.kind
+        tw = defaultFont.calcWidth(t)
+        ts = 37/14
+        mat4.identity(mat)
+        mat4.translate(mat, mat, [25, g.y + 25 + 37, 0])
+        mat4.scale(mat, mat, [ts, ts, 1])
+        defaultFont.draw(0,0, t, colors.inactive, v.mat, mat)
+      }
 
       v.gadgets.splice(v.gadgets.length - tailGads - 1, 0, g1, g2)
     }
