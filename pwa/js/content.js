@@ -31,7 +31,7 @@ export function pingFeed() {
   requestTime = Date.now()
   v.requestTime = requestTime
   const relay = 'wss://relay.satoshidnc.com'//randomRelay()
-  console.log('random relay:', relay)
+  console.log(`[${TAG}] query relay:`, relay)
   let avgConnect = getRelayStat(relay, 'avgConnect')
   try {
     v.socket = new WebSocket(relay)
@@ -94,11 +94,9 @@ export function getFeed() {
       let cursor = e.target.result
       if (cursor) {
         let v = cursor.value
-        console.log(v)
         posts.push(v)
         cursor.continue()
       } else {
-        console.log(`end`)
         resolve(posts)
       }
     }
