@@ -115,7 +115,7 @@ v.setContact = function(hpub) {
         tw = defaultFont.calcWidth(t)
         ts = 20/14
         mat4.identity(mat)
-        mat4.translate(mat, mat, [25, g.y + 25 + 37, 0])
+        mat4.translate(mat, mat, [15, g.y + 15 + 20, 0])
         mat4.scale(mat, mat, [ts, ts, 1])
         defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
       }
