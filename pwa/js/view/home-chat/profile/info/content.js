@@ -179,13 +179,10 @@ v.layoutFunc = function() {
 
   v.gadgets.push(...tail)
 
-
   // v.gadgets.push(g = new fg.Gadget(v))
   // g.type = '-', g.y = y, g.h = Math.max(22, v.sh - y)
   // g.renderFunc = v.firstSep.renderFunc
   // y += g.h
-
-  console.log(y, v.gadgets)
 
   v.maxY = y
 
