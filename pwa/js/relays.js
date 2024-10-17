@@ -53,5 +53,16 @@ export function reloadRelays() {
   if (reloadTimer) {
     clearTimeout(reloadTimer)
   }
-  reloadTimer = setTimeout(reload)
+  reloadTimer = setTimeout(reload, 10)
+}
+
+export const HAS_DATA = 'HAS_DATA'
+
+export function setRelation(relayUrl, contactHpub, relation) {
+  const tr = db.transaction('relay-contact-relations', 'readwrite', { durability: 'strict' })
+  const os = tr.objectStore('relay-contact-relations')
+  const req = os.put({ relayUrl, contactHpub, relation })
+  req.onsuccess = (e) => {
+    // reload()
+  }
 }

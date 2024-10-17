@@ -2,6 +2,7 @@ import { db } from './db.js'
 import { getRelayStat, setRelayStat } from './stats.js'
 import { randomRelay } from './relays.js'
 import { contentView as debugView } from './view/home-chat/profile/info/content.js'
+import { setRelation, HAS_DATA } from './relays.js'
 
 export function aggregateEvent(hpub, e) {
   const TAG = 'aggregateEvent'
@@ -77,6 +78,7 @@ export function pingFeed(hpub) {
     if (m[0] == 'EVENT' && m[1] == 'feed') {
       const event = m[2]
       aggregateEvent(hpub, event)
+      setRelation(relay, hpub, HAS_DATA)
     } else {
       console.log(`[${TAG}] message`, JSON.stringify(m))
     }
