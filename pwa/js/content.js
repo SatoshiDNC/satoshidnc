@@ -14,7 +14,7 @@ export function aggregateEvent(hpub, e) {
     req.onsuccess = () => {
       if (!req.result) {
         console.log(`[${TAG}] new event`, JSON.stringify(e))
-        const req = os.put({ hpub, firstSeen: now, data: e })
+        const req = os.add({ hpub, firstSeen: now, data: e })
         req.onsuccess = () => {
           resolve()
         }
