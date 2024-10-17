@@ -111,13 +111,13 @@ v.setContact = function(hpub) {
         const mat = mat4.create()
         let t,tw,ts
 
-        t = `${g.data.kind} ${kindInfo.filter(r=>r.kindMax?r.kind<=g.data.kind&&g.data.kind<=r.kindMax:r.kind==g.data.kind)?.[0]?.desc}`
+        t = `${g.data.kind} ${kindInfo.filter(r=>r.kindMax?r.kind<=g.data.kind&&g.data.kind<=r.kindMax:r.kind==g.data.kind)?.[0]?.desc.toUpperCase()}`
         tw = defaultFont.calcWidth(t)
-        ts = 37/14
+        ts = 20/14
         mat4.identity(mat)
         mat4.translate(mat, mat, [25, g.y + 25 + 37, 0])
         mat4.scale(mat, mat, [ts, ts, 1])
-        defaultFont.draw(0,0, t, colors.inactive, v.mat, mat)
+        defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
       }
 
       v.gadgets.splice(v.gadgets.length - tailGads - 1, 0, g1, g2)
