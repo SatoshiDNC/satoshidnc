@@ -102,7 +102,7 @@ v.setContact = function(hpub) {
       g.renderFunc = v.lastSep.renderFunc
 
       const g2 = g = new fg.Gadget(v)
-      g.type = 'post', g.y = 0, g.h = 300
+      g.type = 'post', g.y = 0, g.h = 500
       g.data = post.data
       g.renderFunc = function() {
         const g = this, v = g.viewport
