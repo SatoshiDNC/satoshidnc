@@ -106,6 +106,7 @@ v.setContact = function(hpub) {
       g.data = post.data
       g.renderFunc = function() {
         const g = this, v = g.viewport
+        const mat = mat4.create()
         let t,tw,ts
 
         t = ''+g.data.kind
