@@ -91,6 +91,7 @@ v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
   v.userY = 0
+  v.requestTime = undefined
   v.gadgets.splice(fixedGads, v.gadgets.length - fixedGads - tailGads - 1)
   pingFeed(v.hpub)
   getFeed(v.hpub).then(posts => {

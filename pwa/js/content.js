@@ -44,7 +44,6 @@ export function pingFeed(hpub) {
     console.log(`[${TAG}] error:`, e)
   }
   socket.addEventListener('open', event => {
-    if (thisRequestTime != requestTime) return
     const deltaTime = Date.now() - requestTime
     if (avgConnect) {
       const w0 = avgConnect.weight, w1 = w0 + 1
@@ -55,8 +54,10 @@ export function pingFeed(hpub) {
     }
     setRelayStat(relay, 'avgConnect', avgConnect)
     setRelayStat(relay, 'lastConnect', { time: deltaTime, date: requestTime })
-    debugView.deltaTime = deltaTime
-    debugView.setRenderFlag(true)
+    if (thisRequestTime == requestTime) {
+      debugView.deltaTime = deltaTime
+      debugView.setRenderFlag(true)
+    }
     console.log(`[${TAG}] open`, deltaTime)
     socket.send(JSON.stringify([
       'REQ',
