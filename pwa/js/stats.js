@@ -7,6 +7,7 @@ export const relayStats = []
 export function setRelayStat(relay, key, value) {
   const tr = db.transaction('relay-stats', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('relay-stats')
+  console.log(relay, key, value)
   const req = os.put({ relay, key, value })
   req.onsuccess = (e) => {
     reloadPersonalData()
