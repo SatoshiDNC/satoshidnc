@@ -85,7 +85,7 @@ export function getFeed() {
   return new Promise((resolve, reject) => {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
-    const req = os.index('firstSeen').openCursor(null, 'next')
+    const req = os.index('firstSeen').openCursor(null, 'prev')
     req.onerror = function(e) {
       console.err(e)
     }
