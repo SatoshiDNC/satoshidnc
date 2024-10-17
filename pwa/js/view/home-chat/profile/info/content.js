@@ -120,6 +120,7 @@ v.setContact = function(hpub) {
         defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
       }
       g.clickFunc = function() {
+        const g = this, v = g.viewport
         console.log('click', g.data)
       }
 
