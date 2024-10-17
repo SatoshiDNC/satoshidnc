@@ -170,9 +170,31 @@ v.renderFunc = function() {
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
+  const mat = mat4.create()
 
   const f1 = Math.max(0, Math.min(v.userY / 100, 1))
   const f0 = 1 - f1
+
+  let t,tw,ts
+
+  t = ''+v.deltaTime
+  tw = defaultFont.calcWidth(t)
+  ts = 37/14
+  mat4.identity(mat)
+  mat4.translate(mat, mat, [(v.sw - tw * ts) / 2, 515, 0])
+  mat4.scale(mat, mat, [ts, ts, 1])
+  defaultFont.draw(0,0, t, colors.inactive, v.mat, mat)
+
+  for (g of v.gadgets) if (g.font) {
+    let gy = g.y
+    if ([v.backGad, v.lawGad, v.menuGad].includes(g)) {
+      gy = g.absY + v.userY
+    }
+    mat4.identity(mat)
+    mat4.translate(mat, mat, [g.x, gy+g.h, 0])
+    mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
+    g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
+  } else g.renderFunc?.()
 
   // header background
   mainShapes.useProg2()
@@ -197,9 +219,6 @@ v.renderFunc = function() {
   const hpub = v.hpub
   drawAvatar(v, hpub, (v.sw-316)/2 * f0 + 129 * f1, 30 * f0 + 17 * f1 + v.userY, 316 * f0 + 114 * f1, 316 * f0 + 114 * f1)
 
-  let t,tw,ts
-
-  const mat = mat4.create()
   t = get(hpub, 'name') || 'Unnamed'
   tw = defaultFont.calcWidth(t)
   ts = 49/14 * f0 + 45/14 * f1
@@ -208,24 +227,6 @@ v.renderFunc = function() {
   mat4.scale(mat, mat, [ts, ts, 1])
   defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
 
-  t = ''+v.deltaTime
-  tw = defaultFont.calcWidth(t)
-  ts = 37/14
-  mat4.identity(mat)
-  mat4.translate(mat, mat, [(v.sw - tw * ts) / 2, 515, 0])
-  mat4.scale(mat, mat, [ts, ts, 1])
-  defaultFont.draw(0,0, t, colors.inactive, v.mat, mat)
-
-  for (g of v.gadgets) if (g.font) {
-    let gy = g.y
-    if ([v.backGad, v.lawGad, v.menuGad].includes(g)) {
-      gy = g.absY + v.userY
-    }
-    mat4.identity(mat)
-    mat4.translate(mat, mat, [g.x, gy+g.h, 0])
-    mat4.scale(mat, mat, [g.h/g.fontSize, g.h/g.fontSize, 1])
-    g.font.draw(0,0, g.label, v.textColor, v.mat, mat)
-  } else g.renderFunc?.()
   v.renderFinish() // kludge
 }
 setEasingParameters(v)
