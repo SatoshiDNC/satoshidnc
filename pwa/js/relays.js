@@ -57,11 +57,33 @@ export function reloadRelays() {
 }
 
 export const HAS_DATA = 'HAS_DATA'
+export const HAS_NO_DATA = 'HAS_NO_DATA'
 
 export function setRelation(relayUrl, contactHpub, relation) {
   const tr = db.transaction('relay-contact-relations', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('relay-contact-relations')
-  const req = os.put({ relayUrl, contactHpub, relation })
+  const req = os.put({ relayUrl, contactHpub, relation, asOf: Date.now() })
+  req.onsuccess = (e) => {
+    // reload()
+  }
+}
+
+export function setHasData(relayUrl, contactHpub) {
+  const tr = db.transaction('relay-contact-relations', 'readwrite', { durability: 'strict' })
+  const os = tr.objectStore('relay-contact-relations')
+  const req = os.put({ relayUrl, contactHpub, HAS_DATA, asOf: Date.now() })
+  req.onsuccess = (e) => {
+    const req = os.delete([ relayUrl, contactHpub, HAS_NO_DATA ])
+    req.onsuccess = (e) => {
+      // reload()
+    }
+  }
+}
+
+export function setHasNoData(relayUrl, contactHpub) {
+  const tr = db.transaction('relay-contact-relations', 'readwrite', { durability: 'strict' })
+  const os = tr.objectStore('relay-contact-relations')
+  const req = os.put({ relayUrl, contactHpub, HAS_NO_DATA, asOf: Date.now() })
   req.onsuccess = (e) => {
     // reload()
   }

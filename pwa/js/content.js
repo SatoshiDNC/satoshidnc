@@ -2,7 +2,7 @@ import { db } from './db.js'
 import { getRelayStat, setRelayStat } from './stats.js'
 import { randomRelay } from './relays.js'
 import { contentView as debugView } from './view/home-chat/profile/info/content.js'
-import { setRelation, HAS_DATA } from './relays.js'
+import { setHasData } from './relays.js'
 
 export function aggregateEvent(hpub, e) {
   const TAG = 'aggregateEvent'
@@ -78,7 +78,7 @@ export function pingFeed(hpub) {
     if (m[0] == 'EVENT' && m[1] == 'feed') {
       const event = m[2]
       aggregateEvent(hpub, event)
-      setRelation(relay, hpub, HAS_DATA)
+      setHasData(relay, hpub)
     } else {
       console.log(`[${TAG}] message`, JSON.stringify(m))
     }
@@ -89,7 +89,6 @@ export function getFeed(hpub) {
   return new Promise((resolve, reject) => {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
-    console.log('querying on hpub', hpub)
     const req = os.index('firstSeen').openCursor(window.IDBKeyRange.bound([hpub, 0], [hpub, 91729187740298]), 'prev')
     req.onerror = function(e) {
       console.err(e)
@@ -99,11 +98,9 @@ export function getFeed(hpub) {
       let cursor = e.target.result
       if (cursor) {
         let v = cursor.value
-        console.log('v', v)
         posts.push(v)
         cursor.continue()
       } else {
-        console.log('end')
         resolve(posts)
       }
     }
