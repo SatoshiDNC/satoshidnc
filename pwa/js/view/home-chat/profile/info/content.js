@@ -104,9 +104,14 @@ v.setContact = function(hpub) {
       g.renderFunc = v.lastSep.renderFunc
 
       const g2 = g = new fg.Gadget(v)
-      g.type = 'post', g.y = 0, g.h = 500
+      g.type = 'post'
       g.actionFlags = fg.GAF_CLICKABLE
       g.data = post.data
+      g.clickFunc = function() {
+        console.log('click')
+        const g = this, v = g.viewport
+        console.log('click', g.data)
+      }
       g.renderFunc = function() {
         const g = this, v = g.viewport
         const mat = mat4.create()
@@ -119,10 +124,6 @@ v.setContact = function(hpub) {
         mat4.translate(mat, mat, [15, g.y + 15 + 20, 0])
         mat4.scale(mat, mat, [ts, ts, 1])
         defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
-      }
-      g.clickFunc = function() {
-        const g = this, v = g.viewport
-        console.log('click', g.data)
       }
 
       v.gadgets.splice(v.gadgets.length - tailGads - 1, 0, g1, g2)
@@ -156,7 +157,8 @@ v.layoutFunc = function() {
 
   let y = 808
   for (g of todo) {
-    g.y = y
+    g.x = 0, g.y = y
+    g.w = v.sw, g.h = 500
     v.gadgets.push(g)
     y += g.h
     g.autoHull()
