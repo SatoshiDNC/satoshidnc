@@ -117,7 +117,13 @@ v.setContact = function(hpub) {
   })
   v.socket.addEventListener('message', e => {
     let m = JSON.parse(e.data)
-    console.log(`[${TAG}] message`, JSON.stringify(m))
+    if (m[0] == 'EVENT' && m[1] == 'feed') {
+      const event = m[2]
+      aggregate(event)
+      console.log(`[${TAG}] event`, JSON.stringify(event))
+    } else {
+      console.log(`[${TAG}] message`, JSON.stringify(m))
+    }
   })
 
 }
