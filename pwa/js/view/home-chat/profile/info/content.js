@@ -2,6 +2,7 @@ import { setEasingParameters } from '../../../util.js'
 import { drawAvatar, alpha } from '../../../../draw.js'
 import { getPersonalData as get } from '../../../../personal.js'
 import { pingFeed, getFeed } from '../../../../content.js'
+import { kindInfo } from '../../../../nostor.js'
 
 const TAG = 'INFO'
 
@@ -110,7 +111,7 @@ v.setContact = function(hpub) {
         const mat = mat4.create()
         let t,tw,ts
 
-        t = ''+g.data.kind
+        t = ''+kindInfo.filter(r=>r.kind==g.data.kind)?.[0]?.desc
         tw = defaultFont.calcWidth(t)
         ts = 37/14
         mat4.identity(mat)
