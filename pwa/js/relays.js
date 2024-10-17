@@ -7,6 +7,7 @@ export const relayViewDependencies = []
 export const relays = []
 
 export function randomRelay() {
+  const relays = ['wss://relay.satoshidnc.com', 'wss://relay.fanfares.io']
   console.log(relays.length)
   return relays[Math.floor(Math.random() * relays.length)]
 }
