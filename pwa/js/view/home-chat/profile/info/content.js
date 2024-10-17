@@ -1,6 +1,7 @@
 import { setEasingParameters } from '../../../util.js'
 import { drawAvatar, alpha } from '../../../../draw.js'
 import { getPersonalData as get } from '../../../../personal.js'
+import { getRelayStat, setRelayStat } from '../../../../stats.js'
 import { randomRelay } from '../../../../relays.js'
 
 const TAG = 'INFO'
@@ -76,16 +77,26 @@ v.setContact = function(hpub) {
   v.requestTime = requestTime
   const relay = 'wss://relay.satoshidnc.com'//randomRelay()
   console.log('random relay:', relay)
+  let avgConnect = getRelayStat(relay, 'avgConnect')
   try {
     v.socket = new WebSocket(relay)
     console.log(`[${TAG}] created socket`, v.socket.readyState, WebSocket.OPEN)
   } catch (e) {
+    setRelayStat(relay, 'lastConnect', { time: 0, date: requestTime })
     console.log(`[${TAG}] error:`, e)
   }
   v.socket.addEventListener('open', event => {
     if (requestTime != v.requestTime) return
     const deltaTime = Date.now() - requestTime
-
+    if (avgConnect) {
+      const w0 = avgConnect.weight, w1 = w0 + 1
+      const t0 = avgConnect.time, t1 = (t0 * w0 + deltaTime) / w1
+      avgConnect = { time: t1, weight: w1 }
+    } else {
+      avgConnect = { time: deltaTime, weight: 1 }
+    }
+    setRelayStat(relay, 'avgConnect', avgConnect)
+    setRelayStat(relay, 'lastConnect', { time: deltaTime, date: requestTime })
     v.deltaTime = deltaTime
     v.setRenderFlag(true)
     console.log(`[${TAG}] open`, deltaTime)
