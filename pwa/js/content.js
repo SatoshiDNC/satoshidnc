@@ -88,7 +88,7 @@ export function getFeed(hpub) {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
     console.log('querying on hpub', hpub)
-    const req = os.index('firstSeen').openCursor(window.IDBKeyRange.only(hpub), 'prev')
+    const req = os.index('firstSeen').openCursor(window.IDBKeyRange.range([hpub], [hpub]), 'prev')
     req.onerror = function(e) {
       console.err(e)
     }
