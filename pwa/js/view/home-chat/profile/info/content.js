@@ -114,7 +114,9 @@ v.setContact = function(hpub) {
           const url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
           || 'https://file-examples.com/wp-content/storage/2017/11/file_example_MP3_700KB.mp3'
           if (url) {
-            new Audio(url).play()
+            const audio = new Audio(url)
+            audio.crossOrigin = 'anonymous'
+            audio.play()
           } else {
             console.error('URL not found.')
           }
