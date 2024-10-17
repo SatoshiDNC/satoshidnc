@@ -80,3 +80,24 @@ export function pingFeed() {
     }
   })
 }
+
+export function getFeed() {
+  return new Promise((resolve, reject) => {
+    const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
+    const os = tr.objectStore('events')
+    const req = os.index('date').openCursor(null, 'next')
+    req.onerror = function(e) {
+      console.err(e)
+    }
+    req.onsuccess = function(e) {
+      let cursor = e.target.result
+      if (cursor) {
+        let v = cursor.value
+        console.log(v)
+        cursor.continue()
+      } else {
+        console.log(`end`)
+      }
+    }
+  })
+}
