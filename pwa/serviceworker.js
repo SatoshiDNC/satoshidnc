@@ -55,7 +55,7 @@ self.addEventListener('fetch', (event) => {
     if ((!cachedResponse) || (!asOf) || (Date.now() - asOf > ONE_DAY_IN_MILLISECONDS)) {
       networkResponsePromise = fetch(event.request)
 
-      if (event.request.url.startsWith(`https://`)) {
+      if (event.request.url.startsWith(`https://`) && !event.request.url.endsWith('.mp3')) {
         event.waitUntil(async function() {
           const networkResponse = await networkResponsePromise
           await cache.put(event.request, networkResponse.clone())
