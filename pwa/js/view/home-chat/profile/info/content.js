@@ -112,7 +112,7 @@ v.setContact = function(hpub) {
         if (e.kind == 31338) {
           console.log('play', e)
           const url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
-          const url = 'https://file-examples.com/wp-content/storage/2017/11/file_example_MP3_700KB.mp3'
+          || 'https://file-examples.com/wp-content/storage/2017/11/file_example_MP3_700KB.mp3'
           if (url) {
             new Audio(url).play()
           } else {
