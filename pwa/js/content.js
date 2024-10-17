@@ -83,11 +83,11 @@ export function pingFeed(hpub) {
   })
 }
 
-export function getFeed() {
+export function getFeed(hpub) {
   return new Promise((resolve, reject) => {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
-    const req = os.index('firstSeen').openCursor(null, 'prev')
+    const req = os.index('firstSeen').openCursor(window.IDBKeyRange.bound([hpub], [hpub + '0'], true, false), 'prev')
     req.onerror = function(e) {
       console.err(e)
     }

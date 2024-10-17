@@ -93,7 +93,7 @@ v.setContact = function(hpub) {
   v.userY = 0
   v.gadgets.splice(fixedGads, v.gadgets.length - fixedGads - tailGads - 1)
   pingFeed(v.hpub)
-  getFeed().then(posts => {
+  getFeed(v.hpub).then(posts => {
     for (const post of posts) {
       let g
 
