@@ -116,8 +116,7 @@ v.setContact = function(hpub) {
     console.log(`[${TAG}] error`)
   })
   v.socket.addEventListener('message', event => {
-    console.log(`[${TAG}] message`)
-    console.log('Message from server ', event.data)
+    console.log(`[${TAG}] message`, event.data[0])
   })
 
 }
