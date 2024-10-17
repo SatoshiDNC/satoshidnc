@@ -3,7 +3,7 @@ import { drawAvatar, alpha } from '../../../../draw.js'
 import { getPersonalData as get } from '../../../../personal.js'
 import { getRelayStat, setRelayStat } from '../../../../stats.js'
 import { randomRelay } from '../../../../relays.js'
-import { aggregateEvent } from '../../../../nostor.js'
+import { aggregateEvent } from '../../../../content.js'
 
 const TAG = 'INFO'
 
