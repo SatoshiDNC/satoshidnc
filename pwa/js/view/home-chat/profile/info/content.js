@@ -100,15 +100,14 @@ v.setContact = function(hpub) {
       let g
 
       const g1 = g = new fg.Gadget(v)
-      g.type = '-', g.y = 0, g.h = 22
+      g.type = '-', g.h = 22
       g.renderFunc = v.lastSep.renderFunc
 
       const g2 = g = new fg.Gadget(v)
-      g.type = 'post'
+      g.type = 'post', g.h = 500
       g.actionFlags = fg.GAF_CLICKABLE
       g.data = post.data
       g.clickFunc = function() {
-        console.log('click')
         const g = this, v = g.viewport
         console.log('click', g.data)
       }
@@ -158,7 +157,7 @@ v.layoutFunc = function() {
   let y = 808
   for (g of todo) {
     g.x = 0, g.y = y
-    g.w = v.sw, g.h = 500
+    g.w = v.sw
     v.gadgets.push(g)
     y += g.h
     g.autoHull()
