@@ -26,8 +26,8 @@ export function init() {
       }
       if (e.oldVersion < 2) {
         db.createObjectStore(`relay-stats`, { keyPath: ['relayUrl', 'key'] })
-        os = db.createObjectStore(`events`, { keyPath: ['id'] })
-        os.createIndex(`date`, { keyPath: ['firstSeen'] })
+        os = db.createObjectStore(`events`, { keyPath: 'id' })
+        os.createIndex(`firstSeen`, { keyPath: 'firstSeen' })
       }
     }
   })
