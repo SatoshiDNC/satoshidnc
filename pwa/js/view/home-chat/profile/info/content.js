@@ -93,7 +93,7 @@ v.setContact = function(hpub) {
   v.userY = 0
   pingFeed()
   getFeed().then(posts => {
-    for (post of posts) {
+    for (const post of posts) {
       console.log(post)
       let g
 
