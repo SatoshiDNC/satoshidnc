@@ -72,19 +72,21 @@ v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
   v.userY = 0
-  v.requestTime = Date.now()
+  requestTime = Date.now()
+  v.requestTime = requestTime
   const relay = 'wss://relay.satoshidnc.com'//randomRelay()
   console.log('random relay:', relay)
   try {
-    v.startTime = Date.now()
     v.socket = new WebSocket(relay)
     console.log(`[${TAG}] created socket`, v.socket.readyState, WebSocket.OPEN)
   } catch (e) {
     console.log(`[${TAG}] error:`, e)
   }
   v.socket.addEventListener('open', event => {
-    const deltaTime = Date.now() - v.startTime
-    v.deltaTime = ''+deltaTime
+    if (requestTime != v.requestTime) return
+    const deltaTime = Date.now() - requestTime
+
+    v.deltaTime = deltaTime
     v.setRenderFlag(true)
     console.log(`[${TAG}] open`, deltaTime)
     v.socket.send(JSON.stringify([
@@ -176,11 +178,11 @@ v.renderFunc = function() {
 
   t = ''+v.deltaTime
   tw = defaultFont.calcWidth(t)
-  ts = 45/14
+  ts = 37/14
   mat4.identity(mat)
-  mat4.translate(mat, mat, [(v.sw - tw * ts) / 2, 500, 0])
+  mat4.translate(mat, mat, [(v.sw - tw * ts) / 2, 515, 0])
   mat4.scale(mat, mat, [ts, ts, 1])
-  defaultFont.draw(0,0, t, v.textColor, v.mat, mat)
+  defaultFont.draw(0,0, t, colors.inactive, v.mat, mat)
 
   for (g of v.gadgets) if (g.font) {
     let gy = g.y
