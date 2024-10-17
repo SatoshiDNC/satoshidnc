@@ -10,7 +10,7 @@ export function aggregateEvent(e) {
     const os = tr.objectStore('events')
     const req = os.get(e.id)
     req.onsuccess = (e) => {
-      console.log(`[${TAG}] ${e}`)
+      console.log(`[${TAG}]`, e)
       resolve()
     }
 
