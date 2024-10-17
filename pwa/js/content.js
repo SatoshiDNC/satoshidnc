@@ -32,7 +32,7 @@ export function pingFeed(hpub) {
   const TAG = 'pingFeed'
   requestTime = Date.now()
   let thisRequestTime = requestTime
-  const relay = 'wss://relay.satoshidnc.com'//randomRelay()
+  const relay = randomRelay()
   console.log(`[${TAG}] query relay:`, relay)
   let avgConnect = getRelayStat(relay, 'avgConnect')
   let socket
