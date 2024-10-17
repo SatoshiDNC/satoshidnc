@@ -187,6 +187,8 @@ v.layoutFunc = function() {
   // g.renderFunc = v.firstSep.renderFunc
   // y += g.h
 
+  console.log(y, v.gadgets)
+
   v.maxY = y
 }
 v.renderFunc = function() {
