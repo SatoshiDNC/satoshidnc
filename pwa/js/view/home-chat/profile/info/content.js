@@ -105,6 +105,7 @@ v.setContact = function(hpub) {
 
       const g2 = g = new fg.Gadget(v)
       g.type = 'post', g.y = 0, g.h = 500
+      g.actionFlags = fg.GAF_CLICKABLE
       g.data = post.data
       g.renderFunc = function() {
         const g = this, v = g.viewport
