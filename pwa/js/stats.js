@@ -10,7 +10,7 @@ export function setRelayStat(relayUrl, key, value) {
   console.log(relayUrl, key, value)
   const req = os.put({ relayUrl, key, value })
   req.onsuccess = (e) => {
-    reloadPersonalData()
+    reloadRelayStats()
   }
 }
 
