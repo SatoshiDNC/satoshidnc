@@ -159,6 +159,7 @@ v.layoutFunc = function() {
     g.y = y
     v.gadgets.push(g)
     y += g.h
+    g.autoHull()
   }
 
   v.gadgets.push(...tail)
