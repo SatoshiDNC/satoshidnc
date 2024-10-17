@@ -100,12 +100,10 @@ v.setContact = function(hpub) {
       const g1 = g = new fg.Gadget(v)
       g.type = 'post', g.y = 0, g.h = 100
       //g.renderFunc = v.firstSep.renderFunc
-      y += g.h
 
       const g2 = g = new fg.Gadget(v)
       g.type = '-', g.y = 0, g.h = 22
       g.renderFunc = v.firstSep.renderFunc
-      y += g.h
 
       v.gadgets.splice(v.gadgets.length - tailGads - 1, 0, g1, g2)
     }
