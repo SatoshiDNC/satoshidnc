@@ -166,8 +166,6 @@ v.layoutFunc = function() {
   g.h = 45
   g.x = v.menuGad.x - 52 - g.w
   g.autoHull()
-  g = v.swipeGad
-  g.layout.call(g)
 
   const todo = v.gadgets.splice(fixedGads, v.gadgets.length)
   const tail = todo.splice(todo.length - tailGads, todo.length)
@@ -190,6 +188,9 @@ v.layoutFunc = function() {
   console.log(y, v.gadgets)
 
   v.maxY = y
+
+  g = v.swipeGad
+  g.layout.call(g)
 }
 v.renderFunc = function() {
   const v = this
