@@ -1,6 +1,7 @@
 import { db } from './db.js'
 import { getRelayStat, setRelayStat } from './stats.js'
 import { randomRelay } from './relays.js'
+import { contentView as debugView } from './view/home-chat/profile/info/content.js'
 
 export function aggregateEvent(e) {
   const TAG = 'aggregateEvent'
@@ -26,22 +27,23 @@ export function aggregateEvent(e) {
 }
 
 let requestTime
-export function pingFeed() {
+export function pingFeed(hpub) {
   const TAG = 'pingFeed'
   requestTime = Date.now()
-  v.requestTime = requestTime
+  let thisRequestTime = requestTime
   const relay = 'wss://relay.satoshidnc.com'//randomRelay()
   console.log(`[${TAG}] query relay:`, relay)
   let avgConnect = getRelayStat(relay, 'avgConnect')
+  let socket
   try {
-    v.socket = new WebSocket(relay)
+    socket = new WebSocket(relay)
     console.log(`[${TAG}] created socket`, v.socket.readyState, WebSocket.OPEN)
   } catch (e) {
     setRelayStat(relay, 'lastConnect', { time: 0, date: requestTime })
     console.log(`[${TAG}] error:`, e)
   }
-  v.socket.addEventListener('open', event => {
-    if (requestTime != v.requestTime) return
+  socket.addEventListener('open', event => {
+    if (thisRequestTime != requestTime) return
     const deltaTime = Date.now() - requestTime
     if (avgConnect) {
       const w0 = avgConnect.weight, w1 = w0 + 1
@@ -52,25 +54,25 @@ export function pingFeed() {
     }
     setRelayStat(relay, 'avgConnect', avgConnect)
     setRelayStat(relay, 'lastConnect', { time: deltaTime, date: requestTime })
-    v.deltaTime = deltaTime
-    v.setRenderFlag(true)
+    debugView.deltaTime = deltaTime
+    debugView.setRenderFlag(true)
     console.log(`[${TAG}] open`, deltaTime)
-    v.socket.send(JSON.stringify([
+    socket.send(JSON.stringify([
       'REQ',
       'feed',
       {
-        'authors': [v.hpub],
+        'authors': [hpub],
         'limit': 5,
       }
     ]))
   })
-  v.socket.addEventListener('close', e => {
+  socket.addEventListener('close', e => {
     console.log(`[${TAG}] close`)
   })
-  v.socket.addEventListener('error', e => {
+  socket.addEventListener('error', e => {
     console.log(`[${TAG}] error`)
   })
-  v.socket.addEventListener('message', e => {
+  socket.addEventListener('message', e => {
     let m = JSON.parse(e.data)
     if (m[0] == 'EVENT' && m[1] == 'feed') {
       const event = m[2]
