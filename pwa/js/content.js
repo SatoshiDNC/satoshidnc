@@ -1,6 +1,6 @@
 import { db } from './db.js'
-import { getRelayStat, setRelayStat } from '../../../../stats.js'
-import { randomRelay } from '../../../../relays.js'
+import { getRelayStat, setRelayStat } from './stats.js'
+import { randomRelay } from './relays.js'
 
 export function aggregateEvent(e) {
   const TAG = 'aggregateEvent'
