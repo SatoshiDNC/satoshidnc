@@ -93,7 +93,23 @@ v.setContact = function(hpub) {
   v.userY = 0
   pingFeed()
   getFeed().then(posts => {
-    console.log(posts)
+    for (post of posts) {
+      console.log(post)
+      let g
+
+      const g1 = g = new fg.Gadget(v)
+      g.type = 'post', g.y = 0, g.h = 100
+      //g.renderFunc = v.firstSep.renderFunc
+      y += g.h
+
+      const g2 = g = new fg.Gadget(v)
+      g.type = '-', g.y = 0, g.h = 22
+      g.renderFunc = v.firstSep.renderFunc
+      y += g.h
+
+      v.gadgets.splice(v.gadgets.length - tailGads - 1, 0, g1, g2)
+    }
+    v.relayout()
   })
 }
 v.layoutFunc = function() {
@@ -128,11 +144,6 @@ v.layoutFunc = function() {
   }
 
   v.gadgets.push(...tail)
-
-  // v.gadgets.push(g = new fg.Gadget(v))
-  // g.type = '-', g.y = y, g.h = Math.max(22, v.sh - y)
-  // g.renderFunc = v.firstSep.renderFunc
-  // y += g.h
 
   v.maxY = y
 
