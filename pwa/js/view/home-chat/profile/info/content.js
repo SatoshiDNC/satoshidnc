@@ -115,7 +115,7 @@ v.setContact = function(hpub) {
           if (url) {
             new Audio(url).play()
           } else {
-            console.log('URL not found.')
+            console.error('URL not found.')
           }
         } else {
           console.log('click', g.data)
