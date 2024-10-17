@@ -8,9 +8,19 @@ export function aggregateEvent(e) {
     console.log(`[${TAG}] event`, JSON.stringify(e))
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
-    const req = os.put({ id: e.id, firstSeen: now, data: e })
+    const req = os.get(e.id)
     req.onsuccess = (e) => {
+      console.log(`[${TAG}] success`)
       resolve()
     }
+    req.onerror = (e) => {
+      console.log(`[${TAG}] error`)
+      resolve()
+    }
+
+    // const req = os.put({ id: e.id, firstSeen: now, data: e })
+    // req.onsuccess = (e) => {
+    //   resolve()
+    // }
   })
 }
