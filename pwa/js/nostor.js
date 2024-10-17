@@ -115,12 +115,3 @@ export function findEvent(id, url) {
     operator()
   })
 }
-
-export function aggregateEvent(e) {
-  const TAG = 'aggregateEvent'
-  return new Promise((resolve, reject) => {
-    if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid event')
-    console.log(`[${TAG}] event`, JSON.stringify(e))
-    resolve()
-  })
-}
