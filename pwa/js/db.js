@@ -2,7 +2,7 @@ export let db
 
 export function init() {
   return new Promise((resolve, reject) => {
-    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 1)
+    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 2)
     req.onsuccess = e => {
       db = req.result
       resolve()
@@ -23,6 +23,9 @@ export function init() {
         db.createObjectStore(`relays`, { keyPath: 'url' })
         db.createObjectStore(`relay-contact-relations`, { keyPath: ['relayUrl', 'contactHpub', 'relation'] })
         db.createObjectStore(`personal`, { keyPath: ['hpub', 'key'] })
+      }
+      if (e.oldVersion < 2) {
+        db.createObjectStore(`relay-stats`, { keyPath: ['relayUrl', 'key'] })
       }
     }
   })
