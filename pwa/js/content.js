@@ -1,3 +1,5 @@
+import { db } from './db.js'
+
 export function aggregateEvent(e) {
   const TAG = 'aggregateEvent'
   const now = Date.now()
