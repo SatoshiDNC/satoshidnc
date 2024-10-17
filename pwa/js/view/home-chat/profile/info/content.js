@@ -108,17 +108,17 @@ v.setContact = function(hpub) {
       g.actionFlags = fg.GAF_CLICKABLE
       g.data = post.data
       g.clickFunc = function() {
-        const g = this, v = g.viewport
-        if (g.kind == 31338) {
-          console.log('play', g.data)
-          const url = g.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
+        const g = this, v = g.viewport, e = g.data
+        if (e.kind == 31338) {
+          console.log('play', e)
+          const url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
           if (url) {
             new Audio(url).play()
           } else {
             console.error('URL not found.')
           }
         } else {
-          console.log('click', g.data)
+          console.log('click', e)
         }
       }
       g.renderFunc = function() {
