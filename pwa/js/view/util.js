@@ -70,7 +70,11 @@ export function addedOn(timeStamp) {
     return `Added today`
   } else if (now - timeStamp < 2 * ONE_DAY && new Date(timeStamp).getDate() == new Date(now).getDate() - 1) {
     return `Added yesterday`
+  } else if (now - timeStamp < 6 * ONE_DAY && new Date(timeStamp).getDate() == new Date(now).getDate() - 1) {
+    return `Added on ${new Date(timeStamp).toLocaleDateString('en-US', { weekday: 'long' })}`
+  } else if (now - timeStamp < 360 * ONE_DAY && new Date(timeStamp).getDate() == new Date(now).getDate() - 1) {
+    return `Added on ${new Date(timeStamp).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`
   } else {
-    return `Added on ${new Date(timeStamp).toString()}`
+    return `Added on ${new Date(timeStamp).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`
   }
 }
