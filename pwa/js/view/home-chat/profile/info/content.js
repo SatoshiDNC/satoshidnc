@@ -119,6 +119,9 @@ v.setContact = function(hpub) {
         mat4.scale(mat, mat, [ts, ts, 1])
         defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
       }
+      g.clickFunc = function() {
+        console.log('click', g.data)
+      }
 
       v.gadgets.splice(v.gadgets.length - tailGads - 1, 0, g1, g2)
     }
