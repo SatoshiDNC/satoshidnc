@@ -109,7 +109,17 @@ v.setContact = function(hpub) {
       g.data = post.data
       g.clickFunc = function() {
         const g = this, v = g.viewport
-        console.log('click', g.data)
+        if (g.kind == 31338) {
+          console.log('play', g.data)
+          const url = g.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
+          if (url) {
+            new Audio(url).play()
+          } else {
+            console.log('URL not found.')
+          }
+        } else {
+          console.log('click', g.data)
+        }
       }
       g.renderFunc = function() {
         const g = this, v = g.viewport
