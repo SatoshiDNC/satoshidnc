@@ -116,7 +116,11 @@ v.setContact = function(hpub) {
           if (url) {
             const audio = new Audio(url)
             audio.crossOrigin = 'anonymous'
-            audio.play()
+            audio.play().then(()=>{
+              console.log('playing')
+            }, ()=>{
+              console.log('notplaying')
+            })
           } else {
             console.error('URL not found.')
           }
