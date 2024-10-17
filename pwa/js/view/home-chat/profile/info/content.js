@@ -154,11 +154,9 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 
-  v.gadgets.splice(fixedGads, v.gadgets.length)
-
-  v.gadgets.push(g = new fg.Gadget(v))
-  g.type = '-'
-  g.y = 808, g.h = 22
+  let y = 808
+  v.gadgets.push(g = v.firstSep = new fg.Gadget(v))
+  g.type = '-', g.y = y, g.h = 22
   g.renderFunc = function() {
     const g = this, v = g.viewport
     const m = mat4.create()
@@ -171,6 +169,15 @@ v.layoutFunc = function() {
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
     mainShapes.drawArrays2('rect')
   }
+  y += g.h
+
+  const todo = v.gadgets.splice(fixedGads, v.gadgets.length)
+
+  v.gadgets.push(g = new fg.Gadget(v))
+  g.type = '-', g.y = y, g.h = Math.max(22, v.sh - y)
+  g.renderFunc = v.firstSep.renderFunc
+  y += g.h
+
   v.maxY = g.y + g.h
 }
 v.renderFunc = function() {
