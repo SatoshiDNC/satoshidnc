@@ -37,7 +37,7 @@ export function pingFeed(hpub) {
   let socket
   try {
     socket = new WebSocket(relay)
-    console.log(`[${TAG}] created socket`, v.socket.readyState, WebSocket.OPEN)
+    console.log(`[${TAG}] created socket`, socket.readyState, WebSocket.OPEN)
   } catch (e) {
     setRelayStat(relay, 'lastConnect', { time: 0, date: requestTime })
     console.log(`[${TAG}] error:`, e)
