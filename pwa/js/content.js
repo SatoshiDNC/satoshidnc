@@ -9,8 +9,8 @@ export function aggregateEvent(e) {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
     const req = os.get(e.id)
-    req.onsuccess = (e) => {
-      console.log(`[${TAG}]`, e.result)
+    req.onsuccess = () => {
+      console.log(`[${TAG}]`, e.id, req, req.result)
       resolve()
     }
 
