@@ -72,8 +72,23 @@ v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
     console.log(`click '${g.label}'`)
   }
 const fixedGads = v.gadgets.length
+v.gadgets.push(g = v.lastSep = new fg.Gadget(v))
+g.type = '-', g.h = 22
+g.renderFunc = function() {
+  const g = this, v = g.viewport
+  const m = mat4.create()
+  mainShapes.useProg2()
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([0,0,0,1]))
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+  mat4.identity(m)
+  mat4.translate(m,m, [0, g.y, 0])
+  mat4.scale(m,m, [v.sw, g.h, 1])
+  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+  mainShapes.drawArrays2('rect')
+}
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
+const tailGads = v.gadgets.length - fixedGads - 1
 v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
@@ -154,31 +169,25 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 
-  let y = 808
-  v.gadgets.push(g = v.firstSep = new fg.Gadget(v))
-  g.type = '-', g.y = y, g.h = 22
-  g.renderFunc = function() {
-    const g = this, v = g.viewport
-    const m = mat4.create()
-    mainShapes.useProg2()
-    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([0,0,0,1]))
-    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-    mat4.identity(m)
-    mat4.translate(m,m, [0, g.y, 0])
-    mat4.scale(m,m, [v.sw, g.h, 1])
-    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-    mainShapes.drawArrays2('rect')
-  }
-  y += g.h
-
   const todo = v.gadgets.splice(fixedGads, v.gadgets.length)
+  const tail = todo.splice(todo.length - tailGads, todo.length)
 
-  v.gadgets.push(g = new fg.Gadget(v))
-  g.type = '-', g.y = y, g.h = Math.max(22, v.sh - y)
-  g.renderFunc = v.firstSep.renderFunc
-  y += g.h
+  let y = 808
+  for (g of todo) {
+    g.y = y
+    v.gadgets.push(g)
+    y += g.h
+  }
 
-  v.maxY = g.y + g.h
+  v.gadgets.push(...tail)
+
+
+  // v.gadgets.push(g = new fg.Gadget(v))
+  // g.type = '-', g.y = y, g.h = Math.max(22, v.sh - y)
+  // g.renderFunc = v.firstSep.renderFunc
+  // y += g.h
+
+  v.maxY = y
 }
 v.renderFunc = function() {
   const v = this
