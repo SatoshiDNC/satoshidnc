@@ -168,7 +168,7 @@ v.renderFunc = function() {
   const m = mat4.create()
   const mat = mat4.create()
 
-  const f1 = Math.max(0, Math.min(v.userY / 478, 1))
+  const f1 = Math.max(0, Math.min(v.userY / 331, 1))
   const f0 = 1 - f1
 
   let t,tw,ts
