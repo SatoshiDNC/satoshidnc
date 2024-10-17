@@ -92,6 +92,9 @@ v.setContact = function(hpub) {
   v.hpub = hpub
   v.userY = 0
   pingFeed()
+  getFeed().then(posts => {
+    console.log(posts)
+  })
 }
 v.layoutFunc = function() {
   const v = this
