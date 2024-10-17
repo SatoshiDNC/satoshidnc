@@ -73,6 +73,7 @@ v.gadgets.push(g = new fg.Gadget(v))
   g.y = 808, g.h = 22
   g.renderFunc = function() {
     const g = this, v = g.viewport
+    const m = mat4.create()
     mainShapes.useProg2()
     gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([0,0,0,1]))
     gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
