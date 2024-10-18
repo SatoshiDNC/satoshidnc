@@ -43,20 +43,20 @@ self.addEventListener('periodicsync', event => {
 
 let numCached = 0
 let logTimer
-async function cachedOrLive(event) {
+async function cachedOrLive(event, request = event.request) {
   const cache = await caches.open(offlineCache)
-  const cachedResponse = undefined // await cache.match(event.request)
-  const asOf = cacheDates[event.request.url]
+  const cachedResponse = undefined // await cache.match(request)
+  const asOf = cacheDates[request.url]
 
   let networkResponsePromise
   if ((!cachedResponse) || (!asOf) || (Date.now() - asOf > ONE_DAY_IN_MILLISECONDS)) {
-    networkResponsePromise = fetch(event.request)
+    networkResponsePromise = fetch(request)
 
-    if (event.request.url.startsWith(`https://`) && !event.request.url.endsWith('.mp3')) {
+    if (request.url.startsWith(`https://`) && !request.url.endsWith('.mp3')) {
       event.waitUntil(async function() {
         const networkResponse = await networkResponsePromise
-        await cache.put(event.request, networkResponse.clone())
-        cacheDates[event.request.url] = Date.now()
+        await cache.put(request, networkResponse.clone())
+        cacheDates[request.url] = Date.now()
         numCached++
         if (logTimer) {
           clearTimeout(logTimer)
@@ -73,8 +73,17 @@ async function cachedOrLive(event) {
   // Returned the cached response if we have one, otherwise return the network response.
   return cachedResponse || networkResponsePromise
 }
-async function decryptRange(event) {
-  return cachedOrLive(event)
+async function decryptRange(event, request = event.request) {
+  const headers = new Headers(request.headers)
+  // headers.set('x-my-custom-header', 'The Most Amazing Header Ever')
+  // headers.delete('x-request')
+
+  const newRequest = new Request(request, {
+    mode: 'cors',
+    credentials: 'omit',
+    headers: headers
+  })
+  return cachedOrLive(event, newRequest)
 }
 self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
