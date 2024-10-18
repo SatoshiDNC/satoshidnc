@@ -75,6 +75,7 @@ async function cachedOrLive(event, request = event.request) {
 }
 async function decryptRange(event, request = event.request) {
   const BUFFER_SIZE = 1024 * 1024
+  const hash = request.url.split('/').pop().split('.')[0]
   const headers = new Headers(request.headers)
   const unit = headers.get('range').split('=')
   if (unit[0] == 'bytes') {
@@ -82,17 +83,22 @@ async function decryptRange(event, request = event.request) {
     console.log('[SW] fetch encrypted range', request.url, byteRange[0])
     headers.set('range', `bytes=${byteRange[0]}-${+byteRange[0]+BUFFER_SIZE-1}`)
   }
+  const { url, req } = request
+  //const newRequest = new Request({ url: `https://cdn.satellite.earth/${hash}.enc`, ...req }, {
   const newRequest = new Request(request, {
     mode: 'cors',
     credentials: 'omit',
     headers: headers
   })
-  return cachedOrLive(event, newRequest)
+  console.log('fetching')
+  return fetch(newRequest)
 }
 self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
   if (event.request.headers.has('range')) {
-    if (event.request.url.startsWith(`https://`) && !event.request.url.endsWith('.enc.mp3')) {
+    const url = event.request.url
+    const parts = url.split('/')
+    if (parts.length = 5 && parts[0] == 'https:' && parts[1] == '' && parts[3] == 'dec' && url.endsWith('.mp3')) {
       event.respondWith(decryptRange(event))
       return
     } else {

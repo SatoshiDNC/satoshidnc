@@ -119,8 +119,13 @@ v.setContact = function(hpub) {
             }
           } else {
             const url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
+            || e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.enc')))?.[0]
             || 'https://dev.satoshidnc.com/E19.mp3'
             if (url) {
+              if (url.endsWith('.enc')) {
+                const hash = url.split('/').pop().split('.')[0]
+                url = `https://dev.satoshidnc.com/dec/${hash}.mp3`
+              }
               const audio = g.audio = new Audio(url)
               audio.crossOrigin = 'anonymous'
               audio.play().then(() => {
