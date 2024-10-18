@@ -85,7 +85,8 @@ async function decryptRange(event, request = event.request) {
   }
   const { url, req } = request
   //const newRequest = new Request({ url: `https://cdn.satellite.earth/${hash}.enc`, ...req }, {
-  const newRequest = new Request(request, {
+  const newRequest = new Request({ url: `https://dev.satoshidnc.com/E19.mp3`, ...req }, {
+  //const newRequest = new Request(request, {
     mode: 'cors',
     credentials: 'omit',
     headers: headers
