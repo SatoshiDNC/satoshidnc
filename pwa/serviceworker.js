@@ -75,12 +75,12 @@ async function cachedOrLive(event, request = event.request) {
 }
 async function decryptRange(event, request = event.request) {
   const headers = new Headers(request.headers)
+  headers.delete('range')
+  headers.set('range', 'bytes=0-1024')
   console.log(headers)
   for (const pair of event.request.headers.entries()) {
     console.log(pair[0]+ ': '+ pair[1]);
   }
-  // headers.set('x-my-custom-header', 'The Most Amazing Header Ever')
-  // headers.delete('x-request')
 
   const newRequest = new Request(request, {
     mode: 'cors',
