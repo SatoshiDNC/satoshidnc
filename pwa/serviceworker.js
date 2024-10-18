@@ -45,10 +45,10 @@ let numCached = 0
 let logTimer
 self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
-  if (event.request.headers.has('range')) {
-    console.log('[SW] fetch range', event.request.url)
-    return
-  }
+  // if (event.request.headers.has('range')) {
+  //   console.log('[SW] fetch range', event.request.url)
+  //   return
+  // }
   event.respondWith(async function() {
 
     const cache = await caches.open(offlineCache)
