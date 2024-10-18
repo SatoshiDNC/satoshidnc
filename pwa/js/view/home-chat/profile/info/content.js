@@ -112,10 +112,10 @@ v.setContact = function(hpub) {
         if (e.kind == 31338) {
           console.log('play', e)
           if (g.audio) {
-            if (g.isPlaying) {
-              g.audio.pause()
-            } else {
+            if (g.audio.paused) {
               g.audio.play()
+            } else {
+              g.audio.pause()
             }
           } else {
             const url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
