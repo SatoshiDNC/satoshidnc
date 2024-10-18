@@ -79,7 +79,7 @@ async function decryptRange(event, request = event.request) {
   const unit = headers.get('range').split('=')
   if (unit[0] == 'bytes') {
     const byteRange = unit[1].split('-')
-    console.log('[SW] fetch encrypted range', event.request.url, byteRange)
+    console.log('[SW] fetch encrypted range', request.url, byteRange[0])
     headers.set('range', `bytes=${byteRange[0]}-${+byteRange[0]+BUFFER_SIZE-1}`)
   }
   const newRequest = new Request(request, {
