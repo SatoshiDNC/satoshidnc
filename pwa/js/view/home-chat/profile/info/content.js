@@ -119,7 +119,7 @@ v.setContact = function(hpub) {
             }
           } else {
             let url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url ')&&t[1].endsWith('.mp3'))?.[0]?.[1].split(' ',2)[1]
-            //|| e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url ')&&t[1].endsWith('.enc'))?.[0]?.[1].split(' ',2)[1]
+            || e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url ')&&t[1].endsWith('.enc'))?.[0]?.[1].split(' ',2)[1]
             || 'https://dev.satoshidnc.com/E19.mp3'
             if (url) {
               console.log('url:', url)

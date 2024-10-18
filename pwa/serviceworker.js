@@ -75,7 +75,7 @@ async function cachedOrLive(event, request = event.request) {
 }
 async function decryptRange(event, request = event.request) {
   // const BUFFER_SIZE = 1024 * 1024
-  // const hash = request.url.split('/').pop().split('.')[0]
+  const hash = request.url.split('/').pop().split('.')[0]
   // const headers = new Headers(request.headers)
   // const unit = headers.get('range').split('=')
   // if (unit[0] == 'bytes') {
@@ -83,16 +83,16 @@ async function decryptRange(event, request = event.request) {
   //   console.log('[SW] fetch encrypted range', request.url, byteRange[0])
   //   headers.set('range', `bytes=${byteRange[0]}-${+byteRange[0]+BUFFER_SIZE-1}`)
   // }
-  // const { url, req } = request
-  // //const newRequest = new Request({ url: `https://cdn.satellite.earth/${hash}.enc`, ...req }, {
-  // const newRequest = new Request({ url: `https://dev.satoshidnc.com/E19.mp3`, ...req }, {
-  // //const newRequest = new Request(request, {
-  //   mode: 'cors',
-  //   credentials: 'omit',
-  //   headers: headers
-  // })
-  // console.log('fetching')
-  return fetch(request)
+  const { url, req } = request
+  //const newRequest = new Request({ url: `https://cdn.satellite.earth/${hash}.enc`, ...req }, {
+  const newRequest = new Request({ url: `https://dev.satoshidnc.com/E19.mp3`, ...req }, {
+  //const newRequest = new Request(request, {
+    mode: 'cors',
+    credentials: 'omit',
+    headers: headers
+  })
+  console.log('fetching')
+  return fetch(newRequest)
 }
 self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
