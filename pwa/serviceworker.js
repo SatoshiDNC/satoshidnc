@@ -92,7 +92,7 @@ async function decryptRange(event, request = event.request) {
     headers: headers
   })
   console.log('fetching')
-  return fetch(newRequest)
+  return fetch(request)
 }
 self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
