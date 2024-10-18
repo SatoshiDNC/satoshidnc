@@ -43,7 +43,7 @@ self.addEventListener('periodicsync', event => {
 
 let numCached = 0
 let logTimer
-async function cachedOrLive() {
+async function cachedOrLive(event) {
   const cache = await caches.open(offlineCache)
   const cachedResponse = undefined // await cache.match(event.request)
   const asOf = cacheDates[event.request.url]
@@ -73,8 +73,8 @@ async function cachedOrLive() {
   // Returned the cached response if we have one, otherwise return the network response.
   return cachedResponse || networkResponsePromise
 }
-async function decryptRange() {
-  return cachedOrLive()
+async function decryptRange(event) {
+  return cachedOrLive(event)
 }
 self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
