@@ -118,8 +118,8 @@ v.setContact = function(hpub) {
               g.audio.pause()
             }
           } else {
-            const url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
-            || e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.enc')))?.[0]
+            const url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url ')&&t[1].endsWith('.mp3'))?.[0]
+            || e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url ')&&t[1].endsWith('.enc'))?.[0]
             || 'https://dev.satoshidnc.com/E19.mp3'
             if (url) {
               if (url.endsWith('.enc')) {
