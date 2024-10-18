@@ -79,7 +79,7 @@ async function decryptRange(event, request = event.request) {
   const unit = headers.get('range').split('=')
   if (unit[0] == 'bytes') {
     const byteRange = unit[1].split('-')
-    console.log(byteRange)
+    console.log('[SW] fetch encrypted range', event.request.url, byteRange)
     headers.set('range', `bytes=${byteRange[0]}-${+byteRange[0]+BUFFER_SIZE-1}`)
   }
   const newRequest = new Request(request, {
@@ -93,7 +93,6 @@ self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
   if (event.request.headers.has('range')) {
     if (event.request.url.startsWith(`https://`) && !event.request.url.endsWith('.enc.mp3')) {
-      console.log('[SW] fetch encrypted range', event.request.url)
       event.respondWith(decryptRange(event))
       return
     } else {
