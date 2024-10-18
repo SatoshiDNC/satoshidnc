@@ -43,41 +43,49 @@ self.addEventListener('periodicsync', event => {
 
 let numCached = 0
 let logTimer
+async function cachedOrLive() {
+  const cache = await caches.open(offlineCache)
+  const cachedResponse = undefined // await cache.match(event.request)
+  const asOf = cacheDates[event.request.url]
+
+  let networkResponsePromise
+  if ((!cachedResponse) || (!asOf) || (Date.now() - asOf > ONE_DAY_IN_MILLISECONDS)) {
+    networkResponsePromise = fetch(event.request)
+
+    if (event.request.url.startsWith(`https://`) && !event.request.url.endsWith('.mp3')) {
+      event.waitUntil(async function() {
+        const networkResponse = await networkResponsePromise
+        await cache.put(event.request, networkResponse.clone())
+        cacheDates[event.request.url] = Date.now()
+        numCached++
+        if (logTimer) {
+          clearTimeout(logTimer)
+        }
+        logTimer = setTimeout(() => {
+          console.log(`[SW] cached ${numCached} files`)
+          numCached = 0
+          logTimer = undefined
+        }, 1000)
+      }())  
+    }
+  }
+
+  // Returned the cached response if we have one, otherwise return the network response.
+  return cachedResponse || networkResponsePromise
+}
+async function decryptRange() {
+  return cachedOrLive()
+}
 self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
-  // if (event.request.headers.has('range')) {
-  //   console.log('[SW] fetch range', event.request.url)
-  //   return
-  // }
-  event.respondWith(async function() {
-
-    const cache = await caches.open(offlineCache)
-    const cachedResponse = undefined // await cache.match(event.request)
-    const asOf = cacheDates[event.request.url]
-
-    let networkResponsePromise
-    if ((!cachedResponse) || (!asOf) || (Date.now() - asOf > ONE_DAY_IN_MILLISECONDS)) {
-      networkResponsePromise = fetch(event.request)
-
-      if (event.request.url.startsWith(`https://`) && !event.request.url.endsWith('.mp3')) {
-        event.waitUntil(async function() {
-          const networkResponse = await networkResponsePromise
-          await cache.put(event.request, networkResponse.clone())
-          cacheDates[event.request.url] = Date.now()
-          numCached++
-          if (logTimer) {
-            clearTimeout(logTimer)
-          }
-          logTimer = setTimeout(() => {
-            console.log(`[SW] cached ${numCached} files`)
-            numCached = 0
-            logTimer = undefined
-          }, 1000)
-        }())  
-      }
+  if (event.request.headers.has('range')) {
+    if (event.request.url.startsWith(`https://`) && !event.request.url.endsWith('.enc.mp3')) {
+      console.log('[SW] fetch encrypted range', event.request.url)
+      event.respondWith(decryptRange(event))
+      return
+    } else {
+      console.log('[SW] fetch range', event.request.url)
     }
-
-    // Returned the cached response if we have one, otherwise return the network response.
-    return cachedResponse || networkResponsePromise
-  }())
+  }
+  event.respondWith(cachedOrLive(event))
 })
