@@ -74,14 +74,13 @@ async function cachedOrLive(event, request = event.request) {
   return cachedResponse || networkResponsePromise
 }
 async function decryptRange(event, request = event.request) {
+  const BUFFER_SIZE = 1024 * 1024
   const headers = new Headers(request.headers)
   const unit = headers.get('range').split('=')
   if (unit[0] == 'bytes') {
     const byteRange = unit[1].split('-')
     console.log(byteRange)
-    //headers.delete('range')
-    headers.set('range', `bytes=${byteRange[0]}-${+byteRange[0]+1024-1}`)
-    //headers.set('range', 'bytes=0-1023')
+    headers.set('range', `bytes=${byteRange[0]}-${+byteRange[0]+BUFFER_SIZE-1}`)
     for (const pair of event.request.headers.entries()) {
       console.log(pair[0]+ ': '+ pair[1]);
     }
