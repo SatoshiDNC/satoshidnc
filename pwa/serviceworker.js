@@ -79,12 +79,11 @@ async function decryptRange(event, request = event.request) {
   if (unit[0] == 'bytes') {
     const byteRange = unit[1].split('-')
     headers.delete('range')
-    headers.set('range', `bytes=${byteRange[0]}-${byteRange[0]+1024-1}`)
+    headers.set('range', `bytes=${byteRange[0]}-${+byteRange[0]+1024-1}`)
     for (const pair of event.request.headers.entries()) {
       console.log(pair[0]+ ': '+ pair[1]);
     }
   }
-
   const newRequest = new Request(request, {
     mode: 'cors',
     credentials: 'omit',
