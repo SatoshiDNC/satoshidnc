@@ -111,18 +111,33 @@ v.setContact = function(hpub) {
         const g = this, v = g.viewport, e = g.data
         if (e.kind == 31338) {
           console.log('play', e)
-          const url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
-          || 'https://dev.satoshidnc.com/E19.mp3'
-          if (url) {
-            const audio = new Audio(url)
-            audio.crossOrigin = 'anonymous'
-            audio.play().then(() => {
-              console.log('playing')
-            }, e => {
-              console.error('unable to play audio:', e)
-            })
+          if (g.audio) {
+            if (g.isPlaying) {
+              g.audio.pause()
+            } else {
+              g.audio.play()
+            }
           } else {
-            console.error('URL not found.')
+            const url = e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url '&&t[1].endsWith('.mp3')))?.[0]
+            || 'https://dev.satoshidnc.com/E19.mp3'
+            if (url) {
+              const audio = g.audio = new Audio(url)
+              audio.crossOrigin = 'anonymous'
+              audio.onplaying = function() {
+                g.isPlaying = true
+              }
+              audio.onpause = function() {
+                g.isPlaying = false
+              }
+              audio.play().then(() => {
+                console.log('playing')
+                g.isPlaying = true
+              }, e => {
+                console.error('unable to play audio:', e)
+              })
+            } else {
+              console.error('URL not found.')
+            }
           }
         } else {
           console.log('click', e)
