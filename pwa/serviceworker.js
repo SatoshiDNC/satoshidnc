@@ -76,7 +76,7 @@ async function cachedOrLive(event, request = event.request) {
 async function decryptRange(event, request = event.request) {
   // const BUFFER_SIZE = 1024 * 1024
   const hash = request.url.split('/').pop().split('.')[0]
-  // const headers = new Headers(request.headers)
+  const headers = new Headers(request.headers)
   // const unit = headers.get('range').split('=')
   // if (unit[0] == 'bytes') {
   //   const byteRange = unit[1].split('-')
