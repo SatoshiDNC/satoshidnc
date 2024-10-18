@@ -78,6 +78,7 @@ async function decryptRange(event, request = event.request) {
   const unit = headers.get('range').split('=')
   if (unit[0] == 'bytes') {
     const byteRange = unit[1].split('-')
+    console.log(byteRange)
     headers.delete('range')
     headers.set('range', `bytes=${byteRange[0]}-${+byteRange[0]+1024-1}`)
     for (const pair of event.request.headers.entries()) {
