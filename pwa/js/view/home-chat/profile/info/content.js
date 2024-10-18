@@ -122,6 +122,7 @@ v.setContact = function(hpub) {
             || e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url ')&&t[1].endsWith('.enc'))?.[0]
             || 'https://dev.satoshidnc.com/E19.mp3'
             if (url) {
+              console.log('url:', url)
               if (url.endsWith('.enc')) {
                 const hash = url.split('/').pop().split('.')[0]
                 url = `https://dev.satoshidnc.com/dec/${hash}.mp3`
