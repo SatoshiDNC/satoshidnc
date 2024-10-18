@@ -123,15 +123,8 @@ v.setContact = function(hpub) {
             if (url) {
               const audio = g.audio = new Audio(url)
               audio.crossOrigin = 'anonymous'
-              audio.onplaying = function() {
-                g.isPlaying = true
-              }
-              audio.onpause = function() {
-                g.isPlaying = false
-              }
               audio.play().then(() => {
                 console.log('playing')
-                g.isPlaying = true
               }, e => {
                 console.error('unable to play audio:', e)
               })
