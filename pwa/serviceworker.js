@@ -76,6 +76,9 @@ async function cachedOrLive(event, request = event.request) {
 async function decryptRange(event, request = event.request) {
   const headers = new Headers(request.headers)
   console.log(headers)
+  for (const pair of event.request.headers.entries()) {
+    console.log(pair[0]+ ': '+ pair[1]);
+  }
   // headers.set('x-my-custom-header', 'The Most Amazing Header Ever')
   // headers.delete('x-request')
 
