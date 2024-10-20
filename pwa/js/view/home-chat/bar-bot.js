@@ -1,4 +1,4 @@
-import { drawPill } from '../../draw.js'
+import { drawPill, alpha } from '../../draw.js'
 
 let v, g
 export const barBot = v = new fg.View()
@@ -57,15 +57,7 @@ v.renderFunc = function() {
     }
     const f1 = g.animValue
     const f0 = 1 - f1
-    const light = [
-      colors.accent[0] * f1 + colors.inactive[0] * f0,
-      colors.accent[1] * f1 + colors.inactive[1] * f0,
-      colors.accent[2] * f1 + colors.inactive[2] * f0, 1]
-    const dark = [
-      colors.accentDark[0] * f1 + colors.inactiveDark[0] * f0,
-      colors.accentDark[1] * f1 + colors.inactiveDark[1] * f0, 
-      colors.accentDark[2] * f1 + colors.inactiveDark[2] * f0, 1]
-    drawPill(v, dark, g.x, g.y, g.w, 84)
+    drawPill(v, alpha(colors.accentDark, f1), g.x, g.y, g.w, 84)
     mat4.identity(m)
     const s = 26/14
     mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
