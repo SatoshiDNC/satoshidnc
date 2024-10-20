@@ -3,14 +3,14 @@
   "short_name": "SatoshiDNC",
   "icons": [
     {
-      "src": "/app-icon/512.png",
+      "src": "/app-icon/320.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "320x320"
     },
     {
-      "src": "/app-icon/512-maskable.png",
+      "src": "/app-icon/426-maskable.png",
       "type": "image/png",
-      "sizes": "512x512",
+      "sizes": "426x426",
       "purpose": "maskable"
     }
   ],
