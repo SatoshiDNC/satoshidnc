@@ -2,11 +2,38 @@ let v, g
 export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
+v.paneGads = []
+for (const pane of [{ label: 'Chats' }, { label: 'Updates' }, { label: 'Communities' }, { label: 'Calls' }]) {
+  v.gadgets.push(g = new fg.Gadget(v))
+  v.paneGads.push(g)
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.w = 168, g.h = 136
+  g.label = pane.label
+  g.icon = pane.icon
+  g.animValue = 0
+  g.clickFunc = function() {
+    const g = this, v = g.viewport
+    v.activePane = g.label
+    v.setRenderFlag(true)
+  }
+}
+v.activePane = v.paneGads[0].label
+v.layoutFunc = function() {
+  const v = this
+  let x = 0
+  for (const g of v.paneGads) {
+    g.x = x + (v.sw / 4 - g.w) / 2, g.y = 33
+    g.autoHull()
+    x += v.sw /4
+  }
+}
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
+
+  // subtle divider
   mainShapes.useProg2()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
@@ -15,4 +42,31 @@ v.renderFunc = function() {
   mat4.scale(m,m, [v.sw, 2, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
+
+  for (const g of v.paneGads) {
+    const goal = g.label == v.activePane? 1: 0
+    if (g.animValue != goal) {
+      g.animValue = g.animValue * 0.7 + goal * 0.3
+      if (Math.abs(goal - g.animValue) < 0.005) {
+        g.animValue = goal
+      }
+      setTimeout(() => { v.setRenderFlag(true) })
+    }
+    const f1 = g.animValue
+    const f0 = 1 - f1
+    const light = [
+      colors.accent[0] * f1 + colors.inactive[0] * f0,
+      colors.accent[1] * f1 + colors.inactive[1] * f0,
+      colors.accent[2] * f1 + colors.inactive[2] * f0, 1]
+    const dark = [
+      colors.accentDark[0] * f1 + colors.inactiveDark[0] * f0,
+      colors.accentDark[1] * f1 + colors.inactiveDark[1] * f0, 
+      colors.accentDark[2] * f1 + colors.inactiveDark[2] * f0, 1]
+    drawPill(v, dark, g.x, g.y, g.w, 84)
+    mat4.identity(m)
+    const s = 26/14
+    mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
+    mat4.scale(m,m, [s, s, 1])
+    defaultFont.draw(0,0, g.label, light, v.mat, m)
+  }
 }
