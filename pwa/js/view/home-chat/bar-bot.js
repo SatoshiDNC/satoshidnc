@@ -4,6 +4,7 @@ let v, g
 export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
+v.textColor = [1,1,1,1]
 v.paneGads = []
 for (const pane of [{ label: 'Chats' }, { label: 'Updates' }, { label: 'Communities' }, { label: 'Calls' }]) {
   v.gadgets.push(g = new fg.Gadget(v))
@@ -69,6 +70,6 @@ v.renderFunc = function() {
     const s = 26/14
     mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
     mat4.scale(m,m, [s, s, 1])
-    defaultFont.draw(0,0, g.label, light, v.mat, m)
+    defaultFont.draw(0,0, g.label, v.textColor, v.mat, m)
   }
 }
