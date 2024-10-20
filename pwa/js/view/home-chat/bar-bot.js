@@ -1,3 +1,5 @@
+import { drawPill } from '../../draw.js'
+
 let v, g
 export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
