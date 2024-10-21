@@ -74,7 +74,7 @@ async function cachedOrLive(event, request = event.request) {
   return cachedResponse || networkResponsePromise
 }
 async function decryptRange(event, request = event.request) {
-  // const BUFFER_SIZE = 1024 * 1024
+  const BUFFER_SIZE = 1024 * 1024
   const hash = request.url.split('/').pop().split('.')[0]
   const headers = new Headers(request.headers)
   // const unit = headers.get('range').split('=')
@@ -92,7 +92,12 @@ async function decryptRange(event, request = event.request) {
     headers: headers
   })
   console.log('fetching')
-  return fetch(newRequest)
+  return fetch(`https://dev.satoshidnc.com/E19.mp3`, {
+    headers: {
+      "Content-Type": `audio/mpeg`,
+      "Range": `bytes=0-${BUFFER_SIZE}`,
+    }
+  })
 }
 self.addEventListener('fetch', (event) => {
   // console.log('[SW] fetch', event.request.url)
