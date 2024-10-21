@@ -15,7 +15,5 @@ v.designSize = 1080 * 2183
 v.bgColor = [0,0,0,1]
 v.a = barTop; barTop.parent = v
 v.b = homeOverlay; homeOverlay.parent = v
-v.layoutFunc = function() {
-  v.c = barBot; barBot.parent = v
-}
+v.c = barBot; barBot.parent = v
 setEasingParameters(v)
