@@ -1,4 +1,4 @@
-import { trezorConnect, trezorPing, trezorWipe } from '../../trezor.js'
+import { trezorConnect, trezorPing, trezorWipe } from '../../../trezor.js'
 import { menuView as trezorTools } from './tools-trezor.js'
 import { menuView as nostorTools } from './tools-nostor.js'
 import { Buffer } from 'buffer'

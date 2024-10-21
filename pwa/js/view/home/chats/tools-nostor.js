@@ -1,15 +1,6 @@
-import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../draw.js'
-import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorGetPassword, trezorSign, trezorWipe } from '../../trezor.js'
-import { contentView as newContactForm } from './new-chat/new-contact/content.js'
-import * as bjs from 'bitcoinjs-lib'
-import bm from 'bitcoinjs-message'
-import * as ecc from '@bitcoinerlab/secp256k1'
-import * as bip32f from 'bip32'
-//import { Buffer } from 'buffer'
-import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-tools'
-
-import { noteDecode, nsecDecode, validKey, relayUrl, findEvent, npub, signEvent, publishEvent, nostrWatchRelays } from '../../nostor.js'
-import { relays } from '../../relays.js'
+import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../../draw.js'
+import { noteDecode, nsecDecode, validKey, relayUrl, findEvent, npub, signEvent, publishEvent, nostrWatchRelays } from '../../../nostor.js'
+import { relays } from '../../../relays.js'
 
 // import * as nip19 from 'nostr-tools/nip19'
 // import { Buffer } from 'buffer'
