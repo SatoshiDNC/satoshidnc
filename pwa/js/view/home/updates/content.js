@@ -13,19 +13,6 @@ v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
-v.filterGads = []
-for (const label of ['All', 'Unread', 'Favorites', 'Groups']) {
-  v.gadgets.push(g = new fg.Gadget(v))
-  v.filterGads.push(g)
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.label = label
-  g.animValue = 0
-  g.clickFunc = function() {
-    const g = this, v = g.viewport
-    v.activeFilter = g.label
-    v.setRenderFlag(true)
-  }
-}
 v.gadgets.push(g = v.listGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
@@ -38,16 +25,9 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
       g.root.easeOut(g.target)
     }
   }
-v.activeFilter = v.filterGads[0].label
 v.layoutFunc = function() {
   const v = this
   let x = 42
-  for (const g of v.filterGads) {
-    g.x = x, g.y = 51, g.h = 86
-    g.w = 33 + defaultFont.calcWidth(g.label) * 30/14 + 33
-    g.autoHull()
-    x += g.w + 15
-  }
   let g
   g = v.listGad
   g.x = 0, g.y = 0
