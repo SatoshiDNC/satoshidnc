@@ -1,6 +1,3 @@
-import { trezorConnect, trezorPing, trezorWipe } from '../../../trezor.js'
-import { menuView as trezorTools } from './tools-trezor.js'
-import { menuView as nostorTools } from './tools-nostor.js'
 import { Buffer } from 'buffer'
 
 let v, g
@@ -92,8 +89,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     // { id: 6, label: 'Compute SHA-256', handler: g.sha256 },
     // { id: 7, label: 'Compute index hash', handler: g.indexHash },
     // { id: 8, label: 'Copy result', handler: g.copyResult },
-    { id: 8, label: 'Nostor tools', handler: g.handleSerial, subhandler: nostorTools.invoker },
-    { id: 9, label: 'Trezor tools', handler: trezorTools.invoker },
+    // { id: 8, label: 'Nostor tools', handler: g.handleSerial, subhandler: nostorTools.invoker },
+    // { id: 9, label: 'Trezor tools', handler: trezorTools.invoker },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
