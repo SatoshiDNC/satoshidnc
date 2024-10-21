@@ -18,8 +18,11 @@ for (const pane of v.panes) {
   g.clickFunc = function() {
     const g = this, v = g.viewport
     v.activeLabel = g.label
-    console.log(v.panes.filter(p => p.label == v.activeLabel))
-    v.setRenderFlag(true)
+    const pane = v.panes.filter(p => p.label == v.activeLabel)[0]
+    console.log(pane)
+    pane.view.c = barBot; barBot.parent = pane.view
+    pane.view.setRenderFlag(true)
+    fg.setRoot(pane.view)
   }
 }
 v.activeLabel = v.paneGads[0].label
