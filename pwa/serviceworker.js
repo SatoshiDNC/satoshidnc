@@ -100,6 +100,7 @@ self.addEventListener('fetch', (event) => {
     const url = event.request.url
     const parts = url.split('/')
     if (parts.length = 5 && parts[0] == 'https:' && parts[1] == '' && parts[3] == 'dec' && url.endsWith('.mp3')) {
+      console.log('[SW] detected fetch of audio from encrypted source', event.request.url)
       event.respondWith(decryptRange(event))
       return
     } else {
