@@ -1,7 +1,7 @@
 import { db } from './db.js'
 import { getRelayStat, setRelayStat } from './stats.js'
 import { randomRelay } from './relays.js'
-import { contentView as debugView } from './view/home-chats/profile/info/content.js'
+import { contentView as debugView } from './view/home/home-chats/profile/info/content.js'
 import { setHasData } from './relays.js'
 
 export function aggregateEvent(hpub, e) {

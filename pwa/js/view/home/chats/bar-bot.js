@@ -1,4 +1,4 @@
-import { drawPill, alpha } from '../../draw.js'
+import { drawPill, alpha } from '../../../draw.js'
 
 let v, g
 export const barBot = v = new fg.View()

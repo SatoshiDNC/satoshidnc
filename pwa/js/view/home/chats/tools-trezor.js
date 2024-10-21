@@ -1,5 +1,5 @@
-import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../draw.js'
-import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorGetPassword, trezorSign, trezorWipe } from '../../trezor.js'
+import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../../draw.js'
+import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorGetPassword, trezorSign, trezorWipe } from '../../../trezor.js'
 import { contentView as newContactForm } from './new-chat/new-contact/content.js'
 import * as bjs from 'bitcoinjs-lib'
 import bm from 'bitcoinjs-message'
@@ -10,8 +10,8 @@ import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-
 
 import * as nip19 from 'nostr-tools/nip19'
 import { Buffer } from 'buffer'
-import { getKeyInfo, addTrezorKey } from '../../keys.js'
-import { getPersonalData, setPersonalData } from '../../personal.js'
+import { getKeyInfo, addTrezorKey } from '../../../keys.js'
+import { getPersonalData, setPersonalData } from '../../../personal.js'
 
 /* secret key should not leave this file */
 const my_hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
