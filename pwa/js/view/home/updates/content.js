@@ -11,6 +11,7 @@ v.name = Object.keys({contentView}).pop()
 v.splashMode = 0
 v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
+v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.gadgets.push(g = v.listGad = new fg.Gadget(v))
@@ -34,7 +35,6 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = v.sh
   g.autoHull()
 }
-contactViewDependencies.push(v)
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
@@ -42,6 +42,11 @@ v.renderFunc = function() {
   const m = mat4.create()
   const mat = mat4.create()
 
+  mat4.identity(m)
+  mat4.translate(m, m, [44, 125, 0])
+  mat4.scale(m, m, [41/14, 41/14, 1])
+  let x = 0, y = 0
+  defaultFont.draw(x,y, 'Status', v.textColor, v.mat, m)
 }
 
 export const overlayView = v = new fg.View(null)
