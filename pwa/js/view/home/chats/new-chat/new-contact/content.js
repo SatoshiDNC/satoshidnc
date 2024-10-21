@@ -1,4 +1,4 @@
-import { getKeyboardInput } from '../../../../../util.js'
+import { getKeyboardInput } from '../../../../util.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
