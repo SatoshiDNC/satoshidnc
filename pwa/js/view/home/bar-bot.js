@@ -18,7 +18,7 @@ for (const pane of v.panes) {
   g.clickFunc = function() {
     const g = this, v = g.viewport
     v.activeLabel = g.label
-    console.log(v.panes.filter(p => p.label = g.label))
+    console.log(v.panes.filter(p => p.label == g.label))
     v.setRenderFlag(true)
   }
 }
