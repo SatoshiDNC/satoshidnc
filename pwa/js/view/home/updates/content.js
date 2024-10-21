@@ -4,7 +4,6 @@ import { drawPill, drawAvatar } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn } from '../../util.js'
-import { popupRoot, popupView } from './profile/popup.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -35,17 +34,8 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const index = Math.floor((y - 167.5) / 200)
     const c = contacts?.[index]
     if (c) {
-      if (x < 175) {
-        popupView.setContact(c.hpub, 204 + 147 + 200 * index)
-        if (fg.getRoot() !== popupRoot || popupRoot.easingState() == -1) {
-          popupRoot.easeIn()
-        } else {
-          popupRoot.easeOut()
-        }
-      } else {
-        chatRoomView.setContact(c.hpub)
-        g.root.easeOut(g.target)
-      }
+      chatRoomView.setContact(c.hpub)
+      g.root.easeOut(g.target)
     }
   }
 v.activeFilter = v.filterGads[0].label
