@@ -122,11 +122,11 @@ v.setContact = function(hpub) {
             || e.tags.filter(t=>t[0]=='imeta'&&t[1].startsWith('url ')&&t[1].endsWith('.enc'))?.[0]?.[1].split(' ',2)[1]
             || 'https://dev.satoshidnc.com/E19.mp3'
             if (url) {
-              console.log('url:', url)
               if (url.endsWith('.enc')) {
                 const hash = url.split('/').pop().split('.')[0]
                 url = `https://dev.satoshidnc.com/dec/${hash}.mp3`
               }
+              console.log('effective url:', url)
               const audio = g.audio = new Audio(url)
               audio.crossOrigin = 'anonymous'
               audio.play().then(() => {
