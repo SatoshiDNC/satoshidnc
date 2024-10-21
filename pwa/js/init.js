@@ -5,6 +5,8 @@ import { menuRoot } from './view/menu.js'
 import { chatRoomRoot as chatRoom_root } from './view/chat-room/root.js'
 import { homeRoot as home_chats_root } from './view/home/chats/root.js'
 import { homeRoot as home_updates_root } from './view/home/updates/root.js'
+import { homeRoot as home_communities_root } from './view/home/communities/root.js'
+import { homeRoot as home_calls_root } from './view/home/calls/root.js'
 import { contentView as homeChat_content, overlayView as homeChat_overlay } from './view/home/chats/content.js'
 import { newChatRoot as homeChat_newChat_root } from './view/home/chats/new-chat/root.js'
 import { contentView as homeChat_newChat_content} from './view/home/chats/new-chat/content.js'
@@ -50,3 +52,5 @@ profile_popup_content.infoGad.target = profile_info_root, profile_popup_content.
 profile_info_root.backGad.target = home_chats_root, profile_info_root.backGad.root = profile_info_root
 home_bot.panes.filter(p => p.label == 'Chats')[0].view = home_chats_root
 home_bot.panes.filter(p => p.label == 'Updates')[0].view = home_updates_root
+home_bot.panes.filter(p => p.label == 'Communities')[0].view = home_communities_root
+home_bot.panes.filter(p => p.label == 'Calls')[0].view = home_calls_root
