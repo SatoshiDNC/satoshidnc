@@ -5,8 +5,9 @@ export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
+v.panes = [{ label: 'Chats' }, { label: 'Updates' }, { label: 'Communities' }, { label: 'Calls' }]
 v.paneGads = []
-for (const pane of [{ label: 'Chats' }, { label: 'Updates' }, { label: 'Communities' }, { label: 'Calls' }]) {
+for (const pane of v.panes) {
   v.gadgets.push(g = new fg.Gadget(v))
   v.paneGads.push(g)
   g.actionFlags = fg.GAF_CLICKABLE
@@ -16,11 +17,12 @@ for (const pane of [{ label: 'Chats' }, { label: 'Updates' }, { label: 'Communit
   g.animValue = 0
   g.clickFunc = function() {
     const g = this, v = g.viewport
-    v.activePane = g.label
+    v.activeLabel = g.label
+    console.log(g.panes.filter(p => p.label = g.label))
     v.setRenderFlag(true)
   }
 }
-v.activePane = v.paneGads[0].label
+v.activeLabel = v.paneGads[0].label
 v.layoutFunc = function() {
   const v = this
   let x = 0
@@ -47,7 +49,7 @@ v.renderFunc = function() {
   mainShapes.drawArrays2('rect')
 
   for (const g of v.paneGads) {
-    const goal = g.label == v.activePane? 1: 0
+    const goal = g.label == v.activeLabel? 1: 0
     if (g.animValue != goal) {
       g.animValue = g.animValue * 0.7 + goal * 0.3
       if (Math.abs(goal - g.animValue) < 0.005) {
