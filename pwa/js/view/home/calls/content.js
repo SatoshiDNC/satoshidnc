@@ -42,12 +42,6 @@ v.renderFunc = function() {
   const m = mat4.create()
   const mat = mat4.create()
 
-  mat4.identity(m)
-  mat4.translate(m, m, [44, 125, 0])
-  mat4.scale(m, m, [41/14, 41/14, 1])
-  let x = 0, y = 0
-  defaultFont.draw(x,y, 'Status', v.textColor, v.mat, m)
-  console.log('here')
 }
 
 export const overlayView = v = new fg.View(null)
