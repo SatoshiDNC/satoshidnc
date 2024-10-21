@@ -52,6 +52,16 @@ v.renderFunc = function() {
   mat4.translate(m, m, [45, 434, 0])
   mat4.scale(m, m, [28/14, 28/14, 1])
   defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
+
+  mat4.identity(m)
+  mat4.translate(m, m, [211, 553, 0])
+  mat4.scale(m, m, [35/14, 35/14, 1])
+  defaultFont.draw(x,y, 'Name', v.titleColor, v.mat, m)
+
+  mat4.identity(m)
+  mat4.translate(m, m, [211, 618, 0])
+  mat4.scale(m, m, [30/14, 30/14, 1])
+  defaultFont.draw(x,y, 'Time', v.subtitleColor, v.mat, m)
 }
 
 export const overlayView = v = new fg.View(null)
