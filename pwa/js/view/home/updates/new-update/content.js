@@ -1,7 +1,6 @@
-import { contacts, contactViewDependencies } from '../../../../../contacts.js'
-import { keys, keyViewDependencies } from '../../../../../keys.js'
-import { getPersonalData as getAttr, personalData, personalDataViewDependencies } from '../../../../../personal.js'
-import { contentView as chatRoomView } from '../../../../chat-room/content.js'
+import { contacts, contactViewDependencies } from '../../../../contacts.js'
+import { keys, keyViewDependencies } from '../../../../keys.js'
+import { getPersonalData as getAttr, personalData, personalDataViewDependencies } from '../../../../personal.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -54,7 +53,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const index = Math.floor((y - 649) / 179)
     const hpub = g.itemList?.[index]
     if (hpub) {
-      chatRoomView.setContact(hpub)
+      /// chatRoomView.setContact(hpub)
       g.root.easeOut(g.target)
     }
   }
