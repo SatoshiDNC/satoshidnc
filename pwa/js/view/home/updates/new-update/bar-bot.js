@@ -1,11 +1,11 @@
-import { drawPill, alpha } from '../../draw.js'
+import { drawPill, alpha } from '../../../../draw.js'
 
 let v, g
 export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
-v.panes = [{ label: 'Chats' }, { label: 'Updates' }, { label: 'Communities' }, { label: 'Calls' }]
+v.panes = [{ label: 'Audio' }, { label: 'Video' }, { label: 'Photo' }]
 v.paneGads = []
 for (const pane of v.panes) {
   v.gadgets.push(g = new fg.Gadget(v))
