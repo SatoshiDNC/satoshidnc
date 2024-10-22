@@ -63,7 +63,7 @@ v.renderFunc = function() {
     }
     const f1 = g.animValue
     const f0 = 1 - f1
-    drawPill(v, alpha(colors.accentDark, f1), g.x + g.w/2 * f0, g.y, g.w * f1, 84)
+    drawPill(v, alpha(colors.bubbleDark, f1), g.x + g.w/2 * f0, 26, g.w * f1, 96)
     mat4.identity(m)
     const s = 26/14
     mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
