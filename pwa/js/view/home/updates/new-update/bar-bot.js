@@ -72,10 +72,17 @@ v.renderFunc = function() {
     }
     const f1 = g.animValue
     const f0 = 1 - f1
-    drawPill(v, alpha(colors.bubbleDark, f1), g.x + g.w/2 * f0 - 48 * f1, 26, (g.w + 96) * f1, 96)
+    let x = (g.x + (g.oldX || g.x)) / 2
+    if (Math.abs(x - g.x) < 1) {
+      x = g.x
+    } else {
+      v.setRenderFlag(true)
+    }
+    g.oldX = x
+    drawPill(v, alpha(colors.bubbleDark, f1), x + g.w/2 * f0 - 48 * f1, 26, (g.w + 96) * f1, 96)
     mat4.identity(m)
     const s = g.textScale
-    mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
+    mat4.translate(m,m, [x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
     mat4.scale(m,m, [s, s, 1])
     defaultFont.draw(0,0, g.label, v.textColor, v.mat, m)
   }
