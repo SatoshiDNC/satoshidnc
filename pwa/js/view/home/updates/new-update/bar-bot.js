@@ -21,10 +21,11 @@ for (const pane of v.panes) {
     v.activeLabel = g.label
     const pane = v.panes.filter(p => p.label == v.activeLabel)[0]
     console.log(pane)
-    pane.view.c = barBot; barBot.parent = pane.view
-    pane.view.easingValue = 1
-    pane.view.setRenderFlag(true)
-    fg.setRoot(pane.view)
+    v.relayout()
+    // pane.view.c = barBot; barBot.parent = pane.view
+    // pane.view.easingValue = 1
+    // pane.view.setRenderFlag(true)
+    // fg.setRoot(pane.view)
   }
 }
 v.activeLabel = v.paneGads[0].label
