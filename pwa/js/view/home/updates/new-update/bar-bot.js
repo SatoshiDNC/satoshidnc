@@ -31,10 +31,17 @@ v.activeLabel = v.paneGads[0].label
 v.layoutFunc = function() {
   const v = this
   let x = v.sw / 2
+  let xOffset = 0
   for (const g of v.paneGads) {
     g.x = x - g.w / 2, g.y = 90-28
-    g.autoHull()
+    if (g.label == v.activeLabel) {
+      xOffset = x - v.sw / 2
+    }
     x += g.w + 96
+  }
+  for (const g of v.paneGads) {
+    g.x -= xOffset
+    g.autoHull()
   }
 }
 v.renderFunc = function() {
