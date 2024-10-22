@@ -1,6 +1,6 @@
 import { barTop } from './bar-top.js'
 import { contentView } from './content.js'
-import { setEasingParameters } from '../../util.js'
+import { setEasingParameters } from '../../../util.js'
 
 export const rootView = v = new fg.DualSliceView(null, 'v', 147, 0)
 v.name = Object.keys({rootView}).pop()
