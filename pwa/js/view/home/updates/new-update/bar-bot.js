@@ -11,7 +11,7 @@ for (const pane of v.panes) {
   v.gadgets.push(g = new fg.Gadget(v))
   v.paneGads.push(g)
   g.actionFlags = fg.GAF_CLICKABLE
-  g.w = 168, g.h = 136
+  g.w = 168, g.h = 28
   g.label = pane.label
   g.icon = pane.icon
   g.animValue = 0
@@ -31,7 +31,7 @@ v.layoutFunc = function() {
   const v = this
   let x = 0
   for (const g of v.paneGads) {
-    g.x = x + (v.sw / 4 - g.w) / 2, g.y = 33
+    g.x = x + (v.sw / 4 - g.w) / 2, g.y = 90-28
     g.autoHull()
     x += v.sw /4
   }
