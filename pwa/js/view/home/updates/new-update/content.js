@@ -72,9 +72,6 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = v.sh
   g.autoHull()
 }
-contactViewDependencies.push(v)
-keyViewDependencies.push(v)
-personalDataViewDependencies.push(v)
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
@@ -82,111 +79,5 @@ v.renderFunc = function() {
   const m = mat4.create()
   const mat = mat4.create()
 
-  const iconRender = (icon, x, y, ix, iy, iw) => {
-    const size = 105
-    mat4.identity(m)
-    mat4.translate(m,m, [x, y + size, 0])
-    mat4.scale(m,m, [size/6, size/6, 1])
-    iconFont.draw(0,0, `\x0d`, v.buttonFaceColor, v.mat, m)
-    mat4.identity(m)
-    mat4.translate(m,m, [ix, iy, 0])
-    mat4.scale(m,m, [iw/iconFont.calcWidth(icon), iw/iconFont.calcWidth(icon), 1])
-    iconFont.draw(0,0, icon, v.buttonTextColor, v.mat, m)
-  }
-  const npubRender = (c, x, y) => {
-    mat4.identity(mat)
-    mat4.translate(mat, mat, [x, y, 0])
-    mat4.scale(mat, mat, [105/32, 105/32, 1])
-    let ox = -0.5, oy = 8.5
-    c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
-      mat4.copy(m, mat)
-      nybbleFont.draw(ox,oy + i*8, str, v.titleColor, v.mat, m)
-    })  
-  }
-  const titleRender = (title, x, y) => {
-    mat4.identity(m)
-    mat4.translate(m,m, [x, y, 0])
-    const s1 = 35/14
-    mat4.scale(m,m, [s1, s1, 1])
-    const w3 = v.sw - 192 - 45 - 25
-    let str
-    if (defaultFont.calcWidth(title) * s1 > w3) {
-      let l = title.length
-      while (defaultFont.calcWidth(title.substring(0,l)+'...') * s1 > w3) {
-        l--
-      }
-      str = title.substring(0,l)+'...'
-    } else {
-      str = title
-    }
-    defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
-  }
-  const subtitleRender = (c, x, y) => {
-    mat4.identity(m)
-    mat4.translate(m,m, [x, y, 0])
-    const s3 = 31/14
-    mat4.scale(m,m, [s3, s3, 1])
-    const w4 = v.sw - 192 - 45 - 25
-    let str
-    if (defaultFont.calcWidth(c.about) * s3 > w4) {
-      let l = c.about.length
-      while (defaultFont.calcWidth(c.about.substring(0,l)+'...') * s3 > w4) {
-        l--
-      }
-      str = c.about.substring(0,l)+'...'
-    } else {
-      str = c.about
-    }
-    defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
-  }
-
-  let i = 0
-  let g
-  g = v.newGroupGad
-  iconRender('\x02', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
-  titleRender(g.label, 192, 124 + 179 * i, 0, 1)
-  i++
-
-  g = v.newContactGad
-  iconRender('\x01', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
-  titleRender(g.label, 192, 124 + 179 * i, 0, 1)
-
-  g = v.scanGad
-  mat4.identity(m)
-  mat4.translate(m,m, [g.x, g.y + g.h, 0])
-  let s = g.w/iconFont.calcWidth(g.label)
-  mat4.scale(m,m, [s, s, 1])
-  iconFont.draw(0,0, g.label, v.titleColor, v.mat, m)
-  i++
-
-  g = v.newCommunityGad
-  iconRender('\x03', 42, 53 + 179 * i, 63, 127 + 179 * i, 63)
-  titleRender(g.label, 192, 124 + 179 * i, 0, 1)
-  i++
-
-  let x = 44, y = 617
-  mat4.identity(m)
-  mat4.translate(m,m, [x, y, 0])
-  const s3 = 29/14
-  mat4.scale(m,m, [s3, s3, 1])
-  defaultFont.draw(0,0, 'Contacts on Nostor', v.subtitleColor, v.mat, m)
-
-  i = 0
-  const index = []
-  for (const c of [ ...keys.map(k => { return {
-    hpub: k.hpub,
-    name: (getAttr(k.hpub, 'name') || 'Unnamed') + ' (You)',
-    about: 'Message yourself',
-  }}), ...contacts.map(c => { return {
-    hpub: c.hpub,
-    name: getAttr(c.hpub, 'name'),
-    about: getAttr(c.hpub, 'about') || '',
-  }}) ]) {
-    index.push(c.hpub)
-    npubRender(c, 42, 686 + 179 * i) // 482
-    titleRender(c.name, 190, 728 + 179 * i + (c.about?0:29))
-    subtitleRender(c, 192, 788 + 179 * i)
-    i++
-  }
-  v.listGad.itemList = index
+  
 }
