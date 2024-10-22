@@ -69,9 +69,7 @@ v.renderFunc = function() {
       v.setRenderFlag(true)
     }
     g.oldX = x
-    if (x == g.x) {
-      drawPill(v, alpha(colors.bubbleDark, f1), x - 48, 26, g.w + 96, 96)
-    }
+    drawPill(v, alpha(colors.bubbleDark, f1), x + g.w/2 * f0 - 48 * f1, 26, (g.w + 96) * f1, 96)
     mat4.identity(m)
     const s = g.textScale
     mat4.translate(m,m, [x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
