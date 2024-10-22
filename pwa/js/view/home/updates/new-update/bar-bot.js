@@ -51,16 +51,6 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
 
-  // subtle divider
-  mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  mat4.identity(m)
-  mat4.translate(m,m, [0, 0, 0])
-  mat4.scale(m,m, [v.sw, 2, 1])
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('rect')
-
   for (const g of v.paneGads) {
     const goal = g.label == v.activeLabel? 1: 0
     if (g.animValue != goal) {
@@ -77,6 +67,8 @@ v.renderFunc = function() {
       x = g.x
     } else {
       v.setRenderFlag(true)
+      f0 = 1, f1 = 0
+      g.animValue = 0
     }
     g.oldX = x
     drawPill(v, alpha(colors.bubbleDark, f1), x + g.w/2 * f0 - 48 * f1, 26, (g.w + 96) * f1, 96)
