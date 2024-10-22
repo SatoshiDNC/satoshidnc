@@ -75,8 +75,7 @@ v.gadgets.push(g = v.addGad = new fg.Gadget(v))
   g.label = '+'
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    // g.root.easeOut(g.target)
-    console.log('upload audio')
+    g.root.easeOut(g.target)
   }
 v.layoutFunc = function() {
   const v = this
