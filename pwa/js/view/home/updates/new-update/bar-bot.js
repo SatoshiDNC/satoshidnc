@@ -11,7 +11,8 @@ for (const pane of v.panes) {
   v.gadgets.push(g = new fg.Gadget(v))
   v.paneGads.push(g)
   g.actionFlags = fg.GAF_CLICKABLE
-  g.w = 168, g.h = 28
+  g.textScale = 28/14
+  g.w = defaultFont.calcWidth(pane.label) * g.textScale, g.h = 28
   g.label = pane.label
   g.icon = pane.icon
   g.animValue = 0
@@ -29,11 +30,11 @@ for (const pane of v.panes) {
 v.activeLabel = v.paneGads[0].label
 v.layoutFunc = function() {
   const v = this
-  let x = 0
+  let x = v.sw / 2
   for (const g of v.paneGads) {
-    g.x = x + (v.sw / 4 - g.w) / 2, g.y = 90-28
+    g.x = x - g.w / 2, g.y = 90-28
     g.autoHull()
-    x += v.sw /4
+    x += g.w
   }
 }
 v.renderFunc = function() {
@@ -65,7 +66,7 @@ v.renderFunc = function() {
     const f0 = 1 - f1
     drawPill(v, alpha(colors.bubbleDark, f1), g.x + g.w/2 * f0, 26, g.w * f1, 96)
     mat4.identity(m)
-    const s = 26/14
+    const s = g.textScale
     mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
     mat4.scale(m,m, [s, s, 1])
     defaultFont.draw(0,0, g.label, v.textColor, v.mat, m)
