@@ -3,7 +3,7 @@ import { drawPill, alpha } from '../../../../draw.js'
 let v, g
 export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
-v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
+v.bgColor = [0,0,0, 1]
 v.textColor = [1,1,1,1]
 v.panes = [{ label: 'Audio' }, { label: 'Video' }, { label: 'Photo' }]
 v.paneGads = []
