@@ -94,10 +94,10 @@ v.renderFunc = function() {
   t = `${data.kind} · ${(''+kindInfo.filter(r=>r.kindMax?r.kind<=data.kind&&data.kind<=r.kindMax:r.kind==data.kind)?.[0]?.desc).toUpperCase()}`
   tw = defaultFont.calcWidth(t)
   ts = 20/14
-  mat4.identity(mat)
-  mat4.translate(mat, mat, [15, 150, 0])
-  mat4.scale(mat, mat, [ts, ts, 1])
-  defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
+  mat4.identity(m)
+  mat4.translate(m, m, [15, 150, 0])
+  mat4.scale(m, m, [ts, ts, 1])
+  defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, m)
 
   // const g = v.addGad
   // mat4.identity(m)
