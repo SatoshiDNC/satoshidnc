@@ -56,7 +56,7 @@ export function drawPill(v, color, x,y,w,h) {
   mainShapes.drawArrays2('rect')
 }
 
-export function drawEllipse(v, color, x,y,w,h) {
+export function drawEllipse(v, color, x,y,w,h, percent) {
   mainShapes.useProg2()
   const m = mat4.create()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(color))
@@ -65,7 +65,8 @@ export function drawEllipse(v, color, x,y,w,h) {
   mat4.translate(m,m, [x, y, 0])
   mat4.scale(m,m, [w, h, 1])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('circle')
+  //mainShapes.drawArrays2('circle')
+  gl.drawArrays(mainShapes.typ2['circle'],mainShapes.beg2['circle'],mainShapes.len2['circle'])
 }
 
 export function drawRoundedRect(v, color, radius, x,y,w,h) {
