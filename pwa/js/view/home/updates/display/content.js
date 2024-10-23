@@ -4,6 +4,7 @@ import { getPersonalData as getAttr, personalData, personalDataViewDependencies 
 import { drawPill, drawEllipse, alpha } from '../../../../draw.js'
 import { kindInfo } from '../../../../nostor.js'
 import { overlayView } from './overlay.js'
+import { markUpdateAsViewed } from '../../../../content.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
