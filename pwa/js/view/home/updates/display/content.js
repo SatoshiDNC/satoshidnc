@@ -107,7 +107,7 @@ v.renderFunc = function() {
 }
 v.renderKind1 = function(data) {
   const v = this
-  gl.clearColor(...colors.accent)
+  gl.clearColor(...[parseInt(data.id[10],16)/16, parseInt(data.id[11],16)/16, parseInt(data.id[12],16)/16, 1])
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   let t,tw,th,ts
