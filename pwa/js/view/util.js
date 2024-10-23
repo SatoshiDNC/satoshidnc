@@ -74,7 +74,7 @@ export function updatePostedAsOf(timeStamp) {
       return `Yesterday`
     }
   }
-  return `age: ${now - timeStamp}`
+  return addedOn(timeStamp)
 }
 
 export function addedOn(timeStamp) {
