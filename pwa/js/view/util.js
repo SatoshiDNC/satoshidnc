@@ -67,10 +67,12 @@ const ONE_DAY = 24 * 60 * 60 * 1000
 export function updatePostedAsOf(timeStamp) {
   // assumption: timeStamp is within past 24 hours
   const now = Date.now()
-  if (new Date(timeStamp).getDate() == new Date(now).getDate()) {
-    return `Today`
-  } else {
-    return `Yesterday`
+  if (now - timeStamp < ONE_DAY) {
+    if (new Date(timeStamp).getDate() == new Date(now).getDate()) {
+      return `Today`
+    } else {
+      return `Yesterday`
+    }
   }
 }
 
