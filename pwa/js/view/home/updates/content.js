@@ -25,6 +25,16 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
     displayView.setContext(updates)
     g.root.easeOut(g.target)
   }
+v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function(e) {
+    const g = this, v = this.viewport
+    const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
+    const index = Math.floor((y - g.y) / 200)
+    const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
+    displayView.setContext(updates)
+    g.root.easeOut(g.target)
+  }
 v.query = { inProgress: false, lastCompleted: 0, results: [] }
 v.queryFunc = function() {
   const v = this
@@ -68,6 +78,10 @@ v.layoutFunc = function() {
   g = v.recentsGad
   g.x = 0, g.y = 466
   g.w = v.sw, g.h = recents.length * 200
+  g.autoHull()
+  g = v.viewedGad
+  g.x = 0, g.y = v.recentsGad.y + v.recentsGad.height + 96
+  g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
 
   v.queryFunc()
