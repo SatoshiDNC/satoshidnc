@@ -1,10 +1,10 @@
-// import { hpub, npub } from '../../keys.js'
 import { contacts, contactViewDependencies } from '../../../contacts.js'
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
 import { getUpdates } from '../../../content.js'
+import { rootView as displayView } from './display/root.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -24,8 +24,9 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
     console.log(index)
     // const c = v.query.results?.[index]
     // if (c) {
-    //   chatRoomView.setContact(c.hpub)
-    //   g.root.easeOut(g.target)
+    console.log('here?')
+      displayView.setContext(c.hpub, noteid)
+      g.root.easeOut(g.target)
     // }
   }
 v.query = { inProgress: false, lastCompleted: 0, results: [] }
