@@ -122,8 +122,7 @@ export function getUpdates() {
     }
     const posts = []
     req.onsuccess = function(e) {
-      console.log(e.target.result)
-      resolve(e.target.result.filter(e => ![5, 31234].includes(e.kind)))
+      resolve(e.target.result.filter(r => ![5, 31234].includes(r.data.kind)))
     }
   })
 }
