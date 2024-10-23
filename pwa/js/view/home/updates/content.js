@@ -102,19 +102,19 @@ v.renderFunc = function() {
         }
 
         const numUpdates = v.query.results.filter(u => u.hpub == update.hpub).length
-        const numViewed = numUpdates - 1
-        drawEllipse(v, colors.accent, 32, 492, 147, 147)
+        const numViewed = 0
+        drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
         if (numViewed) {
-          drawEllipse(v, colors.inactive, 32, 492 + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
+          drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
         }
-        drawEllipse(v, v.bgColor, 38, 498, 135, 135)
+        drawEllipse(v, v.bgColor, 38, 498 + y, 135, 135)
         for (let i = 0; i < numUpdates; i++) {
           // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
           mainShapes.useProg2()
           gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
           gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
           mat4.identity(m)
-          mat4.translate(m,m, [105, 565.5, 0])
+          mat4.translate(m,m, [105, 565.5 + y, 0])
           mat4.rotate(m,m, 2*Math.PI*i/numUpdates, [0, 0, 1])
           mat4.translate(m,m, [-3, -74.5, 0])
           mat4.scale(m,m, [6, 8, 1])
@@ -122,7 +122,8 @@ v.renderFunc = function() {
           mainShapes.drawArrays2('rect')
         }
 
-        drawAvatar(v, update.hpub, 43,503 + y, 125,125)
+        // drawAvatar(v, update.hpub, 43,503 + y, 125,125)
+        drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
 
         mat4.identity(m)
         mat4.translate(m, m, [211, 553 + y, 0])
