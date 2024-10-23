@@ -78,11 +78,11 @@ v.renderFunc = function() {
   mat4.scale(m, m, [28/14, 28/14, 1])
   defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
 
-  const contacts = []
+  const recents = []
   for (const update of v.query.results) {
-    let y = contacts.length * 200
-    if (!contacts.includes(update.hpub)) {
-      contacts.push(update.hpub)
+    let y = recents.length * 200
+    if (!recents.includes(update.hpub)) {
+      recents.push(update.hpub)
 
       drawAvatar(v, update.hpub, 43,503 + y, 125,125)
 
@@ -99,7 +99,7 @@ v.renderFunc = function() {
   }
 
   mat4.identity(m)
-  mat4.translate(m, m, [45, 434 + y + 98, 0])
+  mat4.translate(m, m, [45, 434 + recents.length * 200 + 98, 0])
   mat4.scale(m, m, [28/14, 28/14, 1])
   defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
 
