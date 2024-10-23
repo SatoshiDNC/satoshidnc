@@ -25,6 +25,7 @@ v.pageTurn = function() {
   v.currentUpdate += 1
   v.startTime = Date.now()
   if (v.currentUpdate >= v.updates.length) {
+    console.log(v.returnView)
     fg.setRoot(v.returnView)
   }
 }
