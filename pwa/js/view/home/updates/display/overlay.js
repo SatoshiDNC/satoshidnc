@@ -25,6 +25,9 @@ v.layoutFunc = function() {
 v.renderFunc = function() {
   const v = this
   const m = mat4.create()
+
+  drawPill(v, colors.inactive, 9,9, v.sw-18,6)
+
   const g = v.addGad
   mat4.identity(m)
   mat4.translate(m,m, [g.x, g.y + g.h, 0])
