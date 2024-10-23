@@ -110,7 +110,7 @@ export function getFeed(hpub) {
 
 export function getUpdates() {
   return new Promise((resolve, reject) => {
-    const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
+    const tr = db.transaction(['events', 'updates-viewed'], 'readonly', { durability: 'strict' })
     const os = tr.objectStore('events')
     const DISTANT_FUTURE = 91729187740298
     const ONE_DAY_AGO_IN_MILLISECONDS = Date.now() - 24 * 60 * 60 * 1000
@@ -122,7 +122,12 @@ export function getUpdates() {
     }
     const posts = []
     req.onsuccess = function(e) {
-      resolve(e.target.result.filter(r => ![5, 31234].includes(r.data.kind)))
+      resolve(Promise.all(e.target.result.filter(r => ![5, 31234].includes(r.data.kind)).map(r => {
+        return tr.objectStore('updates-viewed').get(r.data.id).then(e => {
+          console.log(e)
+          return { ...r, viewed: e.target.result }
+        })
+      })))
     }
   })
 }
