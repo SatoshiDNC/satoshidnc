@@ -1,4 +1,5 @@
 import { drawPill, drawEllipse } from '../../../../draw.js'
+import { getPersonalData as getAttr } from '../../../../personal.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
