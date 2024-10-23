@@ -101,7 +101,12 @@ v.renderFunc = function() {
           viewed.splice(index, 1)
         }
 
-        drawAvatar(v, update.hpub, 43,503 + y, 125,125)
+        mat4.identity(m)
+        mat4.translate(m, m, [43, 503 + y, 0])
+        mat4.scale(m, m, [35/14, 35/14, 1])
+        defaultFont.draw(0,0, ''+v.query.results.filter(u => u.hpub == update.hpub).length, v.titleColor, v.mat, m)
+
+        //drawAvatar(v, update.hpub, 43,503 + y, 125,125)
 
         mat4.identity(m)
         mat4.translate(m, m, [211, 553 + y, 0])
