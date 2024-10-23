@@ -115,6 +115,7 @@ export function getUpdates() {
     const DISTANT_FUTURE = 91729187740298
     const ONE_DAY_AGO_IN_SECONDS = Date.now() - 24 * 60 * 60
     const ONE_DAY_AGO_IN_MILLISECONDS = ONE_DAY_AGO_IN_SECONDS * 1000
+    console.log (`from ${ONE_DAY_AGO_IN_SECONDS} to ${DISTANT_FUTURE}`)
     const req = os.index('createdAt').getAll(IDBKeyRange.bound(ONE_DAY_AGO_IN_SECONDS, DISTANT_FUTURE))
     req.onerror = function(e) {
       console.err(e)
