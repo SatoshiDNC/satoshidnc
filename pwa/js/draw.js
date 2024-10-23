@@ -73,7 +73,7 @@ export function drawEllipse(v, color, x,y,w,h, f,a) {
   }
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   //mainShapes.drawArrays2('circle')
-  gl.drawArrays(mainShapes.typ2['circle'],mainShapes.beg2['circle'],f? Math.round(mainShapes.len2['circle']/2*f)*2 : mainShapes.len2['circle'])
+  gl.drawArrays(mainShapes.typ2['pies'],mainShapes.beg2['pies'],f? Math.round(mainShapes.len2['pies']/2*f)*2 : mainShapes.len2['pies'])
 }
 
 export function drawRoundedRect(v, color, radius, x,y,w,h) {
