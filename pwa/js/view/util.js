@@ -65,7 +65,13 @@ export function getKeyboardInput(title, defaultValue, handler) {
 const ONE_DAY = 24 * 60 * 60 * 1000
 
 export function updatePostedAsOf(timeStamp) {
-  return addedOn(timeStamp)
+  // assumption: timeStamp is within past 24 hours
+  const now = Date.now()
+  if (new Date(timeStamp).getDate() == new Date(now).getDate()) {
+    return `Today`
+  } else {
+    return `Yesterday`
+  }
 }
 
 export function addedOn(timeStamp) {
