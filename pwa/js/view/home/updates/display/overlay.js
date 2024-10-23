@@ -1,5 +1,6 @@
 import { drawPill, drawEllipse } from '../../../../draw.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
+import { updatePostedAsOf } from '../../../util.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -95,7 +96,7 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m, m, [263, 131, 0])
   mat4.scale(m, m, [24/14, 24/14, 1])
-  defaultFont.draw(0,0, ''+v.updates[v.currentUpdate].data.created_at, v.textColor, v.mat, m)
+  defaultFont.draw(0,0, updatePostedAsOf(v.updates[v.currentUpdate].data.created_at, true), v.textColor, v.mat, m)
 
   // const g = v.addGad
   // mat4.identity(m)
