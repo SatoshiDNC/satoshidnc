@@ -14,6 +14,11 @@ v.gadgets.push(g = v.addGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     g.root.easeOut(g.target)
   }
+v.setContext = function(updates) {
+  const v = this
+  v.updates = updates
+  v.startTime = 0
+}
 v.layoutFunc = function() {
   const v = this
   let g
@@ -28,7 +33,17 @@ v.renderFunc = function() {
   const v = this
   const m = mat4.create()
 
-  drawPill(v, colors.inactive, 9,9, v.sw-18,6)
+  const numUpdates = v.updates.length
+  if (!v.startTime) {
+    v.startTime = Date.now()
+  }
+  const now = Date.now()
+  const elapsedTime = now - v.startTime
+  const w = (v.sw-9-9*numUpdates)/numUpdates
+  for (i = 0; i < numUpdates; i++) {
+    drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
+    //drawPill(v, [1,1,1,1], 9,9, (v.sw-9-9*numUpdates)/numUpdates,6)
+  }
 
   const g = v.addGad
   mat4.identity(m)

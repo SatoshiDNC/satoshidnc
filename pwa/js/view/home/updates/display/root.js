@@ -11,6 +11,7 @@ v.a = overlayView; overlayView.parent = v
 v.b = contentView; contentView.parent = v
 v.setContext = function(updates) {
   console.log(updates)
+  overlayView.setContext(updates)
   // let startAt
   // for (const update of updates) {
   //   if (!update.viewed) {
