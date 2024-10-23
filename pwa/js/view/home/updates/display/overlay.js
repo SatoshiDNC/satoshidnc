@@ -49,6 +49,7 @@ v.renderFunc = function() {
     } else {
       drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
       drawPill(v, [1,1,1,1], 9+(w+9)*i,9, w*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
+      v.setRenderFlag(true)
     }
   }
 
