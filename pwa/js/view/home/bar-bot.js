@@ -25,7 +25,6 @@ for (const pane of v.panes) {
     const g = this, v = g.viewport
     v.activeLabel = g.label
     const pane = v.panes.filter(p => p.label == v.activeLabel)[0]
-    console.log(pane)
     pane.view.c = barBot; barBot.parent = pane.view
     pane.view.easingValue = 1
     pane.view.setRenderFlag(true)
