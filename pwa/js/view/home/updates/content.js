@@ -27,7 +27,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
       g.root.easeOut(g.target)
     }
   }
-v.query = { inProgress: false, lastCompleted: 0 }
+v.query = { inProgress: false, lastCompleted: 0, results: undefined }
 v.queryFunc = function() {
   const v = this
   const ONE_MINUTE_IN_MILLISECONDS = 1 * 60 * 1000
@@ -36,14 +36,15 @@ v.queryFunc = function() {
     getUpdates().then(updates => {
       v.query.inProgress = false
       v.query.lastCompleted = Date.now()
-      console.log('got all recent updates')
-      console.log(updates)
+      v.query.results = updates
       v.relayout()
     })
   }
 }
 v.layoutFunc = function() {
   const v = this
+  console.log(v.query.results)
+
   let x = 42
   let g
   g = v.listGad
