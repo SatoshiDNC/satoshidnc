@@ -28,7 +28,8 @@ export function init() {
         db.createObjectStore(`relay-stats`, { keyPath: ['relayUrl', 'key'] })
         os = db.createObjectStore(`events`, { keyPath: 'data.id' })
         os.createIndex(`id`, 'data.id')
-        os.createIndex(`firstSeen`, ['hpub', 'firstSeen'])
+        os.createIndex(`firstSeen`, 'firstSeen')
+        os.createIndex(`hpubFirstSeen`, ['hpub', 'firstSeen'])
       }
     }
   })
