@@ -40,7 +40,7 @@ v.renderFunc = function() {
   const now = Date.now()
   const elapsedTime = now - v.startTime
   const w = (v.sw-9-9*numUpdates)/numUpdates
-  for (i = 0; i < numUpdates; i++) {
+  for (let i = 0; i < numUpdates; i++) {
     drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
     //drawPill(v, [1,1,1,1], 9,9, (v.sw-9-9*numUpdates)/numUpdates,6)
   }
