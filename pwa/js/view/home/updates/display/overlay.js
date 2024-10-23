@@ -50,6 +50,13 @@ v.renderFunc = function() {
       drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
       drawPill(v, [1,1,1,1], 9+(w+9)*i,9, w*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
       v.setRenderFlag(true)
+      if (elapsedTime / 4000 > 1) {
+        v.currentUpdate += 1
+        v.startTime = now
+        if (v.currentUpdate >= numUpdates) {
+          vp.setRoot(v.returnView)
+        }
+      }
     }
   }
 
