@@ -61,7 +61,8 @@ v.renderFunc = function() {
     v.startTime = Date.now()
     if (v.currentUpdate >= v.updates.length) {
       setTimeout(() => {
-        v.returnView.easingState == 1  
+        v.returnView.easingState = 1
+        v.returnView.easingValue = 1
         fg.setRoot(v.returnView)
       }, 100)
     }
