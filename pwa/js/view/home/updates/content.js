@@ -80,17 +80,18 @@ v.renderFunc = function() {
 
   const contacts = []
   for (const update of v.query.results) {
+    let y = contacts.length * 200
     if (!contacts.includes(update.hpub)) {
       contacts.push(update.hpub)
       mat4.identity(m)
-      mat4.translate(m, m, [211, 553 + contacts.length * 200, 0])
+      mat4.translate(m, m, [211, 553 + y, 0])
       mat4.scale(m, m, [35/14, 35/14, 1])
       defaultFont.draw(x,y, getAttr(update.hpub, 'name'), v.titleColor, v.mat, m)
     
       mat4.identity(m)
-      mat4.translate(m, m, [211, 618 + contacts.length * 200, 0])
+      mat4.translate(m, m, [211, 618 + y, 0])
       mat4.scale(m, m, [30/14, 30/14, 1])
-      defaultFont.draw(x,y, update.firstSeen, v.subtitleColor, v.mat, m)
+      defaultFont.draw(x,y, ''+update.firstSeen, v.subtitleColor, v.mat, m)
     }
   }
 
