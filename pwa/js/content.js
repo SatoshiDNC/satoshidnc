@@ -90,7 +90,7 @@ export function getFeed(hpub) {
   return new Promise((resolve, reject) => {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
-    const req = os.index('firstSeen').openCursor(window.IDBKeyRange.bound([hpub, 0], [hpub, 91729187740298]), 'prev')
+    const req = os.index('hpub_firstSeen').openCursor(window.IDBKeyRange.bound([hpub, 0], [hpub, 91729187740298]), 'prev')
     req.onerror = function(e) {
       console.err(e)
     }
@@ -112,10 +112,9 @@ export function getUpdates() {
   return new Promise((resolve, reject) => {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
-    const firstSeen = os.index('firstSeen')
     const DISTANT_FUTURE = 91729187740298
     const ONE_DAY_AGO = Date.now() - 24 * 60 * 60 * 1000
-    const req = firstSeen.getAll(IDBKeyRange.bound(ONE_DAY_AGO, DISTANT_FUTURE))
+    const req = os.index('createdAt').getAll(IDBKeyRange.bound(ONE_DAY_AGO, DISTANT_FUTURE))
     req.onerror = function(e) {
       console.err(e)
     }
