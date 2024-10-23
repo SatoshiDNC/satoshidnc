@@ -30,6 +30,7 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
+    console.log(y, e.y, v.y, v.viewScale)
     const index = Math.floor((y - g.y) / 200)
     console.log(index, v.query.results)
     const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
