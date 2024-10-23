@@ -90,7 +90,10 @@ v.renderFunc = function() {
   } else {
     gl.clearColor(...v.bgColor)
     gl.clear(gl.COLOR_BUFFER_BIT)  
-    console.log(data)
+    if (data.id != v.lastRenderedId) {
+      v.lastRenderedId = data.id
+      console.log(data)
+    }
   }
   const m = mat4.create()
   const mat = mat4.create()
