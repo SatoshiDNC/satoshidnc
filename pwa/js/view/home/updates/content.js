@@ -106,10 +106,10 @@ v.renderFunc = function() {
     mat4.scale(m, m, [28/14, 28/14, 1])
     defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
   }
-  
+
   if (viewed.length > 0) {
     mat4.identity(m)
-    mat4.translate(m, m, [45, 434 + recents.length * 200 + 98, 0])
+    mat4.translate(m, m, [45, 434 + (recents.length>0 ? recents.length * 200 + 98 : 0), 0])
     mat4.scale(m, m, [28/14, 28/14, 1])
     defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
   }
