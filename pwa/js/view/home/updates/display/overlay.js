@@ -5,13 +5,13 @@ export const overlayView = v = new fg.View(null)
 v.name = Object.keys({overlayView}).pop()
 v.designSize = 1080*1825
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
+v.textColor = [1,1,1,1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 39, g.y = 63, g.w = 48, g.h = 48
   g.label = '\x08'
-  g.textColor = [1,1,1,1]
   g.font = iconFont
   g.fontSize = 13
   g.autoHull()
