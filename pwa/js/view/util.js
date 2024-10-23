@@ -69,7 +69,9 @@ export function updatePostedAsOf(timeStamp) {
   // assumption: timeStamp is within past 24 hours
   const now = Date.now()
   if (now - timeStamp < ONE_DAY) {
-    if (Math.floor((now - timeStamp) / ONE_HOUR * 60) <= 1) {
+    if (now - timeStamp < 0) {
+      return `Future`
+    } else if (Math.floor((now - timeStamp) / ONE_HOUR * 60) <= 1) {
       return `Now`
     } else if (now - timeStamp < ONE_HOUR) {
       return `${Math.floor((now - timeStamp) / ONE_HOUR * 60)} minutes ago`
