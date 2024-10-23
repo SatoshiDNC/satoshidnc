@@ -82,7 +82,7 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = recents.length * 200
   g.autoHull()
   g = v.viewedGad
-  g.x = 0, g.y = v.recentsGad.y + v.recentsGad.height + 96
+  g.x = 0, g.y = v.recentsGad.y + v.recentsGad.h + 96
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
 
