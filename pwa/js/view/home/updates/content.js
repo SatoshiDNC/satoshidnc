@@ -22,11 +22,11 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
     const index = Math.floor(y / 200)
     console.log(index)
-    const c = v.query.results?.[index]
-    if (c) {
-      chatRoomView.setContact(c.hpub)
-      g.root.easeOut(g.target)
-    }
+    // const c = v.query.results?.[index]
+    // if (c) {
+    //   chatRoomView.setContact(c.hpub)
+    //   g.root.easeOut(g.target)
+    // }
   }
 v.query = { inProgress: false, lastCompleted: 0, results: [] }
 v.queryFunc = function() {
