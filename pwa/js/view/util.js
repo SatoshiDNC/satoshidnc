@@ -76,9 +76,9 @@ export function updatePostedAsOf(timeStamp, full = false) {
     } else if (now - timeStamp < ONE_HOUR) {
       return `${Math.floor((now - timeStamp) / ONE_HOUR * 60)} minutes ago`
     } else if (new Date(timeStamp).getDate() == new Date(now).getDate()) {
-      return full?`Today, `:``+`${new Date(timeStamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
+      return (full?`Today, `:``)+`${new Date(timeStamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
     } else {
-      return `Yesterday`+full?`, ${new Date(timeStamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`:``
+      return `Yesterday`+(full?`, ${new Date(timeStamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`:``)
     }
   }
   return addedOn(timeStamp)
