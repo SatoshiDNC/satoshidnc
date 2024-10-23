@@ -95,7 +95,7 @@ v.renderFunc = function() {
   tw = defaultFont.calcWidth(t)
   ts = 20/14
   mat4.identity(m)
-  mat4.translate(m, m, [15, 175, 0])
+  mat4.translate(m, m, [15, 200, 0])
   mat4.scale(m, m, [ts, ts, 1])
   defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, m)
 
