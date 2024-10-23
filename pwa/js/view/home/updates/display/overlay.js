@@ -86,6 +86,16 @@ v.renderFunc = function() {
   drawEllipse(v, [1,1,1,1], 126,34, 105,105)
   drawEllipse(v, colors.inactive, 129,37, 99,99)
 
+  mat4.identity(m)
+  mat4.translate(m, m, [263, 82, 0])
+  mat4.scale(m, m, [33/14, 33/14, 1])
+  defaultFont.draw(0,0, 'Name', v.textColor, v.mat, m)
+
+  mat4.identity(m)
+  mat4.translate(m, m, [263, 131, 0])
+  mat4.scale(m, m, [24/14, 24/14, 1])
+  defaultFont.draw(0,0, 'Time', v.textColor, v.mat, m)
+
   // const g = v.addGad
   // mat4.identity(m)
   // mat4.translate(m,m, [g.x, g.y + g.h, 0])
