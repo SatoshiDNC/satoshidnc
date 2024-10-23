@@ -99,6 +99,32 @@ v.renderFunc = function() {
   mat4.scale(m, m, [ts, ts, 1])
   defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, m)
 
+  if (data.kind == 1) {
+    ts = 20/14
+    const words = data.content.split(' ')
+    const lines = []
+    while (words.length > 0) {
+      lines.push(words.pop())
+      while (words.length > 0 && defaultFont.calcWidth(lines[lines.length] + ' ' + words[words.length]) * ts <= v.sw) {
+        lines.push(lines.pop() + ' ' + words[words.length])
+      }
+    }
+    console.log(lines)
+    // let candidate = 1
+    // for (i = 0; i < words.length; i++) {
+    //   tw = defaultFont.calcWidth(words.slice(0, i).join(' ')) * ts
+    //   if (tw < v.sw) {
+    //     candidate = i
+    //   }
+    // }
+    // t = data.content
+    // tw = defaultFont.calcWidth(t)
+    // mat4.identity(m)
+    // mat4.translate(m, m, [15, 200, 0])
+    // mat4.scale(m, m, [ts, ts, 1])
+    // defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, m)
+  }
+
   // const g = v.addGad
   // mat4.identity(m)
   // mat4.translate(m,m, [g.x, g.y + g.h, 0])
