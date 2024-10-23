@@ -77,9 +77,9 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, g.label, v.textColor, v.mat, m)
     mat4.identity(m)
     s = g.iconScale
-    console.log(iconFont.glyphHeights[g.icon])
+    console.log(iconFont.glyphHeights[g.icon.codePointAt(0)])
     console.log(iconFont)
-    mat4.translate(m,m, [g.x + (g.w - iconFont.calcWidth(g.icon) * s) / 2, g.y + 75 + iconFont.glyphHeights[g.icon]/2, 0])
+    mat4.translate(m,m, [g.x + (g.w - iconFont.calcWidth(g.icon) * s) / 2, g.y + 75 + iconFont.glyphHeights[g.icon.codePointAt(0)]/2, 0])
     mat4.scale(m,m, [s, s, 1])
     iconFont.draw(0,0, g.icon, v.textColor, v.mat, m)
   }
