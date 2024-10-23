@@ -50,6 +50,7 @@ v.renderFunc = function() {
   const now = Date.now()
   const elapsedTime = now - v.startTime
   const w = (v.sw-9-3-6*numUpdates)/numUpdates
+  let pageTurn = false
   for (let i = 0; i < numUpdates; i++) {
     if (i < v.currentUpdate) {
       drawPill(v, [1,1,1,1], 9+(w+6)*i,9, w,6)
@@ -60,9 +61,12 @@ v.renderFunc = function() {
       drawPill(v, [1,1,1,1], 9+(w+6)*i,9, w*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
       v.setRenderFlag(true)
       if (elapsedTime > 4000) {
-        setTimeout(v.pageTurn.call(v))
+        pageTurn = true
       }
     }
+  }
+  if (pageTurn) {
+    setTimeout(v.pageTurn.call(v))
   }
 
   const g = v.addGad
