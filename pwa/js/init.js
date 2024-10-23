@@ -31,6 +31,7 @@ import { contentView as home_updates_content } from './view/home/updates/content
 import { rootView as home_updates_new_root } from './view/home/updates/new-update/root.js'
 import { barTop as home_updates_new_top } from './view/home/updates/new-update/bar-top.js'
 import { rootView as home_updates_display_root } from './view/home/updates/display/root.js'
+import { overlayView as home_updates_display_overlay } from './view/home/updates/display/content.js'
 
 homeChatTop.menuGad.root = home_chats_root
 homeChatTop.menuGad.target = menuRoot
@@ -60,6 +61,6 @@ home_bot.panes.filter(p => p.label == 'Updates')[0].view = home_updates_root
 home_bot.panes.filter(p => p.label == 'Communities')[0].view = home_communities_root
 home_bot.panes.filter(p => p.label == 'Calls')[0].view = home_calls_root
 home_updates_overlay.addGad.root = home_updates_root, home_updates_overlay.addGad.target = home_updates_new_root
-home_updates_overlay.returnView = home_updates_root
+home_updates_display_overlay.returnView = home_updates_root
 home_updates_new_top.backGad.root = home_updates_new_root, home_updates_new_top.backGad.target = home_updates_root
 home_updates_content.recentsGad.root = home_updates_root, home_updates_content.recentsGad.target = home_updates_display_root
