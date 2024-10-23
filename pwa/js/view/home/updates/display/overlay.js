@@ -88,7 +88,7 @@ v.renderFunc = function() {
   mat4.scale(m, m, [24/14, 24/14, 1])
   defaultFont.draw(0,0, updatePostedAsOf(v.updates[v.currentUpdate].data.created_at * 1000, true), v.textColor, v.mat, m)
 
-  let t,tw,ts
+  let t,tw,th,ts
   const data = v.updates[v.currentUpdate].data
 
   t = `${data.kind} · ${(''+kindInfo.filter(r=>r.kindMax?r.kind<=data.kind&&data.kind<=r.kindMax:r.kind==data.kind)?.[0]?.desc).toUpperCase()}`
@@ -109,20 +109,17 @@ v.renderFunc = function() {
         lines.push(lines.pop() + ' ' + words.shift())
       }
     }
-    console.log(lines)
-    // let candidate = 1
-    // for (i = 0; i < words.length; i++) {
-    //   tw = defaultFont.calcWidth(words.slice(0, i).join(' ')) * ts
-    //   if (tw < v.sw) {
-    //     candidate = i
-    //   }
-    // }
-    // t = data.content
-    // tw = defaultFont.calcWidth(t)
-    // mat4.identity(m)
-    // mat4.translate(m, m, [15, 200, 0])
-    // mat4.scale(m, m, [ts, ts, 1])
-    // defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, m)
+    // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
+    th = lines.length * defaultFont.glyphHeights[65]
+    let i = 1
+    for (line of lines) {
+      i++
+      tw = defaultFont.calcWidth(line) * ts
+      mat4.identity(m)
+      mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65], 0])
+      mat4.scale(m, m, [ts, ts, 1])
+      defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+    }
   }
 
   // const g = v.addGad
