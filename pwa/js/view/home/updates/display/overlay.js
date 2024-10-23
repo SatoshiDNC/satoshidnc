@@ -83,8 +83,8 @@ v.renderFunc = function() {
     g.font.draw(0,0, g.label, v.textColor, v.mat, m)
   }
 
-  drawEllipse(v, [1,1,1,1], 185,34, 105,105)
-  drawEllipse(v, colors.inactive, 188,37, 99,99)
+  drawEllipse(v, [1,1,1,1], 126,34, 105,105)
+  drawEllipse(v, colors.inactive, 129,37, 99,99)
 
   // const g = v.addGad
   // mat4.identity(m)
