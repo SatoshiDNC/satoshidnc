@@ -45,7 +45,7 @@ v.layoutFunc = function() {
   const v = this
 
   const contacts = []
-  for (update of v.query.results) {
+  for (const update of v.query.results) {
     if (!contacts.includes(update.hpub)) {
       contacts.push(update.hpub)
     }
@@ -79,7 +79,7 @@ v.renderFunc = function() {
   defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
 
   const contacts = []
-  for (update of v.query.results) {
+  for (const update of v.query.results) {
     if (!contacts.includes(update.hpub)) {
       contacts.push(update.hpub)
       mat4.identity(m)
