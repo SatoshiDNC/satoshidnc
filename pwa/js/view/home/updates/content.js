@@ -46,9 +46,20 @@ v.layoutFunc = function() {
   const v = this
 
   const recents = []
+  const viewed = []
   for (const update of v.query.results) {
-    if (!recents.includes(update.hpub)) {
-      recents.push(update.hpub)
+    if (!update.viewed) {
+      if (!recents.includes(update.hpub)) {
+        recents.push(update.hpub)
+        const index = array.indexOf(update.hpub)
+        if (index > -1) {
+          viewed.splice(index, 1)
+        }
+      }
+    } else {
+      if (!recents.includes(update.hpub)) {
+        viewed.push(update.hpub)
+      }
     }
   }
 
@@ -80,22 +91,32 @@ v.renderFunc = function() {
   defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
 
   const recents = []
+  const viewed = []
   for (const update of v.query.results) {
-    let y = recents.length * 200
-    if (!recents.includes(update.hpub)) {
-      recents.push(update.hpub)
+    if (!update.viewed) {
+      if (!recents.includes(update.hpub)) {
+        recents.push(update.hpub)
+        const index = array.indexOf(update.hpub)
+        if (index > -1) {
+          viewed.splice(index, 1)
+        }
 
-      drawAvatar(v, update.hpub, 43,503 + y, 125,125)
+        drawAvatar(v, update.hpub, 43,503 + y, 125,125)
 
-      mat4.identity(m)
-      mat4.translate(m, m, [211, 553 + y, 0])
-      mat4.scale(m, m, [35/14, 35/14, 1])
-      defaultFont.draw(0,0, getAttr(update.hpub, 'name'), v.titleColor, v.mat, m)
-    
-      mat4.identity(m)
-      mat4.translate(m, m, [211, 618 + y, 0])
-      mat4.scale(m, m, [30/14, 30/14, 1])
-      defaultFont.draw(0,0, updatePostedAsOf(update.firstSeen), v.subtitleColor, v.mat, m)
+        mat4.identity(m)
+        mat4.translate(m, m, [211, 553 + y, 0])
+        mat4.scale(m, m, [35/14, 35/14, 1])
+        defaultFont.draw(0,0, getAttr(update.hpub, 'name'), v.titleColor, v.mat, m)
+      
+        mat4.identity(m)
+        mat4.translate(m, m, [211, 618 + y, 0])
+        mat4.scale(m, m, [30/14, 30/14, 1])
+        defaultFont.draw(0,0, updatePostedAsOf(update.firstSeen), v.subtitleColor, v.mat, m)
+      }
+    } else {
+      if (!recents.includes(update.hpub)) {
+        viewed.push(update.hpub)
+      }
     }
   }
 
@@ -103,6 +124,20 @@ v.renderFunc = function() {
   mat4.translate(m, m, [45, 434 + recents.length * 200 + 98, 0])
   mat4.scale(m, m, [28/14, 28/14, 1])
   defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
+
+  for (const hpub of viewed) {
+    drawAvatar(v, hpub, 43,503 + y, 125,125)
+
+    mat4.identity(m)
+    mat4.translate(m, m, [211, 553 + y, 0])
+    mat4.scale(m, m, [35/14, 35/14, 1])
+    defaultFont.draw(0,0, getAttr(hpub, 'name'), v.titleColor, v.mat, m)
+  
+    mat4.identity(m)
+    mat4.translate(m, m, [211, 618 + y, 0])
+    mat4.scale(m, m, [30/14, 30/14, 1])
+    defaultFont.draw(0,0, updatePostedAsOf(v.query.results.filter(u => u.hpub == hpub)[0].firstSeen), v.subtitleColor, v.mat, m)
+  }
 
 }
 
