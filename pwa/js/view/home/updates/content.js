@@ -119,7 +119,6 @@ v.renderFunc = function() {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.viewed?1:0), 0)
-    i++
     const y = i * 200 + ((v.viewed.includes(hpub) && v.recents.length > 0)? 96: 0)
     drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
     if (numViewed) {
@@ -152,6 +151,8 @@ v.renderFunc = function() {
     mat4.translate(m, m, [211, 618 + y, 0])
     mat4.scale(m, m, [30/14, 30/14, 1])
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
+    
+    i++
   }
   // for (const update of v.query.results) {
   //   if (!update.viewed) {
