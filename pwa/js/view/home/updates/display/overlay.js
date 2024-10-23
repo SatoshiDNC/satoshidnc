@@ -7,12 +7,19 @@ v.designSize = 1080*1825
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
-v.gadgets.push(g = v.addGad = new fg.Gadget(v))
+v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.label = '+'
+  g.x = 39, g.y = 63, g.w = 48, g.h = 48
+  g.label = '\x08'
+  g.font = iconFont
+  g.fontSize = 13
+  g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    g.root.easeOut(g.target)
+    //g.root.easeOut(g.target)
+    v.returnView.easingState = 1
+    v.returnView.easingValue = 0
+    fg.setRoot(v.returnView)
   }
 v.setContext = function(updates) {
   const v = this
