@@ -115,7 +115,7 @@ export function getUpdates() {
     const DISTANT_FUTURE = 91729187740298
     const ONE_DAY_AGO_IN_MILLISECONDS = Date.now() - 24 * 60 * 60 * 1000
     const ONE_DAY_AGO_IN_SECONDS = Math.floor(ONE_DAY_AGO_IN_MILLISECONDS / 1000)
-    console.log (`from ${ONE_DAY_AGO_IN_SECONDS} to ${DISTANT_FUTURE}`)
+    // console.log (`from ${ONE_DAY_AGO_IN_SECONDS} to ${DISTANT_FUTURE}`)
     const req = os.index('createdAt').getAll(IDBKeyRange.bound(ONE_DAY_AGO_IN_SECONDS, DISTANT_FUTURE))
     req.onerror = function(e) {
       console.err(e)
@@ -125,8 +125,10 @@ export function getUpdates() {
       resolve(Promise.all(e.target.result.filter(r => ![5, 31234].includes(r.data.kind)).map(r => {
         return new Promise((resolve, reject) => {
           const req = tr.objectStore('updates-viewed').get(r.data.id)
+          req.onerror = function(e) {
+            console.err(e)
+          }
           req.onsuccess = function(e) {
-            console.log(e)
             resolve({ ...r, viewed: e.target.result !== undefined })
           }
         })
