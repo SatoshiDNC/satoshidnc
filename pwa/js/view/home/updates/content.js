@@ -20,7 +20,7 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
-    const index = Math.floor(y / 200)
+    const index = Math.floor((y - g.y) / 200)
     console.log(index)
     // const c = v.query.results?.[index]
     // if (c) {
