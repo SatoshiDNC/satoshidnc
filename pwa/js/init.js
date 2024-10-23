@@ -64,3 +64,4 @@ home_updates_overlay.addGad.root = home_updates_root, home_updates_overlay.addGa
 home_updates_display_overlay.returnView = home_updates_root
 home_updates_new_top.backGad.root = home_updates_new_root, home_updates_new_top.backGad.target = home_updates_root
 home_updates_content.recentsGad.root = home_updates_root, home_updates_content.recentsGad.target = home_updates_display_root
+home_updates_content.viewedGad.root = home_updates_root, home_updates_content.viewedGad.target = home_updates_display_root
