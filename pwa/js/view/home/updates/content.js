@@ -23,7 +23,7 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     const updates = v.query.results.filter(u => u.hpub == v.recents[index])
     let startAt
-    for (update of updates) {
+    for (const update of updates) {
       if (!update.viewed) {
         startAt = update
       }
