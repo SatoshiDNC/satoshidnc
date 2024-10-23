@@ -127,7 +127,7 @@ export function getUpdates() {
           const req = tr.objectStore('updates-viewed').get(r.data.id)
           req.onsuccess = function(e) {
             console.log(e)
-            resolve({ ...r, viewed: e.target.result })
+            resolve({ ...r, viewed: e.target.result !== undefined })
           }
         })
       })))
