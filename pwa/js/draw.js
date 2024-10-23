@@ -56,14 +56,16 @@ export function drawPill(v, color, x,y,w,h) {
   mainShapes.drawArrays2('rect')
 }
 
-export function drawEllipse(v, color, x,y,w,h, f) {
+export function drawEllipse(v, color, x,y,w,h, a,f) {
   mainShapes.useProg2()
   const m = mat4.create()
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(color))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)
-  mat4.translate(m,m, [x, y, 0])
+  mat4.translate(m,m, [x + w/2, y + h/2, 0])
+  mat4.rotate(m,m, Math.PI * a, [0, 0, 1])
   mat4.scale(m,m, [w, h, 1])
+  mat4.translate(m,m, [-w/2, -h/2, 0])
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   //mainShapes.drawArrays2('circle')
   gl.drawArrays(mainShapes.typ2['circle'],mainShapes.beg2['circle'],f? Math.round(mainShapes.len2['circle']/2*f)*2 : mainShapes.len2['circle'])
