@@ -96,9 +96,9 @@ v.renderFunc = function() {
   for (let hpub of [...v.recents, ...v.viewed]) {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
-    const numViewed = 0
+    const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.viewed?1:0), 0)
     i++
-    const y = i * 200 + v.viewed.includes(hpub)? 100: 0
+    const y = i * 200 + v.viewed.includes(hpub)? 96: 0
     drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
     if (numViewed) {
       drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
