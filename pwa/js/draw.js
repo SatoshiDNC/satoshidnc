@@ -64,7 +64,7 @@ export function drawEllipse(v, color, x,y,w,h, f,a) {
   mat4.identity(m)
   if (a) {
     mat4.translate(m,m, [x + w/2, y + h/2, 0])
-    mat4.rotate(m,m, Math.PI * a, [0, 0, 1])
+    mat4.rotate(m,m, 2 * Math.PI * a, [0, 0, 1])
     mat4.translate(m,m, [-w/2, -h/2, 0])
     mat4.scale(m,m, [w, h, 1])
   } else {
