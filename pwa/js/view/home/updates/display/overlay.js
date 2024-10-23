@@ -104,9 +104,9 @@ v.renderFunc = function() {
     const words = data.content.split(' ')
     const lines = []
     while (words.length > 0) {
-      lines.push(words.pop())
-      while (words.length > 0 && defaultFont.calcWidth(lines[lines.length] + ' ' + words[words.length]) * ts <= v.sw) {
-        lines.push(lines.pop() + ' ' + words[words.length])
+      lines.push(words.shift())
+      while (words.length > 0 && defaultFont.calcWidth(lines[lines.length] + ' ' + words[0]) * ts <= v.sw) {
+        lines.push(lines.pop() + ' ' + words.shift())
       }
     }
     console.log(lines)
