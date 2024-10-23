@@ -27,8 +27,10 @@ import { popupDissolveRoot as profile_popup_root2, popupView as profile_popup_co
 import { contentView as profile_info_root } from './view/home/chats/profile/info/content.js'
 import { barBot as home_bot } from './view/home/bar-bot.js'
 import { overlayView as home_updates_overlay } from './view/home/updates/content.js'
+import { contentView as home_updates_content } from './view/home/updates/content.js'
 import { rootView as home_updates_new_root } from './view/home/updates/new-update/root.js'
 import { barTop as home_updates_new_top } from './view/home/updates/new-update/bar-top.js'
+import { rootView as home_updates_display_root } from './view/home/updates/display/root.js'
 
 homeChatTop.menuGad.root = home_chats_root
 homeChatTop.menuGad.target = menuRoot
@@ -59,3 +61,4 @@ home_bot.panes.filter(p => p.label == 'Communities')[0].view = home_communities_
 home_bot.panes.filter(p => p.label == 'Calls')[0].view = home_calls_root
 home_updates_overlay.addGad.root = home_updates_root, home_updates_overlay.addGad.target = home_updates_new_root
 home_updates_new_top.backGad.root = home_updates_new_root, home_updates_new_top.backGad.target = home_updates_root
+home_updates_content.recentsGad.root = home_updates_root, home_updates_content.recentsGad.target = home_updates_display_root
