@@ -117,6 +117,7 @@ v.renderFunc = function() {
           gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
           mat4.identity(m)
           mat4.translate(m,m, [105, 565.5, 0])
+          mat4.rotate(m,m, 2*Math.PI*i/numUpdates, [0, 0, 1])
           mat4.translate(m,m, [-3, -74.5, 0])
           mat4.scale(m,m, [6, 8, 1])
           gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
