@@ -3,7 +3,7 @@ import { contacts, contactViewDependencies } from '../../../contacts.js'
 import { drawPill, drawAvatar } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
-import { addedOn } from '../../util.js'
+import { addedOn, updatePostedAsOf } from '../../util.js'
 import { getUpdates } from '../../../content.js'
 
 let v, g
@@ -94,7 +94,7 @@ v.renderFunc = function() {
       mat4.identity(m)
       mat4.translate(m, m, [211, 618 + y, 0])
       mat4.scale(m, m, [30/14, 30/14, 1])
-      defaultFont.draw(x,y, ''+update.firstSeen, v.subtitleColor, v.mat, m)
+      defaultFont.draw(x,y, updatePostedAsOf(update.firstSeen), v.subtitleColor, v.mat, m)
     }
   }
 
