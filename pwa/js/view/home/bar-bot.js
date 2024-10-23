@@ -5,7 +5,12 @@ export const barBot = v = new fg.View()
 v.name = Object.keys({barBot}).pop()
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
-v.panes = [{ label: 'Chats' }, { label: 'Updates' }, { label: 'Communities' }, { label: 'Calls' }]
+v.panes = [
+  { label: 'Chats',       icon: '\x0e', scale: 50/14 },
+  { label: 'Updates',     icon: '\x0c', scale: 50/14 },
+  { label: 'Communities', icon: '\x09', scale: 50/14 },
+  { label: 'Calls',       icon: '\x0b', scale: 50/14 },
+]
 v.paneGads = []
 for (const pane of v.panes) {
   v.gadgets.push(g = new fg.Gadget(v))
@@ -14,6 +19,7 @@ for (const pane of v.panes) {
   g.w = 168, g.h = 136
   g.label = pane.label
   g.icon = pane.icon
+  g.iconScale = pane.scale
   g.animValue = 0
   g.clickFunc = function() {
     const g = this, v = g.viewport
@@ -65,9 +71,14 @@ v.renderFunc = function() {
     const f0 = 1 - f1
     drawPill(v, alpha(colors.accentDark, f1), g.x + g.w/2 * f0, g.y, g.w * f1, 84)
     mat4.identity(m)
-    const s = 26/14
+    let s = 26/14
     mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
     mat4.scale(m,m, [s, s, 1])
     defaultFont.draw(0,0, g.label, v.textColor, v.mat, m)
+    mat4.identity(m)
+    s = g.iconScale
+    mat4.translate(m,m, [x + (g.w - iconFont.calcWidth(g.icon) * s) / 2, g.y + g.h, 0])
+    mat4.scale(m,m, [s, s, 1])
+    iconFont.draw(0,0, g.icon, v.textColor, v.mat, m)
   }
 }
