@@ -81,7 +81,7 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = recents.length * 200
   g.autoHull()
   g = v.viewedGad
-  g.x = 0, g.y = v.recentsGad.y + v.recentsGad.h + 96
+  g.x = 0, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
 
@@ -100,10 +100,19 @@ v.renderFunc = function() {
   let x = 0, y = 0
   defaultFont.draw(x,y, 'Status', v.textColor, v.mat, m)
 
-  mat4.identity(m)
-  mat4.translate(m, m, [45, 434, 0])
-  mat4.scale(m, m, [28/14, 28/14, 1])
-  defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
+  if (recents.length > 0) {
+    mat4.identity(m)
+    mat4.translate(m, m, [45, 434, 0])
+    mat4.scale(m, m, [28/14, 28/14, 1])
+    defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
+  }
+  
+  if (viewed.length > 0) {
+    mat4.identity(m)
+    mat4.translate(m, m, [45, 434 + recents.length * 200 + 98, 0])
+    mat4.scale(m, m, [28/14, 28/14, 1])
+    defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
+  }
 
   const recents = []
   const viewed = []
@@ -113,7 +122,7 @@ v.renderFunc = function() {
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.viewed?1:0), 0)
     i++
-    const y = i * 200 + v.viewed.includes(hpub)? 96: 0
+    const y = i * 200 + ((v.viewed.includes(hpub) && recents.length > 0)? 96: 0)
     drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
     if (numViewed) {
       drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
@@ -163,24 +172,19 @@ v.renderFunc = function() {
   //   }
   // }
 
-  mat4.identity(m)
-  mat4.translate(m, m, [45, 434 + recents.length * 200 + 98, 0])
-  mat4.scale(m, m, [28/14, 28/14, 1])
-  defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
+  // for (const hpub of viewed) {
+  //   drawAvatar(v, hpub, 43,503 + y, 125,125)
 
-  for (const hpub of viewed) {
-    drawAvatar(v, hpub, 43,503 + y, 125,125)
-
-    mat4.identity(m)
-    mat4.translate(m, m, [211, 553 + y, 0])
-    mat4.scale(m, m, [35/14, 35/14, 1])
-    defaultFont.draw(0,0, getAttr(hpub, 'name'), v.titleColor, v.mat, m)
+  //   mat4.identity(m)
+  //   mat4.translate(m, m, [211, 553 + y, 0])
+  //   mat4.scale(m, m, [35/14, 35/14, 1])
+  //   defaultFont.draw(0,0, getAttr(hpub, 'name'), v.titleColor, v.mat, m)
   
-    mat4.identity(m)
-    mat4.translate(m, m, [211, 618 + y, 0])
-    mat4.scale(m, m, [30/14, 30/14, 1])
-    defaultFont.draw(0,0, updatePostedAsOf(v.query.results.filter(u => u.hpub == hpub)[0].firstSeen), v.subtitleColor, v.mat, m)
-  }
+  //   mat4.identity(m)
+  //   mat4.translate(m, m, [211, 618 + y, 0])
+  //   mat4.scale(m, m, [30/14, 30/14, 1])
+  //   defaultFont.draw(0,0, updatePostedAsOf(v.query.results.filter(u => u.hpub == hpub)[0].firstSeen), v.subtitleColor, v.mat, m)
+  // }
 
 }
 
