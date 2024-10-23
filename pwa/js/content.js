@@ -112,11 +112,12 @@ export function getUpdates() {
   return new Promise((resolve, reject) => {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
+    const firstSeen = os.index('firstSeen')
     const DISTANT_FUTURE = 91729187740298
     const ONE_DAY_AGO = Date.now() - 24 * 60 * 60 * 1000
     const MIN_HPUB = '0000000000000000000000000000000000000000000000000000000000000000'
     const MAX_HPUB = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
-    const req = os.index('firstSeen').getAll(IDBKeyRange.bound([MIN_HPUB, 0], [MAX_HPUB, DISTANT_FUTURE]))
+    const req = firstSeen.getAll(firstSeen.IDBKeyRange.bound(0, DISTANT_FUTURE))
     req.onerror = function(e) {
       console.err(e)
     }
