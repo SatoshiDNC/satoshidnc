@@ -96,7 +96,7 @@ v.renderFunc = function() {
     if (!update.viewed) {
       if (!recents.includes(update.hpub)) {
         recents.push(update.hpub)
-        const index = array.indexOf(update.hpub)
+        const index = viewed.indexOf(update.hpub)
         if (index > -1) {
           viewed.splice(index, 1)
         }
