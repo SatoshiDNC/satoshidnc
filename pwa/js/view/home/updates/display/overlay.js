@@ -75,7 +75,7 @@ v.renderFunc = function() {
     }
   }
 
-  for (g of v.gadgets) {
+  for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
     mat4.translate(m, m, [g.x, g.y+g.h, 0])
     mat4.scale(m, m, [g.h/g.fontSize, g.h/g.fontSize, 1])
