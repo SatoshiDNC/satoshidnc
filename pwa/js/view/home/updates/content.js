@@ -98,6 +98,11 @@ v.renderFunc = function() {
     }
   }
 
+  mat4.identity(m)
+  mat4.translate(m, m, [45, 434 + y + 98, 0])
+  mat4.scale(m, m, [28/14, 28/14, 1])
+  defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
+
 }
 
 export const overlayView = v = new fg.View(null)
