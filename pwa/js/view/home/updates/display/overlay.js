@@ -91,12 +91,12 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m, m, [263, 82, 0])
   mat4.scale(m, m, [33/14, 33/14, 1])
-  defaultFont.draw(0,0, getAttr(v.updates[v.currentUpdate].hpub, 'name'), v.textColor, v.mat, m)
+  defaultFont.draw(0,0, getAttr(v.updates[v.currentUpdate]?.hpub, 'name'), v.textColor, v.mat, m)
 
   mat4.identity(m)
   mat4.translate(m, m, [263, 131, 0])
   mat4.scale(m, m, [24/14, 24/14, 1])
-  defaultFont.draw(0,0, updatePostedAsOf(v.updates[v.currentUpdate].data.created_at, true), v.textColor, v.mat, m)
+  defaultFont.draw(0,0, updatePostedAsOf(v.updates[v.currentUpdate]?.data.created_at, true), v.textColor, v.mat, m)
 
   // const g = v.addGad
   // mat4.identity(m)
