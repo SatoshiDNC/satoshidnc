@@ -66,17 +66,6 @@ v.renderFunc = function() {
       }
     }
   }
-  if (pageTurn) {
-    v.currentUpdate += 1
-    v.startTime = Date.now()
-    if (v.currentUpdate >= v.updates.length) {
-      setTimeout(() => {
-        v.returnView.easingState = 1
-        v.returnView.easingValue = 0
-        fg.setRoot(v.returnView)
-      })
-    }
-  }
 
   for (g of v.gadgets) if (g.label) {
     mat4.identity(m)
@@ -91,12 +80,12 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m, m, [263, 82, 0])
   mat4.scale(m, m, [33/14, 33/14, 1])
-  defaultFont.draw(0,0, getAttr(v.updates[v.currentUpdate]?.hpub, 'name'), v.textColor, v.mat, m)
+  defaultFont.draw(0,0, getAttr(v.updates[v.currentUpdate].hpub, 'name'), v.textColor, v.mat, m)
 
   mat4.identity(m)
   mat4.translate(m, m, [263, 131, 0])
   mat4.scale(m, m, [24/14, 24/14, 1])
-  defaultFont.draw(0,0, updatePostedAsOf(v.updates[v.currentUpdate]?.data.created_at, true), v.textColor, v.mat, m)
+  defaultFont.draw(0,0, updatePostedAsOf(v.updates[v.currentUpdate].data.created_at, true), v.textColor, v.mat, m)
 
   // const g = v.addGad
   // mat4.identity(m)
@@ -107,4 +96,17 @@ v.renderFunc = function() {
   // mat4.translate(m,m, [g.x + 49, g.y + 95, 0])
   // mat4.scale(m,m, [51/11, 51/11, 1])
   // iconFont.draw(-2,0, g.label, v.buttonTextColor, v.mat, m)
+
+  if (pageTurn) {
+    v.currentUpdate += 1
+    v.startTime = Date.now()
+    if (v.currentUpdate >= v.updates.length) {
+      setTimeout(() => {
+        v.returnView.easingState = 1
+        v.returnView.easingValue = 0
+        fg.setRoot(v.returnView)
+      })
+    }
+  }
+
 }
