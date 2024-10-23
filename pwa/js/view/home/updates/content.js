@@ -101,13 +101,17 @@ v.renderFunc = function() {
           viewed.splice(index, 1)
         }
 
+        const numUpdates = v.query.results.filter(u => u.hpub == update.hpub).length
         mat4.identity(m)
         mat4.translate(m, m, [43, 503 + y, 0])
         mat4.scale(m, m, [35/14, 35/14, 1])
-        defaultFont.draw(0,0, ''+v.query.results.filter(u => u.hpub == update.hpub).length, v.titleColor, v.mat, m)
+        defaultFont.draw(0,0, ''+numUpdates, v.titleColor, v.mat, m)
 
         drawEllipse(v, colors.accent, 32, 492, 147, 147)
         drawEllipse(v, v.bgColor, 38, 498, 135, 135)
+        for (let i = 0; i < numUpdates; i++) {
+          drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
+        }
 
         drawAvatar(v, update.hpub, 43,503 + y, 125,125)
 
