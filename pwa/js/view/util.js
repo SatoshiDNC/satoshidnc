@@ -62,14 +62,17 @@ export function getKeyboardInput(title, defaultValue, handler) {
   handler()
 }
 
-const ONE_DAY = 24 * 60 * 60 * 1000
+const ONE_DAY = 1 * 24 * 60 * 60 * 1000
+const ONE_HOUR = 1 * 60 * 60 * 1000
 
 export function updatePostedAsOf(timeStamp) {
   // assumption: timeStamp is within past 24 hours
   const now = Date.now()
   if (now - timeStamp < ONE_DAY) {
-    if (new Date(timeStamp).getDate() == new Date(now).getDate()) {
-      return `${new Date(timeStamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`
+    if (now - timeStamp < ONE_HOUR) {
+      return `${Math.floor((now - timeStampnew) / ONE_HOUR * 60)} minutes ago`
+    } else if (new Date(timeStamp).getDate() == new Date(now).getDate()) {
+      return `${new Date(timeStamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
     } else {
       return `Yesterday`
     }
