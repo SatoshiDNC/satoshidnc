@@ -47,7 +47,6 @@ v.queryFunc = function() {
       v.query.inProgress = false
       v.query.lastCompleted = Date.now()
       v.query.results = updates
-      console.log(updates)
       v.relayout()
     })
   }
