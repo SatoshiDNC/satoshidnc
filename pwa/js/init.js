@@ -31,7 +31,7 @@ import { contentView as home_updates_content } from './view/home/updates/content
 import { rootView as home_updates_new_root } from './view/home/updates/new-update/root.js'
 import { barTop as home_updates_new_top } from './view/home/updates/new-update/bar-top.js'
 import { rootView as home_updates_display_root } from './view/home/updates/display/root.js'
-import { overlayView as home_updates_display_overlay } from './view/home/updates/display/content.js'
+import { overlayView as home_updates_display_overlay } from './view/home/updates/display/overlay.js'
 
 homeChatTop.menuGad.root = home_chats_root
 homeChatTop.menuGad.target = menuRoot
