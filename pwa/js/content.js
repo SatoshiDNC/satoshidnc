@@ -108,14 +108,15 @@ export function getFeed(hpub) {
   })
 }
 
-export function getFeeds() {
+export function getUpdates() {
   return new Promise((resolve, reject) => {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
     const DISTANT_FUTURE = 91729187740298
+    const ONE_DAY_AGO = Date.now() - 24 * 60 * 60 * 1000
     const MIN_HPUB = '0000000000000000000000000000000000000000000000000000000000000000'
     const MAX_HPUB = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
-    const req = os.index('firstSeen').openCursor(window.IDBKeyRange.bound([MIN_HPUB, 0], [MAX_HPUB, DISTANT_FUTURE]), 'prev')
+    const req = os.index('firstSeen').openCursor(window.IDBKeyRange.bound([MIN_HPUB, ONE_DAY_AGO], [MAX_HPUB, DISTANT_FUTURE]), 'prev')
     req.onerror = function(e) {
       console.err(e)
     }

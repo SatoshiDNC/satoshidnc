@@ -4,7 +4,7 @@ import { drawPill, drawAvatar } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn } from '../../util.js'
-import { getFeeds } from '../../../content.js'
+import { getUpdates } from '../../../content.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -33,11 +33,11 @@ v.queryFunc = function() {
   const ONE_MINUTE_IN_MILLISECONDS = 1 * 60 * 1000
   if (!v.query.inProgress && v.query.lastCompleted < Date.now() - ONE_MINUTE_IN_MILLISECONDS) {
     v.query.inProgress = true
-    getFeeds().then(allNewUpdates => {
+    getUpdates().then(updates => {
       v.query.inProgress = false
       v.query.lastCompleted = Date.now()
-      console.log('got all new updates')
-      console.log(allNewUpdates)
+      console.log('got all recent updates')
+      console.log(updates)
       v.relayout()
     })
   }
