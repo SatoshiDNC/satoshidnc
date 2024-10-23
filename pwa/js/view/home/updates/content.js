@@ -107,7 +107,7 @@ v.renderFunc = function() {
           drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
         }
         drawEllipse(v, v.bgColor, 38, 498 + y, 135, 135)
-        for (let i = 0; i < numUpdates; i++) {
+        if (numUpdates > 1) for (let i = 0; i < numUpdates; i++) {
           // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
           mainShapes.useProg2()
           gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
