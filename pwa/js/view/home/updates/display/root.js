@@ -10,6 +10,7 @@ v.bgColor = [0,0,0,1]
 v.a = overlayView; overlayView.parent = v
 v.b = contentView; contentView.parent = v
 v.setContext = function(updates) {
+  console.log('setContext:', updates)
   contentView.setContext(updates)
   overlayView.setContext(updates)
   // let startAt
