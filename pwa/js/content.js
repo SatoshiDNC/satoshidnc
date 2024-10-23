@@ -123,9 +123,12 @@ export function getUpdates() {
     const posts = []
     req.onsuccess = function(e) {
       resolve(Promise.all(e.target.result.filter(r => ![5, 31234].includes(r.data.kind)).map(r => {
-        return tr.objectStore('updates-viewed').get(r.data.id).then(e => {
-          console.log(e)
-          return { ...r, viewed: e.target.result }
+        return new Promise((resolve, reject) => {
+          const req = tr.objectStore('updates-viewed').get(r.data.id)
+          req.onsuccess = function(e) {
+            console.log(e)
+            resolve({ ...r, viewed: e.target.result })
+          }
         })
       })))
     }
