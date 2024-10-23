@@ -1,6 +1,6 @@
 // import { hpub, npub } from '../../keys.js'
 import { contacts, contactViewDependencies } from '../../../contacts.js'
-import { drawPill, drawAvatar } from '../../../draw.js'
+import { drawPill, drawAvatar, drawEllipse } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
@@ -107,7 +107,7 @@ v.renderFunc = function() {
         defaultFont.draw(0,0, ''+v.query.results.filter(u => u.hpub == update.hpub).length, v.titleColor, v.mat, m)
 
         drawEllipse(v, colors.accent, 32, 492, 147, 147)
-        
+
         drawAvatar(v, update.hpub, 43,503 + y, 125,125)
 
         mat4.identity(m)
