@@ -87,6 +87,17 @@ v.renderFunc = function() {
   mat4.scale(m, m, [24/14, 24/14, 1])
   defaultFont.draw(0,0, updatePostedAsOf(v.updates[v.currentUpdate].data.created_at * 1000, true), v.textColor, v.mat, m)
 
+  let t,tw,ts
+  const data = v.updates[v.currentUpdate].data
+
+  t = `${data.kind} · ${(''+kindInfo.filter(r=>r.kindMax?r.kind<=data.kind&&data.kind<=r.kindMax:r.kind==data.kind)?.[0]?.desc).toUpperCase()}`
+  tw = defaultFont.calcWidth(t)
+  ts = 20/14
+  mat4.identity(mat)
+  mat4.translate(mat, mat, [15, 150, 0])
+  mat4.scale(mat, mat, [ts, ts, 1])
+  defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
+
   // const g = v.addGad
   // mat4.identity(m)
   // mat4.translate(m,m, [g.x, g.y + g.h, 0])
