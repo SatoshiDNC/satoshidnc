@@ -107,6 +107,9 @@ v.renderFunc = function() {
 }
 v.renderKind1 = function(data) {
   const v = this
+  gl.clearColor(...colors.accent)
+  gl.clear(gl.COLOR_BUFFER_BIT)  
+  const m = mat4.create()
   let t,tw,th,ts
   ts = 20/14
   const words = data.content.split(' ')
