@@ -108,7 +108,7 @@ v.renderFunc = function() {
         defaultFont.draw(0,0, ''+numUpdates, v.titleColor, v.mat, m)
 
         drawEllipse(v, colors.accent, 32, 492, 147, 147)
-        drawEllipse(v, colors.inactive, 32, 492, 147, 147, 0.25)
+        drawEllipse(v, colors.inactive, 32, 492, 147, -147, 0.25)
         drawEllipse(v, v.bgColor, 38, 498, 135, 135)
         for (let i = 0; i < numUpdates; i++) {
           drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
