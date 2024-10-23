@@ -31,6 +31,7 @@ export function init() {
         os.createIndex(`createdAt`, 'data.created_at')
         os.createIndex(`firstSeen`, 'firstSeen')
         os.createIndex(`hpub_firstSeen`, ['hpub', 'firstSeen'])
+        db.createObjectStore(`updates-viewed`, { keyPath: 'id' })
       }
     }
   })
