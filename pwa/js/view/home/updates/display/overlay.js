@@ -97,8 +97,8 @@ v.renderFunc = function() {
   // ts = 20/14
   // mat4.identity(m)
   // mat4.translate(m, m, [15, 200, 0])
-  mat4.scale(m, m, [0.5, 0.5, 1])
-  defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, m)
+  mat4.scale(m, m, [0.85, 0.85, 1])
+  defaultFont.draw(20,0, t, alpha(colors.inactive, 0.5), v.mat, m)
 
   // const g = v.addGad
   // mat4.identity(m)
