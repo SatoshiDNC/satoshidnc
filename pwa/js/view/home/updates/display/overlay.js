@@ -59,7 +59,7 @@ v.renderFunc = function() {
       drawPill(v, [1,1,1,1], 9+(w+6)*i,9, w*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
       v.setRenderFlag(true)
       if (elapsedTime / 4000 > 1) {
-        setTimeout(v.pageTurn)
+        setTimeout(v.pageTurn.call(v))
       }
     }
   }
