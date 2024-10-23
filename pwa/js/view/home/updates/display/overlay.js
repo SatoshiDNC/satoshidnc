@@ -1,4 +1,4 @@
-import { drawPill } from '../../../../draw.js'
+import { drawPill, drawEllipse } from '../../../../draw.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -82,6 +82,9 @@ v.renderFunc = function() {
     mat4.scale(m, m, [g.h/g.fontSize, g.h/g.fontSize, 1])
     g.font.draw(0,0, g.label, v.textColor, v.mat, m)
   }
+
+  drawEllipse(v, [1,1,1,1], 185,34, 105,105)
+  drawEllipse(v, colors.inactive, 188,37, 99,99)
 
   // const g = v.addGad
   // mat4.identity(m)
