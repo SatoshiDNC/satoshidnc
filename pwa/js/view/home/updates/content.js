@@ -15,13 +15,14 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
-v.gadgets.push(g = v.listGad = new fg.Gadget(v))
+v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
-    const index = Math.floor((y - 167.5) / 200)
-    const c = contacts?.[index]
+    const index = Math.floor(y / 200)
+    console.log(index)
+    const c = v.query.results?.[index]
     if (c) {
       chatRoomView.setContact(c.hpub)
       g.root.easeOut(g.target)
@@ -44,18 +45,18 @@ v.queryFunc = function() {
 v.layoutFunc = function() {
   const v = this
 
-  const contacts = []
+  const recents = []
   for (const update of v.query.results) {
-    if (!contacts.includes(update.hpub)) {
-      contacts.push(update.hpub)
+    if (!recents.includes(update.hpub)) {
+      recents.push(update.hpub)
     }
   }
 
   let x = 42
   let g
-  g = v.listGad
-  g.x = 0, g.y = 0
-  g.w = v.sw, g.h = v.sh
+  g = v.recentsGad
+  g.x = 0, g.y = 466
+  g.w = v.sw, g.h = recents.length * 200
   g.autoHull()
 
   v.queryFunc()
