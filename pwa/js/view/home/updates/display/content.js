@@ -111,7 +111,7 @@ v.renderKind1 = function(data) {
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   let t,tw,th,ts
-  ts = 20/14
+  ts = 50/14
   const words = data.content.split(' ')
   const lines = []
   while (words.length > 0) {
