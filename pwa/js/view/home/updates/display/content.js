@@ -9,6 +9,7 @@ let v, g
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
 v.bgColor = [0,0,0, 1]
+v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
