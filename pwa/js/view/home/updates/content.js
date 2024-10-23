@@ -109,13 +109,11 @@ v.renderFunc = function() {
 
   if (viewed.length > 0) {
     mat4.identity(m)
-    mat4.translate(m, m, [45, 434 + (recents.length>0 ? recents.length * 200 + 98 : 0), 0])
+    mat4.translate(m, m, [45, 434 + (v.recents.length>0 ? recents.length * 200 + 98 : 0), 0])
     mat4.scale(m, m, [28/14, 28/14, 1])
     defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
   }
 
-  const recents = []
-  const viewed = []
   let i = 0
   for (let hpub of [...v.recents, ...v.viewed]) {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
