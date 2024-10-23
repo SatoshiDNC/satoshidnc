@@ -1,3 +1,5 @@
+import { drawPill } from '../../../../draw.js'
+
 let v, g
 export const overlayView = v = new fg.View(null)
 v.name = Object.keys({overlayView}).pop()
