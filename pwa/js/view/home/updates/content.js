@@ -102,7 +102,7 @@ v.renderFunc = function() {
         }
 
         const numUpdates = v.query.results.filter(u => u.hpub == update.hpub).length
-        const numViewed = 0
+        const numViewed = numUpdates
         drawEllipse(v, colors.accent, 32, 492, 147, 147)
         if (numViewed) {
           drawEllipse(v, colors.inactive, 32, 492 + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
