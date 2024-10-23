@@ -107,6 +107,7 @@ v.renderFunc = function() {
         defaultFont.draw(0,0, ''+v.query.results.filter(u => u.hpub == update.hpub).length, v.titleColor, v.mat, m)
 
         drawEllipse(v, colors.accent, 32, 492, 147, 147)
+        drawEllipse(v, colors.accent, 38, 498, 135, 135)
 
         drawAvatar(v, update.hpub, 43,503 + y, 125,125)
 
