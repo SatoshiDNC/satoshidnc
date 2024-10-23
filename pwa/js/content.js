@@ -113,8 +113,8 @@ export function getUpdates() {
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
     const DISTANT_FUTURE = 91729187740298
-    const ONE_DAY_AGO_IN_SECONDS = Date.now() - 24 * 60 * 60
-    const ONE_DAY_AGO_IN_MILLISECONDS = ONE_DAY_AGO_IN_SECONDS * 1000
+    const ONE_DAY_AGO_IN_MILLISECONDS = Date.now() / 1000 - 24 * 60 * 60 * 1000
+    const ONE_DAY_AGO_IN_SECONDS = Math.floor(ONE_DAY_AGO_IN_MILLISECONDS / 1000)
     console.log (`from ${ONE_DAY_AGO_IN_SECONDS} to ${DISTANT_FUTURE}`)
     const req = os.index('createdAt').getAll(IDBKeyRange.bound(ONE_DAY_AGO_IN_SECONDS, DISTANT_FUTURE))
     req.onerror = function(e) {
