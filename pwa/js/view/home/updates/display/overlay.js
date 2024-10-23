@@ -23,7 +23,7 @@ v.setContext = function(updates) {
 v.pageTurn = function() {
   const v = this
   v.currentUpdate += 1
-  v.startTime = now
+  v.startTime = Date.now()
   if (v.currentUpdate >= v.updates.length) {
     fg.setRoot(v.returnView)
   }
