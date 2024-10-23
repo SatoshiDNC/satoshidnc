@@ -122,6 +122,7 @@ export function getUpdates() {
     }
     const posts = []
     req.onsuccess = function(e) {
+      console.log(e.target.result)
       resolve(e.target.result)
       // let cursor = e.target.result
       // if (cursor) {
