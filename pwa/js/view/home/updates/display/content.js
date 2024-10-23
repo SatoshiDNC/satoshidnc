@@ -107,6 +107,7 @@ v.renderFunc = function() {
 }
 v.renderKind1 = function(data) {
   const v = this
+  let t,tw,th,ts
   ts = 20/14
   const words = data.content.split(' ')
   const lines = []
