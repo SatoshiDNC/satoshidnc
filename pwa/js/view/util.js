@@ -70,7 +70,7 @@ export function updatePostedAsOf(timeStamp) {
   const now = Date.now()
   if (now - timeStamp < ONE_DAY) {
     if (now - timeStamp < ONE_HOUR) {
-      return `${Math.floor((now - timeStampnew) / ONE_HOUR * 60)} minutes ago`
+      return `${Math.floor((now - timeStamp) / ONE_HOUR * 60)} minutes ago`
     } else if (new Date(timeStamp).getDate() == new Date(now).getDate()) {
       return `${new Date(timeStamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
     } else {
