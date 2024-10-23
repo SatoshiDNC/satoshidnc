@@ -83,6 +83,9 @@ v.renderFunc = function() {
     let y = contacts.length * 200
     if (!contacts.includes(update.hpub)) {
       contacts.push(update.hpub)
+
+      drawAvatar(v, update.hpub, 43,503 + y, 125,125)
+
       mat4.identity(m)
       mat4.translate(m, m, [211, 553 + y, 0])
       mat4.scale(m, m, [35/14, 35/14, 1])
