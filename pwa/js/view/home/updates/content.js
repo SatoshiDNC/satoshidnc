@@ -22,8 +22,16 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
     const index = Math.floor((y - g.y) / 200)
     const updates = v.query.results.filter(u => u.hpub == v.recents[index])
-    displayView.setContext(v.recents[index], undefined)
-    g.root.easeOut(g.target)
+    let startAt
+    for (update of updates) {
+      if (!update.viewed) {
+        startAt = update
+      }
+    }
+    if (startAt) {
+      displayView.setContext(startAt.hpub, startAt.data.id)
+      g.root.easeOut(g.target)
+    }
   }
 v.query = { inProgress: false, lastCompleted: 0, results: [] }
 v.queryFunc = function() {
