@@ -96,6 +96,8 @@ v.renderFunc = function() {
     }
   }
 
+  markUpdateAsViewed(data.id, data.created_at * 1000)
+
 }
 v.renderKind1 = function(data) {
   const v = this
