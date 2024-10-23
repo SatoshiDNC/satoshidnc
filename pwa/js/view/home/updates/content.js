@@ -19,9 +19,9 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    if (v.recents.length <= 0) return
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
     const index = Math.floor((y - g.y) / 200)
+    if (index < 0 || index >= v.recents.length) return
     const updates = v.query.results.filter(u => u.hpub == v.recents[index])
     displayView.setContext(updates)
     g.root.easeOut(g.target)
@@ -30,9 +30,9 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    if (v.viewed.length <= 0) return
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
     const index = Math.floor((y - g.y) / 200)
+    if (index < 0 || index >= v.viewed.length) return
     const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
     displayView.setContext(updates)
     g.root.easeOut(g.target)
