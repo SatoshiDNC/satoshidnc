@@ -61,6 +61,7 @@ v.renderFunc = function() {
     v.startTime = Date.now()
     if (v.currentUpdate >= v.updates.length) {
       fg.setRoot(v.returnView)
+      v.setRenderFlag(true)
     }
   }
 
