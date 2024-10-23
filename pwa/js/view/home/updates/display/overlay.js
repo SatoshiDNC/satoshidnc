@@ -11,6 +11,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 39, g.y = 63, g.w = 48, g.h = 48
   g.label = '\x08'
+  g.textColor = [1,1,1,1]
   g.font = iconFont
   g.fontSize = 13
   g.autoHull()
