@@ -20,6 +20,14 @@ v.setContext = function(updates) {
   v.startTime = 0
   v.currentUpdate = 1
 }
+v.pageTurn = function() {
+  const v = this
+  v.currentUpdate += 1
+  v.startTime = now
+  if (v.currentUpdate >= v.updates.length) {
+    fg.setRoot(v.returnView)
+  }
+}
 v.layoutFunc = function() {
   const v = this
   let g
@@ -51,13 +59,7 @@ v.renderFunc = function() {
       drawPill(v, [1,1,1,1], 9+(w+6)*i,9, w*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
       v.setRenderFlag(true)
       if (elapsedTime / 4000 > 1) {
-        setTimeout(() => {
-          v.currentUpdate += 1
-          v.startTime = now
-          if (v.currentUpdate >= numUpdates) {
-            fg.setRoot(v.returnView)
-          }
-        })
+        setTimeout(v.pageTurn)
       }
     }
   }
