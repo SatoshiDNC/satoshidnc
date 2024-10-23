@@ -112,7 +112,7 @@ v.renderFunc = function() {
     // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
     th = lines.length * defaultFont.glyphHeights[65]
     let i = 1
-    for (line of lines) {
+    for (let line of lines) {
       i++
       tw = defaultFont.calcWidth(line) * ts
       mat4.identity(m)
