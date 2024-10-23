@@ -1,6 +1,7 @@
 import { contacts, contactViewDependencies } from '../../../../contacts.js'
 import { keys, keyViewDependencies } from '../../../../keys.js'
 import { getPersonalData as getAttr, personalData, personalDataViewDependencies } from '../../../../personal.js'
+import { kindInfo } from '../../../../nostor.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
