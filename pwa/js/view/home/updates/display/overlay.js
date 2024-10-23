@@ -30,12 +30,12 @@ v.setContext = function(updates) {
 v.layoutFunc = function() {
   const v = this
   let g
-  g = v.addGad
-  g.x = v.sw-189
-  g.y = v.sh-189
-  g.w = 147
-  g.h = 147
-  g.autoHull()
+  // g = v.addGad
+  // g.x = v.sw-189
+  // g.y = v.sh-189
+  // g.w = 147
+  // g.h = 147
+  // g.autoHull()
 }
 v.renderFunc = function() {
   const v = this
