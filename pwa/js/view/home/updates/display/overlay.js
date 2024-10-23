@@ -20,15 +20,6 @@ v.setContext = function(updates) {
   v.startTime = 0
   v.currentUpdate = 1
 }
-v.pageTurn = function() {
-  console.log('oageturn')
-  const v = this
-  v.currentUpdate += 1
-  v.startTime = Date.now()
-  if (v.currentUpdate >= v.updates.length) {
-    fg.setRoot(v.returnView)
-  }
-}
 v.layoutFunc = function() {
   const v = this
   let g
@@ -66,7 +57,11 @@ v.renderFunc = function() {
     }
   }
   if (pageTurn) {
-    setTimeout(v.pageTurn.call(v))
+    v.currentUpdate += 1
+    v.startTime = Date.now()
+    if (v.currentUpdate >= v.updates.length) {
+      fg.setRoot(v.returnView)
+    }
   }
 
   const g = v.addGad
