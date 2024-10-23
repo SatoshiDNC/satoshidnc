@@ -111,7 +111,16 @@ v.renderFunc = function() {
         drawEllipse(v, colors.inactive, 32, 492 + 147, 147, -147, 1/numUpdates, -1/numUpdates)
         drawEllipse(v, v.bgColor, 38, 498, 135, 135)
         for (let i = 0; i < numUpdates; i++) {
-          drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
+          // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
+          mainShapes.useProg2()
+          gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
+          gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+          mat4.identity(m)
+          mat4.translate(m,m, [105, 565.5, 0])
+          mat4.translate(m,m, [-3, -74.5, 0])
+          mat4.scale(m,m, [6, 8, 1])
+          gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+          mainShapes.drawArrays2('rect')
         }
 
         drawAvatar(v, update.hpub, 43,503 + y, 125,125)
