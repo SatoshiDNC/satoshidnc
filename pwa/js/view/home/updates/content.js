@@ -92,55 +92,61 @@ v.renderFunc = function() {
 
   const recents = []
   const viewed = []
-  for (const update of v.query.results) {
-    if (!update.viewed) {
-      if (!recents.includes(update.hpub)) {
-        recents.push(update.hpub)
-        const index = viewed.indexOf(update.hpub)
-        if (index > -1) {
-          viewed.splice(index, 1)
-        }
-
-        const numUpdates = v.query.results.filter(u => u.hpub == update.hpub).length
-        const numViewed = 0
-        drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
-        if (numViewed) {
-          drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
-        }
-        drawEllipse(v, v.bgColor, 38, 498 + y, 135, 135)
-        if (numUpdates > 1) for (let i = 0; i < numUpdates; i++) {
-          // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
-          mainShapes.useProg2()
-          gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
-          gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-          mat4.identity(m)
-          mat4.translate(m,m, [105, 565.5 + y, 0])
-          mat4.rotate(m,m, 2*Math.PI*i/numUpdates, [0, 0, 1])
-          mat4.translate(m,m, [-3, -74.5, 0])
-          mat4.scale(m,m, [6, 8, 1])
-          gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-          mainShapes.drawArrays2('rect')
-        }
-
-        // drawAvatar(v, update.hpub, 43,503 + y, 125,125)
-        drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
-
-        mat4.identity(m)
-        mat4.translate(m, m, [211, 553 + y, 0])
-        mat4.scale(m, m, [35/14, 35/14, 1])
-        defaultFont.draw(0,0, getAttr(update.hpub, 'name'), v.titleColor, v.mat, m)
-      
-        mat4.identity(m)
-        mat4.translate(m, m, [211, 618 + y, 0])
-        mat4.scale(m, m, [30/14, 30/14, 1])
-        defaultFont.draw(0,0, updatePostedAsOf(update.firstSeen), v.subtitleColor, v.mat, m)
-      }
-    } else {
-      if (!recents.includes(update.hpub)) {
-        viewed.push(update.hpub)
-      }
+  let i = 0
+  for (let hpub of [...v.recents, ...v.viewed]) {
+    const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
+    const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
+    const numViewed = 0
+    i++
+    const y = i * 200 + v.viewed.includes(hpub)? 100: 0
+    drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
+    if (numViewed) {
+      drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
     }
+    drawEllipse(v, v.bgColor, 38, 498 + y, 135, 135)
+    if (numUpdates > 1) for (let i = 0; i < numUpdates; i++) {
+      // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
+      mainShapes.useProg2()
+      gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
+      gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+      mat4.identity(m)
+      mat4.translate(m,m, [105, 565.5 + y, 0])
+      mat4.rotate(m,m, 2*Math.PI*i/numUpdates, [0, 0, 1])
+      mat4.translate(m,m, [-3, -74.5, 0])
+      mat4.scale(m,m, [6, 8, 1])
+      gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+      mainShapes.drawArrays2('rect')
+    }
+
+    // drawAvatar(v, hpub, 43,503 + y, 125,125)
+    drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
+
+    mat4.identity(m)
+    mat4.translate(m, m, [211, 553 + y, 0])
+    mat4.scale(m, m, [35/14, 35/14, 1])
+    defaultFont.draw(0,0, getAttr(hpub, 'name'), v.titleColor, v.mat, m)
+  
+    mat4.identity(m)
+    mat4.translate(m, m, [211, 618 + y, 0])
+    mat4.scale(m, m, [30/14, 30/14, 1])
+    defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
   }
+  // for (const update of v.query.results) {
+  //   if (!update.viewed) {
+  //     if (!recents.includes(update.hpub)) {
+  //       recents.push(update.hpub)
+  //       const index = viewed.indexOf(update.hpub)
+  //       if (index > -1) {
+  //         viewed.splice(index, 1)
+  //       }
+
+  //     }
+  //   } else {
+  //     if (!recents.includes(update.hpub)) {
+  //       viewed.push(update.hpub)
+  //     }
+  //   }
+  // }
 
   mat4.identity(m)
   mat4.translate(m, m, [45, 434 + recents.length * 200 + 98, 0])
