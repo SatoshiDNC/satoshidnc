@@ -109,6 +109,7 @@ export const kindInfo = [
   { kind: 30618, desc: `Repository state announcements`, nips: [34] },
   { kind: 30818, desc: `Wiki article`, nips: [54] },
   { kind: 30819, desc: `Redirects`, nips: [54] },
+  { kind: 31234, desc: `Generic Draft Event`, nips: ['Generic Draft Event'] }
   { kind: 31338, desc: `Audio Track`, nips: [] },
   { kind: 31388, desc: `Link Set`, nips: ['Corny Chat'] },
   { kind: 31890, desc: `Feed`, nips: ['NUD: Custom Feeds'] },
