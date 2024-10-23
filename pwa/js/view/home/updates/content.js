@@ -27,7 +27,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
       g.root.easeOut(g.target)
     }
   }
-v.query = { inProgress: false, lastCompleted: 0, results: undefined }
+v.query = { inProgress: false, lastCompleted: 0, results: [] }
 v.queryFunc = function() {
   const v = this
   const ONE_MINUTE_IN_MILLISECONDS = 1 * 60 * 1000
@@ -43,7 +43,13 @@ v.queryFunc = function() {
 }
 v.layoutFunc = function() {
   const v = this
-  console.log(v.query.results)
+
+  const contacts = []
+  for (update of v.query.results) {
+    if (!contacts.includes(update.hpub)) {
+      contacts.push(update.hpub)
+    }
+  }
 
   let x = 42
   let g
@@ -72,15 +78,22 @@ v.renderFunc = function() {
   mat4.scale(m, m, [28/14, 28/14, 1])
   defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
 
-  mat4.identity(m)
-  mat4.translate(m, m, [211, 553, 0])
-  mat4.scale(m, m, [35/14, 35/14, 1])
-  defaultFont.draw(x,y, 'Name', v.titleColor, v.mat, m)
+  const contacts = []
+  for (update of v.query.results) {
+    if (!contacts.includes(update.hpub)) {
+      contacts.push(update.hpub)
+      mat4.identity(m)
+      mat4.translate(m, m, [211, 553 + contacts.length * 200, 0])
+      mat4.scale(m, m, [35/14, 35/14, 1])
+      defaultFont.draw(x,y, getPersonalData(update.hpub, 'name'), v.titleColor, v.mat, m)
+    
+      mat4.identity(m)
+      mat4.translate(m, m, [211, 618 + contacts.length * 200, 0])
+      mat4.scale(m, m, [30/14, 30/14, 1])
+      defaultFont.draw(x,y, update.firstSeen, v.subtitleColor, v.mat, m)
+    }
+  }
 
-  mat4.identity(m)
-  mat4.translate(m, m, [211, 618, 0])
-  mat4.scale(m, m, [30/14, 30/14, 1])
-  defaultFont.draw(x,y, 'Time', v.subtitleColor, v.mat, m)
 }
 
 export const overlayView = v = new fg.View(null)
