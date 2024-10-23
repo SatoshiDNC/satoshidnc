@@ -100,14 +100,14 @@ v.renderFunc = function() {
   let x = 0, y = 0
   defaultFont.draw(x,y, 'Status', v.textColor, v.mat, m)
 
-  if (recents.length > 0) {
+  if (v.recents.length > 0) {
     mat4.identity(m)
     mat4.translate(m, m, [45, 434, 0])
     mat4.scale(m, m, [28/14, 28/14, 1])
     defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
   }
 
-  if (viewed.length > 0) {
+  if (v.viewed.length > 0) {
     mat4.identity(m)
     mat4.translate(m, m, [45, 434 + (v.recents.length>0 ? recents.length * 200 + 98 : 0), 0])
     mat4.scale(m, m, [28/14, 28/14, 1])
