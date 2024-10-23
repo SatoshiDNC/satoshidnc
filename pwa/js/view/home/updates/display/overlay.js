@@ -44,7 +44,7 @@ v.renderFunc = function() {
   for (let i = 0; i < numUpdates; i++) {
     if (i < v.currentUpdate) {
       drawPill(v, [1,1,1,1], 9+(w+9)*i,9, w,6)
-    } else if (i > currentUpdate) {
+    } else if (i > v.currentUpdate) {
       drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
     } else {
       drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
