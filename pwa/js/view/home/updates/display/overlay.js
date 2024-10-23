@@ -64,7 +64,7 @@ v.renderFunc = function() {
         v.returnView.easingState = 1
         v.returnView.easingValue = 0
         fg.setRoot(v.returnView)
-      }, 100)
+      })
     }
   }
 
