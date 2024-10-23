@@ -69,7 +69,7 @@ export function updatePostedAsOf(timeStamp) {
   const now = Date.now()
   if (now - timeStamp < ONE_DAY) {
     if (new Date(timeStamp).getDate() == new Date(now).getDate()) {
-      return `${timeStamp.toLocaleTimeString()}`
+      return `${new Date(timeStamp).toLocaleTimeString()}`
     } else {
       return `Yesterday`
     }
