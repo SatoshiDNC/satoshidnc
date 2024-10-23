@@ -59,6 +59,8 @@ v.layoutFunc = function() {
       }
     }
   }
+  v.recents = recents
+  v.viewed = viewed
 
   let x = 42
   let g
