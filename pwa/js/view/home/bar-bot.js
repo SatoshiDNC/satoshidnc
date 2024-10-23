@@ -7,9 +7,9 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
 v.panes = [
   { label: 'Chats',       icon: '\x0e', scale: 50/14 },
-  { label: 'Updates',     icon: '\x0c', scale: 50/14 },
-  { label: 'Communities', icon: '\x09', scale: 50/14 },
-  { label: 'Calls',       icon: '\x0b', scale: 50/14 },
+  { label: 'Updates',     icon: '\x0c', scale: 25/14 },
+  { label: 'Communities', icon: '\x09', scale: 25/14 },
+  { label: 'Calls',       icon: '\x0b', scale: 25/14 },
 ]
 v.paneGads = []
 for (const pane of v.panes) {
@@ -77,7 +77,9 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, g.label, v.textColor, v.mat, m)
     mat4.identity(m)
     s = g.iconScale
-    mat4.translate(m,m, [g.x + (g.w - iconFont.calcWidth(g.icon) * s) / 2, g.y + g.h, 0])
+    console.log(iconFont.glyphHeights[g.icon])
+    console.log(iconFont)
+    mat4.translate(m,m, [g.x + (g.w - iconFont.calcWidth(g.icon) * s) / 2, g.y + 75 + iconFont.glyphHeights[g.icon]/2, 0])
     mat4.scale(m,m, [s, s, 1])
     iconFont.draw(0,0, g.icon, v.textColor, v.mat, m)
   }
