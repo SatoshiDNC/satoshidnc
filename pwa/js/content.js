@@ -107,3 +107,28 @@ export function getFeed(hpub) {
     }
   })
 }
+
+export function getFeeds() {
+  return new Promise((resolve, reject) => {
+    const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
+    const os = tr.objectStore('events')
+    const DISTANT_FUTURE = 91729187740298
+    const MIN_HPUB = '0000000000000000000000000000000000000000000000000000000000000000'
+    const MAX_HPUB = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+    const req = os.index('firstSeen').openCursor(window.IDBKeyRange.bound([MIN_HPUB, 0], [MAX_HPUB, DISTANT_FUTURE]), 'prev')
+    req.onerror = function(e) {
+      console.err(e)
+    }
+    const posts = []
+    req.onsuccess = function(e) {
+      let cursor = e.target.result
+      if (cursor) {
+        let v = cursor.value
+        posts.push(v)
+        cursor.continue()
+      } else {
+        resolve(posts)
+      }
+    }
+  })
+}

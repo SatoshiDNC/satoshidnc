@@ -4,6 +4,7 @@ import { drawPill, drawAvatar } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn } from '../../util.js'
+import { getFeeds } from '../../../content.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -26,6 +27,20 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
       g.root.easeOut(g.target)
     }
   }
+v.query = { inProgress: false, lastCompleted: 0 }
+v.queryFunc = function() {
+  const v = this
+  const ONE_MINUTE_IN_MILLISECONDS = 1 * 60 * 1000
+  if (!v.query.inProgress && v.query.lastCompleted < Date.now() - ONE_MINUTE_IN_MILLISECONDS) {
+    v.query.inProgress = true
+    getFeeds().then(allNewUpdates => {
+      v.query.inProgress = false
+      v.query.lastCompleted = Date.now()
+      console.log('got all new updates')
+      v.relayout()
+    })
+  }
+}
 v.layoutFunc = function() {
   const v = this
   let x = 42
@@ -34,6 +49,8 @@ v.layoutFunc = function() {
   g.x = 0, g.y = 0
   g.w = v.sw, g.h = v.sh
   g.autoHull()
+
+  v.queryFunc()
 }
 v.renderFunc = function() {
   const v = this
