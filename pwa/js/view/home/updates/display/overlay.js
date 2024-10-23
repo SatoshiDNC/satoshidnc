@@ -18,6 +18,7 @@ v.setContext = function(updates) {
   const v = this
   v.updates = updates
   v.startTime = 0
+  v.currentUpdate = 1
 }
 v.layoutFunc = function() {
   const v = this
@@ -41,8 +42,14 @@ v.renderFunc = function() {
   const elapsedTime = now - v.startTime
   const w = (v.sw-9-9*numUpdates)/numUpdates
   for (let i = 0; i < numUpdates; i++) {
-    drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
-    //drawPill(v, [1,1,1,1], 9,9, (v.sw-9-9*numUpdates)/numUpdates,6)
+    if (i < v.currentUpdate) {
+      drawPill(v, [1,1,1,1], 9+(w+9)*i,9, w,6)
+    } else if (i > currentUpdate) {
+      drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
+    } else {
+      drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
+      drawPill(v, [1,1,1,1], 9+(w+9)*i,9, w*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
+    }
   }
 
   const g = v.addGad
