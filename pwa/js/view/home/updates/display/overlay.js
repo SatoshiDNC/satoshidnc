@@ -40,15 +40,15 @@ v.renderFunc = function() {
   }
   const now = Date.now()
   const elapsedTime = now - v.startTime
-  const w = (v.sw-9-9*numUpdates)/numUpdates
+  const w = (v.sw-9-3-6*numUpdates)/numUpdates
   for (let i = 0; i < numUpdates; i++) {
     if (i < v.currentUpdate) {
-      drawPill(v, [1,1,1,1], 9+(w+9)*i,9, w,6)
+      drawPill(v, [1,1,1,1], 9+(w+6)*i,9, w,6)
     } else if (i > v.currentUpdate) {
-      drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
+      drawPill(v, colors.inactive, 9+(w+6)*i,9, w,6)
     } else {
-      drawPill(v, colors.inactive, 9+(w+9)*i,9, w,6)
-      drawPill(v, [1,1,1,1], 9+(w+9)*i,9, w*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
+      drawPill(v, colors.inactive, 9+(w+6)*i,9, w,6)
+      drawPill(v, [1,1,1,1], 9+(w+6)*i,9, w*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
       v.setRenderFlag(true)
       if (elapsedTime / 4000 > 1) {
         setTimeout(() => {
