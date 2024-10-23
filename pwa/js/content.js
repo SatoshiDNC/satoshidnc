@@ -116,7 +116,7 @@ export function getUpdates() {
     const ONE_DAY_AGO = Date.now() - 24 * 60 * 60 * 1000
     const MIN_HPUB = '0000000000000000000000000000000000000000000000000000000000000000'
     const MAX_HPUB = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
-    const req = os.index('firstSeen').getAll(IDBKeyRange.bound([0], [DISTANT_FUTURE]))
+    const req = os.index('firstSeen').getAll(IDBKeyRange.bound([MIN_HPUB, 0], [MAX_HPUB, DISTANT_FUTURE]))
     req.onerror = function(e) {
       console.err(e)
     }
