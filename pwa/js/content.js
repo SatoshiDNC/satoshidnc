@@ -122,14 +122,15 @@ export function getUpdates() {
     }
     const posts = []
     req.onsuccess = function(e) {
-      let cursor = e.target.result
-      if (cursor) {
-        let v = cursor.value
-        posts.push(v)
-        cursor.continue()
-      } else {
-        resolve(posts)
-      }
+      resolve(e.target.result)
+      // let cursor = e.target.result
+      // if (cursor) {
+      //   let v = cursor.value
+      //   posts.push(v)
+      //   cursor.continue()
+      // } else {
+      //   resolve(posts)
+      // }
     }
   })
 }
