@@ -49,7 +49,7 @@ v.renderFunc = function() {
       drawPill(v, colors.inactive, 9+(w+6)*i,9, w,6)
     } else {
       drawPill(v, colors.inactive, 9+(w+6)*i,9, w,6)
-      drawPill(v, [1,1,1,1], 9+(w+6)*i,9, w*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
+      drawPill(v, [1,1,1,1], 9+(w+6)*i,9, w*(Math.max(6,Math.min(1,elapsedTime / 4000))),6)
       v.setRenderFlag(true)
       if (elapsedTime > 4000) {
         pageTurn = true
@@ -60,8 +60,11 @@ v.renderFunc = function() {
     v.currentUpdate += 1
     v.startTime = Date.now()
     if (v.currentUpdate >= v.updates.length) {
-      fg.setRoot(v.returnView)
-      v.setRenderFlag(true)
+      setTimeout(() => {
+        fg.setRoot(v.returnView)
+        v.setRenderFlag(true)
+  
+      }, 100)
     }
   }
 
