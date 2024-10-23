@@ -102,13 +102,9 @@ v.renderFunc = function() {
         }
 
         const numUpdates = v.query.results.filter(u => u.hpub == update.hpub).length
-        mat4.identity(m)
-        mat4.translate(m, m, [43, 503 + y, 0])
-        mat4.scale(m, m, [35/14, 35/14, 1])
-        defaultFont.draw(0,0, ''+numUpdates, v.titleColor, v.mat, m)
-
+        const numViewed = 0
         drawEllipse(v, colors.accent, 32, 492, 147, 147)
-        drawEllipse(v, colors.inactive, 32, 492 + 147, 147, -147, 1/numUpdates, -1/numUpdates)
+        drawEllipse(v, colors.inactive, 32, 492 + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
         drawEllipse(v, v.bgColor, 38, 498, 135, 135)
         for (let i = 0; i < numUpdates; i++) {
           // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
