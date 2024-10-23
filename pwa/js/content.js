@@ -123,15 +123,7 @@ export function getUpdates() {
     const posts = []
     req.onsuccess = function(e) {
       console.log(e.target.result)
-      resolve(e.target.result)
-      // let cursor = e.target.result
-      // if (cursor) {
-      //   let v = cursor.value
-      //   posts.push(v)
-      //   cursor.continue()
-      // } else {
-      //   resolve(posts)
-      // }
+      resolve(e.target.result.filter(e => ![5, 31234].includes(e.kind)))
     }
   })
 }
