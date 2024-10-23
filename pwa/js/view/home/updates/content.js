@@ -1,6 +1,6 @@
 // import { hpub, npub } from '../../keys.js'
 import { contacts, contactViewDependencies } from '../../../contacts.js'
-import { drawPill, drawAvatar, drawEllipse } from '../../../draw.js'
+import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
