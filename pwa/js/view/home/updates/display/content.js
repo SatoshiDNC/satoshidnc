@@ -3,6 +3,7 @@ import { keys, keyViewDependencies } from '../../../../keys.js'
 import { getPersonalData as getAttr, personalData, personalDataViewDependencies } from '../../../../personal.js'
 import { drawPill, drawEllipse, alpha } from '../../../../draw.js'
 import { kindInfo } from '../../../../nostor.js'
+import { overlayView } from './overlay.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -88,7 +89,7 @@ v.renderFunc = function() {
   const mat = mat4.create()
 
   let t,tw,th,ts
-  const data = v.updates[v.currentUpdate].data
+  const data = v.updates[overlayView.currentUpdate].data
 
   t = `${data.kind} · ${(''+kindInfo.filter(r=>r.kindMax?r.kind<=data.kind&&data.kind<=r.kindMax:r.kind==data.kind)?.[0]?.desc).toUpperCase()}`
   tw = defaultFont.calcWidth(t)
