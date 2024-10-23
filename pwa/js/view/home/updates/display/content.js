@@ -84,13 +84,17 @@ v.layoutFunc = function() {
 }
 v.renderFunc = function() {
   const v = this
-  gl.clearColor(...v.bgColor)
-  gl.clear(gl.COLOR_BUFFER_BIT)  
+  const data = v.updates[overlayView.currentUpdate].data
+  if (data.kind == 1) {
+    v.renderKind1(data)
+  } else {
+    gl.clearColor(...v.bgColor)
+    gl.clear(gl.COLOR_BUFFER_BIT)  
+  }
   const m = mat4.create()
   const mat = mat4.create()
 
   let t,tw,th,ts
-  const data = v.updates[overlayView.currentUpdate].data
 
   t = `${data.kind} · ${(''+kindInfo.filter(r=>r.kindMax?r.kind<=data.kind&&data.kind<=r.kindMax:r.kind==data.kind)?.[0]?.desc).toUpperCase()}`
   tw = defaultFont.calcWidth(t)
@@ -100,27 +104,27 @@ v.renderFunc = function() {
   mat4.scale(m, m, [ts, ts, 1])
   defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, m)
 
-  if (data.kind == 1) {
-    ts = 20/14
-    const words = data.content.split(' ')
-    const lines = []
-    while (words.length > 0) {
-      lines.push(words.shift())
-      while (words.length > 0 && defaultFont.calcWidth(lines[lines.length] + ' ' + words[0]) * ts <= v.sw) {
-        lines.push(lines.pop() + ' ' + words.shift())
-      }
-    }
-    // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
-    th = lines.length * defaultFont.glyphHeights[65]
-    let i = 1
-    for (let line of lines) {
-      i++
-      tw = defaultFont.calcWidth(line) * ts
-      mat4.identity(m)
-      mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65], 0])
-      mat4.scale(m, m, [ts, ts, 1])
-      defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+}
+v.renderKind1 = function(data) {
+  const v = this
+  ts = 20/14
+  const words = data.content.split(' ')
+  const lines = []
+  while (words.length > 0) {
+    lines.push(words.shift())
+    while (words.length > 0 && defaultFont.calcWidth(lines[lines.length] + ' ' + words[0]) * ts <= v.sw) {
+      lines.push(lines.pop() + ' ' + words.shift())
     }
   }
-
+  // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
+  th = lines.length * defaultFont.glyphHeights[65]
+  let i = 1
+  for (let line of lines) {
+    i++
+    tw = defaultFont.calcWidth(line) * ts
+    mat4.identity(m)
+    mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65], 0])
+    mat4.scale(m, m, [ts, ts, 1])
+    defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+  }
 }
