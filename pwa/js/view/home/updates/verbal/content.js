@@ -70,12 +70,12 @@ v.renderFunc = function() {
   th = (lines.length * 2 - 1) * v.font.glyphHeights[65] * ts
   let i = 1
   for (let line of lines) {
-    i++
     tw = v.font.calcWidth(line) * ts
     mat4.identity(m)
-    mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*v.font.glyphHeights[65]*ts*2, 0])
+    mat4.translate(m, m, [(v.sw - tw)/2, v.sh/2 - th/2 + i*v.font.glyphHeights[65]*ts*2, 0])
     mat4.scale(m, m, [ts, ts, 1])
-    v.font.draw(0,-14, line, textColor, v.mat, m)
+    v.font.draw(0,0, line, textColor, v.mat, m)
+    i++
   }
 
 }
