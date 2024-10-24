@@ -88,10 +88,10 @@ v.renderFunc = function() {
 
   for (g of v.gadgets) {
     drawEllipse(v, v.buttonFaceColor, g.x,g.y, g.w,g.h)
-    const font = g.font || defaultFont
+    const font = g.font || iconFont
     const s = 53/font.glyphHeights[g.icon]
     mat4.identity(m)
-    mat4.translate(m, m, [g.x+g.w/2-(53/font.glyphHeights[g.icon]*font.glyphWidths[g.icon])/2, g.y+g.h-(g.h-53)/2, 0])
+    mat4.translate(m, m, [g.x+g.w/2-(53/font.glyphHeights[g.icon]*font.glyphWidths[g.icon])/2, g.y+g.h/2+53/2, 0])
     mat4.scale(m, m, [s, s, 1])
     font.draw(0,0, g.icon, v.buttonTextColor, v.mat, m)
   }
