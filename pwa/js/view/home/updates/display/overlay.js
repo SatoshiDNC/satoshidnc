@@ -2,6 +2,7 @@ import { drawPill, drawEllipse, alpha } from '../../../../draw.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { updatePostedAsOf } from '../../../util.js'
 import { kindInfo } from '../../../../nostor.js'
+import { contentView } from './content.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -56,7 +57,8 @@ v.renderFunc = function() {
   }
   const deltaTime = now - v.lastTime
   v.lastTime = now
-  if (!v.paused) {
+  console.log(contentView.listGad.gestureState)
+  if (!v.pause) {
     v.elapsedTime += deltaTime
   }
   const elapsedTime = v.elapsedTime

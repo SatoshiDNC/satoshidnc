@@ -13,9 +13,11 @@ v.buttonTextColor = colors.accentButtonText
 v.gadgets.push(g = v.listGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.mouseDownFunc = function(e) {
+    console.log('down')
     overlayView.pause = true
   }
   g.mouseUpFunc = function(e) {
+    console.log('up')
     overlayView.pause = false
   }
   g.clickFunc = function(e) {
