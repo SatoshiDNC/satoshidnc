@@ -28,10 +28,10 @@ import { contentView as profile_info_root } from './view/home/chats/profile/info
 import { barBot as home_bot } from './view/home/bar-bot.js'
 import { overlayView as home_updates_overlay } from './view/home/updates/overlay.js'
 import { contentView as home_updates_content } from './view/home/updates/content.js'
-import { rootView as home_updates_new_root } from './view/home/updates/verbal/root.js'
-import { barTop as home_updates_new_top } from './view/home/updates/verbal/bar-top.js'
 import { rootView as home_updates_display_root } from './view/home/updates/display/root.js'
 import { overlayView as home_updates_display_overlay } from './view/home/updates/display/overlay.js'
+import { rootView as home_updates_verbal_root } from './view/home/updates/verbal/root.js'
+import { overlayView as home_updates_verbal_overlay } from './view/home/updates/verbal/overlay.js'
 
 homeChatTop.menuGad.root = home_chats_root
 homeChatTop.menuGad.target = menuRoot
@@ -63,6 +63,6 @@ home_bot.panes.filter(p => p.label == 'Calls')[0].view = home_calls_root
 home_updates_overlay.cameraGad.root = home_updates_root, home_updates_overlay.cameraGad.target = home_updates_new_root
 home_updates_overlay.pencilGad.root = home_updates_root, home_updates_overlay.pencilGad.target = home_updates_new_root
 home_updates_display_overlay.returnView = home_updates_root
-home_updates_new_top.backGad.root = home_updates_new_root, home_updates_new_top.backGad.target = home_updates_root
 home_updates_content.recentsGad.root = home_updates_root, home_updates_content.recentsGad.target = home_updates_display_root
 home_updates_content.viewedGad.root = home_updates_root, home_updates_content.viewedGad.target = home_updates_display_root
+home_updates_verbal_overlay.closeGad.root = home_updates_verbal_root, home_updates_verbal_overlay.closeGad.target = home_updates_root
