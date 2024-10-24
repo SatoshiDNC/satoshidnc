@@ -46,7 +46,7 @@ v.renderFunc = function() {
     iconFont.draw(0,0, `\x0a`, g.buttonFaceColor, v.mat, m)
     const s = g.iconSize/iconFont.calcWidth(g.icon)
     mat4.identity(m)
-    mat4.translate(m,m, [g.x + (g.w-g.iconSize)/2, g.y + g.h - (g.w-g.iconSize)/2, 0])
+    mat4.translate(m,m, [g.x + (g.w-g.iconSize*s)/2, g.y + g.h - (g.w-g.iconSize*s)/2, 0])
     mat4.scale(m,m, [s, s, 1])
     iconFont.draw(-2,0, g.icon, g.buttonTextColor, v.mat, m)
   }
