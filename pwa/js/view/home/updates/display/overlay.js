@@ -57,8 +57,7 @@ v.renderFunc = function() {
   }
   const deltaTime = now - v.lastTime
   v.lastTime = now
-  console.log(contentView.listGad.gestureState)
-  if (!v.pause) {
+  if (!contentView.listGad.gestureState) {
     v.elapsedTime += deltaTime
   }
   const elapsedTime = v.elapsedTime
