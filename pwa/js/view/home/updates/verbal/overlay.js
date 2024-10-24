@@ -85,12 +85,12 @@ v.renderFunc = function() {
     if (g.label) {
       drawPill(v, colors.inactiveDark, g.x,g.y, g.w,g.h)
       const font = g.font || defaultFont
-      const s = g.fontSize || 29/14
+      const s = g.textSize/14
       mat4.identity(m)
-      mat4.translate(m, m, [g.x+g.w/2-font.calcWidth(g.label)*s/2, g.y+g.h/2+g.fontSize/2, 0])
+      mat4.translate(m, m, [g.x+g.w/2-font.calcWidth(g.label)*s/2, g.y+g.h/2+g.textSize/2, 0])
       mat4.scale(m, m, [s, s, 1])
       font.draw(0,0, g.label, v.buttonTextColor, v.mat, m)
-    } else {
+    } else if (g.icon) {
       drawEllipse(v, v.buttonFaceColor, g.x,g.y, g.w,g.h)
       const font = g.font || iconFont
       const c = g.icon.codePointAt(0)
