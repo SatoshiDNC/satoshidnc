@@ -101,6 +101,7 @@ v.renderFunc = function() {
 }
 v.renderKind1 = function(data) {
   const v = this
+  console.log(`${data.id[61]}${data.id[62]}${data.id[63]}`)
   const bgColor = [parseInt(data.id[61],16)/64, parseInt(data.id[62],16)/64, parseInt(data.id[63],16)/64, 1]
   gl.clearColor(...bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
