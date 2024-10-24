@@ -33,11 +33,6 @@ v.gadgets.push(g = v.emojiGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    //g.root.easeOut(g.target)
-    v.returnView.b.b.clearQuery()
-    v.returnView.easingState = 1
-    v.returnView.easingValue = 0
-    fg.setRoot(v.returnView)
   }
 v.gadgets.push(g = v.fontGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -47,11 +42,6 @@ v.gadgets.push(g = v.fontGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    //g.root.easeOut(g.target)
-    v.returnView.b.b.clearQuery()
-    v.returnView.easingState = 1
-    v.returnView.easingValue = 0
-    fg.setRoot(v.returnView)
   }
 v.gadgets.push(g = v.paletteGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
