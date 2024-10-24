@@ -44,6 +44,6 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m, m, [v.sw/2 - tw/2, v.sh/2 + 33, 0])
   mat4.scale(m, m, [s, s, 1])
-  v.font.draw(0,0, t, v.buttonTextColor, v.mat, m)
+  v.font.draw(0,0, t, alpha(v.textColor, 0.1), v.mat, m)
 
 }
