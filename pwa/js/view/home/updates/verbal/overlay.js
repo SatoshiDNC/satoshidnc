@@ -14,7 +14,7 @@ v.subtitleColor = colors.softWhite
 v.pause = false
 v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 39, g.y = 63, g.w = 48, g.h = 48
+  g.x = 34, g.y = 34, g.w = 110, g.h = 110
   g.label = '\x08'
   g.textColor = colors.white
   g.font = iconFont
