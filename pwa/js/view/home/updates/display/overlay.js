@@ -21,7 +21,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     //g.root.easeOut(g.target)
-    v.returnView.clearQuery()
+    v.returnView.b.b.clearQuery()
     v.returnView.easingState = 1
     v.returnView.easingValue = 0
     fg.setRoot(v.returnView)
