@@ -34,9 +34,7 @@ v.gadgets.push(g = v.textGad = new fg.Gadget(v))
           g.text = value
         }
       }
-      console.log(overlayView.micSendGad.icon.codePointAt(0))
-      overlayView.micSendGad.icon = g.text? overlayView.micSendGad.iconMic: overlayView.micSendGad.iconSend
-      console.log(overlayView.micSendGad.icon.codePointAt(0))
+      overlayView.micSendGad.icon = g.text? overlayView.micSendGad.iconSend: overlayView.micSendGad.iconMic
       v.setRenderFlag(true)
     })
   }
