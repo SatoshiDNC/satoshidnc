@@ -28,8 +28,8 @@ import { contentView as profile_info_root } from './view/home/chats/profile/info
 import { barBot as home_bot } from './view/home/bar-bot.js'
 import { overlayView as home_updates_overlay } from './view/home/updates/overlay.js'
 import { contentView as home_updates_content } from './view/home/updates/content.js'
-import { rootView as home_updates_new_root } from './view/home/updates/new-update/root.js'
-import { barTop as home_updates_new_top } from './view/home/updates/new-update/bar-top.js'
+import { rootView as home_updates_new_root } from './view/home/updates/verbal/root.js'
+import { barTop as home_updates_new_top } from './view/home/updates/verbal/bar-top.js'
 import { rootView as home_updates_display_root } from './view/home/updates/display/root.js'
 import { overlayView as home_updates_display_overlay } from './view/home/updates/display/overlay.js'
 
