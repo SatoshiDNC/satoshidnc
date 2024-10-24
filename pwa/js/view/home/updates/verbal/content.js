@@ -19,11 +19,11 @@ v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
-v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
+v.gadgets.push(g = v.textGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function() {
     const g = this, v = g.viewport
-    console.log('click')
+    console.log('text click')
   }
 v.setContext = function() {
   const v = this
@@ -31,9 +31,9 @@ v.setContext = function() {
 v.layoutFunc = function() {
   const v = this
   let g
-  g = v.screenGad
-  g.x = 0, g.y = 0
-  g.w = v.sw, g.h = v.sh
+  g = v.textGad
+  g.x = 0, g.y = v.sh/2 - 33
+  g.w = v.sw, g.h = 66
   g.autoHull()
 }
 v.renderFunc = function() {
