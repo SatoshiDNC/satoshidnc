@@ -7,7 +7,7 @@ v.gadgets.push(g = v.cameraGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.buttonFaceColor = colors.accentButtonFace
   g.buttonTextColor = colors.accentButtonText
-  g.label = '+'
+  g.label = 'c'
   g.clickFunc = function() {
     const g = this, v = this.viewport
     g.root.easeOut(g.target)
@@ -16,7 +16,7 @@ v.gadgets.push(g = v.pencilGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.buttonFaceColor = colors.subtleButtonFace
   g.buttonTextColor = colors.subtleButtonText
-  g.label = '+'
+  g.label = '\x0f'
   g.clickFunc = function() {
     const g = this, v = this.viewport
     g.root.easeOut(g.target)
