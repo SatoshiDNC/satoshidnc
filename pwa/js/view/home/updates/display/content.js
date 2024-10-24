@@ -87,15 +87,18 @@ v.renderFunc = function() {
   const data = v.updates[overlayView.currentUpdate].data
   if (data.kind == 1) {
     v.renderKind1(data)
-    if (data.tags.length > 0) {
-      console.log(data)
+    if (data.id != v.lastRenderedId) {
+      v.lastRenderedId = data.id
+      if (data.tags.length > 0) {
+        console.log(`[NOTE] tags are present:`, data)
+      }
     }
   } else {
     gl.clearColor(...v.bgColor)
     gl.clear(gl.COLOR_BUFFER_BIT)
     if (data.id != v.lastRenderedId) {
       v.lastRenderedId = data.id
-      console.log(data)
+      console.log(`[NOTE] unrecognized kind:`, data)
     }
   }
 
