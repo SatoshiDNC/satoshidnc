@@ -30,6 +30,14 @@ v.setContext = function(updates) {
   v.updates = updates
   v.startTime = 0
   v.currentUpdate = 0
+  for (u of v.updates) {
+    if (u.viewed) {
+      v.currentUpdate++
+    }
+  }
+  if (v.currentUpdate >= v.updates.length) {
+    v.currentUpdate = 0
+  }
 }
 v.layoutFunc = function() {
   const v = this

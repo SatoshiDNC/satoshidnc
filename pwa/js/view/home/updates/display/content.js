@@ -66,7 +66,6 @@ v.setContext = function(updates) {
   const v = this
   v.updates = updates
   v.startTime = 0
-  v.currentUpdate = 0
 }
 v.layoutFunc = function() {
   const v = this
