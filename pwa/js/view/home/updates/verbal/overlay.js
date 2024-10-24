@@ -17,8 +17,6 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
   g.icon = '\x08'
-  g.font = iconFont
-  g.fontSize = 13
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
@@ -32,8 +30,6 @@ v.gadgets.push(g = v.emojiGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
   g.icon = '\x08'
-  g.font = iconFont
-  g.fontSize = 13
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
@@ -46,9 +42,8 @@ v.gadgets.push(g = v.emojiGad = new fg.Gadget(v))
 v.gadgets.push(g = v.fontGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
-  g.icon = '\x08'
-  g.font = iconFont
-  g.fontSize = 13
+  g.icon = 'T'
+  g.font = defaultFont
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
@@ -62,8 +57,6 @@ v.gadgets.push(g = v.paletteGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
   g.icon = '\x08'
-  g.font = iconFont
-  g.fontSize = 13
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
@@ -95,11 +88,12 @@ v.renderFunc = function() {
 
   for (g of v.gadgets) {
     drawEllipse(v, v.buttonFaceColor, g.x,g.y, g.w,g.h)
-    const s = 53/iconFont.glyphHeights[g.icon]
+    const font = g.font || defaultFont
+    const s = 53/font.glyphHeights[g.icon]
     mat4.identity(m)
     mat4.translate(m, m, [g.x, g.y+g.h-(g.h-53)/2, 0])
     mat4.scale(m, m, [s, s, 1])
-    iconFont.draw(0,0, g.icon, v.buttonTextColor, v.mat, m)
+    font.draw(0,0, g.icon, v.buttonTextColor, v.mat, m)
   }
 
 }
