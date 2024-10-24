@@ -86,7 +86,7 @@ v.layoutFunc = function() {
   g.x = 21, g.y = v.sh - 126, g.w = 62 + defaultFont.calcWidth(g.label)*g.textSize/14, g.h = 84
   g.autoHull()
   g = v.micSendGad
-  g.x = v.sw - 20 - g.w
+  g.x = v.sw - 20 - g.w, g.y = v.sh - 20 - g.h
   g.autoHull()
 }
 v.renderFunc = function() {
