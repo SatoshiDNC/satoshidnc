@@ -112,21 +112,18 @@ v.renderKind1 = function(data) {
   while (words.length > 0) {
     lines.push(words.shift())
     while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
-      console.log(lines[lines.length-1] + ' ' + words[0], defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]), ts, v.sw)
-      console.log(lines, words)
       lines.push(lines.pop() + ' ' + words.shift())
-      console.log(lines, words)
     }
   }
   // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
   console.log(lines, words)
-  th = lines.length * defaultFont.glyphHeights[65]
+  th = lines.length * defaultFont.glyphHeights[65] * ts
   let i = 1
   for (let line of lines) {
     i++
     tw = defaultFont.calcWidth(line) * ts
     mat4.identity(m)
-    mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65], 0])
+    mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65]*ts, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
