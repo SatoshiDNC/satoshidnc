@@ -62,7 +62,7 @@ v.renderFunc = function() {
   const lines = []
   while (words.length > 0) {
     lines.push(words.shift())
-    while (words.length > 0 && v.font.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
+    while (words.length > 0 && v.font.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw-100) {
       lines.push(lines.pop() + ' ' + words.shift())
     }
   }
