@@ -11,7 +11,7 @@ v.randomColor = function() {
     Math.floor(Math.random()*16)/32,
     Math.floor(Math.random()*16)/32,
     Math.floor(Math.random()*16)/32, 1]
-  contentView.setRenderFlag(true)
+  v.setRenderFlag(true)
 }
 v.randomColor()
 v.font = defaultFont
@@ -34,7 +34,9 @@ v.gadgets.push(g = v.textGad = new fg.Gadget(v))
           g.text = value
         }
       }
+      console.log(overlayView.micSendGad.icon.codePointAt(0))
       overlayView.micSendGad.icon = g.text? overlayView.micSendGad.iconMic: overlayView.micSendGad.iconSend
+      console.log(overlayView.micSendGad.icon.codePointAt(0))
       v.setRenderFlag(true)
     })
   }
