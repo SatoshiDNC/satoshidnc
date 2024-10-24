@@ -111,8 +111,8 @@ v.renderKind1 = function(data) {
   const lines = []
   while (words.length > 0) {
     lines.push(words.shift())
-    while (words.length > 0 && defaultFont.calcWidth(lines[lines.length] + ' ' + words[0]) * ts <= v.sw) {
-      console.log(lines[lines.length] + ' ' + words[0], defaultFont.calcWidth(lines[lines.length] + ' ' + words[0]), ts, v.sw)
+    while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
+      console.log(lines[lines.length-1] + ' ' + words[0], defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]), ts, v.sw)
       console.log(lines, words)
       lines.push(lines.pop() + ' ' + words.shift())
       console.log(lines, words)
