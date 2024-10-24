@@ -10,26 +10,8 @@ v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
-v.gadgets.push(g = v.listGad = new fg.Gadget(v))
+v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.mouseDownFunc = function(e) {
-    console.log('down')
-    overlayView.pause = true
-  }
-  g.mouseUpFunc = function(e) {
-    console.log('up')
-    overlayView.pause = false
-  }
-  g.clickFunc = function(e) {
-    const g = this, v = this.viewport
-    const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
-    const index = Math.floor((y - 649) / 179)
-    const hpub = g.itemList?.[index]
-    if (hpub) {
-      /// chatRoomView.setContact(hpub)
-      g.root.easeOut(g.target)
-    }
-  }
 v.setContext = function(updates) {
   const v = this
   v.updates = updates
