@@ -116,7 +116,6 @@ v.renderKind1 = function(data) {
     }
   }
   // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
-  console.log(lines, words)
   th = lines.length * defaultFont.glyphHeights[65] * ts * 2
   let i = 1
   for (let line of lines) {
