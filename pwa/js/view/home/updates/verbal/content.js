@@ -54,12 +54,28 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
 
-  const s = 66/v.font.glyphHeights[65]
+  const textColor = g.text? v.textColor : alpha(v.textColor, 0.1)
   const t = g.text || g.label
-  const tw = v.font.calcWidth(t) * s
-  mat4.identity(m)
-  mat4.translate(m, m, [v.sw/2 - tw/2, v.sh/2 + 33, 0])
-  mat4.scale(m, m, [s, s, 1])
-  v.font.draw(0,0, t, g.text? v.textColor : alpha(v.textColor, 0.1), v.mat, m)
+  let tw,th,ts
+  ts = 50/14
+  const words = t.split(' ')
+  const lines = []
+  while (words.length > 0) {
+    lines.push(words.shift())
+    while (words.length > 0 && v.font.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
+      lines.push(lines.pop() + ' ' + words.shift())
+    }
+  }
+  // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
+  th = lines.length * v.font.glyphHeights[65] * ts * 2
+  let i = 1
+  for (let line of lines) {
+    i++
+    tw = v.font.calcWidth(line) * ts
+    mat4.identity(m)
+    mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*v.font.glyphHeights[65]*ts*2, 0])
+    mat4.scale(m, m, [ts, ts, 1])
+    v.font.draw(0,0, line, textColor, v.mat, m)
+  }
 
 }
