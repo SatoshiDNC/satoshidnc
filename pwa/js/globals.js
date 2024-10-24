@@ -35,4 +35,4 @@ const objectColors = {
   // chat text box
   chatTextBox: themeColors.subtle,
 }
-const colors = { ...themeColors, ...objectColors }
+const colors = { ...fixedColors, ...themeColors, ...objectColors }
