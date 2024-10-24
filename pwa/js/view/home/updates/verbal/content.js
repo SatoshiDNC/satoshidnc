@@ -68,7 +68,7 @@ v.renderFunc = function() {
   }
   // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
   th = (lines.length * 2 - 1) * v.font.glyphHeights[65] * ts
-  let i = 1
+  let i = 0
   for (let line of lines) {
     tw = v.font.calcWidth(line) * ts
     mat4.identity(m)
