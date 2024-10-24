@@ -81,6 +81,8 @@ v.renderFunc = function() {
   const v = this
   const m = mat4.create()
 
+  drawRect(v, alpha(colors.black, 0.70), 0,v.sh-168, v.sw,168)
+
   for (g of v.gadgets) {
     if (g.label) {
       drawPill(v, colors.inactiveDark, g.x,g.y, g.w,g.h)
@@ -102,5 +104,4 @@ v.renderFunc = function() {
     }
   }
 
-  drawRect(v, alpha(colors.black, 0.70), 0,v.sh-168, v.sw,168)
 }
