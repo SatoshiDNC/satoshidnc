@@ -8,7 +8,7 @@ let v, g
 export const overlayView = v = new fg.View(null)
 v.name = Object.keys({overlayView}).pop()
 v.designSize = 1080*1825
-v.buttonFaceColor = alpha(colors.black, 0.7)
+v.buttonFaceColor = alpha(colors.black, 0.5)
 v.buttonTextColor = colors.white
 v.titleColor = colors.white
 v.subtitleColor = colors.softWhite
@@ -29,7 +29,7 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
 v.gadgets.push(g = v.emojiGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
-  g.icon = '\x10'
+  g.icon = '\x58'
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
