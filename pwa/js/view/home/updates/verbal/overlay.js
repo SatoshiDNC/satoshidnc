@@ -1,4 +1,4 @@
-import { drawPill, drawEllipse, alpha } from '../../../../draw.js'
+import { drawRect, drawEllipse, alpha } from '../../../../draw.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { updatePostedAsOf } from '../../../util.js'
 import { kindInfo } from '../../../../nostor.js'
@@ -83,4 +83,5 @@ v.renderFunc = function() {
     font.draw(0,0, g.icon, v.buttonTextColor, v.mat, m)
   }
 
+  drawRect(v, alpha(colors.black, 0.70), 0,v.sh-168, v.sw,168)
 }
