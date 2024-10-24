@@ -8,6 +8,7 @@ v.gadgets.push(g = v.cameraGad = new fg.Gadget(v))
   g.buttonFaceColor = colors.accentButtonFace
   g.buttonTextColor = colors.accentButtonText
   g.icon = 'c'
+  g.iconSize = 53
   g.clickFunc = function() {
     const g = this, v = this.viewport
     g.root.easeOut(g.target)
@@ -17,6 +18,7 @@ v.gadgets.push(g = v.pencilGad = new fg.Gadget(v))
   g.buttonFaceColor = colors.subtleButtonFace
   g.buttonTextColor = colors.subtleButtonText
   g.icon = '\x0f'
+  g.iconSize = 47
   g.clickFunc = function() {
     const g = this, v = this.viewport
     g.root.easeOut(g.target)
@@ -42,9 +44,10 @@ v.renderFunc = function() {
     mat4.translate(m,m, [g.x, g.y + g.h, 0])
     mat4.scale(m,m, [g.w/6, g.h/6, 1])
     iconFont.draw(0,0, `\x0a`, g.buttonFaceColor, v.mat, m)
+    const s = g.iconSize/iconFont.calcWidth(g.icon)
     mat4.identity(m)
-    mat4.translate(m,m, [g.x + 49, g.y + 95, 0])
-    mat4.scale(m,m, [51/11, 51/11, 1])
+    mat4.translate(m,m, [g.x + (g.w-g.iconSize)/2, g.y + (g.w-g.iconSize)/2, 0])
+    mat4.scale(m,m, [s, s, 1])
     iconFont.draw(-2,0, g.icon, g.buttonTextColor, v.mat, m)
   }
 }
