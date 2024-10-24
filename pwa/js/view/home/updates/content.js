@@ -40,7 +40,8 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
 v.clearQuery = function() {
   const v = this
   v.query = { inProgress: false, lastCompleted: 0, results: [] }
-} ()
+}
+v.clearQuery()
 v.queryFunc = function() {
   const v = this
   const ONE_MINUTE_IN_MILLISECONDS = 1 * 60 * 1000
