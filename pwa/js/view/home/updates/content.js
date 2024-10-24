@@ -44,8 +44,6 @@ v.queryFunc = function() {
   if (!v.query.inProgress && v.query.lastCompleted < Date.now() - ONE_MINUTE_IN_MILLISECONDS) {
     v.query.inProgress = true
     getUpdates().then(updates => {
-      console.log('got updates')
-      console.log(updates)
       v.query.inProgress = false
       v.query.lastCompleted = Date.now()
       v.query.results = updates
@@ -117,9 +115,7 @@ v.renderFunc = function() {
   }
 
   let i = 0
-  console.log(v.recents,v.viewed)
   for (let hpub of [...v.recents, ...v.viewed]) {
-    console.log(hpub)
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => a+(c.viewed?1:0), 0)
