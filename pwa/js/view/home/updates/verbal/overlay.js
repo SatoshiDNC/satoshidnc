@@ -60,11 +60,11 @@ v.gadgets.push(g = v.paletteGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    //g.root.easeOut(g.target)
-    v.returnView.b.b.clearQuery()
-    v.returnView.easingState = 1
-    v.returnView.easingValue = 0
-    fg.setRoot(v.returnView)
+    contentView.bgColor = [
+      Math.floor(Math.random()*16)/32,
+      Math.floor(Math.random()*16)/32,
+      Math.floor(Math.random()*16)/32, 1]
+    contentView.setRenderFlag(true)
   }
 v.setContext = function() {
   const v = this
