@@ -87,6 +87,9 @@ v.renderFunc = function() {
   const data = v.updates[overlayView.currentUpdate].data
   if (data.kind == 1) {
     v.renderKind1(data)
+    if (data.tags.length > 0) {
+      console.log(data)
+    }
   } else {
     gl.clearColor(...v.bgColor)
     gl.clear(gl.COLOR_BUFFER_BIT)
