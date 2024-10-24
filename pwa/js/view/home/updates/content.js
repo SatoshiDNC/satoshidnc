@@ -24,7 +24,6 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
     if (index < 0 || index >= v.recents.length) return
     const updates = v.query.results.filter(u => u.hpub == v.recents[index])
     displayView.setContext(updates)
-    v.query = { inProgress: false, lastCompleted: 0, results: [] }
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
@@ -36,10 +35,12 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
     if (index < 0 || index >= v.viewed.length) return
     const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
     displayView.setContext(updates)
-    v.query = { inProgress: false, lastCompleted: 0, results: [] }
     g.root.easeOut(g.target)
   }
-v.query = { inProgress: false, lastCompleted: 0, results: [] }
+v.clearQuery = function() {
+  const v = this
+  v.query = { inProgress: false, lastCompleted: 0, results: [] }
+} ()
 v.queryFunc = function() {
   const v = this
   const ONE_MINUTE_IN_MILLISECONDS = 1 * 60 * 1000

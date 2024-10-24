@@ -21,6 +21,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     //g.root.easeOut(g.target)
+    v.returnView.clearQuery()
     v.returnView.easingState = 1
     v.returnView.easingValue = 0
     fg.setRoot(v.returnView)
@@ -123,9 +124,7 @@ v.renderFunc = function() {
     v.startTime = Date.now()
     if (v.currentUpdate >= v.updates.length) {
       setTimeout(() => {
-        v.returnView.easingState = 1
-        v.returnView.easingValue = 0
-        fg.setRoot(v.returnView)
+        v.backGad.clickFunc()
       })
     }
   }
