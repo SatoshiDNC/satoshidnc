@@ -20,7 +20,7 @@ v.setContext = function(updates) {
 v.layoutFunc = function() {
   const v = this
   let g
-  g = v.listGad
+  g = v.screenGad
   g.x = 0, g.y = 0
   g.w = v.sw, g.h = v.sh
   g.autoHull()
