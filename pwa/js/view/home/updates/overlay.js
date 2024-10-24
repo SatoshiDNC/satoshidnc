@@ -1,3 +1,5 @@
+import { contentView as verbalView } from './verbal/content.js'
+
 let v, g
 export const overlayView = v = new fg.View(null)
 v.name = Object.keys({overlayView}).pop()
@@ -21,6 +23,7 @@ v.gadgets.push(g = v.pencilGad = new fg.Gadget(v))
   g.iconSize = 47
   g.clickFunc = function() {
     const g = this, v = this.viewport
+    verbalView.randomColor()
     g.root.easeOut(g.target)
   }
 v.layoutFunc = function() {
