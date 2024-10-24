@@ -30,8 +30,8 @@ v.setContext = function(updates) {
   v.updates = updates
   v.startTime = 0
   v.currentUpdate = 0
-  for (u of v.updates) {
-    if (u.viewed) {
+  for (const update of v.updates) {
+    if (update.viewed) {
       v.currentUpdate++
     }
   }
