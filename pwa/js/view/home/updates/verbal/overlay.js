@@ -16,7 +16,7 @@ v.pause = false
 v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
-  g.label = '\x08'
+  g.icon = '\x08'
   g.font = iconFont
   g.fontSize = 13
   g.autoHull()
@@ -31,7 +31,7 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
 v.gadgets.push(g = v.emojiGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
-  g.label = '\x08'
+  g.icon = '\x08'
   g.font = iconFont
   g.fontSize = 13
   g.autoHull()
@@ -46,7 +46,7 @@ v.gadgets.push(g = v.emojiGad = new fg.Gadget(v))
 v.gadgets.push(g = v.fontGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
-  g.label = '\x08'
+  g.icon = '\x08'
   g.font = iconFont
   g.fontSize = 13
   g.autoHull()
@@ -61,7 +61,7 @@ v.gadgets.push(g = v.fontGad = new fg.Gadget(v))
 v.gadgets.push(g = v.paletteGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
-  g.label = '\x08'
+  g.icon = '\x08'
   g.font = iconFont
   g.fontSize = 13
   g.autoHull()
