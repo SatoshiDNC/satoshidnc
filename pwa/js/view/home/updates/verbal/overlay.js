@@ -60,7 +60,7 @@ v.gadgets.push(g = v.audienceGad = new fg.Gadget(v))
 v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 20, g.y = 20, g.w = 128, g.h = 128
-  g.iconMic = '\x11'
+  g.iconMic = '\x13'
   g.iconSend = '\x3e'
   g.icon = g.iconMic
   g.buttonFaceColor = colors.accent
