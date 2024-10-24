@@ -21,9 +21,20 @@ v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.gadgets.push(g = v.textGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
+  g.label = 'Type a status'
+  g.defaultValue = ''
   g.clickFunc = function() {
     const g = this, v = g.viewport
-    console.log('text click')
+    getKeyboardInput(g.label, g.text || g.defaultValue, value => {
+      if (value !== undefined) {
+        if (value.trim() == '') {
+          g.text = undefined
+        } else {
+          g.text = value
+        }
+      }
+      v.setRenderFlag(true)
+    })
   }
 v.setContext = function() {
   const v = this
@@ -43,7 +54,7 @@ v.renderFunc = function() {
   const m = mat4.create()
 
   const s = 66/v.font.glyphHeights[65]
-  const t = 'Type a status'
+  const t = g.text || g.label
   const tw = v.font.calcWidth(t) * s
   mat4.identity(m)
   mat4.translate(m, m, [v.sw/2 - tw/2, v.sh/2 + 33, 0])
