@@ -7,7 +7,7 @@ v.gadgets.push(g = v.cameraGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.buttonFaceColor = colors.accentButtonFace
   g.buttonTextColor = colors.accentButtonText
-  g.label = 'c'
+  g.icon = 'c'
   g.clickFunc = function() {
     const g = this, v = this.viewport
     g.root.easeOut(g.target)
@@ -16,7 +16,7 @@ v.gadgets.push(g = v.pencilGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.buttonFaceColor = colors.subtleButtonFace
   g.buttonTextColor = colors.subtleButtonText
-  g.label = '\x0f'
+  g.icon = '\x0f'
   g.clickFunc = function() {
     const g = this, v = this.viewport
     g.root.easeOut(g.target)
@@ -45,6 +45,6 @@ v.renderFunc = function() {
     mat4.identity(m)
     mat4.translate(m,m, [g.x + 49, g.y + 95, 0])
     mat4.scale(m,m, [51/11, 51/11, 1])
-    iconFont.draw(-2,0, g.label, g.buttonTextColor, v.mat, m)
+    iconFont.draw(-2,0, g.icon, g.buttonTextColor, v.mat, m)
   }
 }
