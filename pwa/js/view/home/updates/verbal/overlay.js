@@ -64,6 +64,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.iconSend = '\x3e'
   g.icon = g.iconMic
   g.buttonFaceColor = colors.accent
+  g.buttonTextColor = colors.background
   g.clickFunc = function() {
     const g = this, v = this.viewport
   }
@@ -112,7 +113,7 @@ v.renderFunc = function() {
       mat4.identity(m)
       mat4.translate(m, m, [g.x+g.w/2-(53/font.glyphHeights[c]*font.calcWidth(g.icon))/2, g.y+g.h/2+53/2, 0])
       mat4.scale(m, m, [s, s, 1])
-      font.draw(0,0, g.icon, v.buttonTextColor, v.mat, m)
+      font.draw(0,0, g.icon, g.buttonTextColor || v.buttonTextColor, v.mat, m)
     }
   }
 
