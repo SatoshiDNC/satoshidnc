@@ -1,6 +1,7 @@
 import { barTop } from './bar-top.js'
 import { barBot } from '../bar-bot.js'
-import { contentView, overlayView } from './content.js'
+import { contentView } from './content.js'
+import { overlayView } from './overlay.js'
 import { setEasingParameters } from '../../util.js'
 
 export const homeOverlay = v = new fg.OverlayView(null)
