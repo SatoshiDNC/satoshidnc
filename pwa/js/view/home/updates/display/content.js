@@ -101,7 +101,8 @@ v.renderFunc = function() {
 }
 v.renderKind1 = function(data) {
   const v = this
-  gl.clearColor(...[parseInt(data.id[10],16)/64, parseInt(data.id[11],16)/64, parseInt(data.id[12],16)/64, 1])
+  const bgColor = [parseInt(data.id[61],16)/64, parseInt(data.id[62],16)/64, parseInt(data.id[63],16)/64, 1]
+  gl.clearColor(...bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   let t,tw,th,ts
