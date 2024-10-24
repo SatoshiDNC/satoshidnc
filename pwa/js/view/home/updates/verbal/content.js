@@ -57,7 +57,7 @@ v.renderFunc = function() {
   const textColor = g.text? v.textColor : alpha(v.textColor, 0.1)
   const t = g.text || g.label
   let tw,th,ts
-  ts = 50/14
+  ts = (g.text?50:66)/14
   const words = t.split(' ')
   const lines = []
   while (words.length > 0) {
