@@ -11,7 +11,7 @@ v.designSize = 1080*1825
 v.titleColor = colors.white
 v.subtitleColor = colors.softWhite
 v.pause = false
-v.gadgets.push(g = v.backGad = new fg.Gadget(v))
+v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 39, g.y = 63, g.w = 48, g.h = 48
   g.label = '\x08'
@@ -115,7 +115,7 @@ v.renderFunc = function() {
     v.lastTime = 0
     if (v.currentUpdate >= v.updates.length) {
       setTimeout(() => {
-        v.backGad.clickFunc()
+        v.closeGad.clickFunc()
       })
     }
   }
