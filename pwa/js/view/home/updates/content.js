@@ -158,35 +158,5 @@ v.renderFunc = function() {
 
     i++
   }
-  // for (const update of v.query.results) {
-  //   if (!update.viewed) {
-  //     if (!recents.includes(update.hpub)) {
-  //       recents.push(update.hpub)
-  //       const index = viewed.indexOf(update.hpub)
-  //       if (index > -1) {
-  //         viewed.splice(index, 1)
-  //       }
-
-  //     }
-  //   } else {
-  //     if (!recents.includes(update.hpub)) {
-  //       viewed.push(update.hpub)
-  //     }
-  //   }
-  // }
-
-  // for (const hpub of viewed) {
-  //   drawAvatar(v, hpub, 43,503 + y, 125,125)
-
-  //   mat4.identity(m)
-  //   mat4.translate(m, m, [211, 553 + y, 0])
-  //   mat4.scale(m, m, [35/14, 35/14, 1])
-  //   defaultFont.draw(0,0, getAttr(hpub, 'name'), v.titleColor, v.mat, m)
   
-  //   mat4.identity(m)
-  //   mat4.translate(m, m, [211, 618 + y, 0])
-  //   mat4.scale(m, m, [30/14, 30/14, 1])
-  //   defaultFont.draw(0,0, updatePostedAsOf(v.query.results.filter(u => u.hpub == hpub)[0].firstSeen), v.subtitleColor, v.mat, m)
-  // }
-
 }
