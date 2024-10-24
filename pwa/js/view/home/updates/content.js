@@ -66,7 +66,7 @@ v.layoutFunc = function() {
         }
       }
     } else {
-      if (!recents.includes(update.hpub)) {
+      if (!recents.includes(update.hpub) && !viewed.includes(update.hpub)) {
         viewed.push(update.hpub)
       }
     }
