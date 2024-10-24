@@ -86,7 +86,7 @@ v.layoutFunc = function() {
   g.x = v.paletteGad.x - 16 - g.w
   g.autoHull()
   g = v.emojiGad
-  g.x = v.fontGad - 16 - g.w
+  g.x = v.fontGad.x - 16 - g.w
   g.autoHull()
 }
 v.renderFunc = function() {
