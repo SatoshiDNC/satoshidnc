@@ -56,7 +56,6 @@ v.gadgets.push(g = v.audienceGad = new fg.Gadget(v))
   g.textSize = 29
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    contentView.randomColor()
   }
 v.setContext = function() {
   const v = this
