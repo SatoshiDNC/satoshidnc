@@ -60,6 +60,7 @@ v.renderFunc = function() {
     v.elapsedTime += deltaTime
   }
   const elapsedTime = v.elapsedTime
+  console.log(elapsedTime, deltaTime, now)
   const w = (v.sw-9-3-6*numUpdates)/numUpdates
   let pageTurn = false
   for (let i = 0; i < numUpdates; i++) {
