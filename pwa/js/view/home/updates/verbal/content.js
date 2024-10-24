@@ -21,6 +21,10 @@ v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function() {
+    const g = this, v = g.viewport
+    console.log('click')
+  }
 v.setContext = function() {
   const v = this
 }
