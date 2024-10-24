@@ -75,7 +75,7 @@ v.renderFunc = function() {
     mat4.identity(m)
     mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*v.font.glyphHeights[65]*ts*2, 0])
     mat4.scale(m, m, [ts, ts, 1])
-    v.font.draw(0,0, line, textColor, v.mat, m)
+    v.font.draw(0,-14, line, textColor, v.mat, m)
   }
 
 }
