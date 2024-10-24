@@ -61,9 +61,9 @@ v.gadgets.push(g = v.paletteGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     contentView.bgColor = [
-      Math.floor(Math.random()*16)/32,
-      Math.floor(Math.random()*16)/32,
-      Math.floor(Math.random()*16)/32, 1]
+      Math.floor(Math.random()*16+16)/32,
+      Math.floor(Math.random()*16+16)/32,
+      Math.floor(Math.random()*16+16)/32, 1]
     contentView.setRenderFlag(true)
   }
 v.setContext = function() {
