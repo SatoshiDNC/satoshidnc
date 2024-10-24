@@ -44,6 +44,8 @@ v.queryFunc = function() {
   if (!v.query.inProgress && v.query.lastCompleted < Date.now() - ONE_MINUTE_IN_MILLISECONDS) {
     v.query.inProgress = true
     getUpdates().then(updates => {
+      console.log('got updates')
+      console.log(updates)
       v.query.inProgress = false
       v.query.lastCompleted = Date.now()
       v.query.results = updates
