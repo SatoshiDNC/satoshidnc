@@ -10,43 +10,14 @@ v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
-v.gadgets.push(g = v.newGroupGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.label = 'New group'
-  g.x = 0, g.y = 16 + 179 * 0, g.h = 179
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    //g.root.easeOut(g.target)
-    console.log('newGroupGad click')
-  }
-v.gadgets.push(g = v.newContactGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.label = 'New contact'
-  g.x = 0, g.y = 16 + 179 * 1, g.h = 179
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    g.root.easeOut(g.target)
-  }
-v.gadgets.push(g = v.newCommunityGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.label = 'New community'
-  g.x = 0, g.y = 16 + 179 * 2, g.h = 179
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    //g.root.easeOut(g.target)
-    console.log('newCommunityGad click')
-  }
-v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.label = '\x04'
-  g.z = 1
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    //g.root.easeOut(g.target)
-    console.log('scanGad click')
-  }
 v.gadgets.push(g = v.listGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
+  g.downFunc = function(e) {
+    overlayView.pause = true
+  }
+  g.upFunc = function(e) {
+    overlayView.pause = false
+  }
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
@@ -65,13 +36,6 @@ v.setContext = function(updates) {
 v.layoutFunc = function() {
   const v = this
   let g
-  g = v.newGroupGad, g.w = v.sw, g.autoHull()
-  g = v.newContactGad, g.w = v.sw, g.autoHull()
-  g = v.newCommunityGad, g.w = v.sw, g.autoHull()
-  g = v.scanGad
-  g.x = v.sw - 220, g.y = 261
-  g.w = 47, g.h = 47
-  g.autoHull()
   g = v.listGad
   g.x = 0, g.y = 0
   g.w = v.sw, g.h = v.sh

@@ -9,6 +9,7 @@ v.name = Object.keys({overlayView}).pop()
 v.designSize = 1080*1825
 v.titleColor = colors.white
 v.subtitleColor = colors.softWhite
+v.pause = false
 v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 39, g.y = 63, g.w = 48, g.h = 48
@@ -28,7 +29,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
 v.setContext = function(updates) {
   const v = this
   v.updates = updates
-  v.startTime = 0
+  v.elapsedTime = 0
   v.currentUpdate = 0
   for (const update of v.updates) {
     if (update.viewed) {
@@ -48,11 +49,17 @@ v.renderFunc = function() {
   const m = mat4.create()
 
   const numUpdates = v.updates.length
-  if (!v.startTime) {
-    v.startTime = Date.now()
-  }
   const now = Date.now()
-  const elapsedTime = now - v.startTime
+  if (!v.elapsedTime) {
+    v.elapsedTime = 0
+    v.lastTime = now
+  }
+  const deltaTime = now - v.lastTime
+  v.lastTime = now
+  if (!v.paused) {
+    v.elapsedTime += deltaTime
+  }
+  const elapsedTime = v.elapsedTime
   const w = (v.sw-9-3-6*numUpdates)/numUpdates
   let pageTurn = false
   for (let i = 0; i < numUpdates; i++) {
@@ -104,7 +111,7 @@ v.renderFunc = function() {
 
   if (pageTurn) {
     v.currentUpdate += 1
-    v.startTime = Date.now()
+    v.elapsedTime = 0
     if (v.currentUpdate >= v.updates.length) {
       setTimeout(() => {
         v.backGad.clickFunc()
