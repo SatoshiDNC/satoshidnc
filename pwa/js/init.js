@@ -26,7 +26,7 @@ import { barTop as settings_profile_top } from './view/settings/profile/bar-top.
 import { popupDissolveRoot as profile_popup_root2, popupView as profile_popup_content } from './view/home/chats/profile/popup.js'
 import { contentView as profile_info_root } from './view/home/chats/profile/info/content.js'
 import { barBot as home_bot } from './view/home/bar-bot.js'
-import { overlayView as home_updates_overlay } from './view/home/updates/content.js'
+import { overlayView as home_updates_overlay } from './view/home/updates/overlay.js'
 import { contentView as home_updates_content } from './view/home/updates/content.js'
 import { rootView as home_updates_new_root } from './view/home/updates/new-update/root.js'
 import { barTop as home_updates_new_top } from './view/home/updates/new-update/bar-top.js'
