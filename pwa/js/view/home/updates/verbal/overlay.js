@@ -92,7 +92,7 @@ v.renderFunc = function() {
     const c = g.icon.codePointAt(0)
     const s = 53/font.glyphHeights[c]
     mat4.identity(m)
-    mat4.translate(m, m, [g.x+g.w/2-(53/font.glyphHeights[c]*font.glyphWidths[c])/2, g.y+g.h/2+53/2, 0])
+    mat4.translate(m, m, [g.x+g.w/2-(53/font.glyphHeights[c]*font.calcWidth(g.icon))/2, g.y+g.h/2+53/2, 0])
     mat4.scale(m, m, [s, s, 1])
     font.draw(0,0, g.icon, v.buttonTextColor, v.mat, m)
   }
