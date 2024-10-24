@@ -89,11 +89,11 @@ v.renderFunc = function() {
     v.renderKind1(data)
   } else {
     gl.clearColor(...v.bgColor)
-    gl.clear(gl.COLOR_BUFFER_BIT)  
-  }
-  if (data.id != v.lastRenderedId) {
-    v.lastRenderedId = data.id
-    console.log(data)
+    gl.clear(gl.COLOR_BUFFER_BIT)
+    if (data.id != v.lastRenderedId) {
+      v.lastRenderedId = data.id
+      console.log(data)
+    }
   }
 
   markUpdateAsViewed(data.id, data.created_at * 1000)
