@@ -29,7 +29,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
 v.setContext = function(updates) {
   const v = this
   v.updates = updates
-  v.elapsedTime = 0
+  v.lastTime = 0
   v.currentUpdate = 0
   for (const update of v.updates) {
     if (update.viewed) {
@@ -50,7 +50,7 @@ v.renderFunc = function() {
 
   const numUpdates = v.updates.length
   const now = Date.now()
-  if (!v.elapsedTime) {
+  if (!v.lastTime) {
     v.elapsedTime = 0
     v.lastTime = now
   }
@@ -112,7 +112,7 @@ v.renderFunc = function() {
 
   if (pageTurn) {
     v.currentUpdate += 1
-    v.elapsedTime = 0
+    v.lastTime = 0
     if (v.currentUpdate >= v.updates.length) {
       setTimeout(() => {
         v.backGad.clickFunc()
