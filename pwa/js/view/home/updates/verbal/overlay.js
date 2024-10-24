@@ -83,7 +83,7 @@ v.renderFunc = function() {
 
   for (g of v.gadgets) {
     if (g.label) {
-      drawPill(v, v.buttonFaceColor, g.x,g.y, g.w,g.h)
+      drawPill(v, colors.inactiveDark, g.x,g.y, g.w,g.h)
       const font = g.font || defaultFont
       const s = g.fontSize || 29/14
       mat4.identity(m)
