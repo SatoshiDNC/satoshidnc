@@ -8,7 +8,8 @@ let v, g
 export const overlayView = v = new fg.View(null)
 v.name = Object.keys({overlayView}).pop()
 v.designSize = 1080*1825
-v.buttonColor = alpha(colors.black, 0.7)
+v.buttonFaceColor = alpha(colors.black, 0.7)
+v.buttonTextColor = colors.white
 v.titleColor = colors.white
 v.subtitleColor = colors.softWhite
 v.pause = false
@@ -16,7 +17,51 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
   g.label = '\x08'
-  g.textColor = colors.white
+  g.font = iconFont
+  g.fontSize = 13
+  g.autoHull()
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    //g.root.easeOut(g.target)
+    v.returnView.b.b.clearQuery()
+    v.returnView.easingState = 1
+    v.returnView.easingValue = 0
+    fg.setRoot(v.returnView)
+  }
+v.gadgets.push(g = v.emojiGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 34, g.y = 34, g.w = 110, g.h = 110
+  g.label = '\x08'
+  g.font = iconFont
+  g.fontSize = 13
+  g.autoHull()
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    //g.root.easeOut(g.target)
+    v.returnView.b.b.clearQuery()
+    v.returnView.easingState = 1
+    v.returnView.easingValue = 0
+    fg.setRoot(v.returnView)
+  }
+v.gadgets.push(g = v.fontGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 34, g.y = 34, g.w = 110, g.h = 110
+  g.label = '\x08'
+  g.font = iconFont
+  g.fontSize = 13
+  g.autoHull()
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    //g.root.easeOut(g.target)
+    v.returnView.b.b.clearQuery()
+    v.returnView.easingState = 1
+    v.returnView.easingValue = 0
+    fg.setRoot(v.returnView)
+  }
+v.gadgets.push(g = v.paletteGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 34, g.y = 34, g.w = 110, g.h = 110
+  g.label = '\x08'
   g.font = iconFont
   g.fontSize = 13
   g.autoHull()
@@ -34,13 +79,27 @@ v.setContext = function() {
 v.layoutFunc = function() {
   const v = this
   let g
+  g = v.paletteGad
+  g.x = v.sw - 34 - g.w
+  g.autoHull()
+  g = v.fontGad
+  g.x = v.paletteGad.x - 16 - g.w
+  g.autoHull()
+  g = v.emojiGad
+  g.x = v.fontGad - 16 - g.w
+  g.autoHull()
 }
 v.renderFunc = function() {
   const v = this
   const m = mat4.create()
 
   for (g of v.gadgets) {
-    drawEllipse(v, v.buttonColor, g.x,g.y, g.w,g.h)
+    drawEllipse(v, v.buttonFaceColor, g.x,g.y, g.w,g.h)
+    const s = 53/iconFont.glyphHeights[g.icon]
+    mat4.identity(m)
+    mat4.translate(m, m, [g.x, g.y+g.h-(g.h-53)/2, 0])
+    mat4.scale(m, m, [s, s, 1])
+    iconFont.draw(0,0, g.icon, v.buttonTextColor, v.mat, m)
   }
 
 }
