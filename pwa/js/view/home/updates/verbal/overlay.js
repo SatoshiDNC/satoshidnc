@@ -109,11 +109,11 @@ v.renderFunc = function() {
       drawEllipse(v, g.buttonFaceColor || v.buttonFaceColor, g.x,g.y, g.w,g.h)
       const font = g.font || iconFont
       const c = g.icon.codePointAt(0)
-      const s = 53/font.glyphHeights[c]
+      const gi = font.glyphCodes.indexOf(c)
+      const s = 53/font.glyphHeights[gi]
       mat4.identity(m)
-      mat4.translate(m, m, [g.x+g.w/2-(53/font.glyphHeights[c]*font.calcWidth(g.icon))/2, g.y+g.h/2+53/2, 0])
-      console.log('here')
-      console.log(`${font.glyphHeights[c]} ${font.calcWidth(g.icon)}, ${g.icon} ${s} ${c} ${font.name}`)
+      mat4.translate(m, m, [g.x+g.w/2-(53/font.glyphHeights[gi]*font.calcWidth(g.icon))/2, g.y+g.h/2+53/2, 0])
+      console.log(`${font.glyphHeights[gi]} ${font.calcWidth(g.icon)}, ${g.icon} ${s} ${c} ${font.name}`)
       mat4.scale(m, m, [s, s, 1])
       font.draw(0,0, g.icon, g.buttonTextColor || v.buttonTextColor, v.mat, m)
     }
