@@ -1,4 +1,4 @@
-import { drawRect, drawEllipse, alpha } from '../../../../draw.js'
+import { drawPill, drawRect, drawEllipse, alpha } from '../../../../draw.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { updatePostedAsOf } from '../../../util.js'
 import { kindInfo } from '../../../../nostor.js'
