@@ -16,7 +16,7 @@ v.pause = false
 v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
-  g.icon = 'X'
+  g.icon = '\x12'
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
