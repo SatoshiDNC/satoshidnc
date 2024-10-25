@@ -13,6 +13,7 @@ v.gadgets.push(g = v.cameraGad = new fg.Gadget(v))
   g.iconSize = 53
   g.clickFunc = function() {
     const g = this, v = this.viewport
+    g.target.setContext()
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.pencilGad = new fg.Gadget(v))
@@ -24,6 +25,7 @@ v.gadgets.push(g = v.pencilGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     verbalView.randomColor()
+    g.target.setContext()
     g.root.easeOut(g.target)
   }
 v.layoutFunc = function() {
