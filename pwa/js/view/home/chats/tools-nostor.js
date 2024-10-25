@@ -1,6 +1,7 @@
 import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../../draw.js'
-import { noteDecode, nsecDecode, validKey, relayUrl, findEvent, npub, hsec_sign, publishEvent, nostrWatchRelays } from '../../../nostor.js'
+import { noteDecode, nsecDecode, validKey, relayUrl, findEvent, npub, publishEvent, nostrWatchRelays } from '../../../nostor.js'
 import { relays } from '../../../relays.js'
+import { finalizeEvent } from 'nostr-tools'
 
 // import * as nip19 from 'nostr-tools/nip19'
 // import { Buffer } from 'buffer'
@@ -187,7 +188,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     if (!validKey(hsec)) {
                       alert('Invalid key')
                     } else {
-                      const deletionEvent = hsec_sign(hsec, {
+                      const deletionEvent = finalizeEvent({
                         kind: 5,
                         created_at: Math.floor(Date.now() / 1000),
                         tags: [
@@ -195,7 +196,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                           ...kinds.map(kind => ['k', `${kind}`])
                         ],
                         content: `${reason}`,
-                      })
+                      }, hexToBytes(hsec))
                       console.log(foundOnRelays)
                       console.log(JSON.stringify(deletionEvent))
   

@@ -1,4 +1,4 @@
-import { getPublicKey } from 'nostr-tools'
+import { getPublicKey, finalizeEvent } from 'nostr-tools'
 import * as nip19 from 'nostr-tools/nip19'
 import { Buffer } from 'buffer'
 import { db } from './db.js'
