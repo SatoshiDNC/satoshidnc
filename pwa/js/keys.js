@@ -1,5 +1,5 @@
 import { getPublicKey, finalizeEvent } from 'nostr-tools'
-import * as nip19 from 'nostr-tools/nip19'
+import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
 import { Buffer } from 'buffer'
 import { db } from './db.js'
 
