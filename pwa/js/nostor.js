@@ -3,6 +3,7 @@ import { finalizeEvent, generateSecretKey, getPublicKey } from 'nostr-tools/pure
 import { Relay } from 'nostr-tools/relay'
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
 import { getKeyInfo } from './keys.js'
+import { db } from './db.js'
 
 export { nostrWatchRelays } from './sw/nostor.js'
 
