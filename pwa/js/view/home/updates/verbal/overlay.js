@@ -68,6 +68,11 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.buttonTextColor = colors.background
   g.clickFunc = function() {
     const g = this, v = this.viewport
+    if (v.text) {
+      console.log('send')
+    } else {
+      console.log('mic')
+    }
   }
 v.setContext = function() {
   const v = this
