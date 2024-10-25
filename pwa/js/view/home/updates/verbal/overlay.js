@@ -77,10 +77,12 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         content: `${contentView.textGad.text}`,
         tags: [],
       }
-      const hsec = defaultKey
-      console.log(hsec)
-      const event = sign(hsec, rumor)
-      console.log(event)
+      const hpub = defaultKey
+      console.log(`hpub ${hpub}`)
+      const keyInfo = getKeyInfo(hpub)
+      console.log(`info ${keyInfo}`)
+      // const event = sign(hsec, rumor)
+      // console.log(event)
     } else {
       console.log('mic')
     }
