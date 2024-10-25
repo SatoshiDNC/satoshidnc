@@ -1,4 +1,4 @@
-import { drawPill, drawRect, drawEllipse, alpha } from '../../../../draw.js'
+import { drawPill, drawRect, drawEllipse, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
 import { defaultKey, sign } from '../../../../keys.js'
 
@@ -72,7 +72,9 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         kind: 1,
         created_at: Math.floor(Date.now() / 1000),
         content: `${contentView.textGad.text}`,
-        tags: [],
+        tags: [
+          ['bgcolor', `${rrggbb(contentView.bgColor)}`],
+        ],
       }
       const hpub = defaultKey
       sign(hpub, rumor).then(event => {
@@ -80,19 +82,6 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       }).catch(reason => {
         alert(reason)
       })
-      // const keyInfo = getKeyInfo(hpub)
-      // console.log(`info ${JSON.stringify(keyInfo)}`)
-      // if (keyInfo.keyType == 'secret') {
-      //   getSecretKey(hpub).then(hsec => {
-      //     // secret key (hsec) never leaves this code block
-      //     return new Promise((resolve, reject) => {
-      //       const signedEvent = sign(hsec, rumor)
-      //       resolve(signedEvent)
-      //     })
-      //   }).then(signedEvent => {
-      //     console.log(signedEvent)
-      //   })
-      // }
     } else {
       console.log('mic')
     }

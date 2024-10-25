@@ -8,6 +8,14 @@ export function blend(color1, color2, factor) {
   return [color1[0]*f1+color2[0]*f2, color1[1]*f1+color2[1]*f2, color1[2]*f1+color2[2]*f2, color1[3]*f1+color2[3]*f2]
 }
 
+export function rrggbb(color) {
+  return ("0"+(Number(
+    ((contentView.bgColor[0] * 0xff0000) & 0xff) +
+    ((contentView.bgColor[1] * 0xff00) & 0xff) +
+    ((contentView.bgColor[2] * 0xff) & 0xff)
+  ).toString(16))).slice(-2).toLowerCase()
+}
+
 export function drawRect(v, color, x,y,w,h) {
   mainShapes.useProg2()
   const m = mat4.create()
