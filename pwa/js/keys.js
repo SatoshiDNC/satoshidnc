@@ -3,28 +3,9 @@ import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
 import { Buffer } from 'buffer'
 import { db } from './db.js'
 
-// /* secret key should not leave this file */
-// function hsec() { return window.localStorage.getItem('hsec')||(window.localStorage.setItem('hsec', Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex'))||window.localStorage.getItem('hsec')) }
-// function bsec() { return Buffer.from(hsec(), 'hex') }
-// function nsec() { return nip19.nsecEncode(bsec()) }
+/* secret key(s) should not leave this file */
 
-// export function hpub() { return getPublicKey(bsec()) }
-// export function bpub() { return Buffer.from(hpub(), 'hex') }
-// export function npub() { return nip19.npubEncode(hpub()) }
-
-// function getSecretKey(pubkey) {
-//   if (pubkey == bpub() || pubkey == hpub() || pubkey == npub()) {
-//     return bsec()
-//   }
-// }
-
-// export function signText(text, pubkey) {
-//   return Buffer.from(schnorr.sign(Buffer.from(text, 'hex'), getSecretKey(pubkey)))
-// }
-
-// export function signEvent(event, pubkey) {
-//   return finalizeEvent(event, getSecretKey(pubkey))
-// }
+/* TODO: need to encrypt secret keys in database */
 
 export const keyViewDependencies = []
 
