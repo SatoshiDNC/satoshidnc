@@ -40,6 +40,7 @@ v.gadgets.push(g = v.textGad = new fg.Gadget(v))
   }
 v.setContext = function() {
   const v = this
+  v.randomColor()
   v.textGad.text = undefined
 }
 v.layoutFunc = function() {
