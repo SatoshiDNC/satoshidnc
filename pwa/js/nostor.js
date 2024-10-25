@@ -149,34 +149,6 @@ export function nsecDecode(bech32) {
   }
 }
 
-export function hsec_sign(hsec, event) {
-  return finalizeEvent(event, hexToBytes(hsec))
-}
-
-export function sign(hpub, event) {
-  return new Promise((resolve, reject) => {
-    const info = getKeyInfo(hpub)
-    if (info.keyType == 'secret') {
-      const tr = db.transaction('keys', 'readonly')
-      const os = tr.objectStore('keys')
-      const req = os.get(hpub)
-      req.onerror = function(e) {
-        reject(e)
-      }
-      req.onsuccess = function(e) {
-        const hsec = e.target.result.hsec
-        if (hsec) {
-          resolve(hsec_sign(hsec, event))
-        } else {
-          reject(`secret key not found`)
-        }
-      }
-    } else {
-      reject(`key type '${info.keyType}' not implemented`)
-    }
-  })
-}
-
 export function validKey(hex) {
   return hex?.length === 64 && hex?.toLowerCase().split('').reduce((a, c) => a && '0123456789abcdef'.includes(c), true)
 }

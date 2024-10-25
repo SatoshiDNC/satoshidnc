@@ -97,3 +97,27 @@ export function reloadKeys() {
     }
   })
 }
+
+export function sign(hpub, event) {
+  return new Promise((resolve, reject) => {
+    const info = getKeyInfo(hpub)
+    if (info.keyType == 'secret') {
+      const tr = db.transaction('keys', 'readonly')
+      const os = tr.objectStore('keys')
+      const req = os.get(hpub)
+      req.onerror = function(e) {
+        reject(`unable to sign: ${e}`)
+      }
+      req.onsuccess = function(e) {
+        const hsec = e.target.result.hsec
+        if (hsec) {
+          resolve(finalizeEvent(event, hexToBytes(hsec)))
+        } else {
+          reject(`unable to sign: secret key not found`)
+        }
+      }
+    } else {
+      reject(`unable to sign: key type '${info.keyType}' not implemented`)
+    }
+  })
+}
