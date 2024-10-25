@@ -80,7 +80,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       const hpub = defaultKey
       console.log(`hpub ${hpub}`)
       const keyInfo = getKeyInfo(hpub)
-      console.log(`info ${keyInfo}`)
+      console.log(`info ${JSON.stringify(keyInfo)}`)
       // const event = sign(hsec, rumor)
       // console.log(event)
     } else {
