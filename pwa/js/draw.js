@@ -9,11 +9,11 @@ export function blend(color1, color2, factor) {
 }
 
 export function rrggbb(color) {
-  return ("0"+(Number(
+  return ('000000'+(Number(
     ((color[0] * 0xff0000) & 0xff0000) +
     ((color[1] * 0xff00) & 0xff00) +
     ((color[2] * 0xff) & 0xff)
-  ).toString(16))).slice(-2).toLowerCase()
+  ).toString(16))).slice(-6).toLowerCase()
 }
 
 export function drawRect(v, color, x,y,w,h) {
