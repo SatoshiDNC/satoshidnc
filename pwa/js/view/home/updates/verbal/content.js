@@ -5,15 +5,6 @@ import { getKeyboardInput } from '../../../util.js'
 let v, g
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
-v.randomColor = function() {
-  const v = this
-  v.bgColor = [
-    Math.floor(Math.random()*16)/32,
-    Math.floor(Math.random()*16)/32,
-    Math.floor(Math.random()*16)/32, 1]
-  v.setRenderFlag(true)
-}
-v.randomColor()
 v.font = defaultFont
 v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
@@ -38,6 +29,14 @@ v.gadgets.push(g = v.textGad = new fg.Gadget(v))
       v.setRenderFlag(true)
     })
   }
+v.randomColor = function() {
+  const v = this
+  v.bgColor = [
+    Math.floor(Math.random()*16)/32,
+    Math.floor(Math.random()*16)/32,
+    Math.floor(Math.random()*16)/32, 1]
+  v.setRenderFlag(true)
+}
 v.setContext = function() {
   const v = this
   v.randomColor()
