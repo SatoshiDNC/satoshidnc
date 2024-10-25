@@ -10,9 +10,9 @@ export function blend(color1, color2, factor) {
 
 export function rrggbb(color) {
   return ("0"+(Number(
-    ((contentView.bgColor[0] * 0xff0000) & 0xff) +
-    ((contentView.bgColor[1] * 0xff00) & 0xff) +
-    ((contentView.bgColor[2] * 0xff) & 0xff)
+    ((color[0] * 0xff0000) & 0xff) +
+    ((color[1] * 0xff00) & 0xff) +
+    ((color[2] * 0xff) & 0xff)
   ).toString(16))).slice(-2).toLowerCase()
 }
 
