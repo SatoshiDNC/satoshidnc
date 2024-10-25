@@ -3,7 +3,7 @@ import { getPersonalData as getAttr } from '../../../../personal.js'
 import { updatePostedAsOf } from '../../../util.js'
 import { kindInfo, sign } from '../../../../nostor.js'
 import { contentView } from './content.js'
-import { defaultKey } from '../../../../keys.js'
+import { defaultKey, getKeyInfo } from '../../../../keys.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
