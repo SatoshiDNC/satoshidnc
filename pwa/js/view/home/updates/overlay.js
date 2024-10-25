@@ -24,7 +24,6 @@ v.gadgets.push(g = v.pencilGad = new fg.Gadget(v))
   g.iconSize = 47
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    verbalView.randomColor()
     g.target.setContext()
     g.root.easeOut(g.target)
   }
