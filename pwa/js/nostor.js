@@ -161,16 +161,19 @@ export function sign(hpub, event) {
       const os = tr.objectStore('keys')
       const req = os.get(hpub)
       req.onerror = function(e) {
-         console.err(e)
+        reject(e)
       }
       req.onsuccess = function(e) {
-        console.log(JSON.stringify(e.target.result))
-        reject('not implemented')
+        const hsec = e.target.result.hsec
+        if (hsec) {
+          resolve(hsec_sign(hsec, event))
+        } else {
+          reject(`secret key not found`)
+        }
       }
-  
+    } else {
+      reject(`key type '${info.keyType}' not implemented`)
     }
-    // Todo: get hsec from hpub
-//    resolve(hsec_sign(hsec, event))
   })
 }
 
