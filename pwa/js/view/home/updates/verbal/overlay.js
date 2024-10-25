@@ -78,19 +78,24 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         tags: [],
       }
       const hpub = defaultKey
-      const keyInfo = getKeyInfo(hpub)
-      console.log(`info ${JSON.stringify(keyInfo)}`)
-      if (keyInfo.keyType == 'secret') {
-        getSecretKey(hpub).then(hsec => {
-          // secret key (hsec) never leaves this code block
-          return new Promise((resolve, reject) => {
-            const signedEvent = sign(hsec, rumor)
-            resolve(signedEvent)
-          })
-        }).then(signedEvent => {
-          console.log(signedEvent)
-        })
-      }
+      sign(hpub, rumor).then(event => {
+        console.log(event)
+      }).catch(reason => {
+        alert(reason)
+      })
+      // const keyInfo = getKeyInfo(hpub)
+      // console.log(`info ${JSON.stringify(keyInfo)}`)
+      // if (keyInfo.keyType == 'secret') {
+      //   getSecretKey(hpub).then(hsec => {
+      //     // secret key (hsec) never leaves this code block
+      //     return new Promise((resolve, reject) => {
+      //       const signedEvent = sign(hsec, rumor)
+      //       resolve(signedEvent)
+      //     })
+      //   }).then(signedEvent => {
+      //     console.log(signedEvent)
+      //   })
+      // }
     } else {
       console.log('mic')
     }

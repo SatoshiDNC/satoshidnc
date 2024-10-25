@@ -2,6 +2,8 @@ import * as nip19 from 'nostr-tools/nip19'
 import { finalizeEvent, generateSecretKey, getPublicKey } from 'nostr-tools/pure'
 import { Relay } from 'nostr-tools/relay'
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
+import { getKeyInfo } from './keys.js'
+
 export { nostrWatchRelays } from './sw/nostor.js'
 
 export const kindInfo = [
@@ -146,8 +148,29 @@ export function nsecDecode(bech32) {
   }
 }
 
-export function sign(hsec, event) {
+export function hsec_sign(hsec, event) {
   return finalizeEvent(event, hexToBytes(hsec))
+}
+
+export function sign(hpub, event) {
+  return new Promise((resolve, reject) => {
+    const info = getKeyInfo(hpub)
+    if (info.keyType == 'secret') {
+      const tr = db.transaction('keys', 'readonly')
+      const os = tr.objectStore('keys')
+      const req = os.get(hpub)
+      req.onerror = function(e) {
+         console.err(e)
+      }
+      req.onsuccess = function(e) {
+        console.log(JSON.stringify(e.target.result))
+        reject('not implemented')
+      }
+  
+    }
+    // Todo: get hsec from hpub
+//    resolve(hsec_sign(hsec, event))
+  })
 }
 
 export function validKey(hex) {
