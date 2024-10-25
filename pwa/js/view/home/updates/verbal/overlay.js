@@ -63,6 +63,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.iconMic = '\x13'
   g.iconSend = '\x14'
   g.icon = g.iconMic
+  g.iconSquare = true
   g.buttonFaceColor = colors.accent
   g.buttonTextColor = colors.background
   g.clickFunc = function() {
@@ -110,10 +111,11 @@ v.renderFunc = function() {
       const font = g.font || iconFont
       const c = g.icon.codePointAt(0)
       const gi = font.glyphCodes.indexOf(c)
-      const s = 53/font.glyphHeights[gi]
+      const iw = font.calcWidth(g.icon)
+      const ih = g.iconSquare? iw : font.glyphHeights[gi]
+      const s = 53/ih
       mat4.identity(m)
-      mat4.translate(m, m, [g.x+g.w/2-(53/font.glyphHeights[gi]*font.calcWidth(g.icon))/2, g.y+g.h/2+53/2, 0])
-      console.log(`${font.glyphHeights[gi]} ${font.calcWidth(g.icon)}, ${g.icon} ${s} ${c} ${font.name}`)
+      mat4.translate(m, m, [g.x+g.w/2-(53/ih*iw)/2, g.y+g.h/2+53/2, 0])
       mat4.scale(m, m, [s, s, 1])
       font.draw(0,0, g.icon, g.buttonTextColor || v.buttonTextColor, v.mat, m)
     }
