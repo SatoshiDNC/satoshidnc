@@ -89,8 +89,6 @@ export function reloadKeys() {
           let info = getDefaultKeyInfo()
           if (info) {
             defaultKey = info.hpub
-          } else {
-            initDefaultKey()
           }
         }
         keyViewDependencies.map(v => v.setRenderFlag(true))

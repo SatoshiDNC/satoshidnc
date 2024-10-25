@@ -1,8 +1,9 @@
 import { drawPill, drawRect, drawEllipse, alpha } from '../../../../draw.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { updatePostedAsOf } from '../../../util.js'
-import { kindInfo } from '../../../../nostor.js'
+import { kindInfo, sign } from '../../../../nostor.js'
 import { contentView } from './content.js'
+import { defaultKey } from '../../../../keys.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -70,6 +71,16 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     if (contentView.textGad.text) {
       console.log('send')
+      const rumor = {
+        kind: 1,
+        created_at: Math.floor(Date.now() / 1000),
+        content: `${contentView.textGad.text}`,
+        tags: [],
+      }
+      const hsec = defaultKey
+      console.log(hsec)
+      const event = sign(hsec, rumor)
+      console.log(event)
     } else {
       console.log('mic')
     }

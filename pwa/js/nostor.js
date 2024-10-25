@@ -146,7 +146,7 @@ export function nsecDecode(bech32) {
   }
 }
 
-export function signEvent(hsec, event) {
+export function sign(hsec, event) {
   return finalizeEvent(event, hexToBytes(hsec))
 }
 
