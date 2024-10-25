@@ -68,7 +68,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.buttonTextColor = colors.background
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    if (v.text) {
+    if (contentView.textGad.text) {
       console.log('send')
     } else {
       console.log('mic')
