@@ -41,6 +41,7 @@ v.setContext = function() {
   const v = this
   v.randomColor()
   v.textGad.text = undefined
+  overlayView.micSendGad.icon = overlayView.micSendGad.iconMic
 }
 v.layoutFunc = function() {
   const v = this
