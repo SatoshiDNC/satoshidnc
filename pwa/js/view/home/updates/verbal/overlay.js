@@ -1,6 +1,7 @@
 import { drawPill, drawRect, drawEllipse, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
 import { defaultKey, sign } from '../../../../keys.js'
+import { publishEvent } from '../../../../nostor.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -79,6 +80,11 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       const hpub = defaultKey
       sign(hpub, rumor).then(event => {
         console.log(event)
+        publishEvent(event, 'relay.satoshidnc.com').then(() => {
+          v.closeGad.clickFunc()
+        }, reason => {
+          alert(reason)
+        })
       }).catch(reason => {
         alert(reason)
       })
