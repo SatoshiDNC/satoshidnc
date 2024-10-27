@@ -54,7 +54,7 @@ v.renderKind1 = function(data) {
   console.log(`hexColor: ${hexColor}`)
   const rgbColor = parseInt(hexColor,16)
   console.log(`rgbColor: ${rgbColor}`)
-  const bgColor = [(~~(rgbColor/0x10000))/0xff, (~~(rgbColor/0x100))/0xff, (~~(rgbColor/0x1))/0xff, 1]
+  const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
   console.log(`bgColor: ${JSON.stringify(bgColor)}`)
   gl.clearColor(...bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
