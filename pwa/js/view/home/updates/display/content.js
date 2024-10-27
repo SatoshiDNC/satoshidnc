@@ -50,7 +50,12 @@ v.renderFunc = function() {
 }
 v.renderKind1 = function(data) {
   const v = this
-  const bgColor = [parseInt(data.id[61],16)/64, parseInt(data.id[62],16)/64, parseInt(data.id[63],16)/64, 1]
+  const hexColor = data.tags.filter(t => t[0] == 'bgcolor')?.[0][1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
+  console.log(`hexColor: ${hexColor}`)
+  const rgbColor = parseInt(hexColor,16)
+  console.log(`rgbColor: ${rgbColor}`)
+  const bgColor = [(~~(rgbColor/0x10000))/0xff, (~~(rgbColor/0x100))/0xff, (~~(rgbColor/0x1))/0xff, 1]
+  console.log(`bgColor: ${JSON.stringify(bgColor)}`)
   gl.clearColor(...bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
