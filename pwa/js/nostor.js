@@ -172,30 +172,33 @@ export function relayUrl(input) {
 }
 
 export function publishEvent(event, relay) {
+  const TAG = 'PUB'
   return new Promise((resolve, reject) => {
     Relay.connect(relayUrl(relay)).then(relay => {
+      console.log(`[${TAG}] connected to ${relayUrl(relay)}`)
       relay.subscribe([
         {
           ids: [event.id],
         },
       ], {
         onevent(event) {
-          console.log(`publisher onevent: ${JSON.stringify(event)}`)
+          console.log(`[${TAG}] publisher onevent: ${JSON.stringify(event)}`)
           relay.close()
           resolve()
         },
         oneose() {
-          console.log(`publisher oneose`)
+          console.log(`[${TAG}] publisher oneose`)
         }
       })
+      console.log(`[${TAG}] publishing...`)
       relay.publish(event).then(() => {
-        console.log(`published`)
+        console.log(`[${TAG}] published`)
       }, e => {
-        console.log(`publisher failed: ${e}`)
+        console.log(`[${TAG}] publish failed: ${e}`)
         reject(e)
       })
     }).catch(e => {
-      console.log(`publisher error: ${e}`)
+      console.log(`[${TAG}] error: ${e}`)
       reject(e)
     })
   })
