@@ -181,16 +181,18 @@ export function publishEvent(event, relay) {
       ], {
         onevent(event) {
           console.log(`publisher onevent: ${JSON.stringify(event)}`)
+          relay.close()
           resolve()
         },
         oneose() {
           console.log(`publisher oneose`)
-          reject()
         }
       })
       relay.publish(event).then(() => {
         console.log(`published`)
-        relay.close()
+      }, e => {
+        console.log(`publisher failed: ${e}`)
+        reject(e)
       })
     }).catch(e => {
       console.log(`publisher error: ${e}`)
