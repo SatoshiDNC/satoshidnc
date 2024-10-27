@@ -180,17 +180,21 @@ export function publishEvent(event, relay) {
         },
       ], {
         onevent(event) {
+          console.log(`publisher onevent: ${JSON.stringify(event)}`)
           resolve()
         },
         oneose() {
+          console.log(`publisher oneose`)
           reject()
         }
       })
       relay.publish(event).then(() => {
+        console.log(`published`)
         relay.close()
       })
-    }).catch(() => {
-      reject()
+    }).catch(e => {
+      console.log(`publisher error: ${e}`)
+      reject(e)
     })
   })
 }
