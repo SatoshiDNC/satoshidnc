@@ -390,6 +390,7 @@
         dbInit().then(() => {
           clearStatus('initializing_db')
           reloadContacts()
+          reloadRelayStats()
           reloadKeys().then(() => {
             if (keys.length == 0) {
               initDefaultKey()
