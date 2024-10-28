@@ -12,9 +12,14 @@ export function getRelay(name) {
     const requestTime = Date.now()
     const relay = relayUrl(name)
     let r = relays.filter(r => r.url == relay)?.[0]
-    if (r) {
+    if (r?.state === 'open') {
       resolve(r)
     } else {
+      // Remove the existing non-open relay (if any)
+      const filteredRelays = relays.filter(r => r.url != relay)
+      relays.length = 0
+      filteredRelays.forEach(r => relays.push(r))
+
       let avgConnect = getRelayStat(relay, 'avgConnect')
       let socket
       let authEvent
@@ -26,9 +31,15 @@ export function getRelay(name) {
         console.log(`[${TAG}] error:`, e)
       }
       socket.addEventListener('close', e => {
+        if (r) {
+          r.state = 'closed'
+        }
         console.log(`[${TAG}] close`)
       })
       socket.addEventListener('error', e => {
+        if (r) {
+          r.state = 'closed'
+        }
         console.log(`[${TAG}] error`)
       })
       socket.addEventListener('message', e => {
@@ -50,6 +61,7 @@ export function getRelay(name) {
             r.send(['AUTH', event])
           })
         } else if (m[0] == 'OK' && m[1] == authEvent?.id && m[2] == true) {
+          t.authenticated = true
           if (r.timer) {
             clearTimeout(r.timer)
             r.timer = undefined
