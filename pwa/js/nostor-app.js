@@ -8,7 +8,7 @@ let relays = []
 
 export function getRelay(name) {
   return new Promise((resolve, reject) => {
-    const TAG = 'getRelay'
+    const TAG = 'connection'
     const requestTime = Date.now()
     const relay = relayUrl(name)
     let r = relays.filter(r => r.url == relay)?.[0]
