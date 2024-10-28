@@ -50,6 +50,10 @@ export function getRelay(name) {
             r.send(['AUTH', event])
           })
         } else if (m[0] == 'OK' && m[1] == authEvent?.id && m[2] == true) {
+          if (r.timer) {
+            clearTimeout(r.timer)
+            r.timer = undefined
+          }
           resolve(r)
         } else {
           // console.log(`[${TAG}] message`, JSON.stringify(m))
@@ -78,6 +82,9 @@ export function getRelay(name) {
         setRelayStat(relay, 'avgConnect', avgConnect)
         setRelayStat(relay, 'lastConnect', { time: deltaTime, date: requestTime })
         console.log(`[${TAG}] open`, deltaTime)
+        r.timer = setTimeout(() => {
+          resolve(r)
+        }, 1000)
       })
     }
   })
