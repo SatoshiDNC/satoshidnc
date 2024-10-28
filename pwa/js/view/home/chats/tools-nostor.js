@@ -1,5 +1,5 @@
 import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../../draw.js'
-import { noteDecode, nsecDecode, validKey, relayUrl, findEvent, npub, publishEvent, nostrWatchRelays } from '../../../nostor.js'
+import { noteDecode, nsecDecode, validKey, relayUrl, findEvent, npub, publishEvent, nostrWatchRelays } from '../../../nostor-util.js'
 import { relays } from '../../../relays.js'
 import { finalizeEvent } from 'nostr-tools'
 

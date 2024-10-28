@@ -1,7 +1,7 @@
 import { drawPill, drawRect, drawEllipse, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
 import { defaultKey, sign } from '../../../../keys.js'
-import { publishEvent } from '../../../../nostor.js'
+import { publishEvent } from '../../../../nostor-util.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
