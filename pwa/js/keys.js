@@ -92,7 +92,12 @@ export function sign(hpub, event) {
       req.onsuccess = function(e) {
         const hsec = e.target.result.hsec
         if (hsec) {
-          resolve(finalizeEvent(event, hexToBytes(hsec)))
+          try {
+            const signed = finalizeEvent(event, hexToBytes(hsec))
+            resolve(signed)
+          } catch (e) {
+            reject(`unable to sign: ${e}`)
+          }
         } else {
           reject(`unable to sign: secret key not found`)
         }
