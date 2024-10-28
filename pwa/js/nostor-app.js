@@ -1,6 +1,7 @@
 import { relayUrl } from './nostor-util.js'
 import { aggregateEvent } from './content.js'
 import { getRelayStat, setRelayStat } from './stats.js'
+import { setHasData } from './relays.js'
 import { defaultKey, sign } from './keys.js'
 
 let relays = []
