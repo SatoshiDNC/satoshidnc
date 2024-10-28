@@ -91,6 +91,9 @@ export function sign(hpub, event) {
       }
       req.onsuccess = function(e) {
         const hsec = e.target.result.hsec
+        if (!event.created_at) {
+          event.created_at = Math.floor(Date.now() / 1000)
+        }
         if (hsec) {
           try {
             const signed = finalizeEvent(event, hexToBytes(hsec))
