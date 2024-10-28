@@ -33,6 +33,7 @@ export function getRelay(name) {
       socket.addEventListener('message', e => {
         let m = JSON.parse(e.data)
         console.log(`[${TAG}] recv`, JSON.stringify(m))
+        let authEvent
         if (m[0] == 'EVENT' && m[1] == 'feed') {
           const event = m[2]
           aggregateEvent(event)
@@ -45,8 +46,11 @@ export function getRelay(name) {
               ['challenge', `${m[1]}`]
             ],
           }).then(event => {
+            authEvent = event
             r.send(['AUTH', event])
           })
+        } else if (m[0] == 'OK' && m[1] == authEvent.id && m[2] == true) {
+          resolve(r)
         } else {
           // console.log(`[${TAG}] message`, JSON.stringify(m))
         }
@@ -74,7 +78,6 @@ export function getRelay(name) {
         setRelayStat(relay, 'avgConnect', avgConnect)
         setRelayStat(relay, 'lastConnect', { time: deltaTime, date: requestTime })
         console.log(`[${TAG}] open`, deltaTime)
-        resolve(r)
       })
     }
   })
