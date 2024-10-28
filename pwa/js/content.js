@@ -2,7 +2,7 @@ import { db } from './db.js'
 import { getRelayStat, setRelayStat } from './stats.js'
 import { randomRelay } from './relays.js'
 import { contentView as debugView } from './view/home/chats/profile/info/content.js'
-import { getRelay } from './nostor-util.js'
+import { getRelay } from './nostor-app.js'
 
 export function aggregateEvent(hpub, e) {
   const TAG = 'aggregateEvent'
