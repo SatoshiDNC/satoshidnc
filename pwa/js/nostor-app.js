@@ -32,12 +32,12 @@ export function getRelay(name) {
       })
       socket.addEventListener('message', e => {
         let m = JSON.parse(e.data)
+        console.log(`[${TAG}] recv`, JSON.stringify(m))
         if (m[0] == 'EVENT' && m[1] == 'feed') {
           const event = m[2]
           aggregateEvent(event)
           setHasData(relay, event.pubkey)
         } else if (m[0] == 'AUTH' && m[1]) {
-          console.log(`received ${e.data}`)
           sign(defaultKey, {
             'kind': 22242,
             'tags': [
@@ -45,11 +45,10 @@ export function getRelay(name) {
               ['challenge', `${m[1]}`]
             ],
           }).then(event => {
-            console.log(`signed ${JSON.stringify(event)}`)
             r.send(['AUTH', event])
           })
         } else {
-          console.log(`[${TAG}] message`, JSON.stringify(m))
+          // console.log(`[${TAG}] message`, JSON.stringify(m))
         }
       })
       socket.addEventListener('open', event => {
@@ -59,7 +58,7 @@ export function getRelay(name) {
           socket,
           send: function(obj) {
             const r = this
-            console.log(`send ${JSON.stringify(obj)}`)
+            console.log(`[${TAG}] send ${JSON.stringify(obj)}`)
             r.socket.send(JSON.stringify(obj))
           }
         }
