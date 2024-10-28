@@ -15,10 +15,12 @@ export function setRelayStat(relayUrl, key, value) {
 }
 
 export function getRelayStat(relayUrl, key) {
+  console.log(`getRelayStat ${relayUrl} ${key} ${relayStats}`)
   return relayStats.filter(s => s.relayUrl == relayUrl && s.key == key)?.[0]?.value
 }
 
 export function reloadRelayStats() {
+  console.log(`reloadRelayStats`)
   const tr = db.transaction('relay-stats', 'readonly')
   const os = tr.objectStore('relay-stats')
   const req = os.openCursor()
