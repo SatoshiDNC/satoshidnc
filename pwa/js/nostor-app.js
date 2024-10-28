@@ -1,5 +1,6 @@
 import { relayUrl } from './nostor-util.js'
 import { aggregateEvent } from './content.js'
+import { getRelayStat, setRelayStat } from './stats.js'
 
 let relays = []
 
