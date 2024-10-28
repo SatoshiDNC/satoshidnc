@@ -100,13 +100,13 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         setTimeout(() => {
           recorder.start()
           console.log(recorder.state)
-          console.log(`recorder started`, Date.now())
+          console.log(`recorder started`, new Date())
         })
 
         setTimeout(() => {
           recorder.stop()
           console.log(recorder.state)
-          console.log(`recorder stopped`, Date.now())
+          console.log(`recorder stopped`, new Date())
         }, 60 * 1000)
 
         recorder.onstop = e => {
@@ -145,6 +145,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
 
         recorder.ondataavailable = e => {
           chunks.push(e.data)
+          console.log(`data push`)
         }
 
         // const tracks = stream.getAudioTracks()
