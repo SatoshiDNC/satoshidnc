@@ -97,6 +97,9 @@ export function sign(hpub, event) {
         if (!event.created_at) {
           event.created_at = Math.floor(Date.now() / 1000)
         }
+        if (!event.pubkey) {
+          event.pubkey = hpub
+        }
         if (hsec) {
           try {
             const signed = finalizeEvent(event, hexToBytes(hsec))
