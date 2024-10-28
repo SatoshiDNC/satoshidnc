@@ -1,6 +1,7 @@
 import { relayUrl } from './nostor-util.js'
 import { aggregateEvent } from './content.js'
 import { getRelayStat, setRelayStat } from './stats.js'
+import { defaultKey, sign } from './keys.js'
 
 let relays = []
 
@@ -9,7 +10,7 @@ export function getRelay(name) {
     const TAG = 'getRelay'
     const requestTime = Date.now()
     const relay = relayUrl(name)
-    let r = relays.filter(r => r.name == relay)?.[0]
+    let r = relays.filter(r => r.url == relay)?.[0]
     if (r) {
       resolve(r)
     } else {
@@ -34,12 +35,24 @@ export function getRelay(name) {
           const event = m[2]
           aggregateEvent(event)
           setHasData(relay, hpub)
+        } else if (m[0] == 'AUTH' && m[1]) {
+          console.log(`received ${e.data}`)
+          sign(defaultKey, {
+            'kind': 22242,
+            'tags': [
+              ['relay', `${r.url}`],
+              ['challenge', `${m[1]}`]
+            ],
+          }).then(event => {
+            console.log(`signed ${JSON.stringify(event)}`)
+            r.send(['AUTH', event])
+          })
         } else {
           console.log(`[${TAG}] message`, JSON.stringify(m))
         }
       })
       socket.addEventListener('open', event => {
-        const r = {
+        r = {
           url: relay,
           state: 'open',
           socket,
@@ -60,10 +73,6 @@ export function getRelay(name) {
         }
         setRelayStat(relay, 'avgConnect', avgConnect)
         setRelayStat(relay, 'lastConnect', { time: deltaTime, date: requestTime })
-        // if (thisRequestTime == requestTime) {
-        //   debugView.deltaTime = deltaTime
-        //   debugView.setRenderFlag(true)
-        // }
         console.log(`[${TAG}] open`, deltaTime)
         resolve(r)
       })

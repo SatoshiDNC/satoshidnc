@@ -77,8 +77,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           ['bgcolor', `${rrggbb(contentView.bgColor)}`],
         ],
       }
-      const hpub = defaultKey
-      sign(hpub, rumor).then(event => {
+      sign(defaultKey, rumor).then(event => {
         console.log(event)
         publishEvent(event, 'relay.satoshidnc.com').then(() => {
           v.closeGad.clickFunc()
