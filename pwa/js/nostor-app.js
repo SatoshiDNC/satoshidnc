@@ -1,3 +1,4 @@
+import { relayUrl } from './nostor-util.js'
 import { aggregateEvent } from './content.js'
 
 let relays = []
