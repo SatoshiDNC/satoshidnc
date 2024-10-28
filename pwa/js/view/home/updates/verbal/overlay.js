@@ -94,13 +94,66 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         audio: true,
         video: false,
       }).then(stream => {
-        const tracks = stream.getAudioTracks()
-        console.log(`Got stream with constraints`)
-        console.log(`Using device: ${tracks[0].label}`)
-        stream.onremovetrack = () => {
-          console.log("Stream ended")
+        const recorder = new MediaRecorder(stream)
+        let chunks = []
+
+        setTimeout(() => {
+          recorder.start()
+          console.log(recorder.state)
+          console.log("recorder started")
+        })
+
+        setTimeout(() => {
+          recorder.stop()
+          console.log(recorder.state)
+          console.log("recorder stopped")
+        }, 1000)
+
+        recorder.onstop = e => {
+          console.log("data available after MediaRecorder.stop() called.")
+
+          // const clipName = prompt("Enter a name for your sound clip")
+
+          // const clipContainer = document.createElement("article")
+          // const clipLabel = document.createElement("p")
+          const audio = document.createElement("audio")
+          // const deleteButton = document.createElement("button")
+          // const mainContainer = document.querySelector("body")
+
+          // clipContainer.classList.add("clip")
+          audio.setAttribute("controls", "")
+          // deleteButton.textContent = "Delete"
+          // clipLabel.textContent = clipName
+
+          // clipContainer.appendChild(audio)
+          // clipContainer.appendChild(clipLabel)
+          // clipContainer.appendChild(deleteButton)
+          // mainContainer.appendChild(clipContainer)
+
+          audio.controls = true
+          const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" })
+          const audioURL = URL.createObjectURL(blob)
+          audio.src = audioURL
+          console.log("recorder stopped")
+          console.log(audioURL)
+
+          // deleteButton.onclick = (e) => {
+          //   const evtTgt = e.target
+          //   evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode)
+          // }
         }
-        // video.srcObject = stream
+
+        recorder.ondataavailable = e => {
+          chunks.push(e.data)
+        }
+
+        // const tracks = stream.getAudioTracks()
+        // console.log(`Got stream with constraints`)
+        // console.log(`Using device: ${tracks[0].label}`)
+        // stream.onremovetrack = () => {
+        //   console.log("Stream ended")
+        // }
+        // // video.srcObject = stream
       }).catch(error => {
         if (error.name === 'OverconstrainedError') {
           console.error(
