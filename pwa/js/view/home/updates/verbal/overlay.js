@@ -100,14 +100,14 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         setTimeout(() => {
           recorder.start()
           console.log(recorder.state)
-          console.log("recorder started")
+          console.log(`recorder started`, Date.now())
         })
 
         setTimeout(() => {
           recorder.stop()
           console.log(recorder.state)
-          console.log("recorder stopped")
-        }, 1000)
+          console.log(`recorder stopped`, Date.now())
+        }, 60 * 1000)
 
         recorder.onstop = e => {
           console.log("data available after MediaRecorder.stop() called.")
