@@ -32,8 +32,8 @@ v.renderFunc = function() {
     v.renderKind1(data)
     if (data.id != v.lastRenderedId) {
       v.lastRenderedId = data.id
-      if (data.tags.length > 0) {
-        console.log(`[NOTE] tags are present:`, data)
+      if (data.tags.filter(t => !['bgcolor'].includes(t[0])).length > 0) {
+        console.log(`[NOTE] unrecognized tags are present:`, data)
       }
     }
   } else {
