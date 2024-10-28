@@ -5,6 +5,7 @@ import { getRelayStat, setRelayStat } from './stats.js'
 let relays = []
 
 export function getRelay(name) {
+  const TAG = 'getRelay'
   return new Promise((resolve, reject) => {
     const requestTime = Date.now()
     const relay = relayUrl(name)
