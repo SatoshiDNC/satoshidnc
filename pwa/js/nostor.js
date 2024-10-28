@@ -175,7 +175,7 @@ export function publishEvent(event, relay) {
   const TAG = 'PUB'
   return new Promise((resolve, reject) => {
     Relay.connect(relayUrl(relay)).then(relay => {
-      console.log(`[${TAG}] connected to ${JSON.stringify(relay)}`)
+      console.log(`[${TAG}] connected to ${relay.url}`)
       relay.subscribe([
         {
           ids: [event.id],

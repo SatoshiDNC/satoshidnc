@@ -90,6 +90,30 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       })
     } else {
       console.log('mic')
+      navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: false,
+      }).then(stream => {
+        const tracks = stream.getAudioTracks()
+        console.log(`Got stream with constraints`)
+        console.log(`Using device: ${tracks[0].label}`)
+        stream.onremovetrack = () => {
+          console.log("Stream ended")
+        }
+        // video.srcObject = stream
+      }).catch(error => {
+        if (error.name === 'OverconstrainedError') {
+          console.error(
+            `The resolution is not supported by your device.`,
+          )
+        } else if (error.name === 'NotAllowedError') {
+          console.error(
+            `You need to grant this page permission to access your microphone.`,
+          )
+        } else {
+          console.error(`getUserMedia error: ${error.name}`, error)
+        }
+      })
     }
   }
 v.setContext = function() {
