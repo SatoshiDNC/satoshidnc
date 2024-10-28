@@ -61,7 +61,7 @@ export function getRelay(name) {
             r.send(['AUTH', event])
           })
         } else if (m[0] == 'OK' && m[1] == authEvent?.id && m[2] == true) {
-          t.authenticated = true
+          r.authenticated = true
           if (r.timer) {
             clearTimeout(r.timer)
             r.timer = undefined
