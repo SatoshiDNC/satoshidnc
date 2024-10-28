@@ -32,7 +32,7 @@ export function getRelay(name) {
         let m = JSON.parse(e.data)
         if (m[0] == 'EVENT' && m[1] == 'feed') {
           const event = m[2]
-          aggregateEvent(hpub, event)
+          aggregateEvent(event)
           setHasData(relay, hpub)
         } else {
           console.log(`[${TAG}] message`, JSON.stringify(m))

@@ -3,18 +3,18 @@ import { randomRelay } from './relays.js'
 import { contentView as debugView } from './view/home/chats/profile/info/content.js'
 import { getRelay } from './nostor-app.js'
 
-export function aggregateEvent(hpub, e) {
-  const TAG = 'aggregateEvent'
-  const now = Date.now()
+export function aggregateEvent(e) {
   return new Promise((resolve, reject) => {
     if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid event')
+    const TAG = 'aggregateEvent'
+    const now = Date.now()
     const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
     const req = os.index('id').get(e.id)
     req.onsuccess = () => {
       if (!req.result) {
         console.log(`[${TAG}] new event`, JSON.stringify(e))
-        const req = os.add({ hpub, firstSeen: now, data: e })
+        const req = os.add({ hpub: e.pubkey, firstSeen: now, data: e })
         req.onsuccess = () => {
           resolve()
         }
