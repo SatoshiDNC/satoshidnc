@@ -9,7 +9,7 @@ export function getRelay(name) {
     const TAG = 'getRelay'
     const requestTime = Date.now()
     const relay = relayUrl(name)
-    let r = relays.filter(r => r.name == name)?.[0]
+    let r = relays.filter(r => r.name == relay)?.[0]
     if (r) {
       resolve(r)
     } else {
