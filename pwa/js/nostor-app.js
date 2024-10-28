@@ -35,7 +35,7 @@ export function getRelay(name) {
         if (m[0] == 'EVENT' && m[1] == 'feed') {
           const event = m[2]
           aggregateEvent(event)
-          setHasData(relay, hpub)
+          setHasData(relay, e.pubkey)
         } else if (m[0] == 'AUTH' && m[1]) {
           console.log(`received ${e.data}`)
           sign(defaultKey, {
