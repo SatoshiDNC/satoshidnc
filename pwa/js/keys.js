@@ -96,6 +96,7 @@ export function sign(hpub, event) {
             const signed = finalizeEvent(event, hexToBytes(hsec))
             resolve(signed)
           } catch (e) {
+            console.log(e)
             reject(`unable to sign: ${e}`)
           }
         } else {
