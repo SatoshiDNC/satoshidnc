@@ -5,8 +5,8 @@ import { getRelayStat, setRelayStat } from './stats.js'
 let relays = []
 
 export function getRelay(name) {
-  const TAG = 'getRelay'
   return new Promise((resolve, reject) => {
+    const TAG = 'getRelay'
     const requestTime = Date.now()
     const relay = relayUrl(name)
     let r = relays.filter(r => r.name == name)?.[0]
