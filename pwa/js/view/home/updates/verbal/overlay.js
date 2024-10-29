@@ -133,8 +133,9 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" })
           const audioURL = URL.createObjectURL(blob)
           audio.src = audioURL
-          console.log("recorder stopped")
-          console.log(audioURL)
+          let tracks = stream.getTracks()
+          tracks.forEach(track => track.stop())          
+          console.log("recorder stopped", audioURL)
 
           // deleteButton.onclick = (e) => {
           //   const evtTgt = e.target
