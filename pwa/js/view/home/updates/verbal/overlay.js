@@ -1,4 +1,4 @@
-import { drawPill, drawRect, drawEllipse, alpha, rrggbb } from '../../../../draw.js'
+import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
 import { defaultKey, sign } from '../../../../keys.js'
 import { getRelay } from '../../../../nostor-app.js'
@@ -68,6 +68,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.renderFunc = function() {
     const g = this, v = g.viewport
     drawPill(v, g.buttonFaceColor || v.buttonFaceColor, g.x - g.h, g.y, g.w + g.h, g.h)
+    drawAvatar(v, defaultKey, g.x - g.h, g.y, g.h, g.h)
     const font = g.font || iconFont
     const c = g.icon.codePointAt(0)
     const gi = font.glyphCodes.indexOf(c)
