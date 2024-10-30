@@ -42,7 +42,7 @@ v.layoutFunc = function() {
   for (const g of v.paneGads) {
     g.x = x + (v.sw / 4 - g.w) / 2, g.y = 33
     g.autoHull()
-    g.new = 0
+    g.new = Math.floor(Math.random()*200)
     x += v.sw /4
   }
 }
