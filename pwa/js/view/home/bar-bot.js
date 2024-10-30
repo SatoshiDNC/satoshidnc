@@ -42,7 +42,7 @@ v.layoutFunc = function() {
   for (const g of v.paneGads) {
     g.x = x + (v.sw / 4 - g.w) / 2, g.y = 33
     g.autoHull()
-    g.new = undefined
+    g.new = NaN
     x += v.sw /4
   }
 }
