@@ -1,7 +1,7 @@
 import { setEasingParameters } from '../../../util.js'
 import { drawAvatar, alpha } from '../../../../draw.js'
 import { getPersonalData as get } from '../../../../personal.js'
-import { pingFeed, getFeed } from '../../../../content.js'
+import { reqNotes, getFeed } from '../../../../content.js'
 import { kindInfo } from '../../../../nostor-util.js'
 
 const TAG = 'INFO'
@@ -94,7 +94,7 @@ v.setContact = function(hpub) {
   v.userY = 0
   v.deltaTime = undefined
   v.gadgets.splice(fixedGads, v.gadgets.length - fixedGads - tailGads - 1)
-  pingFeed(v.hpub)
+  reqNotes(v.hpub)
   getFeed(v.hpub).then(posts => {
     for (const post of posts) {
       let g

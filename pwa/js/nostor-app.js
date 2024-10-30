@@ -45,7 +45,7 @@ export function getRelay(name) {
       socket.addEventListener('message', e => {
         let m = JSON.parse(e.data)
         console.log(`[${TAG}] recv`, JSON.stringify(m))
-        if (m[0] == 'EVENT' && m[1] == 'feed') {
+        if (m[0] == 'EVENT' /* && m[1] == 'feed' */) {
           const event = m[2]
           aggregateEvent(event)
           setHasData(relay, event.pubkey)

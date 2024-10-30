@@ -1,6 +1,7 @@
 import { db } from './db.js'
 import { randomRelay } from './relays.js'
 import { getRelay } from './nostor-app.js'
+import { contacts } from './contacts.js'
 
 export function aggregateEvent(e) {
   return new Promise((resolve, reject) => {
@@ -25,21 +26,41 @@ export function aggregateEvent(e) {
   })
 }
 
-let requestTime
-export function pingFeed(hpub) {
-  const TAG = 'pingFeed'
-  requestTime = Date.now()
-  let thisRequestTime = requestTime
+let reqNotes_requestTime
+export function reqNotes(hpub) {
+  const TAG = 'reqNotes'
+  reqNotes_requestTime = Date.now()
+  let thisRequestTime = reqNotes_requestTime
   const defaultRelay = randomRelay()
   console.log(`[${TAG}] query relay:`, defaultRelay)
   getRelay(defaultRelay).then(relay => {
-    if (thisRequestTime !== requestTime) return
+    if (thisRequestTime !== reqNotes_requestTime) return
+    relay.send([
+      'REQ',
+      'notes',
+      {
+        'authors': [hpub],
+        'limit': 5,
+      }
+    ])
+  })
+}
+
+let reqFeed_requestTime
+export function reqFeed() {
+  const TAG = 'reqFeed'
+  reqFeed_requestTime = Date.now()
+  let thisRequestTime = reqFeed_requestTime
+  const defaultRelay = 'relay.satoshidnc.com'
+  console.log(`[${TAG}] query relay:`, defaultRelay)
+  getRelay(defaultRelay).then(relay => {
+    if (thisRequestTime !== reqFeed_requestTime) return
     relay.send([
       'REQ',
       'feed',
       {
-        'authors': [hpub],
-        'limit': 5,
+        'authors': contacts.map(c=>c.hpub),
+        'limit': 50,
       }
     ])
   })
