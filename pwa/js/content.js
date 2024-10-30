@@ -1,6 +1,5 @@
 import { db } from './db.js'
 import { randomRelay } from './relays.js'
-import { contentView as debugView } from './view/home/chats/profile/info/content.js'
 import { getRelay } from './nostor-app.js'
 
 export function aggregateEvent(e) {
