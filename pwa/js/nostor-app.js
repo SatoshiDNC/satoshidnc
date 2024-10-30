@@ -59,6 +59,8 @@ export function getRelay(name) {
           }).then(event => {
             authEvent = event
             r.send(['AUTH', event])
+          }).catch(reason => {
+            reject(`could not sign authentication message: ${reason}`)
           })
         } else if (m[0] == 'OK' && m[1] == authEvent?.id && m[2] == true) {
           r.authenticated = true
