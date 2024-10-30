@@ -86,7 +86,7 @@ v.renderFunc = function() {
     iconFont.draw(0,0, g.icon, v.textColor, v.mat, m)
     if (g.new !== undefined) {
       const t = `${g.new}`
-      const w = 32 + isNaN(g.new)? 0: Math.max(0, defaultFont.calcWidth(t) - defaultFont.calcWidth('0'))
+      const w = 32 + (isNaN(g.new)? 0: Math.max(0, defaultFont.calcWidth(t) - defaultFont.calcWidth('0')))
       drawPill(v, colors.accent, g.x + g.w/2 + 23 + 16 - w/2, g.y + 2, w, 32)
       if (!isNaN(g.new)) {
         s = 21/14
