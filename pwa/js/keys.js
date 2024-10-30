@@ -93,7 +93,7 @@ export function sign(hpub, eventTemplate) {
   return new Promise((resolve, reject) => {
     const info = getKeyInfo(hpub)
     if (info.keyType == 'secret') {
-      if (confirm(`Are you sure you want to sign the following message? This document will become legally binding:\n\n${JSON.stringify(serializeEvent(event))}`)) {
+      if (confirm(`Are you sure you want to sign the following message? This document will become legally binding:\n${serializeEvent(event)}`)) {
         const tr = db.transaction('keys', 'readonly')
         const os = tr.objectStore('keys')
         const req = os.get(hpub)
