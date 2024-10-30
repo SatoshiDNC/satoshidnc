@@ -4,6 +4,7 @@ import { sign, keys, getKeyInfo } from '../../../../keys.js'
 import { getRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
+import { getKeyboardInput } from '../../../util.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
