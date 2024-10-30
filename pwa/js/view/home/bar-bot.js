@@ -1,4 +1,5 @@
 import { drawPill, alpha } from '../../draw.js'
+import { contentView } from './updates/content.js'
 
 let v, g
 export const barBot = v = new fg.View()
@@ -29,6 +30,9 @@ for (const pane of v.panes) {
     pane.view.easingValue = 1
     pane.view.setRenderFlag(true)
     fg.setRoot(pane.view)
+    if (v.activeLabel == 'Updates') {
+      contentView.queryFunc()
+    }
   }
 }
 v.activeLabel = v.paneGads[0].label

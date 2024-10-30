@@ -3,7 +3,7 @@ import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
-import { getUpdates, eventLayoutTrigger } from '../../../content.js'
+import { getUpdates, eventTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
 
 let v, g
@@ -95,10 +95,10 @@ v.layoutFunc = function() {
   g.x = 0, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
-
-  v.queryFunc()
 }
-eventLayoutTrigger.push(v)
+eventTrigger.push(() => {
+  v.queryFunc()
+})
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
