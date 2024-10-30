@@ -1,5 +1,6 @@
 import { drawPill, drawEllipse, alpha } from '../../draw.js'
 import { contentView } from './updates/content.js'
+import { eventTrigger } from '../../content.js'
 
 let v, g
 export const barBot = v = new fg.View()
@@ -36,6 +37,9 @@ for (const pane of v.panes) {
     }
   }
 }
+eventTrigger.push(() => {
+  v.paneGads.filter(g => g.label == 'Updates')[0].new = true
+})
 v.activeLabel = v.paneGads[0].label
 v.layoutFunc = function() {
   const v = this
