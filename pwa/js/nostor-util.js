@@ -161,6 +161,10 @@ export function nsec(hsec) {
   return nip19.nsecEncode(hsec)
 }
 
+export function getPubkey(hsec) {
+  return getPublicKey(Buffer.from(hsec, 'hex'))
+}
+
 export function relayUrl(input) {
   if (input.includes('.')) {
     if (input.includes('://')) {

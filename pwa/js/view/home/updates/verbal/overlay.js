@@ -1,8 +1,9 @@
 import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
-import { sign, keys } from '../../../../keys.js'
+import { sign, keys, getKeyInfo } from '../../../../keys.js'
 import { getRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
+import { getPubkey } from '../../../../nostor-util.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -112,6 +113,78 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     v.setRenderFlag(true)
     if (v.selectorItem?.hpub) {
       v.hpub = v.selectorItem.hpub
+    } else if (v.selectorItem.option == 'nsec') {
+      getKeyboardInput('Nostor secret key', '', value => {
+        if (value !== undefined) {
+
+          let hsec, relays
+
+          // If it's a hex key, use it verbatim
+          if (pubkey.length == 64 && Array.from(pubkey.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
+            hsec = pubkey.toLowerCase()
+          }
+
+          // Otherwise...
+          if (!hsec) {
+
+            // Strip the nostr: URL scheme, if present
+            let bech32 = value
+            if (value.startsWith('nostr:')) {
+              bech32 = value.substring(6)
+            }
+
+            // Handle Bech32-encoded formats
+            try {
+              const decoded = nip19.decode(bech32)
+              if (decoded?.type == 'nsec') {
+                hsec = decoded.data
+              }
+            } catch(e) {
+              if (bech32.startsWith('nsec')) {
+                alert(`${e}`)
+                return
+              }
+            }
+          }
+
+          // If we couldn't recognize the key, error and return early
+          if (!hsec) {
+            alert(`Unrecognized secret key format. Supported formats include: nsec, hex`)
+            return
+          }
+
+          // We have the hex secret key; get the public key and try to recognize it
+          const hpub = getPubkey(hsec)
+          const name = getAttr(hpub, 'name')
+          const keyInfo = getKeyInfo(hpub)
+          console.log('public key data:', hpub, name, keyInfo)
+          
+          // // should we import the contact?
+
+          // let cancel = false
+          // const existing = contacts.filter(c => c.hpub == hpub)?.[0]
+          // if (existing) {
+          //   const existingName = getPersonalData(existing.hpub, 'name')
+          //   if (name != existingName) {
+          //     if (confirm(`Contact exists as '${existingName}'.\nUpdate name?`)) {
+          //       setPersonalData(hpub, 'name', name)
+          //     } else {
+          //       cancel = true
+          //     }
+          //   }
+          // } else {
+          //   addNewContact(hpub, name)
+          //   relays?.map(r => detectRelay(r))
+          //   relays?.map(r => addRelayContactRelation(r, hpub, R_KNOWS_C))
+          // }
+          // if (!cancel) {
+          //   g.root.easeOut(g.target)
+          //   g.formView.clear()
+          // }
+
+        }
+        v.setRenderFlag(true)
+      })
     }
   }
   g.clickFunc = function() {
