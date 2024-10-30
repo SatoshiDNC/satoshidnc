@@ -380,7 +380,7 @@ v.renderFunc = function() {
       drawRect(v, colors.inactiveDark, x, y - f1*itemHeight*(itemIndex+1), w, f1*itemHeight)
     }
     for (let i = 0; i<itemCount; i++) {
-      if (items[i].hpub) {
+      if (items[i].hpub && !items[i].option) {
         drawAvatar(v, items[i].hpub, x + h*0.2, y - f1*itemHeight*(i+1) + h*0.1, h*0.8, f1*h*0.8)
       }
       let t = items[i].optionLabel || getAttr(items[i].hpub, 'name') || ''
@@ -392,7 +392,7 @@ v.renderFunc = function() {
         t = t+'...'
       }
       mat4.identity(m)
-      mat4.translate(m, m, [x+h*1.2, y-f1*(itemHeight*(i+1)-h/2), 0])
+      mat4.translate(m, m, [x+h*((items[i].option?0:1) + 0.2), y-f1*(itemHeight*(i+1)-h/2), 0])
       mat4.scale(m, m, [s, s, 1])
       defaultFont.draw(0,7, t, alpha(colors.white, f1), v.mat, m)
     }
