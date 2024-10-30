@@ -57,7 +57,7 @@ v.gadgets.push(g = v.audienceGad = new fg.Gadget(v))
     const g = this, v = this.viewport
   }
 v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
+  g.actionFlags = fg.GAF_CLICKABLE | fg.GAF_DRAGGABLE
   g.x = 20, g.y = 20, g.w = 128, g.h = 128
   g.iconMic = '\x13'
   g.iconSend = '\x14'
@@ -82,6 +82,15 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     mat4.translate(m, m, [g.x+g.w/2-(53/ih*iw)/2, g.y+g.h/2+53/2, 0])
     mat4.scale(m, m, [s, s, 1])
     font.draw(0,0, g.icon, g.buttonTextColor || v.buttonTextColor, v.mat, m)
+  }
+  g.dragBeginFunc = function() {
+    console.log('drag begin')
+  }
+  g.dragMoveFunc = function() {
+    console.log('drag move')
+  }
+  g.dragEndFunc = function() {
+    console.log('drag end')
   }
   g.clickFunc = function() {
     const g = this, v = this.viewport
