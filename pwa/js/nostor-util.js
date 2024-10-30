@@ -4,7 +4,7 @@ import { Relay } from 'nostr-tools/relay'
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
 import { getKeyInfo } from './keys.js'
 import { db } from './db.js'
-import Buffer from 'buffer'
+import { Buffer } from 'buffer'
 
 export { nostrWatchRelays } from './sw/nostor.js'
 
