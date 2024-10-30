@@ -38,7 +38,9 @@ for (const pane of v.panes) {
   }
 }
 eventTrigger.push(() => {
+  console.log('event trigger')
   v.paneGads.filter(g => g.label == 'Updates')[0].new = true
+  v.setRenderFlag(true)
 })
 v.activeLabel = v.paneGads[0].label
 v.layoutFunc = function() {
