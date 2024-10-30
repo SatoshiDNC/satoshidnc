@@ -135,64 +135,63 @@ export function sign(hpub, eventTemplate) {
         reject(`canceled by user`)
       }
     } else if (info.keyType == 'volatile') {
-      getKeyboardInput('Nostor secret key', '', value => {
-        if (value !== undefined) {
+      value = prompt('Nostor secret key', '')
+      if (value !== undefined) {
 
-          let hsec, relays
+        let hsec, relays
 
-          // If it's a hex key, use it verbatim
-          if (value.length == 64 && Array.from(value.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
-            hsec = value.toLowerCase()
-          }
-
-          // Otherwise...
-          if (!hsec) {
-
-            // Strip the nostr: URL scheme, if present
-            let bech32 = value
-            if (value.startsWith('nostr:')) {
-              bech32 = value.substring(6)
-            }
-
-            // Handle Bech32-encoded formats
-            try {
-              const decoded = nip19.decode(bech32)
-              if (decoded?.type == 'nsec') {
-                hsec = decoded.data
-              }
-            } catch(e) {
-              if (bech32.startsWith('nsec')) {
-                reject(`${e}`)
-                return
-              }
-            }
-          }
-
-          // If we couldn't recognize the key, error and return early
-          if (!hsec) {
-            reject(`unable to sign: unrecognized secret key format`)
-            return
-          }
-          const matching_hpub = getPubkey(hsec)
-          if (matching_hpub !== hpub) {
-            reject(`unable to sign: secret key does not match public key`)
-            return
-          }
-
-          // We have the matching hex secret key; use it
-          useVolatileKey(hpub, hsec)
-          try {
-            const signed = finalizeEvent(event, hexToBytes(hsec))
-            putVolatileKey(hpub, hsec) // to update 'lastUsed' time stamp
-            resolve(signed)
-          } catch (e) {
-            console.log(event)
-            reject(`unable to sign: ${e}`)
-          }
-        } else {
-          reject(`canceled by user`)
+        // If it's a hex key, use it verbatim
+        if (value.length == 64 && Array.from(value.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
+          hsec = value.toLowerCase()
         }
-      })
+
+        // Otherwise...
+        if (!hsec) {
+
+          // Strip the nostr: URL scheme, if present
+          let bech32 = value
+          if (value.startsWith('nostr:')) {
+            bech32 = value.substring(6)
+          }
+
+          // Handle Bech32-encoded formats
+          try {
+            const decoded = nip19.decode(bech32)
+            if (decoded?.type == 'nsec') {
+              hsec = decoded.data
+            }
+          } catch(e) {
+            if (bech32.startsWith('nsec')) {
+              reject(`${e}`)
+              return
+            }
+          }
+        }
+
+        // If we couldn't recognize the key, error and return early
+        if (!hsec) {
+          reject(`unable to sign: unrecognized secret key format`)
+          return
+        }
+        const matching_hpub = getPubkey(hsec)
+        if (matching_hpub !== hpub) {
+          reject(`unable to sign: secret key does not match public key`)
+          return
+        }
+
+        // We have the matching hex secret key; use it
+        useVolatileKey(hpub, hsec)
+        try {
+          const signed = finalizeEvent(event, hexToBytes(hsec))
+          putVolatileKey(hpub, hsec) // to update 'lastUsed' time stamp
+          resolve(signed)
+        } catch (e) {
+          console.log(event)
+          reject(`unable to sign: ${e}`)
+        }
+      } else {
+        reject(`canceled by user`)
+      }
     } else {
       reject(`unable to sign: key type '${info.keyType}' not implemented`)
     }
