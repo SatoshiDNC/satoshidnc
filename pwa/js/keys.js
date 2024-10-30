@@ -135,7 +135,7 @@ export function sign(hpub, eventTemplate) {
         reject(`canceled by user`)
       }
     } else if (info.keyType == 'volatile') {
-      value = prompt('Nostor secret key', '')
+      const value = prompt('Nostor secret key', '')
       if (value !== undefined) {
 
         let hsec, relays
