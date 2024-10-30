@@ -2,7 +2,7 @@ import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../.
 import { contentView } from './content.js'
 import { sign, keys } from '../../../../keys.js'
 import { getRelay } from '../../../../nostor-app.js'
-import { getPersonalData as getAttr } from '../../../../../personal.js'
+import { getPersonalData as getAttr } from '../../../../personal.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
