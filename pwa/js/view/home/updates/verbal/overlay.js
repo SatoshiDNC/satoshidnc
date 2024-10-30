@@ -121,8 +121,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           let hsec, relays
 
           // If it's a hex key, use it verbatim
-          if (pubkey.length == 64 && Array.from(pubkey.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
-            hsec = pubkey.toLowerCase()
+          if (value.length == 64 && Array.from(value.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
+            hsec = value.toLowerCase()
           }
 
           // Otherwise...
