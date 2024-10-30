@@ -100,8 +100,6 @@ v.layoutFunc = function() {
   g.x = 0, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
-
-  barBot.paneGads.filter(g => g.label == 'Updates')[0].new = false
 }
 eventTrigger.push(() => {
   v.queryFunc()
@@ -112,6 +110,8 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   const mat = mat4.create()
+
+  barBot.paneGads.filter(g => g.label == 'Updates')[0].new = false
 
   mat4.identity(m)
   mat4.translate(m, m, [45, 125, 0])
