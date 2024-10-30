@@ -80,7 +80,11 @@ export function getRelay(name) {
             const r = this
             console.log(`[${TAG}] send ${JSON.stringify(obj)}`)
             r.socket.send(JSON.stringify(obj))
-          }
+          },
+          sendEvent: function(event) {
+            const r = this
+            return r.send(['EVENT', event])
+          },
         }
         relays.push(r)
         const deltaTime = Date.now() - requestTime

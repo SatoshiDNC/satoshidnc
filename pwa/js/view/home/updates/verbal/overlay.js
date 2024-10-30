@@ -69,7 +69,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     if (contentView.textGad.text) {
       console.log('send')
-      const rumor = {
+      const note = {
         kind: 1,
         created_at: Math.floor(Date.now() / 1000),
         content: `${contentView.textGad.text}`,
@@ -77,12 +77,18 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           ['bgcolor', `${rrggbb(contentView.bgColor)}`],
         ],
       }
-      sign(defaultKey, rumor).then(event => {
+      sign(defaultKey, note).then(event => {
         console.log(event)
-        publishEvent(event, 'relay.satoshidnc.com').then(() => {
-          v.closeGad.clickFunc()
+        console.log('sending...')
+        const name = 'relay.satoshidnc.com'
+        getRelay(name).then(relay => {
+          relay.sendEvent(event).then(() => {
+            v.closeGad.clickFunc()
+          }).catch(reason => {
+            alert(`send to ${relay.url} failed: ${reason}`)
+          })
         }, reason => {
-          alert(reason)
+          alert(`connect to ${name} failed: ${reason}`)
         })
       }).catch(reason => {
         alert(reason)
