@@ -114,8 +114,10 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     v.selectorOpen = false
     v.setRenderFlag(true)
     if (v.selectorItem?.hpub) {
-      v.hpub = v.selectorItem.hpub
-      v.hsec = undefined
+      if (v.hpub != v.selectorItem.hpub) {
+        v.hpub = v.selectorItem.hpub
+        v.hsec = undefined
+      }
     } else if (v.selectorItem?.option == 'nsec') {
       getKeyboardInput('Nostor secret key', '', value => {
         if (value !== undefined) {
