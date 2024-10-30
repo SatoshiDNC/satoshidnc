@@ -27,7 +27,7 @@ export function initDefaultKey() {
   const hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
   const hpub = getPublicKey(Buffer.from(hsec, 'hex'))
   putDeviceKey(hpub, hsec)
-  defaultKey = window.localStorage.setItem('hpub', hsec)||window.localStorage.getItem('hpub')
+  defaultKey = window.localStorage.setItem('hpub', hpub)||window.localStorage.getItem('hpub')
 }
 
 export function putDeviceKey(hpub, hsec) {
