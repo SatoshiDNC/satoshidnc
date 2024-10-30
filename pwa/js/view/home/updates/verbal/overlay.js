@@ -304,7 +304,7 @@ v.renderFunc = function() {
       drawRect(v, colors.inactiveDark, v.sw/2, v.sh-168 - f1*itemHeight*(itemIndex+1), v.sw/2, f1*itemHeight)
     }
     for (let i = 0; i<itemCount; i++) {
-      drawAvatar(v, items[i].hpub, itemHeight, v.sh-168 - f1*itemHeight*(i+1), v.sw/2, f1*itemHeight)
+      drawAvatar(v, items[i].hpub, v.sw/2, v.sh-168 - f1*itemHeight*(i+1), itemHeight, f1*itemHeight)
     }
   }
 
