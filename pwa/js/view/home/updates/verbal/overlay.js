@@ -65,6 +65,20 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.iconSquare = true
   g.buttonFaceColor = colors.accent
   g.buttonTextColor = colors.background
+  g.renderFunc = function() {
+    const g = this, v = g.viewport
+    drawEllipse(v, g.buttonFaceColor || v.buttonFaceColor, g.x - g.h, g.y, g.w + g.h, g.h)
+    const font = g.font || iconFont
+    const c = g.icon.codePointAt(0)
+    const gi = font.glyphCodes.indexOf(c)
+    const iw = font.calcWidth(g.icon)
+    const ih = g.iconSquare? iw : font.glyphHeights[gi]
+    const s = 53/ih
+    mat4.identity(m)
+    mat4.translate(m, m, [g.x+g.w/2-(53/ih*iw)/2, g.y+g.h/2+53/2, 0])
+    mat4.scale(m, m, [s, s, 1])
+    font.draw(0,0, g.icon, g.buttonTextColor || v.buttonTextColor, v.mat, m)
+  }
   g.clickFunc = function() {
     const g = this, v = this.viewport
     if (contentView.textGad.text) {
@@ -212,7 +226,9 @@ v.renderFunc = function() {
   drawRect(v, alpha(colors.black, 0.70), 0,v.sh-168, v.sw,168)
 
   for (g of v.gadgets) {
-    if (g.label) {
+    if (g.renderFunc) {
+      g.renderFunc()
+    } else if (g.label) {
       drawPill(v, colors.inactiveDark, g.x,g.y, g.w,g.h)
       const font = g.font || defaultFont
       const s = g.textSize/14
