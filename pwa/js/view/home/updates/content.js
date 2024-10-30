@@ -45,7 +45,7 @@ v.clearQuery()
 v.queryFunc = function() {
   const v = this
   const ONE_MINUTE_IN_MILLISECONDS = 1 * 60 * 1000
-  if (!v.query.inProgress && v.query.lastCompleted < Date.now() - ONE_MINUTE_IN_MILLISECONDS) {
+  if (!v.query.inProgress /* && v.query.lastCompleted < Date.now() - ONE_MINUTE_IN_MILLISECONDS */) {
     v.query.inProgress = true
     console.log('getting updates')
     getUpdates().then(updates => {
