@@ -296,7 +296,7 @@ v.renderFunc = function() {
 
   if (f1) {
     const items = keys.filter(k=>k.hpub != v.hpub)
-    items.push({ hpub: '0101010101010101010101010101010101010101010101010101010101010101', option: 'Other...' })
+    items.push({ option: 'Other...' })
     const itemHeight = v.micSendGad.h
     const itemCount = items.length // keys.length - ((keys.map(k=>k.hpub).includes(v.hpub))?1:0) + 1
     const itemIndex = Math.floor((v.sh-168 - v.selectorY)/itemHeight)
