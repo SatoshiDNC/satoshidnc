@@ -5,7 +5,6 @@ import { getRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
 import { getKeyboardInput } from '../../../util.js'
-import * as nip19 from 'nostr-tools/nip19'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -115,7 +114,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     v.setRenderFlag(true)
     if (v.selectorItem?.hpub) {
       v.hpub = v.selectorItem.hpub
-    } else if (v.selectorItem.option == 'nsec') {
+    } else if (v.selectorItem?.option == 'nsec') {
       getKeyboardInput('Nostor secret key', '', value => {
         if (value !== undefined) {
 
