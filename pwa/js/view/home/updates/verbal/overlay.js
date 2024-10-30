@@ -16,6 +16,7 @@ v.pause = false
 v.selectorOpen = false
 v.selectorAnimValue = 0
 v.selectorY = 0
+v.selectorItem = {}
 v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
@@ -109,6 +110,9 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     v.selectorY = p.y / v.getScale()
     v.selectorOpen = false
     v.setRenderFlag(true)
+    if (v.selectorItem.hpub) {
+      v.hpub = v.selectorItem.hpub
+    }
   }
   g.clickFunc = function() {
     const g = this, v = this.viewport
@@ -300,6 +304,7 @@ v.renderFunc = function() {
     const itemHeight = v.micSendGad.h
     const itemCount = items.length // keys.length - ((keys.map(k=>k.hpub).includes(v.hpub))?1:0) + 1
     const itemIndex = Math.floor((v.sh-168 - v.selectorY)/itemHeight)
+    v.selectorItem = items[itemIndex]
     const x = v.sw/2, y = v.sh-168, w = v.sw - x, h = itemHeight
     const s = 29/14
     drawRect(v, alpha(colors.black, 0.70), x, y - f1*itemHeight*itemCount, w, f1*itemHeight*itemCount)
@@ -318,7 +323,6 @@ v.renderFunc = function() {
         }
         t = t+'...'
       }
-      console.log(w, h, s, max, defaultFont.calcWidth(t))
       mat4.identity(m)
       mat4.translate(m, m, [x+h*1.2, y-f1*(itemHeight*(i+1)-h/2), 0])
       mat4.scale(m, m, [s, s, 1])
