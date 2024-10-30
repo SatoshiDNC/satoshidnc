@@ -39,12 +39,19 @@ export function putDeviceKey(hpub, hsec) {
   }
 }
 
-export function putManualKey(hpub) {
+export function putVolatileKey(hpub) {
   const tr = db.transaction('keys', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('keys')
-  const req = os.put({ hpub, keyType: 'manual', lastUsed: Date.now() })
+  const req = os.put({ hpub, keyType: 'volatile', lastUsed: Date.now() })
   req.onsuccess = (e) => {
     reloadKeys()
+  }
+}
+
+const volatileKeys = []
+export function useVolatileKey(hpub, hsec) {
+  if (!volatileKeys.map(k=>k.hpub).includes(hpub)) {
+    volatileKeys.push({ hpub, hsec })
   }
 }
 

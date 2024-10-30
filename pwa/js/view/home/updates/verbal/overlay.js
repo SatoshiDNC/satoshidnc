@@ -1,6 +1,6 @@
 import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
-import { sign, keys, getKeyInfo, putDeviceKey, putManualKey } from '../../../../keys.js'
+import { sign, keys, getKeyInfo, putDeviceKey, putVolatileKey, useVolatileKey } from '../../../../keys.js'
 import { getRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
@@ -114,10 +114,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     v.selectorOpen = false
     v.setRenderFlag(true)
     if (v.selectorItem?.hpub) {
-      if (v.hpub != v.selectorItem.hpub) {
-        v.hpub = v.selectorItem.hpub
-        v.hsec = undefined
-      }
+      v.hpub = v.selectorItem.hpub
     } else if (v.selectorItem?.option == 'nsec') {
       getKeyboardInput('Nostor secret key', '', value => {
         if (value !== undefined) {
@@ -161,7 +158,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           // We have the hex secret key; use it
           const hpub = getPubkey(hsec)
           v.hpub = hpub
-          v.hsec = hsec
+          useVolatileKey(hpub, hsec)
           v.setRenderFlag(true)
 
           // housekeeping
@@ -173,7 +170,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
               if (confirm(`Remember this secret key on this device?`)) {
                 putDeviceKey(hpub, hsec)
               } else {
-                putManualKey(hpub)
+                putVolatileKey(hpub)
               }
             }
           }, 10)
@@ -304,7 +301,6 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
 v.setContext = function(hpub) {
   const v = this
   v.hpub = hpub
-  v.hsec = undefined
 }
 v.layoutFunc = function() {
   const v = this
