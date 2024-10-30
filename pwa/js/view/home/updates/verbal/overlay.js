@@ -12,6 +12,8 @@ v.buttonTextColor = colors.white
 v.titleColor = colors.white
 v.subtitleColor = colors.softWhite
 v.pause = false
+v.selectorOpen = false
+v.selectorAnimValue = 0
 v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
