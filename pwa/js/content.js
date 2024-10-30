@@ -3,6 +3,8 @@ import { randomRelay } from './relays.js'
 import { getRelay } from './nostor-app.js'
 import { contacts } from './contacts.js'
 
+export const eventLayoutTrigger = []
+
 export function aggregateEvent(e) {
   return new Promise((resolve, reject) => {
     if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid event')
@@ -17,6 +19,7 @@ export function aggregateEvent(e) {
         const req = os.add({ hpub: e.pubkey, firstSeen: now, data: e })
         req.onsuccess = () => {
           resolve()
+          eventLayoutTrigger.map(v => v.relayout())
         }
       } else {
         resolve()

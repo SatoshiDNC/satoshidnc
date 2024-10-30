@@ -1,6 +1,6 @@
 import { contacts, contactViewDependencies } from '../../../contacts.js'
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
-import { contentView as chatRoomView } from '../../chat-room/content.js'
+import { contentView as chatRoomView, eventLayoutTrigger } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
 import { getUpdates } from '../../../content.js'
@@ -45,7 +45,12 @@ v.clearQuery()
 v.queryFunc = function() {
   const v = this
   const ONE_SECOND_IN_MILLISECONDS = 1 * 1000
-  if (!v.query.inProgress && v.query.lastCompleted < Date.now() - ONE_SECOND_IN_MILLISECONDS) {
+  const now = Date.now()
+  if (!v.query.inProgress && v.query.lastCompleted < now - ONE_SECOND_IN_MILLISECONDS) {
+    if (v.query.timer) {
+      clearTimeout(v.query.timer)
+      v.query.timer = undefined
+    }
     v.query.inProgress = true
     getUpdates().then(updates => {
       v.query.inProgress = false
@@ -53,6 +58,8 @@ v.queryFunc = function() {
       v.query.results = updates
       v.relayout()
     })
+  } else {
+    v.query.timer = setTimeout(v.queryFunc(), v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS)
   }
 }
 v.layoutFunc = function() {
@@ -91,6 +98,7 @@ v.layoutFunc = function() {
 
   v.queryFunc()
 }
+eventLayoutTrigger.push(v)
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
