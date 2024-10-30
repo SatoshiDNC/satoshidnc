@@ -83,14 +83,16 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     mat4.scale(m, m, [s, s, 1])
     font.draw(0,0, g.icon, g.buttonTextColor || v.buttonTextColor, v.mat, m)
   }
-  g.dragBeginFunc = function() {
-    console.log('drag begin')
+  g.dragBeginFunc = function(p) {
+    console.log('drag begin', p)
+    v.selectorOpen = true
   }
-  g.dragMoveFunc = function() {
-    console.log('drag move')
+  g.dragMoveFunc = function(p) {
+    console.log('drag move', p)
   }
-  g.dragEndFunc = function() {
-    console.log('drag end')
+  g.dragEndFunc = function(p) {
+    console.log('drag end', p)
+    v.selectorOpen = false
   }
   g.clickFunc = function() {
     const g = this, v = this.viewport
