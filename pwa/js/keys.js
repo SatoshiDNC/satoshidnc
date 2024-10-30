@@ -1,4 +1,4 @@
-import { getPublicKey, finalizeEvent } from 'nostr-tools'
+import { getPublicKey, serializeEvent, finalizeEvent } from 'nostr-tools'
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
 import { Buffer } from 'buffer'
 import { db } from './db.js'
@@ -83,7 +83,7 @@ export function sign(hpub, event) {
   return new Promise((resolve, reject) => {
     const info = getKeyInfo(hpub)
     if (info.keyType == 'secret') {
-      if (confirm(`Are you sure you want to sign the following message? This document will become legally binding:\n\n${JSON.stringify(event)}`)) {
+      if (confirm(`Are you sure you want to sign the following message? This document will become legally binding:\n\n${JSON.stringify(serializeEvent(event))}`)) {
         const tr = db.transaction('keys', 'readonly')
         const os = tr.objectStore('keys')
         const req = os.get(hpub)
@@ -104,8 +104,7 @@ export function sign(hpub, event) {
           if (hsec) {
             try {
               const signed = finalizeEvent(event, hexToBytes(hsec))
-              //resolve(signed)
-              reject('disabled')
+              resolve(signed)
             } catch (e) {
               console.log(event)
               reject(`unable to sign: ${e}`)
