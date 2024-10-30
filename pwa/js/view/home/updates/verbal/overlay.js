@@ -5,6 +5,7 @@ import { getRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
 import { getKeyboardInput } from '../../../util.js'
+import * as nip19 from 'nostr-tools/nip19'
 
 let v, g
 export const overlayView = v = new fg.View(null)
