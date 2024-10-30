@@ -311,11 +311,12 @@ v.renderFunc = function() {
         drawAvatar(v, items[i].hpub, x + h*0.2, y - f1*itemHeight*(i+1) + h*0.1, h*0.8, f1*h*0.8)
       }
       let t = items[i].option || getAttr(items[i].hpub, 'name')
-      const max = (w - h - h*.04) / s
+      const max = (w - h - h*.04) * s
       if (defaultFont.calcWidth(t) > max) {
         while (defaultFont.calcWidth(t+'...') > max && t.length > 0) {
           t = t.substring(0, t.length-1)
         }
+        t = t+'...'
       }
       mat4.identity(m)
       mat4.translate(m, m, [x+h*1.2, y-f1*(itemHeight*(i+1)-h/2), 0])
