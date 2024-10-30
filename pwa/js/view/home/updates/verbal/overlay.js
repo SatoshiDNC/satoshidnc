@@ -14,6 +14,7 @@ v.subtitleColor = colors.softWhite
 v.pause = false
 v.selectorOpen = false
 v.selectorAnimValue = 0
+v.selectorY = 0
 v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
@@ -92,16 +93,19 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   }
   g.dragBeginFunc = function(p) {
     const g = this, v = g.viewport
+    v.selectorY = p.y
     v.selectorOpen = false
     v.setRenderFlag(true)
   }
   g.dragMoveFunc = function(p) {
     const g = this, v = g.viewport
+    v.selectorY = p.y
     v.selectorOpen = g.calcSwipeDir(p) == 'up'
     v.setRenderFlag(true)
   }
   g.dragEndFunc = function(p) {
     const g = this, v = g.viewport
+    v.selectorY = p.y
     v.selectorOpen = false
     v.setRenderFlag(true)
   }
@@ -293,6 +297,7 @@ v.renderFunc = function() {
     const itemHeight = v.micSendGad.h
     const itemCount = keys.length - ((keys.map(k=>k.hpub).includes(v.hpub))?1:0) + 1
     drawRect(v, alpha(colors.black, 0.70), v.sw/2, v.sh-168 - f1*itemHeight*itemCount, v.sw/2, f1*itemHeight*itemCount)
+    drawRect(v, alpha(colors.white, 0.70), v.sw/2, v.selectorY, v.sw/2, 10)
   }
 
 }
