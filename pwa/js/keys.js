@@ -26,14 +26,14 @@ export function getDefaultKeyInfo() {
 export function initDefaultKey() {
   const hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
   const hpub = getPublicKey(Buffer.from(hsec, 'hex'))
-  putSecretKey(hpub, hsec)
+  putDeviceKey(hpub, hsec)
   defaultKey = window.localStorage.setItem('hsec', hsec)||window.localStorage.getItem('hsec')
 }
 
-export function putSecretKey(hpub, hsec) {
+export function putDeviceKey(hpub, hsec) {
   const tr = db.transaction('keys', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('keys')
-  const req = os.put({ hpub, keyType: 'secret', hsec, lastUsed: Date.now() })
+  const req = os.put({ hpub, keyType: 'device', hsec, lastUsed: Date.now() })
   req.onsuccess = (e) => {
     reloadKeys()
   }
@@ -101,7 +101,7 @@ export function sign(hpub, eventTemplate) {
   }
   return new Promise((resolve, reject) => {
     const info = getKeyInfo(hpub)
-    if (info.keyType == 'secret') {
+    if (info.keyType == 'device') {
       if (confirm(`Are you sure you want to sign the following message? This document will become legally binding:\n${serializeEvent(event)}`)) {
         const tr = db.transaction('keys', 'readonly')
         const os = tr.objectStore('keys')
@@ -114,7 +114,7 @@ export function sign(hpub, eventTemplate) {
           if (hsec) {
             try {
               const signed = finalizeEvent(event, hexToBytes(hsec))
-              putSecretKey(hpub, hsec) // to update 'lastUsed' time stamp
+              putDeviceKey(hpub, hsec) // to update 'lastUsed' time stamp
               resolve(signed)
             } catch (e) {
               console.log(event)
