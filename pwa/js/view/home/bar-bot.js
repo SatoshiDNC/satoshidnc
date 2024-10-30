@@ -1,4 +1,4 @@
-import { drawPill, alpha } from '../../draw.js'
+import { drawPill, drawEllipse, alpha } from '../../draw.js'
 import { contentView } from './updates/content.js'
 
 let v, g
@@ -83,5 +83,6 @@ v.renderFunc = function() {
     mat4.translate(m,m, [g.x + (g.w - iconFont.calcWidth(g.icon) * s) / 2, g.y + (50 + 84)/2, 0])
     mat4.scale(m,m, [s, s, 1])
     iconFont.draw(0,0, g.icon, v.textColor, v.mat, m)
+    drawEllipse(v, colors.accent, g.x + g.w/2 + 23, g.y + 2, 32, 32)
   }
 }
