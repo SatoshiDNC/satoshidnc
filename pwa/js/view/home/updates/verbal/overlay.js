@@ -86,7 +86,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.calcSwipeDir = function(p) {
     const x = p.x - p.ox
     const y = p.y - p.oy
-    return (x>y)?((x>0)?'right':'left'):((y>0)?'down':'up')
+    return (x*x>y*y)?((x>0)?'right':'left'):((y>0)?'down':'up')
   }
   g.dragBeginFunc = function(p) {
     const g = this, v = g.viewport
