@@ -136,7 +136,7 @@ export function sign(hpub, eventTemplate) {
       }
     } else if (info.keyType == 'volatile') {
       const value = prompt('Nostor secret key', '')
-      if (value !== undefined) {
+      if (value !== null) {
 
         let hsec, relays
 
