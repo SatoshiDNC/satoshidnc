@@ -318,7 +318,7 @@ v.renderFunc = function() {
         }
         t = t+'...'
       }
-      console.log(max, defaultFont.calcWidth(t))
+      console.log(w, h, s, max, defaultFont.calcWidth(t))
       mat4.identity(m)
       mat4.translate(m, m, [x+h*1.2, y-f1*(itemHeight*(i+1)-h/2), 0])
       mat4.scale(m, m, [s, s, 1])
