@@ -5,6 +5,7 @@ import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
 import { getUpdates, eventTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
+import { barBot } from '../bar-bot.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -99,6 +100,8 @@ v.layoutFunc = function() {
   g.x = 0, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
+
+  barBot.paneGads.filter(g => g.label == 'Updates')[0].new = false
 }
 eventTrigger.push(() => {
   v.queryFunc()
