@@ -173,7 +173,7 @@ export function sign(hpub, eventTemplate) {
           reject(`unable to sign: unrecognized secret key format`)
           return
         }
-        const matching_hpub = getPubkey(hsec)
+        const matching_hpub = getPublicKey(Buffer.from(hsec, 'hex'))
         if (matching_hpub !== hpub) {
           reject(`unable to sign: secret key does not match public key`)
           return
