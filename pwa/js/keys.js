@@ -39,6 +39,15 @@ export function putSecretKey(hpub, hsec) {
   }
 }
 
+export function putManualKey(hpub) {
+  const tr = db.transaction('keys', 'readwrite', { durability: 'strict' })
+  const os = tr.objectStore('keys')
+  const req = os.put({ hpub, keyType: 'manual', lastUsed: Date.now() })
+  req.onsuccess = (e) => {
+    reloadKeys()
+  }
+}
+
 export function putTrezorKey(hpub, account) {
   const tr = db.transaction('keys', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('keys')

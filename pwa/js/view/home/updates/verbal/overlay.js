@@ -1,6 +1,6 @@
 import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
-import { sign, keys, getKeyInfo } from '../../../../keys.js'
+import { sign, keys, getKeyInfo, putDeviceKey, putManualKey } from '../../../../keys.js'
 import { getRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
@@ -115,6 +115,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     v.setRenderFlag(true)
     if (v.selectorItem?.hpub) {
       v.hpub = v.selectorItem.hpub
+      v.hsec = undefined
     } else if (v.selectorItem?.option == 'nsec') {
       getKeyboardInput('Nostor secret key', '', value => {
         if (value !== undefined) {
@@ -155,35 +156,26 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             return
           }
 
-          // We have the hex secret key; get the public key and try to recognize it
+          // We have the hex secret key; use it
           const hpub = getPubkey(hsec)
-          const name = getAttr(hpub, 'name')
-          const keyInfo = getKeyInfo(hpub)
-          console.log('public key data:', hpub, name, keyInfo)
+          v.hpub = hpub
+          v.hsec = hsec
+          v.setRenderFlag(true)
+
+          // housekeeping
+          setTimeout(() => {
+            const name = getAttr(hpub, 'name')
+            const keyInfo = getKeyInfo(hpub)
+            console.log('public key data:', hpub, name, keyInfo)
+            if (!keyInfo) {
+              if (confirm(`Remember this secret key on this device?`)) {
+                putDeviceKey(hpub, hsec)
+              } else {
+                putManualKey(hpub)
+              }
+            }
+          }, 10)
           
-          // // should we import the contact?
-
-          // let cancel = false
-          // const existing = contacts.filter(c => c.hpub == hpub)?.[0]
-          // if (existing) {
-          //   const existingName = getPersonalData(existing.hpub, 'name')
-          //   if (name != existingName) {
-          //     if (confirm(`Contact exists as '${existingName}'.\nUpdate name?`)) {
-          //       setPersonalData(hpub, 'name', name)
-          //     } else {
-          //       cancel = true
-          //     }
-          //   }
-          // } else {
-          //   addNewContact(hpub, name)
-          //   relays?.map(r => detectRelay(r))
-          //   relays?.map(r => addRelayContactRelation(r, hpub, R_KNOWS_C))
-          // }
-          // if (!cancel) {
-          //   g.root.easeOut(g.target)
-          //   g.formView.clear()
-          // }
-
         }
         v.setRenderFlag(true)
       })
@@ -310,6 +302,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
 v.setContext = function(hpub) {
   const v = this
   v.hpub = hpub
+  v.hsec = undefined
 }
 v.layoutFunc = function() {
   const v = this
