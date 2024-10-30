@@ -10,7 +10,7 @@ import { db } from './db.js'
 export const keyViewDependencies = []
 
 export const keys = []
-export let defaultKey = window.localStorage.getItem('hsec')
+export let defaultKey = window.localStorage.getItem('hpub')
 
 export function getKeyInfo(hpub) {
   return keys.filter(k => k.hpub == hpub)?.[0]
@@ -27,7 +27,7 @@ export function initDefaultKey() {
   const hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
   const hpub = getPublicKey(Buffer.from(hsec, 'hex'))
   putDeviceKey(hpub, hsec)
-  defaultKey = window.localStorage.setItem('hsec', hsec)||window.localStorage.getItem('hsec')
+  defaultKey = window.localStorage.setItem('hpub', hsec)||window.localStorage.getItem('hpub')
 }
 
 export function putDeviceKey(hpub, hsec) {
