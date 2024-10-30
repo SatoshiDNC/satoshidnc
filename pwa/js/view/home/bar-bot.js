@@ -9,7 +9,7 @@ v.textColor = [1,1,1,1]
 v.panes = [
   { label: 'Chats',       icon: '\x0e', scale: 50/14, new: Math.floor(Math.random()*150) },
   { label: 'Updates',     icon: '\x0c', scale: 25/14, new: true },
-  { label: 'Communities', icon: '\x09', scale: 25/14, new: false },
+  { label: 'Communities', icon: '\x09', scale: 25/14, new: NaN },
   { label: 'Calls',       icon: '\x0b', scale: 25/14, new: undefined },
 ]
 v.paneGads = []
