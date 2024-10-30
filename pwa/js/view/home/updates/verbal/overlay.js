@@ -2,6 +2,7 @@ import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../.
 import { contentView } from './content.js'
 import { sign, keys } from '../../../../keys.js'
 import { getRelay } from '../../../../nostor-app.js'
+import { getPersonalData as getAttr } from '../../../../../personal.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -306,11 +307,13 @@ v.renderFunc = function() {
       drawRect(v, colors.inactiveDark, x, y - f1*itemHeight*(itemIndex+1), w, f1*itemHeight)
     }
     for (let i = 0; i<itemCount; i++) {
-      drawAvatar(v, items[i].hpub, x + h*0.2, y - f1*itemHeight*(i+1) + h*0.1, h*0.8, f1*h*0.8)
+      if (items[i].hpub) {
+        drawAvatar(v, items[i].hpub, x + h*0.2, y - f1*itemHeight*(i+1) + h*0.1, h*0.8, f1*h*0.8)
+      }
       mat4.identity(m)
       mat4.translate(m, m, [x+h*1.2, y-f1*(itemHeight*(i+1)-h/2), 0])
       mat4.scale(m, m, [s, s, 1])
-      defaultFont.draw(0,7, 'Test', alpha(colors.white, f1), v.mat, m)
+      defaultFont.draw(0,7, items[i].option || getAttr(items[i].hpub, 'name'), alpha(colors.white, f1), v.mat, m)
     }
   }
 
