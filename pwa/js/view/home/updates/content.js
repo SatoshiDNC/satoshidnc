@@ -1,9 +1,9 @@
 import { contacts, contactViewDependencies } from '../../../contacts.js'
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
-import { contentView as chatRoomView, eventLayoutTrigger } from '../../chat-room/content.js'
+import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
-import { getUpdates } from '../../../content.js'
+import { getUpdates, eventLayoutTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
 
 let v, g
