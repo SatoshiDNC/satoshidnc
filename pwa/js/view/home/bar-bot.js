@@ -7,10 +7,10 @@ v.name = Object.keys({barBot}).pop()
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
 v.panes = [
-  { label: 'Chats',       icon: '\x0e', scale: 50/14 },
-  { label: 'Updates',     icon: '\x0c', scale: 25/14 },
-  { label: 'Communities', icon: '\x09', scale: 25/14 },
-  { label: 'Calls',       icon: '\x0b', scale: 25/14 },
+  { label: 'Chats',       icon: '\x0e', scale: 50/14, new: 10 },
+  { label: 'Updates',     icon: '\x0c', scale: 25/14, new: true },
+  { label: 'Communities', icon: '\x09', scale: 25/14, new: false },
+  { label: 'Calls',       icon: '\x0b', scale: 25/14, new: undefined },
 ]
 v.paneGads = []
 for (const pane of v.panes) {
@@ -22,6 +22,7 @@ for (const pane of v.panes) {
   g.icon = pane.icon
   g.iconScale = pane.scale
   g.animValue = 0
+  g.new = pane.new
   g.clickFunc = function() {
     const g = this, v = g.viewport
     v.activeLabel = g.label
@@ -42,7 +43,6 @@ v.layoutFunc = function() {
   for (const g of v.paneGads) {
     g.x = x + (v.sw / 4 - g.w) / 2, g.y = 33
     g.autoHull()
-    g.new = true
     x += v.sw /4
   }
 }
