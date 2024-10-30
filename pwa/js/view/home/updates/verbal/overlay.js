@@ -82,11 +82,16 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         console.log('sending...')
         const name = 'relay.satoshidnc.com'
         getRelay(name).then(relay => {
-          relay.sendEvent(event).then(() => {
-            v.closeGad.clickFunc()
-          }).catch(reason => {
+          let sent = false
+          try {
+            relay.sendEvent(event)
+            sent = true
+          } catch (reason) {
             alert(`send to ${relay.url} failed: ${reason}`)
-          })
+          }
+          if (sent) {
+            v.closeGad.clickFunc()
+          }
         }, reason => {
           alert(`connect to ${name} failed: ${reason}`)
         })
