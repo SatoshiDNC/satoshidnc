@@ -296,7 +296,9 @@ v.renderFunc = function() {
   if (f1) {
     const itemHeight = v.micSendGad.h
     const itemCount = keys.length - ((keys.map(k=>k.hpub).includes(v.hpub))?1:0) + 1
+    const itemIndex = 0
     drawRect(v, alpha(colors.black, 0.70), v.sw/2, v.sh-168 - f1*itemHeight*itemCount, v.sw/2, f1*itemHeight*itemCount)
+    drawRect(v, alpha(colors.white, 0.70), v.sw/2, v.sh-168 - f1*itemHeight*(itemIndex+1), v.sw/2, f1*itemHeight)
     drawRect(v, alpha(colors.white, 0.70), v.sw/2, v.selectorY, v.sw/2, 10)
   }
 
