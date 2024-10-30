@@ -93,19 +93,19 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   }
   g.dragBeginFunc = function(p) {
     const g = this, v = g.viewport
-    v.selectorY = p.y * v.getScale()
+    v.selectorY = p.y / v.getScale()
     v.selectorOpen = false
     v.setRenderFlag(true)
   }
   g.dragMoveFunc = function(p) {
     const g = this, v = g.viewport
-    v.selectorY = p.y * v.getScale()
+    v.selectorY = p.y / v.getScale()
     v.selectorOpen = g.calcSwipeDir(p) == 'up'
     v.setRenderFlag(true)
   }
   g.dragEndFunc = function(p) {
     const g = this, v = g.viewport
-    v.selectorY = p.y * v.getScale()
+    v.selectorY = p.y / v.getScale()
     v.selectorOpen = false
     v.setRenderFlag(true)
   }
