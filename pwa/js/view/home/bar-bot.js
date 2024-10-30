@@ -42,6 +42,7 @@ v.layoutFunc = function() {
   for (const g of v.paneGads) {
     g.x = x + (v.sw / 4 - g.w) / 2, g.y = 33
     g.autoHull()
+    g.new = undefined
     x += v.sw /4
   }
 }
@@ -73,16 +74,25 @@ v.renderFunc = function() {
     const f1 = g.animValue
     const f0 = 1 - f1
     drawPill(v, alpha(colors.accentDark, f1), g.x + g.w/2 * f0, g.y, g.w * f1, 84)
-    mat4.identity(m)
     let s = 26/14
+    mat4.identity(m)
     mat4.translate(m,m, [g.x + (g.w - defaultFont.calcWidth(g.label) * s) / 2, g.y + g.h, 0])
     mat4.scale(m,m, [s, s, 1])
     defaultFont.draw(0,0, g.label, v.textColor, v.mat, m)
-    mat4.identity(m)
     s = 50/iconFont.glyphHeights[g.icon.codePointAt(0)]
+    mat4.identity(m)
     mat4.translate(m,m, [g.x + (g.w - iconFont.calcWidth(g.icon) * s) / 2, g.y + (50 + 84)/2, 0])
     mat4.scale(m,m, [s, s, 1])
     iconFont.draw(0,0, g.icon, v.textColor, v.mat, m)
-    drawEllipse(v, colors.accent, g.x + g.w/2 + 23, g.y + 2, 32, 32)
+    if (g.new) {
+      drawEllipse(v, colors.accent, g.x + g.w/2 + 23, g.y + 2, 32, 32)
+      if (!isNaN(g.new)) {
+        s = 21/14
+        mat4.identity(m)
+        mat4.translate(m,m, [g.x + g.w/2 + 23 + 16, g.y + 2 + 16, 0])
+        mat4.scale(m,m, [s, s, 1])
+        defaultFont.draw(0,7, g.new, colors.inactiveDark, v.mat, m)
+      }
+    }
   }
 }
