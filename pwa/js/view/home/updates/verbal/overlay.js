@@ -306,9 +306,9 @@ v.renderFunc = function() {
       drawRect(v, colors.inactiveDark, x, y - f1*itemHeight*(itemIndex+1), w, f1*itemHeight)
     }
     for (let i = 0; i<itemCount; i++) {
-      drawAvatar(v, items[i].hpub, x + h*0.05, y - f1*itemHeight*(i+1) + h*0.05, h*0.9, f1*h*0.9)
+      drawAvatar(v, items[i].hpub, x + h*0.2, y - f1*itemHeight*(i+1) + h*0.1, h*0.8, f1*h*0.8)
       mat4.identity(m)
-      mat4.translate(m, m, [x+h, y-f1*itemHeight*(i+1)+h/2, 0])
+      mat4.translate(m, m, [x+h*1.2, y-f1*itemHeight*(i+1)+h/2, 0])
       mat4.scale(m, m, [s, s, 1])
       defaultFont.draw(0,7, 'Test', alpha(colors.white, f1), v.mat, m)
     }
