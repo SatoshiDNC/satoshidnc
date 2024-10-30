@@ -79,7 +79,17 @@ export function reloadKeys() {
   })
 }
 
-export function sign(hpub, event) {
+export function sign(hpub, eventTemplate) {
+  const event = {...eventTemplate}
+  if (!event.content) {
+    event.content = ''
+  }
+  if (!event.created_at) {
+    event.created_at = Math.floor(Date.now() / 1000)
+  }
+  if (!event.pubkey) {
+    event.pubkey = hpub
+  }
   return new Promise((resolve, reject) => {
     const info = getKeyInfo(hpub)
     if (info.keyType == 'secret') {
@@ -92,15 +102,6 @@ export function sign(hpub, event) {
         }
         req.onsuccess = function(e) {
           const hsec = e.target.result.hsec
-          if (!event.content) {
-            event.content = ''
-          }
-          if (!event.created_at) {
-            event.created_at = Math.floor(Date.now() / 1000)
-          }
-          if (!event.pubkey) {
-            event.pubkey = hpub
-          }
           if (hsec) {
             try {
               const signed = finalizeEvent(event, hexToBytes(hsec))
