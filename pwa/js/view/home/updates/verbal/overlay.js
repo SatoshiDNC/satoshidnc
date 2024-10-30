@@ -67,6 +67,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.buttonTextColor = colors.background
   g.renderFunc = function() {
     const g = this, v = g.viewport
+    const m = mat4.create()
     drawPill(v, g.buttonFaceColor || v.buttonFaceColor, g.x - g.h, g.y, g.w + g.h, g.h)
     drawAvatar(v, defaultKey, g.x - g.h, g.y, g.h, g.h)
     const font = g.font || iconFont
