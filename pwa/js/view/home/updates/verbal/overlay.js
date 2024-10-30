@@ -83,14 +83,22 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     mat4.scale(m, m, [s, s, 1])
     font.draw(0,0, g.icon, g.buttonTextColor || v.buttonTextColor, v.mat, m)
   }
+  g.calcSwipeDir = function(p) {
+    const x = p.x - p.ox
+    const y = p.y - p.oy
+    return (x>y)?((x>0)?'right':'left'):((y>0)?'down':'up')
+  }
   g.dragBeginFunc = function(p) {
+    const g = this, v = g.viewport
     console.log('drag begin', p)
-    v.selectorOpen = true
+    v.selectorOpen = g.calcSwipeDir(p) == 'up'
   }
   g.dragMoveFunc = function(p) {
+    const g = this, v = g.viewport
     console.log('drag move', p.dx, p.dy)
   }
   g.dragEndFunc = function(p) {
+    const g = this, v = g.viewport
     console.log('drag end', p)
     v.selectorOpen = false
   }
