@@ -16,7 +16,7 @@ v.pause = false
 v.selectorOpen = false
 v.selectorAnimValue = 0
 v.selectorY = 0
-v.selectorItem = {}
+v.selectorItem = undefined
 v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 34, g.y = 34, g.w = 110, g.h = 110
@@ -110,7 +110,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     v.selectorY = p.y / v.getScale()
     v.selectorOpen = false
     v.setRenderFlag(true)
-    if (v.selectorItem.hpub) {
+    if (v.selectorItem?.hpub) {
       v.hpub = v.selectorItem.hpub
     }
   }
