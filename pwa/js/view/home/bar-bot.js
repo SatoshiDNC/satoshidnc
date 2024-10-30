@@ -91,7 +91,7 @@ v.renderFunc = function() {
         mat4.identity(m)
         mat4.translate(m,m, [g.x + g.w/2 + 23 + 16, g.y + 2 + 16, 0])
         mat4.scale(m,m, [s, s, 1])
-        defaultFont.draw(0,7, g.new, colors.inactiveDark, v.mat, m)
+        defaultFont.draw(0,7, `${g.new}`, colors.inactiveDark, v.mat, m)
       }
     }
   }
