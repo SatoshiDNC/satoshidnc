@@ -95,7 +95,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   }
   g.dragMoveFunc = function(p) {
     const g = this, v = g.viewport
-    console.log('drag move', v.selectorOpen)
+    console.log('drag move', v.selectorOpen, g.calcSwipeDir(p))
   }
   g.dragEndFunc = function(p) {
     const g = this, v = g.viewport
