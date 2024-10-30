@@ -1,6 +1,6 @@
 import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
-import { defaultKey, sign } from '../../../../keys.js'
+import { sign } from '../../../../keys.js'
 import { getRelay } from '../../../../nostor-app.js'
 
 let v, g
@@ -200,9 +200,9 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       })
     }
   }
-v.setContext = function() {
+v.setContext = function(hpub) {
   const v = this
-  v.hpub = defaultKey
+  v.hpub = hpub
 }
 v.layoutFunc = function() {
   const v = this
