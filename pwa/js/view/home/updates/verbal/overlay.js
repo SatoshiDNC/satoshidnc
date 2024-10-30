@@ -310,7 +310,7 @@ v.renderFunc = function() {
       mat4.identity(m)
       mat4.translate(m, m, [x+h, y-f1*itemHeight*(i+1), 0])
       mat4.scale(m, m, [s, s, 1])
-      defaultFont.draw(x,y, 'Test', colors.white, v.mat, m)
+      defaultFont.draw(0,0, 'Test', colors.white, v.mat, m)
     }
   }
 
