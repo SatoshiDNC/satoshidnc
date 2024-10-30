@@ -294,12 +294,17 @@ v.renderFunc = function() {
   const f0 = 1 - f1
 
   if (f1) {
+    const items = keys.filter(k=>k.hpub != v.hpub)
+    items.push({ hpub: '0101010101010101010101010101010101010101010101010101010101010101', option: 'Other...' })
     const itemHeight = v.micSendGad.h
-    const itemCount = keys.length - ((keys.map(k=>k.hpub).includes(v.hpub))?1:0) + 1
+    const itemCount = items.length // keys.length - ((keys.map(k=>k.hpub).includes(v.hpub))?1:0) + 1
     const itemIndex = Math.floor((v.sh-168 - v.selectorY)/itemHeight)
     drawRect(v, alpha(colors.black, 0.70), v.sw/2, v.sh-168 - f1*itemHeight*itemCount, v.sw/2, f1*itemHeight*itemCount)
     if (itemIndex >= 0 && itemIndex < itemCount) {
       drawRect(v, colors.inactiveDark, v.sw/2, v.sh-168 - f1*itemHeight*(itemIndex+1), v.sw/2, f1*itemHeight)
+    }
+    for (i = 0; i<itemCount; i++) {
+      drawAvatar(v, items[i].hpub, v.sw/2, v.sh-168 - f1*itemHeight*(i+1), v.sw/2, f1*itemHeight)
     }
   }
 
