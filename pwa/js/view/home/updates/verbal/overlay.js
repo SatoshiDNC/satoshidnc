@@ -70,7 +70,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     const m = mat4.create()
     drawPill(v, g.buttonFaceColor || v.buttonFaceColor, g.x - g.h, g.y, g.w + g.h, g.h)
     drawRect(v, colors.inactiveDark, g.x - g.h, g.y, g.h, g.h)
-    drawAvatar(v, defaultKey, g.x - g.h, g.y, g.h, g.h)
+    drawAvatar(v, v.hpub, g.x - g.h, g.y, g.h, g.h)
     const font = g.font || iconFont
     const c = g.icon.codePointAt(0)
     const gi = font.glyphCodes.indexOf(c)
@@ -94,7 +94,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           ['bgcolor', `${rrggbb(contentView.bgColor)}`],
         ],
       }
-      sign(defaultKey, note).then(event => {
+      sign(v.hpub, note).then(event => {
         console.log(event)
         console.log('sending...')
         const name = 'relay.satoshidnc.com'
@@ -202,6 +202,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   }
 v.setContext = function() {
   const v = this
+  v.hpub = defaultKey
 }
 v.layoutFunc = function() {
   const v = this
