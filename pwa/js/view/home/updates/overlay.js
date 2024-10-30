@@ -1,4 +1,4 @@
-import { defaultKey } from '../../../../keys.js'
+import { defaultKey } from '../../../keys.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
