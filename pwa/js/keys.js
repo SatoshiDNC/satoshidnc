@@ -83,34 +83,38 @@ export function sign(hpub, event) {
   return new Promise((resolve, reject) => {
     const info = getKeyInfo(hpub)
     if (info.keyType == 'secret') {
-      const tr = db.transaction('keys', 'readonly')
-      const os = tr.objectStore('keys')
-      const req = os.get(hpub)
-      req.onerror = function(e) {
-        reject(`unable to sign: ${e}`)
-      }
-      req.onsuccess = function(e) {
-        const hsec = e.target.result.hsec
-        if (!event.content) {
-          event.content = ''
+      if (confirm(`Are you sure you want to sign the following message? This document will become legally binding:\n\n${JSON.stringify(event)}`)) {
+        const tr = db.transaction('keys', 'readonly')
+        const os = tr.objectStore('keys')
+        const req = os.get(hpub)
+        req.onerror = function(e) {
+          reject(`unable to sign: ${e}`)
         }
-        if (!event.created_at) {
-          event.created_at = Math.floor(Date.now() / 1000)
-        }
-        if (!event.pubkey) {
-          event.pubkey = hpub
-        }
-        if (hsec) {
-          try {
-            const signed = finalizeEvent(event, hexToBytes(hsec))
-            resolve(signed)
-          } catch (e) {
-            console.log(event)
-            reject(`unable to sign: ${e}`)
+        req.onsuccess = function(e) {
+          const hsec = e.target.result.hsec
+          if (!event.content) {
+            event.content = ''
           }
-        } else {
-          reject(`unable to sign: secret key not found`)
+          if (!event.created_at) {
+            event.created_at = Math.floor(Date.now() / 1000)
+          }
+          if (!event.pubkey) {
+            event.pubkey = hpub
+          }
+          if (hsec) {
+            try {
+              const signed = finalizeEvent(event, hexToBytes(hsec))
+              resolve(signed)
+            } catch (e) {
+              console.log(event)
+              reject(`unable to sign: ${e}`)
+            }
+          } else {
+            reject(`unable to sign: secret key not found`)
+          }
         }
+      } else {
+        reject(`canceled by user`)
       }
     } else {
       reject(`unable to sign: key type '${info.keyType}' not implemented`)
