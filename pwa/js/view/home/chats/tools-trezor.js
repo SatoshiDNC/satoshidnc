@@ -10,7 +10,7 @@ import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-
 
 import * as nip19 from 'nostr-tools/nip19'
 import { Buffer } from 'buffer'
-import { getKeyInfo, addTrezorKey } from '../../../keys.js'
+import { getKeyInfo, putTrezorKey } from '../../../keys.js'
 import { getPersonalData, setPersonalData } from '../../../personal.js'
 
 /* secret key should not leave this file */
@@ -163,7 +163,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               item.subtitle = item.npub
               v.setRenderFlag(true)
               if (!getKeyInfo(item.hpub)) {
-                addTrezorKey(item.hpub, n)
+                putTrezorKey(item.hpub, n)
               }
               if (!getPersonalData(item.hpub, 'name')) setPersonalData(item.hpub, 'name', `Trezor Account ${n}`)
               // menuRoot.followUp = () => {

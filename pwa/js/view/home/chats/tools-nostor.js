@@ -6,7 +6,7 @@ import { finalizeEvent } from 'nostr-tools'
 
 // import * as nip19 from 'nostr-tools/nip19'
 // import { Buffer } from 'buffer'
-// import { getKeyInfo, addTrezorKey } from '../../keys.js'
+// import { getKeyInfo, putTrezorKey } from '../../keys.js'
 // import { getPersonalData, setPersonalData } from '../../personal.js'
 
 // /* secret key should not leave this file */

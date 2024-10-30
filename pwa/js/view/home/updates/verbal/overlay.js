@@ -1,6 +1,6 @@
 import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
-import { sign } from '../../../../keys.js'
+import { sign, keys } from '../../../../keys.js'
 import { getRelay } from '../../../../nostor-app.js'
 
 let v, g
@@ -289,6 +289,10 @@ v.renderFunc = function() {
   const f1 = v.selectorAnimValue
   const f0 = 1 - f1
 
-  drawRect(v, alpha(colors.black, 0.70), v.sw/2, v.sh-168 - f1*300, v.sw/2, f1*300)
+  if (f1) {
+    const itemHeight = v.micSendGad.h
+    const itemCount = keys.length - ((keys.map(k=>k.hpub).includes(v.hpub))?1:0) + 1
+    drawRect(v, alpha(colors.black, 0.70), v.sw/2, v.sh-168 - f1*itemHeight*itemCount, v.sw/2, f1*itemHeight*itemCount)
+  }
 
 }

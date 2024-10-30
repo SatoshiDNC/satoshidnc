@@ -26,23 +26,23 @@ export function getDefaultKeyInfo() {
 export function initDefaultKey() {
   const hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
   const hpub = getPublicKey(Buffer.from(hsec, 'hex'))
-  addSecretKey(hpub, hsec)
+  putSecretKey(hpub, hsec)
   defaultKey = window.localStorage.setItem('hsec', hsec)||window.localStorage.getItem('hsec')
 }
 
-export function addSecretKey(hpub, hsec) {
+export function putSecretKey(hpub, hsec) {
   const tr = db.transaction('keys', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('keys')
-  const req = os.put({ hpub, keyType: 'secret', hsec })
+  const req = os.put({ hpub, keyType: 'secret', hsec, lastUsed: Date.now() })
   req.onsuccess = (e) => {
     reloadKeys()
   }
 }
 
-export function addTrezorKey(hpub, account) {
+export function putTrezorKey(hpub, account) {
   const tr = db.transaction('keys', 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('keys')
-  const req = os.put({ hpub, keyType: 'trezor', account })
+  const req = os.put({ hpub, keyType: 'trezor', account, lastUsed: Date.now() })
   req.onsuccess = (e) => {
     reloadKeys()
   }
@@ -61,7 +61,7 @@ export function reloadKeys() {
       let cursor = e.target.result
       if (cursor) {
         let v = cursor.value
-        newList.push({ hpub: v.hpub, keyType: v.keyType })
+        newList.push({ hpub: v.hpub, keyType: v.keyType, lastUsed: v.lastUsed || 0 })
         cursor.continue()
       } else {
         keys.length = 0
@@ -105,6 +105,7 @@ export function sign(hpub, eventTemplate) {
           if (hsec) {
             try {
               const signed = finalizeEvent(event, hexToBytes(hsec))
+              putSecretKey(hpub, hsec) // to update 'lastUsed' time stamp
               resolve(signed)
             } catch (e) {
               console.log(event)
