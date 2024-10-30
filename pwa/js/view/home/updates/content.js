@@ -47,7 +47,9 @@ v.queryFunc = function() {
   const ONE_MINUTE_IN_MILLISECONDS = 1 * 60 * 1000
   if (!v.query.inProgress && v.query.lastCompleted < Date.now() - ONE_MINUTE_IN_MILLISECONDS) {
     v.query.inProgress = true
+    console.log('getting updates')
     getUpdates().then(updates => {
+      console.log('got updates')
       v.query.inProgress = false
       v.query.lastCompleted = Date.now()
       v.query.results = updates
@@ -57,6 +59,7 @@ v.queryFunc = function() {
 }
 v.layoutFunc = function() {
   const v = this
+  console.log('relayout')
 
   const recents = []
   const viewed = []
