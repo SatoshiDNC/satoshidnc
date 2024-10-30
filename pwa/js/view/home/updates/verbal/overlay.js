@@ -300,7 +300,7 @@ v.renderFunc = function() {
     const itemCount = items.length // keys.length - ((keys.map(k=>k.hpub).includes(v.hpub))?1:0) + 1
     const itemIndex = Math.floor((v.sh-168 - v.selectorY)/itemHeight)
     const x = v.sw/2, y = v.sh-168, w = v.sw - x, h = itemHeight
-    const s = 53/14
+    const s = 29/14
     drawRect(v, alpha(colors.black, 0.70), x, y - f1*itemHeight*itemCount, w, f1*itemHeight*itemCount)
     if (itemIndex >= 0 && itemIndex < itemCount) {
       drawRect(v, colors.inactiveDark, x, y - f1*itemHeight*(itemIndex+1), w, f1*itemHeight)
