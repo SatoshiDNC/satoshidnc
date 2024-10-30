@@ -88,10 +88,11 @@ v.renderFunc = function() {
       drawEllipse(v, colors.accent, g.x + g.w/2 + 23, g.y + 2, 32, 32)
       if (!isNaN(g.new)) {
         s = 21/14
+        let t = `${g.new}`
         mat4.identity(m)
         mat4.translate(m,m, [g.x + g.w/2 + 23 + 16, g.y + 2 + 16, 0])
         mat4.scale(m,m, [s, s, 1])
-        defaultFont.draw(0,7, `${g.new}`, colors.inactiveDark, v.mat, m)
+        defaultFont.draw(-defaultFont.calcWidth(t)/2,7, t, colors.inactiveDark, v.mat, m)
       }
     }
   }
