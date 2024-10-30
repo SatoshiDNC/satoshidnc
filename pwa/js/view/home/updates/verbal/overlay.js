@@ -299,12 +299,13 @@ v.renderFunc = function() {
     const itemHeight = v.micSendGad.h
     const itemCount = items.length // keys.length - ((keys.map(k=>k.hpub).includes(v.hpub))?1:0) + 1
     const itemIndex = Math.floor((v.sh-168 - v.selectorY)/itemHeight)
-    drawRect(v, alpha(colors.black, 0.70), v.sw/2, v.sh-168 - f1*itemHeight*itemCount, v.sw/2, f1*itemHeight*itemCount)
+    const x = v.sw/2, y = v.sh-168, w = v.sw - x, h = itemHeight
+    drawRect(v, alpha(colors.black, 0.70), x, y - f1*itemHeight*itemCount, w, f1*itemHeight*itemCount)
     if (itemIndex >= 0 && itemIndex < itemCount) {
-      drawRect(v, colors.inactiveDark, v.sw/2, v.sh-168 - f1*itemHeight*(itemIndex+1), v.sw/2, f1*itemHeight)
+      drawRect(v, colors.inactiveDark, x, y - f1*itemHeight*(itemIndex+1), w, f1*itemHeight)
     }
     for (let i = 0; i<itemCount; i++) {
-      drawAvatar(v, items[i].hpub, v.sw/2, v.sh-168 - f1*itemHeight*(i+1), itemHeight, f1*itemHeight)
+      drawAvatar(v, items[i].hpub, x + h*0.05, y - f1*itemHeight*(i+1) + h*0.05, h*0.9, f1*h*0.9)
     }
   }
 
