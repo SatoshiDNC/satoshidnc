@@ -90,17 +90,14 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   }
   g.dragBeginFunc = function(p) {
     const g = this, v = g.viewport
-    console.log('drag begin', p)
     v.selectorOpen = false
   }
   g.dragMoveFunc = function(p) {
     const g = this, v = g.viewport
     v.selectorOpen = g.calcSwipeDir(p) == 'up'
-    console.log('drag move', v.selectorOpen)
   }
   g.dragEndFunc = function(p) {
     const g = this, v = g.viewport
-    console.log('drag end', p)
     v.selectorOpen = false
   }
   g.clickFunc = function() {
@@ -275,5 +272,18 @@ v.renderFunc = function() {
       font.draw(0,0, g.icon, g.buttonTextColor || v.buttonTextColor, v.mat, m)
     }
   }
+
+  const goal = v.selectorOpen? 1: 0
+  if (v.selectorAnimValue != goal) {
+    v.selectorAnimValue = v.selectorAnimValue * 0.7 + goal * 0.3
+    if (Math.abs(goal - v.selectorAnimValue) < 0.005) {
+      v.selectorAnimValue = goal
+    }
+    setTimeout(() => { v.setRenderFlag(true) })
+  }
+  const f1 = v.selectorAnimValue
+  const f0 = 1 - f1
+
+  drawRect(v, alpha(colors.black, 0.70), v.sw/2, v.sh-168 - f1*300, v.sw/2, f1*300)
 
 }
