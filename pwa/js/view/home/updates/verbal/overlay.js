@@ -284,6 +284,7 @@ v.renderFunc = function() {
   const f1 = v.selectorAnimValue
   const f0 = 1 - f1
 
+  console.log(v.selectorOpen, f1)
   drawRect(v, alpha(colors.black, 0.70), v.sw/2, v.sh-168 - f1*300, v.sw/2, f1*300)
 
 }
