@@ -96,7 +96,9 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           alert(`connect to ${name} failed: ${reason}`)
         })
       }).catch(reason => {
-        alert(reason)
+        if (reason !== 'canceled by user') {
+          alert(reason)
+        }
       })
     } else {
       console.log('mic')
