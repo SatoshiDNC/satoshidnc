@@ -67,7 +67,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
   g.buttonTextColor = colors.background
   g.renderFunc = function() {
     const g = this, v = g.viewport
-    drawEllipse(v, g.buttonFaceColor || v.buttonFaceColor, g.x - g.h, g.y, g.w + g.h, g.h)
+    drawPill(v, g.buttonFaceColor || v.buttonFaceColor, g.x - g.h, g.y, g.w + g.h, g.h)
     const font = g.font || iconFont
     const c = g.icon.codePointAt(0)
     const gi = font.glyphCodes.indexOf(c)
