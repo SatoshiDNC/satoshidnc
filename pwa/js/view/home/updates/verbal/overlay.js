@@ -299,7 +299,7 @@ v.renderFunc = function() {
     const itemIndex = 0
     drawRect(v, alpha(colors.black, 0.70), v.sw/2, v.sh-168 - f1*itemHeight*itemCount, v.sw/2, f1*itemHeight*itemCount)
     drawRect(v, alpha(colors.white, 0.70), v.sw/2, v.sh-168 - f1*itemHeight*(itemIndex+1), v.sw/2, f1*itemHeight)
-    drawRect(v, alpha(colors.white, 0.70), v.sw/2, v.selectorY - v.sh-168, v.sw/2, 10)
+    drawRect(v, alpha(colors.white, 0.70), v.sw/2, v.sh-168 - v.selectorY, v.sw/2, 10)
   }
 
 }
