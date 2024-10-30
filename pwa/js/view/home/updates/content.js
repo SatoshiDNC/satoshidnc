@@ -46,11 +46,11 @@ v.queryFunc = function() {
   const v = this
   const ONE_SECOND_IN_MILLISECONDS = 1 * 1000
   const now = Date.now()
+  if (v.query.timer) {
+    clearTimeout(v.query.timer)
+    v.query.timer = undefined
+  }
   if (!v.query.inProgress && v.query.lastCompleted < now - ONE_SECOND_IN_MILLISECONDS) {
-    if (v.query.timer) {
-      clearTimeout(v.query.timer)
-      v.query.timer = undefined
-    }
     v.query.inProgress = true
     getUpdates().then(updates => {
       v.query.inProgress = false
@@ -59,7 +59,11 @@ v.queryFunc = function() {
       v.relayout()
     })
   } else {
-    v.query.timer = setTimeout(v.queryFunc(), v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS)
+    v.query.timer = setTimeout(() => {
+      v.query.timer = undefined
+      v.queryFunc()
+    }, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS)
+    console.log('query delay:', v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS)
   }
 }
 v.layoutFunc = function() {
