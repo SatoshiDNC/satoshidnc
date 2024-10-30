@@ -383,7 +383,7 @@ v.renderFunc = function() {
       if (items[i].hpub) {
         drawAvatar(v, items[i].hpub, x + h*0.2, y - f1*itemHeight*(i+1) + h*0.1, h*0.8, f1*h*0.8)
       }
-      let t = items[i].optionLabel || getAttr(items[i].hpub, 'name')
+      let t = items[i].optionLabel || getAttr(items[i].hpub, 'name') || ''
       const max = (w - h - h*0.4) / s
       if (defaultFont.calcWidth(t) > max) {
         while (defaultFont.calcWidth(t+'...') > max && t.length > 0) {
