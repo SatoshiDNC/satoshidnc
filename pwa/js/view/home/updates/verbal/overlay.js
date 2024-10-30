@@ -88,7 +88,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     v.selectorOpen = true
   }
   g.dragMoveFunc = function(p) {
-    console.log('drag move', ox, oy)
+    console.log('drag move', p.ox, p.oy)
   }
   g.dragEndFunc = function(p) {
     console.log('drag end', p)
