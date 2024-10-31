@@ -11,7 +11,7 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 const settingsPages = [
-  { h: 237, ty: 109, sty: 165, title: 'Manage storage', subtitle: '4.8 GB', underbar: true },
+  { title: 'Manage storage', subtitle: '4.8 GB', underbar: true },
   { title: 'Network usage', subtitle: '2.2 GB sent · 9.7 GB received' },
   { title: 'Use less data for calls' },
   { title: 'Proxy', subtitle: 'Off' },
@@ -28,7 +28,7 @@ for (const p of settingsPages) {
   g.actionFlags = fg.GAF_CLICKABLE
   g.class = 'settings'
   g.x = 0, g.y = y
-  g.h = p.h || 210
+  g.h = p.h || 237
   g.clickFunc = function() {
     const g = this, v = g.viewport
     console.log('click:', g.title)
@@ -41,7 +41,7 @@ for (const p of settingsPages) {
     let t
 
     mat4.identity(m)
-    mat4.translate(m,m, [g.x + 190, g.y + (g.ty || 90) + offset*subtitleMissing, 0])
+    mat4.translate(m,m, [g.x + 190, g.y + (g.ty || 109) + offset*subtitleMissing, 0])
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 190 - 65
@@ -58,7 +58,7 @@ for (const p of settingsPages) {
 
     if (!subtitleMissing) {
       mat4.identity(m)
-      mat4.translate(m,m, [g.x + 190, g.y + (g.sty || 156) /*433*/, 0])
+      mat4.translate(m,m, [g.x + 190, g.y + (g.sty || 165) /*433*/, 0])
       const s3 = 29/14
       mat4.scale(m,m, [s3, s3, 1])
       const w4 = v.sw - 190 - 65
