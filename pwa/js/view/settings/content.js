@@ -5,6 +5,7 @@ import { defaultKey } from '../../keys.js'
 import { getPersonalData as getAttr } from '../../personal.js'
 
 let v, g
+const m = mat4.create()
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
 v.splashMode = 0
@@ -44,18 +45,73 @@ v.gadgets.push(g = v.profileGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     g.root.easeOut(g.target)
   }
-v.gadgets.push(g = v.listGad = new fg.Gadget(v))
+const settingsPages = [
+  { title: 'Account', subtitle: 'Security notifications, change number' },
+  { title: 'Privacy', subtitle: 'Block contacts, disappearing messages' },
+  { title: 'Avatar', subtitle: 'Create, edit, profile photo' },
+  { title: 'Favorites', subtitle: 'Add, reorder, remove' },
+  { title: 'Chats', subtitle: 'Theme, wallpapers, chat history' },
+  { title: 'Notifications', subtitle: 'Message, group & call tones' },
+  { title: 'Storage and data', subtitle: 'Network usage, auto-download' },
+  { title: 'App language', subtitle: 'English (device’s language)' },
+  { title: 'Help', subtitle: 'Help center, contact us, privacy policy' },
+  { title: 'Invite a friend' },
+]
+let i = 0
+for (p of settingsPages) {
+  v.gadgets.push(g = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.clickFunc = function(e) {
-    const g = this, v = this.viewport
-    const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
-    const index = Math.floor((y - 167.5) / 200)
-    const c = contacts?.[index]
-    if (c) {
-      chatRoomView.setContact(c)
-      g.root.easeOut(g.target)
+  g.class = 'settings'
+  g.x = 0, g.y = v.profileGad.h + 12 + 210*i
+  g.h = 210
+  g.title = p.title
+  g.subtitle = p.subtitle
+  g.clickFunc = function() {
+    const g = this, v = g.viewport
+    console.log('click:', g.title)
+    // g.root.easeOut(g.target)
+  }
+  g.renderFunc = function() {
+    const g = this, v = g.viewport
+    const offset = 22 // title's vertical shift depending on subtitle presence
+    const subtitleMissing = c.subtitle? 0: 1
+
+    mat4.identity(m)
+    mat4.translate(m,m, [g.x + 190, g.y + 90 /*367*/ + offset*subtitleMissing, 0])
+    const s1 = 33/14
+    mat4.scale(m,m, [s1, s1, 1])
+    const w3 = v.sw - 190 - 65
+    if (defaultFont.calcWidth(c.title) * s1 > w3) {
+      let l = c.title.length
+      while (defaultFont.calcWidth(c.title.substring(0,l)+'...') * s1 > w3) {
+        l--
+      }
+      str = c.title.substring(0,l)+'...'
+    } else {
+      str = c.title
+    }
+    defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
+
+    if (!subtitleMissing) {
+      mat4.identity(m)
+      mat4.translate(m,m, [g.x + 190, g.y + 156 /*433*/, 0])
+      const s3 = 29/14
+      mat4.scale(m,m, [s3, s3, 1])
+      const w4 = v.sw - 190 - 65
+      if (defaultFont.calcWidth(c.subtitle) * s3 > w4) {
+        let l = c.subtitle.length
+        while (defaultFont.calcWidth(c.subtitle.substring(0,l)+'...') * s3 > w4) {
+          l--
+        }
+        str = c.subtitle.substring(0,l)+'...'
+      } else {
+        str = c.subtitle
+      }
+      defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
     }
   }
+  i++
+}
 v.layoutFunc = function() {
   const v = this
   let g
@@ -68,10 +124,15 @@ v.layoutFunc = function() {
   g = v.profileGad
   g.w = v.sw
   g.autoHull()
-  g = v.listGad
-  g.x = 0, g.y = 0
-  g.w = v.sw, g.h = v.sh
-  g.autoHull()
+  let max = 0
+  for (const g of v.gadgets) {
+    if (g.class == 'settings') {
+      g.w = v.sw
+      g.autoHull()
+      max = Math.max(max, g.y+g.h)
+    }
+  }
+  v.maxY = max
 }
 contactViewDependencies.push(v)
 v.renderFunc = function() {
@@ -128,7 +189,9 @@ v.renderFunc = function() {
   }
   defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
 
-  for (g of v.gadgets) if (g.label) {
+  for (g of v.gadgets) if (g.renderFunc) {
+    g.renderFunc()
+  } else if (g.label) {
     mat4.identity(m)
     mat4.translate(m, m, [g.x, g.y+g.h, 0])
     mat4.scale(m, m, [g.h/g.fontSize, g.h/g.fontSize, 1])
@@ -144,61 +207,4 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  let i = 0
-  for (const c of [    
-    { title: 'Account', subtitle: 'Security notifications, change number' },
-    { title: 'Privacy', subtitle: 'Block contacts, disappearing messages' },
-    { title: 'Avatar', subtitle: 'Create, edit, profile photo' },
-    { title: 'Favorites', subtitle: 'Add, reorder, remove' },
-    { title: 'Chats', subtitle: 'Theme, wallpapers, chat history' },
-    { title: 'Notifications', subtitle: 'Message, group & call tones' },
-    { title: 'Storage and data', subtitle: 'Network usage, auto-download' },
-    { title: 'App language', subtitle: 'English (device’s language)' },
-    { title: 'Help', subtitle: 'Help center, contact us, privacy policy' },
-    { title: 'Invite a friend' },
-  ]) {
-
-    // icon x = 65
-    // icon w = 60
-
-    const period = 210 // from one item to the next
-    const offset = 22 // title's vertical shift depending on subtitle presence
-    const subtitleMissing = c.subtitle? 0: 1
-
-    mat4.identity(m)
-    mat4.translate(m,m, [190, 367 + offset*subtitleMissing + period*i, 0])
-    const s1 = 33/14
-    mat4.scale(m,m, [s1, s1, 1])
-    const w3 = v.sw - 190 - 65
-    if (defaultFont.calcWidth(c.title) * s1 > w3) {
-      let l = c.title.length
-      while (defaultFont.calcWidth(c.title.substring(0,l)+'...') * s1 > w3) {
-        l--
-      }
-      str = c.title.substring(0,l)+'...'
-    } else {
-      str = c.title
-    }
-    defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
-
-    if (!subtitleMissing) {
-      mat4.identity(m)
-      mat4.translate(m,m, [190, 433 + period*i, 0])
-      const s3 = 29/14
-      mat4.scale(m,m, [s3, s3, 1])
-      const w4 = v.sw - 190 - 65
-      if (defaultFont.calcWidth(c.subtitle) * s3 > w4) {
-        let l = c.subtitle.length
-        while (defaultFont.calcWidth(c.subtitle.substring(0,l)+'...') * s3 > w4) {
-          l--
-        }
-        str = c.subtitle.substring(0,l)+'...'
-      } else {
-        str = c.subtitle
-      }
-      defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
-    }
-    
-    i++
-  }
 }

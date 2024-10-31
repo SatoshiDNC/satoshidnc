@@ -234,7 +234,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           recorder.stop()
           console.log(recorder.state)
           console.log(`recorder stopped`, new Date())
-        }, 60 * 1000)
+        }, 5 * 1000)
 
         recorder.onstop = e => {
           console.log("data available after MediaRecorder.stop() called.")
@@ -283,6 +283,10 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         //   console.log("Stream ended")
         // }
         // // video.srcObject = stream
+
+        
+
+
       }).catch(error => {
         if (error.name === 'OverconstrainedError') {
           console.error(
