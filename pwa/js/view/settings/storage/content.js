@@ -58,7 +58,7 @@ for (const p of settingsPages) {
 
     if (!subtitleMissing) {
       mat4.identity(m)
-      mat4.translate(m,m, [g.x + 190, g.y + (g.sty || 165) /*433*/, 0])
+      mat4.translate(m,m, [g.x + 190, g.y + (g.ty || 109) + 56 /*433*/, 0])
       const s3 = 29/14
       mat4.scale(m,m, [s3, s3, 1])
       const w4 = v.sw - 190 - 65
