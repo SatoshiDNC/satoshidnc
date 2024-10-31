@@ -34,14 +34,13 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         if (!item.types.includes('text/plain')) {
           throw new Error('Clipboard does not contain plain text data.')
         }
-        item.getType('text/plain').then(blob => blob.text()).then(text => {
+        item.getType('text/plain').then(blob => blob.text()).then(rawText => {
           let npubs = []
-          if (text.includes(',')) {
-            npubs = text.split(',').map(a => a.trim())
-          } else if (text.includes(' ')) {
+          let text = rawText.replace(',',' ').replace('\n',' ').replace('\r',' ').replace('\t',' ')
+          if (text.includes(' ')) {
             npubs = text.split(' ').map(a => a.trim())
           } else {
-            alert('Public keys should be comma- or space-delimited.')
+            alert('Public keys should be delimited by whitespace or commas.')
           }
           for (const npub of npubs) {
             let hex = npubDecode(npub) || npub
