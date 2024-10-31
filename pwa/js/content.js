@@ -15,7 +15,7 @@ export function aggregateEvent(e) {
     const req = os.index('id').get(e.id)
     req.onsuccess = () => {
       if (!req.result) {
-        if (e.kind == 31234 /* draft */) {
+        if ([5, 31234].includes(e.kind)) {
           console.log(`[${TAG}] skipping event`, JSON.stringify(e))
           resolve()
         } else {
