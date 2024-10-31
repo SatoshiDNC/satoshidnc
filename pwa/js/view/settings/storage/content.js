@@ -74,6 +74,28 @@ for (const p of settingsPages) {
       defaultFont.draw(0,0, t, v.subtitleColor, v.mat, m)
     }
   }
+
+  if (g.overbar) {
+    mainShapes.useProg2()
+    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+    mat4.identity(m)
+    mat4.translate(m,m, [0, g.y, 0])
+    mat4.scale(m,m, [v.sw, 2, 1])
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+    mainShapes.drawArrays2('rect')
+  }
+  if (g.underbar) {
+    mainShapes.useProg2()
+    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+    mat4.identity(m)
+    mat4.translate(m,m, [0, g.y+g.h-2, 0])
+    mat4.scale(m,m, [v.sw, 2, 1])
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+    mainShapes.drawArrays2('rect')
+  }
+
   i++
   y+=g.h
 }
@@ -105,13 +127,5 @@ v.renderFunc = function() {
     g.renderFunc?.()
   }
 
-  mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  mat4.identity(m)
-  mat4.translate(m,m, [0, 265-2, 0])
-  mat4.scale(m,m, [v.sw, 2, 1])
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('rect')
 
 }
