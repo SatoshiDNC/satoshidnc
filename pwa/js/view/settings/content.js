@@ -3,6 +3,7 @@ import { drawPill } from '../../draw.js'
 import { contentView as chatRoomView } from '../chat-room/content.js'
 import { defaultKey } from '../../keys.js'
 import { getPersonalData as getAttr } from '../../personal.js'
+import { rootView as storageView } from './storage/root.js'
 
 let v, g
 const m = mat4.create()
@@ -52,7 +53,7 @@ const settingsPages = [
   { title: 'Favorites', subtitle: 'Add, reorder, remove' },
   { title: 'Chats', subtitle: 'Theme, wallpapers, chat history' },
   { title: 'Notifications', subtitle: 'Message, group & call tones' },
-  { title: 'Storage and data', subtitle: 'Network usage, auto-download' },
+  { title: 'Storage and data', subtitle: 'Network usage, auto-download', target: storageView },
   { title: 'App language', subtitle: 'English (device’s language)' },
   { title: 'Help', subtitle: 'Help center, contact us, privacy policy' },
   { title: 'Invite a friend' },
@@ -66,10 +67,17 @@ for (const p of settingsPages) {
   g.h = 210
   g.title = p.title
   g.subtitle = p.subtitle
+  g.target = p.target
+  if (g.target) {
+    g.target.a.backGad.root = g.target
+    g.target.a.backGad.target = v
+  }
   g.clickFunc = function() {
     const g = this, v = g.viewport
     console.log('click:', g.title)
-    // g.root.easeOut(g.target)
+    if (g.target) {
+      v.parent.easeOut(g.target)
+    }
   }
   g.renderFunc = function() {
     const g = this, v = g.viewport
@@ -78,7 +86,7 @@ for (const p of settingsPages) {
     let t
 
     mat4.identity(m)
-    mat4.translate(m,m, [g.x + 190, g.y + 90 /*367*/ + offset*subtitleMissing, 0])
+    mat4.translate(m,m, [g.x + 190, g.y + 90 + offset*subtitleMissing, 0])
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 190 - 65
@@ -95,7 +103,7 @@ for (const p of settingsPages) {
 
     if (!subtitleMissing) {
       mat4.identity(m)
-      mat4.translate(m,m, [g.x + 190, g.y + 156 /*433*/, 0])
+      mat4.translate(m,m, [g.x + 190, g.y + 156, 0])
       const s3 = 29/14
       mat4.scale(m,m, [s3, s3, 1])
       const w4 = v.sw - 190 - 65
