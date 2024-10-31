@@ -13,12 +13,12 @@ v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 const settingsPages = [
   { title: 'Manage storage', subtitle: '4.8 GB', underbar: true },
   { title: 'Network usage', subtitle: '2.2 GB sent · 9.7 GB received' },
-  { title: 'Use less data for calls' },
+  { h: 173, ty: 77, title: 'Use less data for calls' },
   { title: 'Proxy', subtitle: 'Off' },
   { title: 'Media upload quality', subtitle: 'Standard quality', overbar: true, underbar: true },
   { title: 'Media auto-download', subtitle: 'Voice messages are always automatically downloaded' },
   { title: 'When using mobile data', subtitle: 'Photos' },
-  { title: 'When connected on Wi-Fi', subtitle: 'All media' },
+  { h: 194, title: 'When connected on Wi-Fi', subtitle: 'All media' },
   { title: 'When roaming', subtitle: 'No media' },
 ]
 let i = 0, y = 0
