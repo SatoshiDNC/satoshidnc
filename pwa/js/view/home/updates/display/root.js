@@ -9,8 +9,8 @@ v.ghostOpacity = 0
 v.bgColor = colors.black
 v.a = overlayView; overlayView.parent = v
 v.b = contentView; contentView.parent = v
-v.setContext = function(updates) {
-  contentView.setContext(updates)
-  overlayView.setContext(updates)
+v.setContext = function(updates, hpub) {
+  contentView.setContext(updates, hpub)
+  overlayView.setContext(updates, hpub)
 }
 setEasingParameters(v)

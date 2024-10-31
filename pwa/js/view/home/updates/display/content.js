@@ -12,9 +12,10 @@ v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-v.setContext = function(updates) {
+v.setContext = function(updates, hpub) {
   const v = this
-  v.updates = updates
+  v.pendingUpdates = updates.filter(u => u.hpub != hpub)
+  v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
 }
 v.layoutFunc = function() {

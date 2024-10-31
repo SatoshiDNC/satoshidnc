@@ -27,9 +27,10 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
     v.returnView.easingValue = 0
     fg.setRoot(v.returnView)
   }
-v.setContext = function(updates) {
+v.setContext = function(updates, hpub) {
   const v = this
-  v.updates = updates
+  v.pendingUpdates = updates.filter(u => u.hpub != hpub)
+  v.updates = updates.filter(u => u.hpub == hpub)
   v.lastTime = 0
   v.currentUpdate = 0
   for (const update of v.updates) {
@@ -114,9 +115,15 @@ v.renderFunc = function() {
     v.currentUpdate += 1
     v.lastTime = 0
     if (v.currentUpdate >= v.updates.length) {
-      setTimeout(() => {
-        v.backGad.clickFunc()
-      })
+      if (v.pendingUpdates.length > 0) {
+        console.log(`switching to ${v.pendingUpdates[0]}`)
+        v.parent.setContext(v.pendingUpdates, v.pendingUpdates[0].hpub)
+        v.parent.relayout()
+      } else {
+        setTimeout(() => {
+          v.backGad.clickFunc()
+        })
+      }
     }
   }
 
