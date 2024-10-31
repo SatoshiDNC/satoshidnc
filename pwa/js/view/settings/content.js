@@ -75,6 +75,7 @@ for (const p of settingsPages) {
     const g = this, v = g.viewport
     const offset = 22 // title's vertical shift depending on subtitle presence
     const subtitleMissing = g.subtitle? 0: 1
+    let t
 
     mat4.identity(m)
     mat4.translate(m,m, [g.x + 190, g.y + 90 /*367*/ + offset*subtitleMissing, 0])
@@ -86,11 +87,11 @@ for (const p of settingsPages) {
       while (defaultFont.calcWidth(g.title.substring(0,l)+'...') * s1 > w3) {
         l--
       }
-      str = g.title.substring(0,l)+'...'
+      t = g.title.substring(0,l)+'...'
     } else {
-      str = g.title
+      t = g.title
     }
-    defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
+    defaultFont.draw(0,0, t, v.titleColor, v.mat, m)
 
     if (!subtitleMissing) {
       mat4.identity(m)
@@ -103,11 +104,11 @@ for (const p of settingsPages) {
         while (defaultFont.calcWidth(g.subtitle.substring(0,l)+'...') * s3 > w4) {
           l--
         }
-        str = g.subtitle.substring(0,l)+'...'
+        t = g.subtitle.substring(0,l)+'...'
       } else {
-        str = g.subtitle
+        t = g.subtitle
       }
-      defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
+      defaultFont.draw(0,0, t, v.subtitleColor, v.mat, m)
     }
   }
   i++
