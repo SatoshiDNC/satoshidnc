@@ -244,7 +244,7 @@ const createProfileBlock = post => {
     let y = 50
     for (const key of Object.keys(g.content)) {
       t = `${key}: ${g.content[key]}`
-      ts = rowHeight/14
+      ts = 32/14
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
