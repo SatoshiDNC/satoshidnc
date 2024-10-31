@@ -144,12 +144,10 @@ export function npubDecode(bech32) {
   try {
     const decoded = nip19.decode(bech32)
     if (decoded?.type == 'npub') {
-      console.log(decoded)
-      //return bytesToHex(decoded.data)
+      return decoded.data
     }
     if (decoded?.type == 'nprofile') {
-      console.log(decoded)
-      //return bytesToHex(decoded.data)
+      return decoded.data.pubkey
     }
   } catch(e) {
   }

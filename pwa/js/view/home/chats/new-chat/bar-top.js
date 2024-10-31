@@ -1,5 +1,5 @@
 import { menuView as trezorTools } from '../tools-trezor.js'
-import { npubDecode } from '../../../../nostor-util.js'
+import { npubDecode, validKey } from '../../../../nostor-util.js'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -44,7 +44,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             alert('Public keys should be comma- or space-delimited.')
           }
           for (const npub of npubs) {
-            console.log(npubDecode(npub) || npub)
+            let hex = npubDecode(npub) || npub
+            if (validKey(hex)) {
+              console.log(hex)
+            }
           }
         })
       }
