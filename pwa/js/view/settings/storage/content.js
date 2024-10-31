@@ -11,14 +11,14 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 const settingsPages = [
-  { title: 'Manage storage', subtitle: '4.8 GB', underbar: true },
-  { title: 'Network usage', subtitle: '2.2 GB sent · 9.7 GB received' },
-  { h: 129, ty: 55, title: 'Use less data for calls' },
-  { h: 183, ty: 55, title: 'Proxy', subtitle: 'Off' },
+  { title: 'Manage storage', subtitle: '4.8 GB', overbar: false, underbar: true },
+  { title: 'Network usage', subtitle: '2.2 GB sent · 9.7 GB received', overbar: false },
+  { title: 'Use less data for calls' },
+  { title: 'Proxy', subtitle: 'Off', underbar: false },
   { title: 'Media upload quality', subtitle: 'Standard quality', overbar: true, underbar: true },
-  { title: 'Media auto-download', subtitle: 'Voice messages are always automatically downloaded' },
+  { title: 'Media auto-download', subtitle: 'Voice messages are always automatically downloaded', overbar: false },
   { title: 'When using mobile data', subtitle: 'Photos' },
-  { h: 194, title: 'When connected on Wi-Fi', subtitle: 'All media' },
+  { title: 'When connected on Wi-Fi', subtitle: 'All media' },
   { title: 'When roaming', subtitle: 'No media' },
 ]
 let i = 0, y = 0
@@ -27,8 +27,8 @@ for (const p of settingsPages) {
   Object.assign(g, p)
   g.actionFlags = fg.GAF_CLICKABLE
   g.class = 'settings'
-  g.x = 0, g.y = y
-  g.h = p.h || 237
+  g.x = 0, g.y = y + (g.overbar !== undefined? 32:0)
+  g.h = p.h || 173
   g.clickFunc = function() {
     const g = this, v = g.viewport
     console.log('click:', g.title)
@@ -41,7 +41,7 @@ for (const p of settingsPages) {
     let t
 
     mat4.identity(m)
-    mat4.translate(m,m, [g.x + 190, g.y + (g.ty || 109) + offset*subtitleMissing, 0])
+    mat4.translate(m,m, [g.x + 190, g.y + 77 + offset*subtitleMissing, 0])
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 190 - 65
@@ -58,7 +58,7 @@ for (const p of settingsPages) {
 
     if (!subtitleMissing) {
       mat4.identity(m)
-      mat4.translate(m,m, [g.x + 190, g.y + (g.ty || 109) + 56 /*433*/, 0])
+      mat4.translate(m,m, [g.x + 190, g.y + 77 + 56 /*433*/, 0])
       const s3 = 29/14
       mat4.scale(m,m, [s3, s3, 1])
       const w4 = v.sw - 190 - 65
@@ -96,7 +96,7 @@ for (const p of settingsPages) {
   }
 
   i++
-  y+=g.h
+  y+= (g.overbar !== undefined? 32:0) + g.h + (g.underbar !== undefined? 32:0)
 }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
