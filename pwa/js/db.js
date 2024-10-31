@@ -2,7 +2,7 @@ export let db
 
 export function init() {
   return new Promise((resolve, reject) => {
-    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 2)
+    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 3)
     req.onsuccess = e => {
       db = req.result
       resolve()
@@ -32,6 +32,9 @@ export function init() {
         os.createIndex(`firstSeen`, 'firstSeen')
         os.createIndex(`hpub_firstSeen`, ['hpub', 'firstSeen'])
         db.createObjectStore(`updates-viewed`, { keyPath: 'id' })
+      }
+      if (e.oldVersion < 3) {
+        db.createObjectStore(`profiles`, { keyPath: 'hpub' })
       }
     }
   })

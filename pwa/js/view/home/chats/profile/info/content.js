@@ -1,7 +1,7 @@
 import { setEasingParameters } from '../../../../util.js'
 import { drawAvatar, alpha } from '../../../../../draw.js'
 import { getPersonalData as get } from '../../../../../personal.js'
-import { reqProfile, getFeed } from '../../../../../content.js'
+import { reqProfile, reqNotes, getFeed, eventTrigger } from '../../../../../content.js'
 import { kindInfo } from '../../../../../nostor-util.js'
 
 const TAG = 'INFO'
@@ -72,22 +72,29 @@ v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
   }
 const fixedGads = v.gadgets.length
 v.gadgets.push(g = v.lastSep = new fg.Gadget(v))
-g.type = '-', g.h = 22
-g.renderFunc = function() {
-  const g = this, v = g.viewport
-  const m = mat4.create()
-  mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([0,0,0,1]))
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-  mat4.identity(m)
-  mat4.translate(m,m, [0, g.y, 0])
-  mat4.scale(m,m, [v.sw, g.h, 1])
-  gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-  mainShapes.drawArrays2('rect')
-}
+  g.type = '-', g.h = 22
+  g.renderFunc = function() {
+    const g = this, v = g.viewport
+    const m = mat4.create()
+    mainShapes.useProg2()
+    gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array([0,0,0,1]))
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+    mat4.identity(m)
+    mat4.translate(m,m, [0, g.y, 0])
+    mat4.scale(m,m, [v.sw, g.h, 1])
+    gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+    mainShapes.drawArrays2('rect')
+  }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 const tailGads = v.gadgets.length - fixedGads - 1
+eventTrigger.push(() => {
+  console.log('event trigger')
+  getProfile(v.hpub).then(event => {
+    console.log(event)
+  })
+  v.setRenderFlag(true)
+})
 v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
@@ -95,6 +102,7 @@ v.setContact = function(hpub) {
   v.deltaTime = undefined
   v.gadgets.splice(fixedGads, v.gadgets.length - fixedGads - tailGads - 1)
   reqProfile(v.hpub)
+  reqNotes(v.hpub)
   getFeed(v.hpub).then(posts => {
     for (const post of posts) {
       let g

@@ -4,13 +4,14 @@ import { getRelay } from './nostor-app.js'
 import { contacts } from './contacts.js'
 
 export const eventTrigger = []
+export const profileTrigger = []
 
 export function aggregateEvent(e) {
   return new Promise((resolve, reject) => {
     if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid event')
     const TAG = 'aggregateEvent'
     const now = Date.now()
-    const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
+    const tr = db.transaction(['events', 'profiles'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
     const req = os.index('id').get(e.id)
     req.onsuccess = () => {
@@ -18,12 +19,26 @@ export function aggregateEvent(e) {
         if ([5, 31234].includes(e.kind)) {
           console.log(`[${TAG}] skipping event`, JSON.stringify(e))
           resolve()
+        } else if (e.kind == 0) {
+          const os = tr.objectStore('profiles')
+          const req = os.put({ hpub: e.pubkey, asOf: now, data: e })
+          req.onsuccess = () => {
+            console.log(`[${TAG}] updated profile for`, e.pubkey)
+            resolve()
+            profileTrigger.map(f => f(e.pubkey))
+          }
+          req.onerror = () => {
+            reject()
+          }
         } else {
           console.log(`[${TAG}] new event`, JSON.stringify(e))
           const req = os.add({ hpub: e.pubkey, firstSeen: now, data: e })
           req.onsuccess = () => {
             resolve()
             eventTrigger.map(f => f())
+          }
+          req.onerror = () => {
+            reject()
           }
         }
       } else {
@@ -93,6 +108,28 @@ export function reqFeed() {
         'limit': 50,
       }
     ])
+  })
+}
+
+export function getProfile(hpub) {
+  return new Promise((resolve, reject) => {
+    const tr = db.transaction('events', 'readonly', { durability: 'strict' })
+    const os = tr.objectStore('events')
+    const req = os.index('hpub_firstSeen').openCursor(window.IDBKeyRange.bound([hpub, 0], [hpub, 91729187740298]), 'prev')
+    req.onerror = function(e) {
+      console.err(e)
+    }
+    const posts = []
+    req.onsuccess = function(e) {
+      let cursor = e.target.result
+      if (cursor) {
+        let v = cursor.value
+        posts.push(v)
+        cursor.continue()
+      } else {
+        resolve(posts)
+      }
+    }
   })
 }
 
