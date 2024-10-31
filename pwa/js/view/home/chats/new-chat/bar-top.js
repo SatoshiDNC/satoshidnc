@@ -1,4 +1,5 @@
 import { menuView as trezorTools } from '../tools-trezor.js'
+import { npubDecode } from '../../../../nostor-util.js'
 
 let v, g
 export const barTop = v = new fg.View()
