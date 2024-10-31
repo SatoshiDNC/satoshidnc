@@ -108,7 +108,7 @@ v.setContact = function(hpub) {
   reqNotes(v.hpub)
   getFeed(v.hpub).then(posts => {
     for (const post of posts) {
-      if (post.data.kind == 0) continue
+      if ([0,5,31234].includes(post.data.kind)) continue
       let g
 
       const g1 = g = new fg.Gadget(v)
