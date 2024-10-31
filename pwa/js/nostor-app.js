@@ -6,6 +6,10 @@ import { defaultKey, sign } from './keys.js'
 
 let relays = []
 
+export function homeRelay() {
+  return getRelay('relay.satoshidnc.com')
+}
+
 export function getRelay(name) {
   return new Promise((resolve, reject) => {
     const TAG = 'connection'
@@ -25,21 +29,33 @@ export function getRelay(name) {
       let authEvent
       try {
         socket = new WebSocket(relay)
-        console.log(`[${TAG}] created socket`, socket.readyState, WebSocket.OPEN)
+        console.log(`[${TAG}] created socket to ${relay}`)
       } catch (e) {
         setRelayStat(relay, 'lastConnect', { time: 0, date: requestTime })
         console.log(`[${TAG}] error:`, e)
       }
+      // Add new instance
+      r = {
+        url: relay,
+        state: 'init',
+        socket,
+        send: function(obj) {
+          const r = this
+          console.log(`[${TAG}] send ${JSON.stringify(obj)}`)
+          r.socket.send(JSON.stringify(obj))
+        },
+        sendEvent: function(event) {
+          const r = this
+          return r.send(['EVENT', event])
+        },
+      }
+      relays.push(r)
       socket.addEventListener('close', e => {
-        if (r) {
-          r.state = 'closed'
-        }
+        r.state = 'closed'
         console.log(`[${TAG}] close`)
       })
       socket.addEventListener('error', e => {
-        if (r) {
-          r.state = 'closed'
-        }
+        r.state = 'closed'
         console.log(`[${TAG}] error`)
       })
       socket.addEventListener('message', e => {
@@ -76,21 +92,7 @@ export function getRelay(name) {
         }
       })
       socket.addEventListener('open', event => {
-        r = {
-          url: relay,
-          state: 'open',
-          socket,
-          send: function(obj) {
-            const r = this
-            console.log(`[${TAG}] send ${JSON.stringify(obj)}`)
-            r.socket.send(JSON.stringify(obj))
-          },
-          sendEvent: function(event) {
-            const r = this
-            return r.send(['EVENT', event])
-          },
-        }
-        relays.push(r)
+        r.state = 'open'
         const deltaTime = Date.now() - requestTime
         if (avgConnect) {
           const w0 = avgConnect.weight, w1 = w0 + 1
@@ -101,7 +103,7 @@ export function getRelay(name) {
         }
         setRelayStat(relay, 'avgConnect', avgConnect)
         setRelayStat(relay, 'lastConnect', { time: deltaTime, date: requestTime })
-        console.log(`[${TAG}] open`, deltaTime)
+        console.log(`[${TAG}] connection opened in ${deltaTime} ms`)
         r.timer = setTimeout(() => {
           resolve(r)
         }, 1000)

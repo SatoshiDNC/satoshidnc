@@ -1,7 +1,7 @@
 import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
 import { sign, keys, getKeyInfo, putDeviceKey, putVolatileKey, useVolatileKey } from '../../../../keys.js'
-import { getRelay } from '../../../../nostor-app.js'
+import { homeRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
 import { getKeyboardInput } from '../../../util.js'
@@ -196,7 +196,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         console.log(event)
         console.log('sending...')
         const name = 'relay.satoshidnc.com'
-        getRelay(name).then(relay => {
+        homeRelay().then(relay => {
           let sent = false
           try {
             relay.sendEvent(event)

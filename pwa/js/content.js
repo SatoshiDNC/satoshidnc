@@ -1,6 +1,6 @@
 import { db } from './db.js'
 import { randomRelay } from './relays.js'
-import { getRelay } from './nostor-app.js'
+import { homeRelay } from './nostor-app.js'
 import { contacts } from './contacts.js'
 
 export const eventTrigger = []
@@ -113,7 +113,7 @@ export function reqNotes(hpub) {
   let thisRequestTime = reqNotes_requestTime
   const defaultRelay = randomRelay()
   console.log(`[${TAG}] query relay:`, defaultRelay)
-  getRelay(defaultRelay).then(relay => {
+  homeRelay().then(relay => {
     if (thisRequestTime !== reqNotes_requestTime) return
     relay.send([
       'REQ',
@@ -133,7 +133,7 @@ export function reqProfile(hpub) {
   let thisRequestTime = reqNotes_requestTime
   const defaultRelay = randomRelay()
   console.log(`[${TAG}] query relay:`, defaultRelay)
-  getRelay(defaultRelay).then(relay => {
+  homeRelay().then(relay => {
     if (thisRequestTime !== reqNotes_requestTime) return
     relay.send([
       'REQ',
@@ -155,7 +155,7 @@ export function reqFeed() {
   let thisRequestTime = reqFeed_requestTime
   const defaultRelay = 'relay.satoshidnc.com'
   console.log(`[${TAG}] query relay:`, defaultRelay)
-  getRelay(defaultRelay).then(relay => {
+  homeRelay().then(relay => {
     if (thisRequestTime !== reqFeed_requestTime) return
     relay.send([
       'REQ',
