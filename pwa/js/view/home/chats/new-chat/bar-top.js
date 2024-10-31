@@ -1,3 +1,5 @@
+import { menuView as trezorTools } from './tools-trezor.js'
+
 let v, g
 export const barTop = v = new fg.View()
 v.name = Object.keys({barTop}).pop()
