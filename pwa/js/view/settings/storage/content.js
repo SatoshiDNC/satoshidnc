@@ -1,8 +1,6 @@
-import { device, contacts, contactViewDependencies } from '../../contacts.js'
-import { drawPill } from '../../draw.js'
-import { contentView as chatRoomView } from '../chat-room/content.js'
-import { defaultKey } from '../../keys.js'
-import { getPersonalData as getAttr } from '../../personal.js'
+import { contactViewDependencies } from '../../../contacts.js'
+import { defaultKey } from '../../../keys.js'
+import { getPersonalData as getAttr } from '../../../personal.js'
 
 let v, g
 const m = mat4.create()
