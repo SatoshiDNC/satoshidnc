@@ -1,5 +1,6 @@
 import { menuView as trezorTools } from '../tools-trezor.js'
 import { npubDecode, validKey } from '../../../../nostor-util.js'
+import { addNewContact, reloadContacts } from '../../../../contacts.js'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -43,12 +44,20 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           } else {
             alert('Public keys should be delimited by whitespace or commas.')
           }
+          let n = 0, m = 0
           for (const npub of npubs) {
-            let hex = npubDecode(npub) || npub
-            if (validKey(hex)) {
-              console.log(hex)
+            let hpub = npubDecode(npub) || npub
+            if (validKey(hpub)) {
+              if (contacts.filter(c => c.hpub == hpub).length == 0) {
+                addNewContact(hpub)
+                n++
+              } else {
+                m++
+              }
             }
           }
+          reloadContacts()
+          alert(`Imported ${n} new and skipped ${m} existing public keys.`)
         })
       }
     }, reason => {
