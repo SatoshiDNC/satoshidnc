@@ -225,6 +225,10 @@ const createProfileBlock = post => {
     return
   }
 
+  if (post.data.kind !== 0) {
+    return
+  }
+
   let g
 
   const g1 = g = new fg.Gadget(v)
