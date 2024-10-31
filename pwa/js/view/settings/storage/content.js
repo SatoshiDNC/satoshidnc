@@ -11,7 +11,7 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 const settingsPages = [
-  { h: 237, title: 'Manage storage', subtitle: '4.8 GB' },
+  { h: 237, title: 'Manage storage', subtitle: '4.8 GB', underbar: true },
   { title: 'Network usage', subtitle: '2.2 GB sent · 9.7 GB received' },
   { title: 'Use less data for calls' },
   { title: 'Proxy', subtitle: 'Off' },
@@ -24,12 +24,11 @@ const settingsPages = [
 let i = 0, y = 0
 for (const p of settingsPages) {
   v.gadgets.push(g = new fg.Gadget(v))
+  Object.assign(g, p)
   g.actionFlags = fg.GAF_CLICKABLE
   g.class = 'settings'
   g.x = 0, g.y = y
   g.h = p.h || 210
-  g.title = p.title
-  g.subtitle = p.subtitle
   g.clickFunc = function() {
     const g = this, v = g.viewport
     console.log('click:', g.title)
