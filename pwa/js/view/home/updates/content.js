@@ -103,6 +103,10 @@ v.layoutFunc = function() {
   g.x = 0, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
+  
+  g = v.swipeGad
+  g.layout.call(g)
+
   v.minX = 0, v.maxX = v.sw
   v.minY = 0, v.maxY = v.viewedGad.y + v.viewedGad.h
 }
