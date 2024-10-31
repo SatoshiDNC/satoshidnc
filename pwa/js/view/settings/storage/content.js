@@ -54,7 +54,7 @@ for (const p of settingsPages) {
     } else {
       t = g.title
     }
-    defaultFont.draw(0,0, t, v.titleColor, v.mat, m)
+    defaultFont.draw(0,0, t, g.margin? v.subtitleColor: v.titleColor, v.mat, m)
 
     if (!subtitleMissing) {
       mat4.identity(m)
