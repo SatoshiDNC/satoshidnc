@@ -1,7 +1,7 @@
 import { setEasingParameters } from '../../../../util.js'
 import { drawAvatar, alpha } from '../../../../../draw.js'
 import { getPersonalData as get } from '../../../../../personal.js'
-import { reqNotes, getFeed } from '../../../../../content.js'
+import { reqProfile, getFeed } from '../../../../../content.js'
 import { kindInfo } from '../../../../../nostor-util.js'
 
 const TAG = 'INFO'
