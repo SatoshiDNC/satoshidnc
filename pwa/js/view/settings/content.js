@@ -148,7 +148,14 @@ v.renderFunc = function() {
   for (const c of [    
     { title: 'Account', subtitle: 'Security notifications, change number' },
     { title: 'Privacy', subtitle: 'Block contacts, disappearing messages' },
+    { title: 'Avatar', subtitle: 'Create, edit, profile photo' },
+    { title: 'Favorites', subtitle: 'Add, reorder, remove' },
+    { title: 'Chats', subtitle: 'Theme, wallpapers, chat history' },
+    { title: 'Notifications', subtitle: 'Message, group & call tones' },
     { title: 'Storage and data', subtitle: 'Network usage, auto-download' },
+    { title: 'App language', subtitle: 'English (device’s language)' },
+    { title: 'Help', subtitle: 'Help center, contact us, privacy policy' },
+    { title: 'Invite a friend' },
   ]) {
 
     // icon x = 65
