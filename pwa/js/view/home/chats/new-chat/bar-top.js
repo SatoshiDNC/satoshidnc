@@ -28,6 +28,18 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
   g.importHandler = function(item) {
     console.log('invoked import handler')
+    navigator.clipboard.read().then(clipboardContents => {
+      for (const item of clipboardContents) {
+        if (!item.types.includes('text/plain')) {
+          throw new Error('Clipboard does not contain plain text data.')
+        }
+        item.getType('text/plain').then(text => {
+          console.log(text)
+        })
+      }
+    }, reason => {
+      alert(`error: ${reason}`)
+    })
   }
   g.items = [
     { id: 1, handler: g.handler, label: 'Batch import npubs', handler: g.importHandler },
