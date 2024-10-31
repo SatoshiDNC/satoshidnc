@@ -104,7 +104,7 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
   v.minX = 0, v.maxX = v.sw
-  v.minY = 0, v.maxY = v.viewGad.y + v.viewGad.h
+  v.minY = 0, v.maxY = v.viewedGad.y + v.viewedGad.h
 }
 eventTrigger.push(() => {
   v.queryFunc()
