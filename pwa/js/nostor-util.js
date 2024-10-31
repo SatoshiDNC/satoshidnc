@@ -140,6 +140,21 @@ export function noteDecode(bech32) {
   }
 }
 
+export function npubDecode(bech32) {
+  try {
+    const decoded = nip19.decode(bech32)
+    if (decoded?.type == 'npub') {
+      console.log(decoded)
+      //return bytesToHex(decoded.data)
+    }
+    if (decoded?.type == 'nprofile') {
+      console.log(decoded)
+      //return bytesToHex(decoded.data)
+    }
+  } catch(e) {
+  }
+}
+
 export function nsecDecode(bech32) {
   try {
     const decoded = nip19.decode(bech32)
