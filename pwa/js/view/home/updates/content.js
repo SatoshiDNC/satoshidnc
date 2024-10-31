@@ -39,6 +39,8 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
     displayView.setContext(updates, updates[0].hpub)
     g.root.easeOut(g.target)
   }
+v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
+  g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.clearQuery = function() {
   const v = this
   v.query = { inProgress: false, lastCompleted: 0, results: [] }
@@ -101,6 +103,8 @@ v.layoutFunc = function() {
   g.x = 0, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
+  v.minX = 0, v.maxX = v.sw
+  v.minY = 0, v.maxY = v.viewGad.y + v.viewGad.h
 }
 eventTrigger.push(() => {
   v.queryFunc()

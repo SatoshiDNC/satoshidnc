@@ -65,8 +65,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     })
   }
   g.items = [
-    { id: 1, handler: g.handler, label: 'Batch import npubs', handler: g.importHandler },
-    { id: 2, label: 'Trezor tools', handler: trezorTools.invoker },
+    { id: 1, label: 'Batch paste public keys', handler: g.importHandler },
+    // { id: 2, label: 'Copy all contacts', handler: g.exportHandler },
+    { id: 3, label: 'Trezor tools', handler: trezorTools.invoker },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
