@@ -70,7 +70,7 @@ v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     console.log(`click '${g.label}'`)
   }
-const fixedGads = v.gadgets.length
+let fixedGads = v.gadgets.length
 v.gadgets.push(g = v.lastSep = new fg.Gadget(v))
   g.type = '-', g.h = 22
   g.renderFunc = function() {
@@ -255,9 +255,11 @@ const createProfileBlock = post => {
 
   let index = v.gadgets.findIndex(o => o.key == 'profile')
   if (index >= 0) {
-    v.gadgets.splice(index, 2)
+    v.gadgets.splice(index, 2, g1, g2)
+  } else {
+    v.gadgets.splice(fixedGads, 0, g1, g2)
+    fixedGads += 2
   }
-  v.gadgets.splice(v.gadgets.length - tailGads - 1, 0, g1, g2)
   v.relayout()
 }
 v.renderFunc = function() {
