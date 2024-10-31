@@ -212,7 +212,7 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-createProfileBlock = post => {
+const createProfileBlock = post => {
   let g
 
   const g1 = g = new fg.Gadget(v)
