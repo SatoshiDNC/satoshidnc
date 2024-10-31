@@ -161,8 +161,12 @@ v.renderFunc = function() {
     // icon x = 65
     // icon w = 60
 
+    const period = 210 // from one item to the next
+    const offset = 22 // title's vertical shift depending on subtitle presence
+    const subtitleMissing = c.subtitle? 0: 1
+
     mat4.identity(m)
-    mat4.translate(m,m, [190, 367 + 210 * i, 0])
+    mat4.translate(m,m, [190, 367 + offset*subtitleMissing + period*i, 0])
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 190 - 65
@@ -177,21 +181,23 @@ v.renderFunc = function() {
     }
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
 
-    mat4.identity(m)
-    mat4.translate(m,m, [190, 433 + 210 * i, 0])
-    const s3 = 29/14
-    mat4.scale(m,m, [s3, s3, 1])
-    const w4 = v.sw - 190 - 65
-    if (defaultFont.calcWidth(c.subtitle) * s3 > w4) {
-      let l = c.subtitle.length
-      while (defaultFont.calcWidth(c.subtitle.substring(0,l)+'...') * s3 > w4) {
-        l--
+    if (!subtitleMissing) {
+      mat4.identity(m)
+      mat4.translate(m,m, [190, 433 + period*i, 0])
+      const s3 = 29/14
+      mat4.scale(m,m, [s3, s3, 1])
+      const w4 = v.sw - 190 - 65
+      if (defaultFont.calcWidth(c.subtitle) * s3 > w4) {
+        let l = c.subtitle.length
+        while (defaultFont.calcWidth(c.subtitle.substring(0,l)+'...') * s3 > w4) {
+          l--
+        }
+        str = c.subtitle.substring(0,l)+'...'
+      } else {
+        str = c.subtitle
       }
-      str = c.subtitle.substring(0,l)+'...'
-    } else {
-      str = c.subtitle
+      defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
     }
-    defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
     
     i++
   }
