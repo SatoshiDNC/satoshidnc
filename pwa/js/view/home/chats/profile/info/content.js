@@ -1,7 +1,7 @@
 import { setEasingParameters } from '../../../../util.js'
 import { drawAvatar, alpha } from '../../../../../draw.js'
 import { getPersonalData as get } from '../../../../../personal.js'
-import { reqProfile, reqNotes, getFeed, eventTrigger } from '../../../../../content.js'
+import { reqProfile, reqNotes, getFeed, profileTrigger, eventTrigger } from '../../../../../content.js'
 import { kindInfo } from '../../../../../nostor-util.js'
 
 const TAG = 'INFO'
@@ -88,12 +88,18 @@ v.gadgets.push(g = v.lastSep = new fg.Gadget(v))
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 const tailGads = v.gadgets.length - fixedGads - 1
-eventTrigger.push(() => {
-  console.log('event trigger')
-  getProfile(v.hpub).then(event => {
-    console.log(event)
+profileTrigger.push(hpub => {
+  if (hpub !== v.hpub) return
+  console.log('profile trigger')
+  getProfile(v.hpub).then(posts => {
+    if (posts.length > 0) {
+      console.log(posts[0])
+    }
   })
   v.setRenderFlag(true)
+})
+eventTrigger.push(() => {
+  console.log('event trigger')
 })
 v.setContact = function(hpub) {
   const v = this
