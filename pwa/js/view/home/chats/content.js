@@ -37,7 +37,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const c = contacts?.[index]
     if (c) {
       if (x < 175) {
-        popupView.setContact(c.hpub, 204 + 147 + 200 * index)
+        popupView.setContact(c.hpub, 204 + 147 + 200 * index + v.userY)
         if (fg.getRoot() !== popupRoot || popupRoot.easingState() == -1) {
           popupRoot.easeIn()
         } else {
