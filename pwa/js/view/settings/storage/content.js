@@ -16,7 +16,7 @@ const settingsPages = [
   { title: 'Use less data for calls' },
   { title: 'Proxy', subtitle: 'Off', underbar: false },
   { title: 'Media upload quality', subtitle: 'Standard quality', overbar: true, underbar: true },
-  { title: 'Media auto-download', subtitle: 'Voice messages are always automatically downloaded', overbar: false },
+  { margin: 64, title: 'Media auto-download', subtitle: 'Voice messages are always automatically downloaded', overbar: false },
   { title: 'When using mobile data', subtitle: 'Photos' },
   { title: 'When connected on Wi-Fi', subtitle: 'All media' },
   { title: 'When roaming', subtitle: 'No media' },
@@ -44,7 +44,7 @@ for (const p of settingsPages) {
     mat4.translate(m,m, [g.x + 190, g.y + 77 + offset*subtitleMissing, 0])
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
-    const w3 = v.sw - 190 - 65
+    const w3 = v.sw - (g.margin || 190) - 65
     if (defaultFont.calcWidth(g.title) * s1 > w3) {
       let l = g.title.length
       while (defaultFont.calcWidth(g.title.substring(0,l)+'...') * s1 > w3) {
@@ -61,7 +61,7 @@ for (const p of settingsPages) {
       mat4.translate(m,m, [g.x + 190, g.y + 77 + 56 /*433*/, 0])
       const s3 = 29/14
       mat4.scale(m,m, [s3, s3, 1])
-      const w4 = v.sw - 190 - 65
+      const w4 = v.sw - (g.margin || 190) - 65
       if (defaultFont.calcWidth(g.subtitle) * s3 > w4) {
         let l = g.subtitle.length
         while (defaultFont.calcWidth(g.subtitle.substring(0,l)+'...') * s3 > w4) {
