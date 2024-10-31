@@ -35,6 +35,7 @@ export function init() {
       }
       if (e.oldVersion < 3) {
         db.createObjectStore(`profiles`, { keyPath: 'hpub' })
+        db.createObjectStore(`deletions`, { keyPath: 'id' })
       }
     }
   })

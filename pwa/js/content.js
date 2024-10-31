@@ -4,6 +4,7 @@ import { getRelay } from './nostor-app.js'
 import { contacts } from './contacts.js'
 
 export const eventTrigger = []
+export const deletionTrigger = []
 export const profileTrigger = []
 
 export function aggregateEvent(e) {
@@ -11,38 +12,94 @@ export function aggregateEvent(e) {
     if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid event')
     const TAG = 'aggregateEvent'
     const now = Date.now()
-    const tr = db.transaction(['events', 'profiles'], 'readwrite', { durability: 'strict' })
+    const tr = db.transaction(['events', 'profiles', 'deletions'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
     const req = os.index('id').get(e.id)
+    req.onerror = () => {
+      reject()
+    }
     req.onsuccess = () => {
-      if (!req.result) {
-        if ([5, 31234].includes(e.kind)) {
-          console.log(`[${TAG}] skipping event`, JSON.stringify(e))
-          resolve()
-        } else if (e.kind == 0) {
-          const os = tr.objectStore('profiles')
-          const req = os.put({ hpub: e.pubkey, asOf: now, data: e })
-          req.onsuccess = () => {
-            console.log(`[${TAG}] updated profile for`, e.pubkey)
+      if (req.result) { // this event is already in our database
+        resolve()
+      } else {
+        const del_os = tr.objectStore('deletions')
+        const req = del_os.get(e.id)
+        req.onerror = () => {
+          reject()
+        }
+        req.onsuccess = () => {
+          if (req.result) { // there's a deletion record in our database
+            console.log(`[${TAG}] skipping deleted event`, JSON.stringify(e))
             resolve()
-            profileTrigger.map(f => f(e.pubkey))
-          }
-          req.onerror = () => {
-            reject()
-          }
-        } else {
-          console.log(`[${TAG}] new event`, JSON.stringify(e))
-          const req = os.add({ hpub: e.pubkey, firstSeen: now, data: e })
-          req.onsuccess = () => {
-            resolve()
-            eventTrigger.map(f => f())
-          }
-          req.onerror = () => {
-            reject()
+          } else {
+            if ([31234].includes(e.kind)) {
+              console.log(`[${TAG}] skipping event`, JSON.stringify(e))
+              resolve()
+            } else if (e.kind == 5) {
+              const ids = []
+              const todo = e.tags.filter(t => t[0] == 'e')
+              const deletionProcessing = () => {
+                if (todo.length > 0) {
+                  const toDelete = todo.pop()
+                  const req = del_os.put({ id: toDelete, asOf: now, hpub: e.pubkey })
+                  req.onerror = () => {
+                    reject()
+                  }
+                  req.onsuccess = () => {
+                    req = os.index('id').get(toDelete)
+                    req.onerror = () => {
+                      reject()
+                    }
+                    req.onsuccess = () => {
+                      if (req.result) { // the deleted event is in our database
+                        if (req.result.data.pubkey == e.pubkey) {
+                          ids.push(toDelete)
+                          req = os.delete(toDelete)
+                          req.onerror = () => {
+                            reject()
+                          }
+                          req.onsuccess = () => {
+                            deletionProcessing()
+                          }
+                        } else {
+                          console.log(`warning: deletion attempt by different pubkey: ${deleterPubkey} tried to delete post by ${req.result.data.pubkey}`)
+                          deletionProcessing()
+                        }
+                      } else {
+                        deletionProcessing()
+                      }
+                    }
+                  }
+                } else {
+                  console.log(`[${TAG}] noted deletions:`, ids)
+                  deletionTrigger.map(f => f(ids))
+                  resolve()
+                }
+              }
+            } else if (e.kind == 0) {
+              const os = tr.objectStore('profiles')
+              const req = os.put({ hpub: e.pubkey, asOf: now, data: e })
+              req.onerror = () => {
+                reject()
+              }
+              req.onsuccess = () => {
+                console.log(`[${TAG}] updated profile for`, e.pubkey)
+                resolve()
+                profileTrigger.map(f => f(e.pubkey))
+              }
+            } else {
+              console.log(`[${TAG}] new event`, JSON.stringify(e))
+              const req = os.add({ hpub: e.pubkey, firstSeen: now, data: e })
+              req.onerror = () => {
+                reject()
+              }
+              req.onsuccess = () => {
+                resolve()
+                eventTrigger.map(f => f())
+              }
+            }
           }
         }
-      } else {
-        resolve()
       }
     }
 
