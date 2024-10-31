@@ -106,7 +106,6 @@ v.setContact = function(hpub) {
   reqProfile(v.hpub)
   reqNotes(v.hpub)
   getFeed(v.hpub).then(posts => {
-    return
     for (const post of posts) {
       let g
 
