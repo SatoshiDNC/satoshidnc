@@ -238,7 +238,11 @@ const createProfileBlock = post => {
   g.type = 'post'
   g.actionFlags = fg.GAF_CLICKABLE
   g.data = post.data
-  g.content = JSON.parse(g.data.content)
+  try {
+    g.content = JSON.parse(g.data.content)
+  } catch {
+    g.content = g.data.content
+  }
   g.h = 50 + rowHeight * Object.keys(g.content).length + 15
   g.renderFunc = function() {
     const g = this, v = g.viewport
