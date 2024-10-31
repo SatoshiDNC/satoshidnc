@@ -118,7 +118,7 @@ profileTrigger.push(hpub => {
       defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
 
       let y = 50
-      for (key of Object.keys(g.content)) {
+      for (const key of Object.keys(g.content)) {
         t = `${key}: ${g.content[key]}`
         ts = 1
         mat4.identity(mat)
