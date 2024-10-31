@@ -70,7 +70,7 @@ for (const p of settingsPages) {
   g.target = p.target
   if (g.target) {
     g.target.a.backGad.root = g.target
-    g.target.a.backGad.target = v.parent
+    g.target.a.backGad.getTarget = () => {return v.parent}
   }
   g.clickFunc = function() {
     const g = this, v = g.viewport
