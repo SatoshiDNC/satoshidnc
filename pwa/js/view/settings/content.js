@@ -74,21 +74,21 @@ for (const p of settingsPages) {
   g.renderFunc = function() {
     const g = this, v = g.viewport
     const offset = 22 // title's vertical shift depending on subtitle presence
-    const subtitleMissing = c.subtitle? 0: 1
+    const subtitleMissing = g.subtitle? 0: 1
 
     mat4.identity(m)
     mat4.translate(m,m, [g.x + 190, g.y + 90 /*367*/ + offset*subtitleMissing, 0])
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 190 - 65
-    if (defaultFont.calcWidth(c.title) * s1 > w3) {
-      let l = c.title.length
-      while (defaultFont.calcWidth(c.title.substring(0,l)+'...') * s1 > w3) {
+    if (defaultFont.calcWidth(g.title) * s1 > w3) {
+      let l = g.title.length
+      while (defaultFont.calcWidth(g.title.substring(0,l)+'...') * s1 > w3) {
         l--
       }
-      str = c.title.substring(0,l)+'...'
+      str = g.title.substring(0,l)+'...'
     } else {
-      str = c.title
+      str = g.title
     }
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
 
@@ -98,14 +98,14 @@ for (const p of settingsPages) {
       const s3 = 29/14
       mat4.scale(m,m, [s3, s3, 1])
       const w4 = v.sw - 190 - 65
-      if (defaultFont.calcWidth(c.subtitle) * s3 > w4) {
-        let l = c.subtitle.length
-        while (defaultFont.calcWidth(c.subtitle.substring(0,l)+'...') * s3 > w4) {
+      if (defaultFont.calcWidth(g.subtitle) * s3 > w4) {
+        let l = g.subtitle.length
+        while (defaultFont.calcWidth(g.subtitle.substring(0,l)+'...') * s3 > w4) {
           l--
         }
-        str = c.subtitle.substring(0,l)+'...'
+        str = g.subtitle.substring(0,l)+'...'
       } else {
-        str = c.subtitle
+        str = g.subtitle
       }
       defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
     }
