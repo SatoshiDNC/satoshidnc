@@ -14,7 +14,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    g.root.easeOut(g.target)
+    g.root.easeOut(g.target || g.getTarget())
   }
 v.gadgets.push(g = v.searchGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
