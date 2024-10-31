@@ -174,9 +174,8 @@ export function getProfile(hpub) {
     const os = tr.objectStore('events')
     const req = os.index('hpub_firstSeen').openCursor(window.IDBKeyRange.bound([hpub, 0], [hpub, 91729187740298]), 'prev')
     req.onerror = function(e) {
-      console.err(e)
+      reject(e)
     }
-    const posts = []
     req.onsuccess = function(e) {
       let cursor = e.target.result
       if (cursor) {

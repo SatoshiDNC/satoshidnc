@@ -214,6 +214,17 @@ v.layoutFunc = function() {
   g.layout.call(g)
 }
 const createProfileBlock = post => {
+
+  if (!post) {
+    let index = v.gadgets.findIndex(o => o.key == 'profile')
+    if (index >= 0) {
+      v.gadgets.splice(index, 2)
+      fixedGads -= 2
+    }
+    v.relayout()
+    return
+  }
+
   let g
 
   const g1 = g = new fg.Gadget(v)
