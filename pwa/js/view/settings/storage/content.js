@@ -41,7 +41,7 @@ for (const p of settingsPages) {
     let t
 
     mat4.identity(m)
-    mat4.translate(m,m, [g.x + 190, g.y + 77 + offset*subtitleMissing, 0])
+    mat4.translate(m,m, [g.x + (g.margin || 190), g.y + 77 + offset*subtitleMissing, 0])
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - (g.margin || 190) - 65
@@ -58,7 +58,7 @@ for (const p of settingsPages) {
 
     if (!subtitleMissing) {
       mat4.identity(m)
-      mat4.translate(m,m, [g.x + 190, g.y + 77 + 56 /*433*/, 0])
+      mat4.translate(m,m, [g.x + (g.margin || 190), g.y + 77 + 56 /*433*/, 0])
       const s3 = 29/14
       mat4.scale(m,m, [s3, s3, 1])
       const w4 = v.sw - (g.margin || 190) - 65
