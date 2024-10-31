@@ -91,10 +91,8 @@ const tailGads = v.gadgets.length - fixedGads - 1
 profileTrigger.push(hpub => {
   if (hpub !== v.hpub) return
   console.log('profile trigger')
-  getProfile(v.hpub).then(posts => {
-    if (posts.length > 0) {
-      console.log(posts[0])
-    }
+  getProfile(v.hpub).then(post => {
+    console.log(post)
   })
   v.setRenderFlag(true)
 })

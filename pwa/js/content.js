@@ -123,11 +123,9 @@ export function getProfile(hpub) {
     req.onsuccess = function(e) {
       let cursor = e.target.result
       if (cursor) {
-        let v = cursor.value
-        posts.push(v)
-        cursor.continue()
+        resolve(cursor.value)
       } else {
-        resolve(posts)
+        resolve()
       }
     }
   })
