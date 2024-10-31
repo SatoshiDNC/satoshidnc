@@ -31,7 +31,8 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
+    const x = (e.x - v.x) / v.viewScale + v.userX
+    const y = (e.y - v.y) / v.viewScale + v.userY
     const index = Math.floor((y - 167.5) / 200)
     const c = contacts?.[index]
     if (c) {
@@ -48,6 +49,8 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
       }
     }
   }
+v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
+  g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.activeFilter = v.filterGads[0].label
 v.layoutFunc = function() {
   const v = this
@@ -60,9 +63,15 @@ v.layoutFunc = function() {
   }
   let g
   g = v.listGad
-  g.x = 0, g.y = 0
-  g.w = v.sw, g.h = v.sh
+  g.x = 0, g.y = 168
+  g.w = v.sw, g.h = 200 * contacts.length
   g.autoHull()
+
+  v.minX = 0, v.maxX = v.sw
+  v.minY = 0, v.maxY = v.listGad.y + v.listGad.h
+
+  g = v.swipeGad
+  g.layout.call(g)
 }
 contactViewDependencies.push(v)
 v.renderFunc = function() {
