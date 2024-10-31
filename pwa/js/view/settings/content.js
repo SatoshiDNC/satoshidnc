@@ -113,6 +113,8 @@ for (const p of settingsPages) {
   }
   i++
 }
+v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
+  g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.layoutFunc = function() {
   const v = this
   let g
@@ -134,6 +136,8 @@ v.layoutFunc = function() {
     }
   }
   v.maxY = max
+  g = v.swipeGad
+  g.layout.call(g)
 }
 contactViewDependencies.push(v)
 v.renderFunc = function() {
