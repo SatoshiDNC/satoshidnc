@@ -219,12 +219,14 @@ const createProfileBlock = post => {
   g.type = '-', g.h = 22
   g.renderFunc = v.lastSep.renderFunc
 
+  const rowHeight = 32
+
   const g2 = g = new fg.Gadget(v)
   g.type = 'post'
   g.actionFlags = fg.GAF_CLICKABLE
   g.data = post.data
   g.content = JSON.parse(g.data.content)
-  g.h = 50 + 16 * Object.keys(g.content).length
+  g.h = 50 + rowHeight * Object.keys(g.content).length + 15
   g.renderFunc = function() {
     const g = this, v = g.viewport
     const mat = mat4.create()
@@ -241,12 +243,12 @@ const createProfileBlock = post => {
     let y = 50
     for (const key of Object.keys(g.content)) {
       t = `${key}: ${g.content[key]}`
-      ts = 1
+      ts = rowHeight/14
       mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + 14, 0])
+      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t, v.titleColor, v.mat, mat)
-      y += 16
+      y += rowHeight
     }
   }
 
