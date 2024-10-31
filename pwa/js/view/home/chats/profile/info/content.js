@@ -216,6 +216,7 @@ const createProfileBlock = post => {
   let g
 
   const g1 = g = new fg.Gadget(v)
+  g.key = 'profile'
   g.type = '-', g.h = 22
   g.renderFunc = v.lastSep.renderFunc
 
@@ -252,6 +253,10 @@ const createProfileBlock = post => {
     }
   }
 
+  let index = v.gadgets.findIndex(o => o.key == 'profile')
+  if (index >= 0) {
+    v.gadgets.splice(index, 2)
+  }
   v.gadgets.splice(v.gadgets.length - tailGads - 1, 0, g1, g2)
   v.relayout()
 }
