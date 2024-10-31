@@ -1,4 +1,4 @@
-import { menuView as trezorTools } from './tools-trezor.js'
+import { menuView as trezorTools } from '../tools-trezor.js'
 
 let v, g
 export const barTop = v = new fg.View()
