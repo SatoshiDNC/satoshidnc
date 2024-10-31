@@ -34,7 +34,16 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           throw new Error('Clipboard does not contain plain text data.')
         }
         item.getType('text/plain').then(blob => blob.text()).then(text => {
-          console.log(text)
+          if (text.includes(',')) {
+            npubs = text.split(',').map(a => a.trim())
+          } else if (text.includes(' ')) {
+            npubs = text.split(' ').map(a => a.trim())
+          } else {
+            alert('Public keys should be comma- or space-delimited.')
+          }
+          for (npub of npubs) {
+            console.log(npubDecode(npub) || npub)
+          }
         })
       }
     }, reason => {
