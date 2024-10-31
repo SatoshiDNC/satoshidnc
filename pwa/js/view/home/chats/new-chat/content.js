@@ -71,7 +71,7 @@ v.layoutFunc = function() {
   g.w = 47, g.h = 47
   g.autoHull()
   g = v.listGad
-  g.x = 0, g.y = 612
+  g.x = 0, g.y = 649
   g.w = v.sw, g.h = (keys.length + contacts.length) * 179
   g.autoHull()
 
