@@ -14,7 +14,7 @@ const settingsPages = [
   { title: 'Manage storage', subtitle: '4.8 GB', underbar: true },
   { title: 'Network usage', subtitle: '2.2 GB sent · 9.7 GB received' },
   { h: 129, ty: 55, title: 'Use less data for calls' },
-  { title: 'Proxy', subtitle: 'Off' },
+  { h: 183, ty: 55, title: 'Proxy', subtitle: 'Off' },
   { title: 'Media upload quality', subtitle: 'Standard quality', overbar: true, underbar: true },
   { title: 'Media auto-download', subtitle: 'Voice messages are always automatically downloaded' },
   { title: 'When using mobile data', subtitle: 'Photos' },
