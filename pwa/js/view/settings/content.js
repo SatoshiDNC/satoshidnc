@@ -146,8 +146,9 @@ v.renderFunc = function() {
 
   let i = 0
   for (const c of [    
-    { name: 'Account', xmitText: 'Security notifications, change number' },
-    { name: 'Privacy', xmitText: 'Block contacts, disappearing messages' },
+    { title: 'Account', subtitle: 'Security notifications, change number' },
+    { title: 'Privacy', subtitle: 'Block contacts, disappearing messages' },
+    { title: 'Storage and data', subtitle: 'Network usage, auto-download' },
   ]) {
 
     // icon x = 65
@@ -158,14 +159,14 @@ v.renderFunc = function() {
     const s1 = 33/14
     mat4.scale(m,m, [s1, s1, 1])
     const w3 = v.sw - 190 - 65
-    if (defaultFont.calcWidth(c.name) * s1 > w3) {
-      let l = c.name.length
-      while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w3) {
+    if (defaultFont.calcWidth(c.title) * s1 > w3) {
+      let l = c.title.length
+      while (defaultFont.calcWidth(c.title.substring(0,l)+'...') * s1 > w3) {
         l--
       }
-      str = c.name.substring(0,l)+'...'
+      str = c.title.substring(0,l)+'...'
     } else {
-      str = c.name
+      str = c.title
     }
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
 
@@ -174,14 +175,14 @@ v.renderFunc = function() {
     const s3 = 29/14
     mat4.scale(m,m, [s3, s3, 1])
     const w4 = v.sw - 190 - 65
-    if (defaultFont.calcWidth(c.xmitText) * s3 > w4) {
-      let l = c.xmitText.length
-      while (defaultFont.calcWidth(c.xmitText.substring(0,l)+'...') * s3 > w4) {
+    if (defaultFont.calcWidth(c.subtitle) * s3 > w4) {
+      let l = c.subtitle.length
+      while (defaultFont.calcWidth(c.subtitle.substring(0,l)+'...') * s3 > w4) {
         l--
       }
-      str = c.xmitText.substring(0,l)+'...'
+      str = c.subtitle.substring(0,l)+'...'
     } else {
-      str = c.xmitText
+      str = c.subtitle
     }
     defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
     
