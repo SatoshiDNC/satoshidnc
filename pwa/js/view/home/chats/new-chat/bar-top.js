@@ -1,6 +1,6 @@
 import { menuView as trezorTools } from '../tools-trezor.js'
 import { npubDecode, validKey } from '../../../../nostor-util.js'
-import { addNewContact, reloadContacts } from '../../../../contacts.js'
+import { contacts, addNewContact, reloadContacts } from '../../../../contacts.js'
 
 let v, g
 export const barTop = v = new fg.View()
