@@ -34,6 +34,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           throw new Error('Clipboard does not contain plain text data.')
         }
         item.getType('text/plain').then(blob => blob.text()).then(text => {
+          let npubs = []
           if (text.includes(',')) {
             npubs = text.split(',').map(a => a.trim())
           } else if (text.includes(' ')) {
@@ -41,7 +42,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           } else {
             alert('Public keys should be comma- or space-delimited.')
           }
-          for (npub of npubs) {
+          for (const npub of npubs) {
             console.log(npubDecode(npub) || npub)
           }
         })
