@@ -20,7 +20,7 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
+    const y = (e.y - v.y) / v.viewScale - v.userY
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.recents.length) return
     // const updates = v.query.results.filter(u => u.hpub == v.recents[index])
@@ -32,7 +32,7 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    const x = (e.x - v.x) / v.viewScale - v.x, y = (e.y - v.y) / v.viewScale
+    const y = (e.y - v.y) / v.viewScale - v.userY
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.viewed.length) return
     const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
