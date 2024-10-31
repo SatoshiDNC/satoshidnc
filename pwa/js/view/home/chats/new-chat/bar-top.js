@@ -36,7 +36,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         }
         item.getType('text/plain').then(blob => blob.text()).then(rawText => {
           let npubs = []
-          let text = rawText.replace(',',' ').replace('\n',' ').replace('\r',' ').replace('\t',' ')
+          let text = rawText.replaceAll(',',' ').replaceAll('\n',' ').replaceAll('\r',' ').replaceAll('\t',' ')
           console.log(text)
           if (text.includes(' ')) {
             npubs = text.split(' ').map(a => a.trim())
