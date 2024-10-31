@@ -117,6 +117,8 @@ v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.layoutFunc = function() {
   const v = this
+  v.minX = 0, v.maxX = v.sw
+  v.minY = 0 //, v.maxY = v.sh*2
   let g
   g = v.addGad
   g.x = v.sw - 105
