@@ -1,4 +1,3 @@
-import { contactViewDependencies } from '../../../contacts.js'
 import { defaultKey } from '../../../keys.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 
@@ -11,57 +10,24 @@ v.frameTimes = []
 v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
-v.gadgets.push(g = v.addGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.label = '*'
-  g.color = colors.accent
-  g.font = iconFont
-  g.fontSize = 18
-  g.y = 100
-  g.w = 53, g.h = 53
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    console.log(`click '${g.label}'`)
-  }
-v.gadgets.push(g = v.scanGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.label = '\x04'
-  g.color = colors.accent
-  g.font = iconFont
-  g.fontSize = 18
-  g.y = 103
-  g.w = 47, g.h = 47
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    console.log(`click 'scan'`)
-  }
-v.gadgets.push(g = v.profileGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 0, g.y = 0
-  g.h = 265
-  g.clickFunc = function() {
-    const g = this, v = this.viewport
-    g.root.easeOut(g.target)
-  }
 const settingsPages = [
-  { title: 'Account', subtitle: 'Security notifications, change number' },
-  { title: 'Privacy', subtitle: 'Block contacts, disappearing messages' },
-  { title: 'Avatar', subtitle: 'Create, edit, profile photo' },
-  { title: 'Favorites', subtitle: 'Add, reorder, remove' },
-  { title: 'Chats', subtitle: 'Theme, wallpapers, chat history' },
-  { title: 'Notifications', subtitle: 'Message, group & call tones' },
-  { title: 'Storage and data', subtitle: 'Network usage, auto-download' },
-  { title: 'App language', subtitle: 'English (device’s language)' },
-  { title: 'Help', subtitle: 'Help center, contact us, privacy policy' },
-  { title: 'Invite a friend' },
+  { h: 237, title: 'Manage storage', subtitle: '4.8 GB' },
+  { title: 'Network usage', subtitle: '2.2 GB sent · 9.7 GB received' },
+  { title: 'Use less data for calls' },
+  { title: 'Proxy', subtitle: 'Off' },
+  { title: 'Media upload quality', subtitle: 'Standard quality' },
+  { title: 'Media auto-download', subtitle: 'Voice messages are always automatically downloaded' },
+  { title: 'When using mobile data', subtitle: 'Photos' },
+  { title: 'When connected on Wi-Fi', subtitle: 'All media' },
+  { title: 'When roaming', subtitle: 'No media' },
 ]
-let i = 0
+let i = 0, y = 0
 for (const p of settingsPages) {
   v.gadgets.push(g = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.class = 'settings'
-  g.x = 0, g.y = v.profileGad.h + 12 + 210*i
-  g.h = 210
+  g.x = 0, g.y = y
+  g.h = p.h || 210
   g.title = p.title
   g.subtitle = p.subtitle
   g.clickFunc = function() {
@@ -110,6 +76,7 @@ for (const p of settingsPages) {
     }
   }
   i++
+  y+=g.h
 }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
@@ -118,15 +85,6 @@ v.layoutFunc = function() {
   v.minX = 0, v.maxX = v.sw
   v.minY = 0 //, v.maxY = v.sh*2
   let g
-  g = v.addGad
-  g.x = v.sw - 105
-  g.autoHull()
-  g = v.scanGad
-  g.x = v.sw - 202
-  g.autoHull()
-  g = v.profileGad
-  g.w = v.sw
-  g.autoHull()
   let max = 0
   for (const g of v.gadgets) {
     if (g.class == 'settings') {
@@ -139,68 +97,13 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-contactViewDependencies.push(v)
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
-  const m = mat4.create()
-  const mat = mat4.create()
-  let c = {
-    hpub: defaultKey,
-    name: getAttr(defaultKey, 'name') || 'Unnamed',
-    about: getAttr(defaultKey, 'about') || 'I’m using Nostor!',
-  }
-  let str
 
-  mat4.identity(mat)
-  mat4.translate(mat, mat, [42, 42, 0])
-  mat4.scale(mat, mat, [168/32, 168/32, 1])
-  let x = -0.5, y = 8.5
-  c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
-    mat4.copy(m, mat)
-    nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
-  })
-
-  mat4.identity(m)
-  mat4.translate(m,m, [256, 116, 0])
-  const s1 = 39/14
-  mat4.scale(m,m, [s1, s1, 1])
-  const w1 = v.sw - 256 - 256
-  if (defaultFont.calcWidth(c.name) * s1 > w1) {
-    let l = c.name.length
-    while (defaultFont.calcWidth(c.name.substring(0,l)+'...') * s1 > w1) {
-      l--
-    }
-    str = c.name.substring(0,l)+'...'
-  } else {
-    str = c.name
-  }
-  defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
-
-  let rawText = c.about || ''
-  mat4.identity(m)
-  mat4.translate(m,m, [255, 185, 0])
-  const s2 = 28/14
-  mat4.scale(m,m, [s2, s2, 1])
-  if (defaultFont.calcWidth(rawText) * s2 > w1) {
-    let l = rawText.length
-    while (defaultFont.calcWidth(rawText.substring(0,l)+'...') * s2 > w1) {
-      l--
-    }
-    str = rawText.substring(0,l)+'...'
-  } else {
-    str = rawText
-  }
-  defaultFont.draw(0,0, str, v.subtitleColor, v.mat, m)
-
-  for (g of v.gadgets) if (g.renderFunc) {
-    g.renderFunc()
-  } else if (g.label) {
-    mat4.identity(m)
-    mat4.translate(m, m, [g.x, g.y+g.h, 0])
-    mat4.scale(m, m, [g.h/g.fontSize, g.h/g.fontSize, 1])
-    g.font.draw(0,0, g.label, g.color, v.mat, m)
+  for (g of v.gadgets) {
+    g.renderFunc?.()
   }
 
   mainShapes.useProg2()
