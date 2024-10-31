@@ -23,7 +23,9 @@ export function addNewContact(hpub, name) {
   const req = os.put({ hpub, added: Date.now() })
   req.onsuccess = (e) => {
     reloadContacts()
-    setPersonalData(hpub, 'name', name)
+    if (name) {
+      setPersonalData(hpub, 'name', name)
+    }
   }
 }
 

@@ -180,7 +180,7 @@ v.renderFunc = function() {
     about: 'Message yourself',
   }}), ...contacts.map(c => { return {
     hpub: c.hpub,
-    name: getAttr(c.hpub, 'name'),
+    name: getAttr(c.hpub, 'name') || 'Unnamed',
     about: getAttr(c.hpub, 'about') || '',
   }}) ]) {
     index.push(c.hpub)
