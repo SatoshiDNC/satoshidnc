@@ -70,6 +70,7 @@ v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     console.log(`click '${g.label}'`)
   }
+const originalFixedGads = v.gadgets.length
 let fixedGads = v.gadgets.length
 v.gadgets.push(g = v.lastSep = new fg.Gadget(v))
   g.type = '-', g.h = 22
@@ -193,7 +194,7 @@ v.layoutFunc = function() {
   g.x = v.menuGad.x - 52 - g.w
   g.autoHull()
 
-  const todo = v.gadgets.splice(fixedGads, v.gadgets.length)
+  const todo = v.gadgets.splice(originalFixedGads, v.gadgets.length)
   const tail = todo.splice(todo.length - tailGads, todo.length)
 
   let y = 808
