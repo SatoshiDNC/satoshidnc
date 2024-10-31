@@ -94,7 +94,7 @@ v.setContact = function(hpub) {
   v.userY = 0
   v.deltaTime = undefined
   v.gadgets.splice(fixedGads, v.gadgets.length - fixedGads - tailGads - 1)
-  reqNotes(v.hpub)
+  reqProfile(v.hpub)
   getFeed(v.hpub).then(posts => {
     for (const post of posts) {
       let g
