@@ -58,7 +58,7 @@ const settingsPages = [
   { title: 'Invite a friend' },
 ]
 let i = 0
-for (p of settingsPages) {
+for (const p of settingsPages) {
   v.gadgets.push(g = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.class = 'settings'
