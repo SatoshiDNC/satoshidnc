@@ -33,7 +33,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         if (!item.types.includes('text/plain')) {
           throw new Error('Clipboard does not contain plain text data.')
         }
-        item.getType('text/plain').then(text => {
+        item.getType('text/plain').then(blob => blob.text()).then(text => {
           console.log(text)
         })
       }
