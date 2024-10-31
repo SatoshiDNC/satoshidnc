@@ -220,7 +220,7 @@ const createProfileBlock = post => {
   g.type = '-', g.h = 22
   g.renderFunc = v.lastSep.renderFunc
 
-  const rowHeight = 32
+  const rowHeight = 42
 
   const g2 = g = new fg.Gadget(v)
   g.type = 'post'
