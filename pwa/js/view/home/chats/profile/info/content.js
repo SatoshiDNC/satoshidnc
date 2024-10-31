@@ -92,9 +92,46 @@ profileTrigger.push(hpub => {
   if (hpub !== v.hpub) return
   console.log('profile trigger')
   getProfile(v.hpub).then(post => {
-    console.log(post)
+    let g
+
+    const g1 = g = new fg.Gadget(v)
+    g.type = '-', g.h = 22
+    g.renderFunc = v.lastSep.renderFunc
+
+    const g2 = g = new fg.Gadget(v)
+    g.type = 'post'
+    g.actionFlags = fg.GAF_CLICKABLE
+    g.data = post.data
+    g.content = JSON.parse(g.data.content)
+    g.h = 50 + 16 * Object.keys(g.content).length
+    g.renderFunc = function() {
+      const g = this, v = g.viewport
+      const mat = mat4.create()
+      let t,tw,ts
+
+      t = `${g.data.kind} · ${(''+kindInfo.filter(r=>r.kindMax?r.kind<=g.data.kind&&g.data.kind<=r.kindMax:r.kind==g.data.kind)?.[0]?.desc).toUpperCase()}`
+      tw = defaultFont.calcWidth(t)
+      ts = 20/14
+      mat4.identity(mat)
+      mat4.translate(mat, mat, [15, g.y + 15 + 20, 0])
+      mat4.scale(mat, mat, [ts, ts, 1])
+      defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
+
+      let y = 50
+      for (key of Object.keys(g.content)) {
+        t = `${key}: ${g.content[key]}`
+        ts = 1
+        mat4.identity(mat)
+        mat4.translate(mat, mat, [15, g.y + y + 14, 0])
+        mat4.scale(mat, mat, [ts, ts, 1])
+        defaultFont.draw(0,0, t, v.titleColor, v.mat, mat)
+        y += 16
+      }
+    }
+
+    v.gadgets.splice(v.gadgets.length - tailGads - 1, 0, g1, g2)
+    v.relayout()
   })
-  v.setRenderFlag(true)
 })
 eventTrigger.push(() => {
   console.log('event trigger')
