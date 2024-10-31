@@ -26,8 +26,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
   }
+  g.importHandler = function(item) {
+    console.log('invoked import handler')
+  }
   g.items = [
-    { id: 1, handler: g.handler, label: 'Batch import npubs' },
+    { id: 1, handler: g.handler, label: 'Batch import npubs', handler: g.importHandler },
     { id: 2, label: 'Trezor tools', handler: trezorTools.invoker },
   ]
   g.clickFunc = function() {
