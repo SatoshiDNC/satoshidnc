@@ -54,6 +54,27 @@ export function reqNotes(hpub) {
   })
 }
 
+let reqProfile_requestTime
+export function reqProfile(hpub) {
+  const TAG = 'reqProfile'
+  reqNotes_requestTime = Date.now()
+  let thisRequestTime = reqNotes_requestTime
+  const defaultRelay = randomRelay()
+  console.log(`[${TAG}] query relay:`, defaultRelay)
+  getRelay(defaultRelay).then(relay => {
+    if (thisRequestTime !== reqNotes_requestTime) return
+    relay.send([
+      'REQ',
+      'profile',
+      {
+        'kinds': [0],
+        'authors': [hpub],
+        'limit': 5,
+      }
+    ])
+  })
+}
+
 let reqFeed_requestTime
 export function reqFeed() {
   const TAG = 'reqFeed'
