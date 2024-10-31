@@ -15,11 +15,16 @@ export function aggregateEvent(e) {
     const req = os.index('id').get(e.id)
     req.onsuccess = () => {
       if (!req.result) {
-        console.log(`[${TAG}] new event`, JSON.stringify(e))
-        const req = os.add({ hpub: e.pubkey, firstSeen: now, data: e })
-        req.onsuccess = () => {
+        if (e.kind == 31234 /* draft */) {
+          console.log(`[${TAG}] skipping event`, JSON.stringify(e))
           resolve()
-          eventTrigger.map(f => f())
+        } else {
+          console.log(`[${TAG}] new event`, JSON.stringify(e))
+          const req = os.add({ hpub: e.pubkey, firstSeen: now, data: e })
+          req.onsuccess = () => {
+            resolve()
+            eventTrigger.map(f => f())
+          }
         }
       } else {
         resolve()
