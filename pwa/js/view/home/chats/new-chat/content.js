@@ -58,6 +58,8 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
       g.root.easeOut(g.target)
     }
   }
+v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
+  g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.layoutFunc = function() {
   const v = this
   let g
@@ -70,8 +72,14 @@ v.layoutFunc = function() {
   g.autoHull()
   g = v.listGad
   g.x = 0, g.y = 0
-  g.w = v.sw, g.h = v.sh
+  g.w = v.sw, g.h = (keys.length + contacts.length) * 179
   g.autoHull()
+
+  v.minX = 0, v.maxX = v.sw
+  v.minY = 0, v.maxY = v.listGad.y + v.listGad.h
+
+  g = v.swipeGad
+  g.layout.call(g)
 }
 contactViewDependencies.push(v)
 keyViewDependencies.push(v)
