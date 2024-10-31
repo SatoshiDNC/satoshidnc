@@ -170,9 +170,9 @@ export function reqFeed() {
 
 export function getProfile(hpub) {
   return new Promise((resolve, reject) => {
-    const tr = db.transaction('events', 'readonly', { durability: 'strict' })
-    const os = tr.objectStore('events')
-    const req = os.index('hpub_firstSeen').openCursor(window.IDBKeyRange.bound([hpub, 0], [hpub, 91729187740298]), 'prev')
+    const tr = db.transaction('profiles', 'readonly', { durability: 'strict' })
+    const os = tr.objectStore('profiles')
+    const req = os.openCursor(window.IDBKeyRange.bound(hpub, hpub))
     req.onerror = function(e) {
       reject(e)
     }
@@ -189,7 +189,7 @@ export function getProfile(hpub) {
 
 export function getFeed(hpub) {
   return new Promise((resolve, reject) => {
-    const tr = db.transaction('events', 'readwrite', { durability: 'strict' })
+    const tr = db.transaction('events', 'readonly', { durability: 'strict' })
     const os = tr.objectStore('events')
     const req = os.index('hpub_firstSeen').openCursor(window.IDBKeyRange.bound([hpub, 0], [hpub, 91729187740298]), 'prev')
     req.onerror = function(e) {
