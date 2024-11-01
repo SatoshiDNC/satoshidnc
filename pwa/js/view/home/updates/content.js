@@ -172,7 +172,7 @@ v.renderFunc = function() {
     mat4.identity(m)
     mat4.translate(m, m, [211, 553 + y, 0])
     mat4.scale(m, m, [35/14, 35/14, 1])
-    defaultFont.draw(0,0, getAttr(hpub, 'name'), v.titleColor, v.mat, m)
+    defaultFont.draw(0,0, getAttr(hpub, 'name') || 'Unnamed', v.titleColor, v.mat, m)
   
     mat4.identity(m)
     mat4.translate(m, m, [211, 618 + y, 0])
