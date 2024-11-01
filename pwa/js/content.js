@@ -150,7 +150,6 @@ export function reqProfile(hpub) {
 let reqFeed_requestTime
 export function reqFeed() {
   const TAG = 'reqFeed'
-  console.log(TAG)
   reqFeed_requestTime = Date.now()
   let thisRequestTime = reqFeed_requestTime
   const defaultRelay = 'relay.satoshidnc.com'
