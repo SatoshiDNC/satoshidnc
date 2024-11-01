@@ -79,6 +79,9 @@ v.renderKind1 = function(data) {
     mat4.identity(m)
     mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65]*ts*2, 0])
     mat4.scale(m, m, [ts, ts, 1])
+    if (!line) {
+      console.log(line)
+    }
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
 }
