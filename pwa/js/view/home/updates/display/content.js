@@ -75,7 +75,7 @@ v.renderKind1 = function(data) {
   let i = 1
   for (let line of lines) {
     i++
-    if (!line) continue
+    if (!line) line = '-'
     line = line.replaceAll(' ', '·')
     tw = defaultFont.calcWidth(line) * ts
     mat4.identity(m)
