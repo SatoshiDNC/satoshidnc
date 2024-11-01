@@ -51,35 +51,39 @@ v.renderFunc = function() {
 }
 v.renderKind1 = function(data) {
   const v = this
+  const whitespace = true
   const hexColor = data.tags.filter(t => t[0] == 'bgcolor')?.[0]?.[1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
   const rgbColor = parseInt(hexColor,16)
   const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
   gl.clearColor(...bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
-  // const m = mat4.create()
-  // let t,tw,th,ts
-  // ts = 50/14
-  // const paragraphs = data.content.replaceAll('\x0a', '¶\x0a').split('\x0a')
-  // const lines = []
-  // for (const para of paragraphs) {
-  //   const words = para.split(' ')
-  //   while (words.length > 0) {
-  //     lines.push(words.shift())
-  //     while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
-  //       lines.push(lines.pop() + ' ' + words.shift())
-  //     }
-  //   }
-  // }
-  // // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
-  // th = lines.length * defaultFont.glyphHeights[65] * ts * 2
-  // let i = 1
-  // for (let line of lines) {
-  //   i++
-  //   line = line.replaceAll(' ', '·')
-  //   tw = defaultFont.calcWidth(line) * ts
-  //   mat4.identity(m)
-  //   mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65]*ts*2, 0])
-  //   mat4.scale(m, m, [ts, ts, 1])
-  //   defaultFont.draw(0,0, line, v.textColor, v.mat, m)
-  // }
+  const m = mat4.create()
+  let t,tw,th,ts
+  ts = 50/14
+  const paragraphs = data.content.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
+  const lines = []
+  for (const para of paragraphs) {
+    const words = para.split(' ')
+    while (words.length > 0) {
+      lines.push(words.shift())
+      while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
+        lines.push(lines.pop() + ' ' + words.shift())
+      }
+    }
+  }
+  // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
+  th = lines.length * defaultFont.glyphHeights[65] * ts * 2
+  let i = 1
+  for (let line of lines) {
+    i++
+    if (!line) continue
+    if (whitespace) {
+      line = line.replaceAll(' ', '·')
+    }
+    tw = defaultFont.calcWidth(line) * ts
+    mat4.identity(m)
+    mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65]*ts*2, 0])
+    mat4.scale(m, m, [ts, ts, 1])
+    defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+  }
 }
