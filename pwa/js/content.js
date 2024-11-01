@@ -1,5 +1,4 @@
 import { db } from './db.js'
-import { randomRelay } from './relays.js'
 import { homeRelay } from './nostor-app.js'
 import { contacts } from './contacts.js'
 
@@ -111,8 +110,7 @@ export function reqNotes(hpub) {
   const TAG = 'reqNotes'
   reqNotes_requestTime = Date.now()
   let thisRequestTime = reqNotes_requestTime
-  const defaultRelay = randomRelay()
-  console.log(`[${TAG}] query relay:`, defaultRelay)
+  console.log(`[${TAG}] query relay`)
   homeRelay().then(relay => {
     if (thisRequestTime !== reqNotes_requestTime) return
     relay.send([
@@ -129,12 +127,11 @@ export function reqNotes(hpub) {
 let reqProfile_requestTime
 export function reqProfile(hpub) {
   const TAG = 'reqProfile'
-  reqNotes_requestTime = Date.now()
-  let thisRequestTime = reqNotes_requestTime
-  const defaultRelay = randomRelay()
-  console.log(`[${TAG}] query relay:`, defaultRelay)
+  reqProfile_requestTime = Date.now()
+  let thisRequestTime = reqProfile_requestTime
+  console.log(`[${TAG}] query relay`)
   homeRelay().then(relay => {
-    if (thisRequestTime !== reqNotes_requestTime) return
+    if (thisRequestTime !== reqProfile_requestTime) return
     relay.send([
       'REQ',
       'profile',
@@ -152,8 +149,7 @@ export function reqFeed() {
   const TAG = 'reqFeed'
   reqFeed_requestTime = Date.now()
   let thisRequestTime = reqFeed_requestTime
-  const defaultRelay = 'relay.satoshidnc.com'
-  console.log(`[${TAG}] query relay:`, defaultRelay)
+  console.log(`[${TAG}] query relay`)
   homeRelay().then(relay => {
     if (thisRequestTime !== reqFeed_requestTime) return
     relay.send([
