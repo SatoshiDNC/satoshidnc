@@ -1,5 +1,5 @@
 import { drawAvatar, alpha } from '../../../../draw.js'
-import { getPersonalData } from '../../../../personal.js'
+import { getPersonalData as getAttr } from '../../../../personal.js'
 import { setEasingParameters } from '../../../util.js'
 
 let v, g
@@ -136,7 +136,7 @@ v.renderFunc = function() {
   mat4.translate(m,m, [v.preX * f0 + (v.menuX + 24) * f1, v.preY * f0 + (v.menuY + 61) * f1, 0])
   mat4.scale(m,m, [33/14 * f1, 33/14 * f1, 1])
   let c = [1,1,1,1]
-  defaultFont.draw(0,0, getPersonalData(hpub, 'name'), [c[0],c[1],c[2],f1], v.mat, m)
+  defaultFont.draw(0,0, getAttr(hpub, 'name') || 'Unnamed', [c[0],c[1],c[2],f1], v.mat, m)
 
   // separator
   mainShapes.useProg2()
