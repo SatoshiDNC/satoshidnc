@@ -59,7 +59,7 @@ v.renderKind1 = function(data) {
   const m = mat4.create()
   let t,tw,th,ts
   ts = 50/14
-  const paragraphs = data.content.split('\x0a')
+  const paragraphs = data.content.replaceAll('\x0a', '¶\x0a').split('\x0a')
   const lines = []
   for (const para of paragraphs) {
     const words = para.split(' ')
