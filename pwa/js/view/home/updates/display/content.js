@@ -59,12 +59,15 @@ v.renderKind1 = function(data) {
   const m = mat4.create()
   let t,tw,th,ts
   ts = 50/14
-  const words = data.content.split(' ')
+  const paragraphs = data.content.split('\x0a')
   const lines = []
-  while (words.length > 0) {
-    lines.push(words.shift())
-    while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
-      lines.push(lines.pop() + ' ' + words.shift())
+  for (para of paragraphs) {
+    const words = para.split(' ')
+    while (words.length > 0) {
+      lines.push(words.shift())
+      while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
+        lines.push(lines.pop() + ' ' + words.shift())
+      }
     }
   }
   // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
