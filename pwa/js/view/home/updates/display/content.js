@@ -66,6 +66,14 @@ v.renderKind1 = function(data) {
     const words = para.split(' ')
     while (words.length > 0) {
       lines.push(words.shift())
+      let buf = ''
+      while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
+        let l = lines.pop()
+        buf = l.substring(l.length-1) + buf
+        l = l.substring(0, l.length-1)
+        lines.push(l)
+      }
+      lines.push(buf)
       while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
         lines.push(lines.pop() + ' ' + words.shift())
       }
