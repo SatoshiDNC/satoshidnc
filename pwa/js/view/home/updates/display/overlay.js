@@ -92,7 +92,7 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m, m, [263, 82, 0])
   mat4.scale(m, m, [33/14, 33/14, 1])
-  defaultFont.draw(0,0, getAttr(v.updates[v.currentUpdate].hpub, 'name'), v.titleColor, v.mat, m)
+  defaultFont.draw(0,0, getAttr(v.updates[v.currentUpdate].hpub, 'name') || 'Unnamed', v.titleColor, v.mat, m)
 
   const data = v.updates[v.currentUpdate].data
 
