@@ -95,7 +95,7 @@ export function reloadKeys() {
   })
 }
 
-export function sign(hpub, eventTemplate) {
+export function sign(hpub, eventTemplate, silent) {
   const event = {...eventTemplate}
   if (!event.content) {
     event.content = ''
@@ -109,7 +109,7 @@ export function sign(hpub, eventTemplate) {
   return new Promise((resolve, reject) => {
     const info = getKeyInfo(hpub)
     if (info.keyType == 'device') {
-      if (confirm(`Are you sure you want to sign the following message? This document will become legally binding:\n${serializeEvent(event)}`)) {
+      if (silent || confirm(`Are you sure you want to sign the following message? This document will become legally binding:\n${serializeEvent(event)}`)) {
         const tr = db.transaction('keys', 'readonly')
         const os = tr.objectStore('keys')
         const req = os.get(hpub)

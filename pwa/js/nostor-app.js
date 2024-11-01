@@ -77,7 +77,7 @@ export function getRelay(name) {
             ['relay', `${r.url}`],
             ['challenge', `${m[1]}`]
           ],
-        }).then(event => {
+        }, true).then(event => {
           authEvent = event
           r.send(['AUTH', event])
         }).catch(reason => {
