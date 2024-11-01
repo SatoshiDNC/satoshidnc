@@ -59,10 +59,10 @@ v.renderKind1 = function(data) {
   const m = mat4.create()
   let t,tw,th,ts
   ts = 50/14
-  const paragraphs = data.content.split('\x0a')
+  const paragraphs = data.content.split('\x0a').filter(s => s)
   const lines = []
   for (const para of paragraphs) {
-    const words = para.split(' ')
+    const words = para.split(' ').filter(s => s)
     while (words.length > 0) {
       lines.push(words.shift())
       while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
@@ -79,9 +79,6 @@ v.renderKind1 = function(data) {
     mat4.identity(m)
     mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65]*ts*2, 0])
     mat4.scale(m, m, [ts, ts, 1])
-    if (!line) {
-      console.log(line)
-    }
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
 }
