@@ -62,7 +62,7 @@ v.renderKind1 = function(data) {
   const paragraphs = data.content.split('\x0a')
   const lines = []
   for (const para of paragraphs) {
-    const words = para.split(' ')
+    const words = para.split(' ').filter(s => s)
     while (words.length > 0) {
       lines.push(words.shift())
       while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
