@@ -61,7 +61,7 @@ v.renderKind1 = function(data) {
   ts = 50/14
   const paragraphs = data.content.split('\x0a')
   const lines = []
-  for (para of paragraphs) {
+  for (const para of paragraphs) {
     const words = para.split(' ')
     while (words.length > 0) {
       lines.push(words.shift())
