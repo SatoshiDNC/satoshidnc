@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer'
-import { ChaCha20 } from '../lib/chacha20.js'
+import { Cypher as ChaCha20 } from '../lib/chacha20.js'
 
 export const storageSystems = []
 
