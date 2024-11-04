@@ -6,6 +6,7 @@ import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
 import { getKeyboardInput } from '../../../util.js'
 import * as nip19 from 'nostr-tools/nip19'
+import { encrypt } from '../../../../storage.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -264,6 +265,19 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           let tracks = stream.getTracks()
           tracks.forEach(track => track.stop())          
           console.log("recorder stopped", audioURL)
+
+          encrypt(blob.stream()).then(stream => {
+            const reader = stream.getReader()
+            let finished = false
+            while (!finished)
+            reader.read().then(({ done, value }) => {
+              console.log(value)
+              if (done) {
+                finished = done
+                console.log('done')
+              }
+            })
+          })
 
           // deleteButton.onclick = (e) => {
           //   const evtTgt = e.target

@@ -6,3 +6,8 @@ storageSystems.push({
   method: 'POST',
 })
 
+export function encrypt(readableStream) {
+  return new Promise((resolve, reject) => {
+    resolve(readableStream)
+  })
+}
