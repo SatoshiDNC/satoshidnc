@@ -1,4 +1,5 @@
 import { Buffer } from 'buffer'
+import { ChaCha20 } from '../lib/chacha20.js'
 
 export const storageSystems = []
 
@@ -11,6 +12,11 @@ storageSystems.push({
 export function encrypt(stream) {
   const TAG = 'enc'
   const { readable, writable } = new TransformStream()
+  let pos = 0
+  var key = new Buffer(32)
+  key.fill(0)
+  var nonce = new Buffer(12)
+  nonce.fill(0)
   return new Promise((resolve, reject) => {
     console.log(`[${TAG}] got stream`)
     const reader = stream.getReader()
@@ -20,7 +26,12 @@ export function encrypt(stream) {
       reader.read().then(({ done, value }) => {
         if (value) {
           console.log(`[${TAG}] ${value}`)
-          writer.write(value).then(() => {
+
+          cypher = new ChaCha20(key, nonce, 1)
+          var ret = Buffer.alloc(value.length)
+          cipher.encrypt(ret, value, value.length)
+        
+          writer.write(ret).then(() => {
             readFunc()
           })
         } else if (done) {
@@ -36,10 +47,6 @@ export function encrypt(stream) {
     readFunc()
     resolve(readable)
 
-    // var key = new Buffer(32)
-    // key.fill(0)
-    // var nonce = new Buffer(8)
-    // nonce.fill(0)
     // chacha20.encrypt(key, nonce, new Buffer(plaintext))
   })
 }
