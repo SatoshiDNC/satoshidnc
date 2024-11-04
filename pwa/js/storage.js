@@ -13,9 +13,9 @@ export function encrypt(stream) {
   const TAG = 'enc'
   const { readable, writable } = new TransformStream()
   let pos = 0
-  var key = new Buffer(32)
+  var key = Buffer.alloc(32)
   key.fill(0)
-  var nonce = new Buffer(12)
+  var nonce = Buffer.alloc(8)
   nonce.fill(0)
   return new Promise((resolve, reject) => {
     console.log(`[${TAG}] got stream`)
@@ -28,10 +28,10 @@ export function encrypt(stream) {
           console.log(`[${TAG}] ${value}`)
 
           const cipher = new Chacha20(key, nonce, 1)
-          var ret = new Buffer(value.length)
+          var ret = Buffer.alloc(value.length)
           cipher.encrypt(ret, value, value.length)
         
-          writer.write(ret).then(() => {
+          writer.write(new Uint8Array(ret)).then(() => {
             readFunc()
           })
         } else if (done) {
