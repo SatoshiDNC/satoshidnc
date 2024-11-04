@@ -20,7 +20,7 @@ function ROTATE(v, c) {
   return (v << c) | (v >>> (32 - c));
 }
 
-var Chacha20 = function(key, nonce, counter) {
+export var Chacha20 = function(key, nonce, counter) {
   this.input = new Uint32Array(16);
 
   // https://tools.ietf.org/html/draft-irtf-cfrg-chacha20-poly1305-01#section-2.3
@@ -105,12 +105,13 @@ Chacha20.prototype.keystream = function(dst, len) {
 
 // additions to make it easier and export it as a module
 
-exports.Cipher = Chacha20;
+// exports.Cipher = Chacha20;
 
-exports.encrypt = exports.decrypt = function(key, nonce, data)
+export const encrypt = function(key, nonce, data)
 {
   var cipher = new Chacha20(key, nonce, 1);
   var ret = Buffer.alloc(data.length);
   cipher.encrypt(ret, data, data.length);
   return ret;
 }
+export const decrypt = encrypt
