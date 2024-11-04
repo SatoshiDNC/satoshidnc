@@ -31,6 +31,7 @@ export function encrypt(stream) {
           // var ret = Buffer.alloc(value.length)
           // cipher.encrypt(ret, value, value.length)
           let ret = chacha20.encrypt(key, nonce, value)
+          console.log(ret.toString('hex'))
         
           writer.write(new Uint8Array(ret)).then(() => {
             readFunc()
