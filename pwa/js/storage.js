@@ -25,6 +25,7 @@ export function encrypt(stream) {
           })
         } else if (done) {
           console.log(`[${TAG}] done`)
+          writer.close()
         } else {
           console.log(`[${TAG}] invalid data`)
         }
