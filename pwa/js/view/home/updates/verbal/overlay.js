@@ -272,12 +272,14 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             const readFunc = () => {
               console.log('read')
               reader.read().then(({ done, value }) => {
-                console.log(value)
-                if (done) {
-                  finished = done
+                if (value) {
+                  console.log('value')
+                  readFunc()
+                } else if (done) {
                   console.log('done')
+                } else {
+                  console.log('invalid data')
                 }
-                readFunc()
               }, reason => {
                 console.log(`read error: ${reason}`)
               })
