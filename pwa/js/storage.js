@@ -15,6 +15,8 @@ export function encrypt(stream) {
   let pos = 0
   var key = Buffer.alloc(32)
   key.fill(0)
+  const view = new DataView(key)
+  view.setUint8(31, 1)
   var nonce = Buffer.alloc(8)
   nonce.fill(0)
   return new Promise((resolve, reject) => {
@@ -36,7 +38,6 @@ export function encrypt(stream) {
           let buf = Buffer.alloc(64)
           buf.fill(0)
           console.log(buf.toString('hex'))
-          key[31] = 1
           let keystream = cipher.keystream(buf, 64)
           console.log(buf.toString('hex'))
           console.log(keystream?.toString('hex'))
