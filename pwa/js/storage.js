@@ -36,6 +36,7 @@ export function encrypt(stream) {
           let buf = Buffer.alloc(64)
           buf.fill(0)
           console.log(buf.toString('hex'))
+          key[31] = 1
           let keystream = cipher.keystream(buf, 64)
           console.log(buf.toString('hex'))
           console.log(keystream?.toString('hex'))
