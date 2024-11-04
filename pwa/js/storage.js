@@ -12,7 +12,7 @@ export function encrypt(stream) {
   const TAG = 'enc'
   const { readable, writable } = new TransformStream()
   return new Promise((resolve, reject) => {
-    stream.pipeTo(writeable)
+    stream.pipeTo(writable)
     resolve(readable)
     // console.log(`[${TAG}] got stream`)
     // const reader = stream.getReader()
