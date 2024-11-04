@@ -267,16 +267,18 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           console.log("recorder stopped", audioURL)
 
           encrypt(blob.stream()).then(stream => {
+            console.log('got stream')
             const reader = stream.getReader()
             let finished = false
-            while (!finished)
-            reader.read().then(({ done, value }) => {
-              console.log(value)
-              if (done) {
-                finished = done
-                console.log('done')
-              }
-            })
+            while (!finished) {
+              reader.read().then(({ done, value }) => {
+                console.log(value)
+                if (done) {
+                  finished = done
+                  console.log('done')
+                }
+              })
+            }
           })
 
           // deleteButton.onclick = (e) => {
