@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer'
-import { ChaCha20 } from '../lib/chacha20.js'
+import { Chacha20 } from '../lib/chacha20.js'
 
 export const storageSystems = []
 
@@ -27,7 +27,7 @@ export function encrypt(stream) {
         if (value) {
           console.log(`[${TAG}] ${value}`)
 
-          cypher = new ChaCha20(key, nonce, 1)
+          cypher = new Chacha20(key, nonce, 1)
           var ret = Buffer.alloc(value.length)
           cipher.encrypt(ret, value, value.length)
         
