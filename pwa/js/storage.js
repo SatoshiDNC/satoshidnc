@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer'
-import { Chacha20 } from '../lib/chacha20.js'
+import { Chacha20, encrypt as chacha20_encrypt } from '../lib/chacha20.js'
 
 export const storageSystems = []
 
@@ -27,9 +27,10 @@ export function encrypt(stream) {
         if (value) {
           console.log(`[${TAG}] ${value}`)
 
-          const cipher = new Chacha20(key, nonce, 1)
-          var ret = Buffer.alloc(value.length)
-          cipher.encrypt(ret, value, value.length)
+          // const cipher = new Chacha20(key, nonce, 1)
+          // var ret = Buffer.alloc(value.length)
+          // cipher.encrypt(ret, value, value.length)
+          let ret = chacha20_encrypt(key, nonce, value)
         
           writer.write(new Uint8Array(ret)).then(() => {
             readFunc()
