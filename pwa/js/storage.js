@@ -38,7 +38,7 @@ export function encrypt(stream) {
           console.log(buf.toString('hex'))
           let keystream = cipher.keystream(buf, 64)
           console.log(buf.toString('hex'))
-          console.log(keystream.toString('hex'))
+          console.log(keystream?.toString('hex'))
           console.log(ret.toString('hex'))
         
           writer.write(new Uint8Array(ret)).then(() => {
