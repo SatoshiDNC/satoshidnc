@@ -1,3 +1,5 @@
+import { Buffer } from 'buffer'
+
 /* chacha20 - 256 bits */
 
 // Written in 2014 by Devi Mandiri. Public domain.
