@@ -271,12 +271,15 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             const reader = stream.getReader()
             let finished = false
             while (!finished) {
+              console.log('read')
               reader.read().then(({ done, value }) => {
                 console.log(value)
                 if (done) {
                   finished = done
                   console.log('done')
                 }
+              }, reason => {
+                console.log(`read error: ${reason}`)
               })
             }
           })
