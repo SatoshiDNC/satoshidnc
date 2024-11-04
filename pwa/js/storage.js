@@ -34,6 +34,7 @@ export function encrypt(stream) {
           console.log(key.toString('hex'))
           console.log(nonce.toString('hex'))
           let buf = Buffer.alloc(64)
+          buf.fill(0)
           console.log(buf.toString('hex'))
           let keystream = chacha20.Chacha20.prototype.keystream(buf, 64)
           console.log(buf.toString('hex'))
