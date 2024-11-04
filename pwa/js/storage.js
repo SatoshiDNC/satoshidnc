@@ -15,9 +15,9 @@ export function encrypt(stream) {
   let pos = 0
   var key = Buffer.alloc(32)
   key.fill(0)
-  key.writeInt8(1, 31)
   var nonce = Buffer.alloc(8)
   nonce.fill(0)
+  nonce.writeInt8(1, 7)
   return new Promise((resolve, reject) => {
     console.log(`[${TAG}] got stream`)
     const reader = stream.getReader()
