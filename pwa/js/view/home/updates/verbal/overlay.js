@@ -266,22 +266,23 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           tracks.forEach(track => track.stop())          
           console.log("recorder stopped", audioURL)
 
+          const TAG = 'aud'
           encrypt(blob.stream()).then(stream => {
-            console.log('got stream')
+            console.log(`[${TAG}] got stream`)
             const reader = stream.getReader()
             const readFunc = () => {
-              console.log('read')
+              console.log(`[${TAG}] read`)
               reader.read().then(({ done, value }) => {
                 if (value) {
-                  console.log(value)
+                  console.log(`[${TAG}] ${value}`)
                   readFunc()
                 } else if (done) {
-                  console.log('done')
+                  console.log(`[${TAG}] done`)
                 } else {
-                  console.log('invalid data')
+                  console.log(`[${TAG}] invalid data`)
                 }
               }, reason => {
-                console.log(`read error: ${reason}`)
+                console.log(`[${TAG}] read error: ${reason}`)
               })
             }
             readFunc()
