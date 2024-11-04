@@ -269,8 +269,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           encrypt(blob.stream()).then(stream => {
             console.log('got stream')
             const reader = stream.getReader()
-            let finished = false
-            while (!finished) {
+            const readFunc = () => {
               console.log('read')
               reader.read().then(({ done, value }) => {
                 console.log(value)
@@ -278,10 +277,12 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
                   finished = done
                   console.log('done')
                 }
+                readFunc()
               }, reason => {
                 console.log(`read error: ${reason}`)
               })
             }
+            readFunc()
           })
 
           // deleteButton.onclick = (e) => {
