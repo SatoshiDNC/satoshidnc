@@ -15,8 +15,7 @@ export function encrypt(stream) {
   let pos = 0
   var key = Buffer.alloc(32)
   key.fill(0)
-  const view = new DataView(key)
-  view.setUint8(31, 1)
+  key.writeInt8(1, 31)
   var nonce = Buffer.alloc(8)
   nonce.fill(0)
   return new Promise((resolve, reject) => {
