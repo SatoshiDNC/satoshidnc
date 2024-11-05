@@ -14,7 +14,7 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100, g.h = 70
   g.label = 'Name on this device'
-  g.text = '', g.defaultValue = 'Satoshi, D.N.C.'
+  g.text = '', g.defaultValue =''//'Satoshi, D.N.C.'
   g.animValue = 0
   g.focusValue = 0
   g.focused = false
@@ -36,7 +36,7 @@ v.gadgets.push(g = v.pubkeyGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100 + 212, g.h = 70
   g.label = 'Nostor public key'
-  g.text = '', g.defaultValue = 'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf'
+  g.text = '', g.defaultValue = ''//'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf'
   g.animValue = 0
   g.focusValue = 0
   g.focused = false
