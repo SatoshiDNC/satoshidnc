@@ -29,7 +29,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     console.log(`id ${JSON.stringify(item)}`)
   }
   g.importHandler = function(item) {
-    console.log('invoked import handler')
     navigator.clipboard.read().then(clipboardContents => {
       for (const item of clipboardContents) {
         if (!item.types.includes('text/plain')) {
