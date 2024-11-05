@@ -259,7 +259,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           // mainContainer.appendChild(clipContainer)
 
           audio.controls = true
-          const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" })
+          const blob = new Blob('testing', { type: 'text/plain' }) // new Blob(chunks, { type: "audio/ogg; codecs=opus" })
           const audioURL = URL.createObjectURL(blob)
           audio.src = audioURL
           let tracks = stream.getTracks()
