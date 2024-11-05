@@ -55,7 +55,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
           }
           reloadContacts()
-          alert(`Imported ${n} new${m?` and skipped ${m} existing`:``} public keys.`)
+          alert(icap(`${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public keys.`))
         })
       }
     }, reason => {

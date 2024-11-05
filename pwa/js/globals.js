@@ -37,3 +37,12 @@ const objectColors = {
   chatTextBox: themeColors.subtle,
 }
 const colors = { ...fixedColors, ...themeColors, ...objectColors }
+
+const icap = function(s) {
+  const i = s.substring(0,1)
+  if (i) {
+    return i.toUpperCase() + s.substring(1)
+  } else {
+    return s
+  }
+}
