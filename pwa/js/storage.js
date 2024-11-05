@@ -56,12 +56,18 @@ export function encrypt(key44, stream) {
             console.log(`[${TAG}] streamPos ${streamPos}`)
           }
 
-          writer.write(new Uint8Array(outBuf.join())).then(() => {
-            while (outBuf.length > 0) {
-              outBuf.pop()
-            }
+          const data = new Uint8Array(outBuf.join())
+          console.log(`writing`, data)
+          if (data.length > 0) {
+            writer.write(data).then(() => {
+              while (outBuf.length > 0) {
+                outBuf.pop()
+              }
+              readFunc()
+            })
+          } else {
             readFunc()
-          })
+          }
 
         } else if (done) {
           console.log(`[${TAG}] done`)
