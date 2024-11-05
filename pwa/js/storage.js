@@ -32,7 +32,7 @@ export function encrypt(key44, stream) {
           console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
           while (bufSize - bufPos >= BLOCKSIZE) {
 
-            let head = Buffer.from(inBuf[0].slice(bufPos, BLOCKSIZE)).toString('hex')
+            let head = Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
             console.log(`[${TAG}] head ${head.length} ${head}`)
             bufPos += Math.min(BLOCKSIZE, inBuf[0].length)
             console.log(`[${TAG}] bufPos ${bufPos}`)
@@ -41,7 +41,7 @@ export function encrypt(key44, stream) {
               bufSize -= len
               bufPos -= len
               console.log(`[${TAG}] while < BLOCKSIZE, bufSize ${bufSize} bufPos ${bufPos}`)
-              head = head + Buffer.from(inBuf[0].slice(bufPos, BLOCKSIZE)).toString('hex')
+              head = head + Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
               console.log(`[${TAG}] head ${head.length} ${head}`)
             }
             var block = Buffer.from(head.substring(0, BLOCKSIZE * 2), 'hex')
