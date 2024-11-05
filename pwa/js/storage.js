@@ -62,7 +62,7 @@ export function encrypt(key44, stream) {
           const totalLength = outBuf.reduce((p,c) => p + c.length, 0)
           const data = new Uint8Array(totalLength)
           let o = 0
-          for (b of outBuf) {
+          for (const b of outBuf) {
             data.set(b, o)
             o += b.length
           }
