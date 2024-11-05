@@ -147,6 +147,7 @@ export function reqProfile(hpub) {
 let reqFeed_requestTime
 export function reqFeed() {
   const TAG = 'reqFeed'
+  if (contacts.length == 0) return
   reqFeed_requestTime = Date.now()
   let thisRequestTime = reqFeed_requestTime
   console.log(`[${TAG}] query relay`)
