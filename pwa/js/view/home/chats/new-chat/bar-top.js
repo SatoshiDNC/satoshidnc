@@ -55,7 +55,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           }
           reloadContacts()
           if (n||m) {
-            alert(icap(`${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public key${(n+m==1)?`s`:``}.`))
+            alert(icap(`${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public key${n+m==1?``:`s`}.`))
           } else {
             alert(`No public keys found in clipboard. Public keys should be delimited by whitespace or commas.`)
           }
