@@ -6,7 +6,7 @@ import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
 import { getKeyboardInput } from '../../../util.js'
 import * as nip19 from 'nostr-tools/nip19'
-import { encrypt } from '../../../../storage.js'
+import { encrypt, decrypt } from '../../../../storage.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -268,7 +268,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
 
           const TAG = 'aud'
           const key = 'ff01020304050607080910111213141516171819202122232425262728293031323334353637383940414243'
-          encrypt(key, blob.stream()).then(stream => encrypt(key, stream).then(stream => {
+          encrypt(key, blob.stream()).then(stream => decrypt(key, stream).then(stream => {
             console.log(`[${TAG}] got stream`)
             const reader = stream.getReader()
             const readFunc = () => {
