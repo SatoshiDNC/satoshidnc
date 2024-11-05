@@ -55,7 +55,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           }
           reloadContacts()
           if (n||m) {
-            alert(icap(`${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public keys.`))
+            alert(icap(`${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public key${n+m==1?`s`:``}.`))
           } else {
             alert(`Public keys should be delimited by whitespace or commas.`)
           }
