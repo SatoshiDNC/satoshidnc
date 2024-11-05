@@ -33,7 +33,7 @@ export function encrypt(key44, stream) {
           while (bufSize - bufPos >= BLOCKSIZE) {
 
             let head = inBuf[0].toString('hex').substring(bufPos * 2)
-            console.log(`[${TAG}] inBuf[0] ${inBuf[0]}, head ${head}`)
+            console.log(`[${TAG}] inBuf... ${inBuf[0].toString('hex')}, head ${head}`)
             bufPos += Math.min(BLOCKSIZE, inBuf[0].length)
             console.log(`[${TAG}] bufPos ${bufPos}`)
             while (head.length < BLOCKSIZE * 2) {
