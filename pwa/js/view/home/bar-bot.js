@@ -31,7 +31,8 @@ for (const pane of v.panes) {
     pane.view.c = barBot; barBot.parent = pane.view
     pane.view.easingValue = 1
     pane.view.setRenderFlag(true)
-    fg.setRoot(pane.view)
+    // fg.setRoot(pane.view)
+    fg.start(pane.view, true)
     if (v.activeLabel == 'Updates') {
       contentView.queryFunc()
     }
