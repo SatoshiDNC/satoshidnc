@@ -218,9 +218,10 @@ export function getUpdates() {
     req.onerror = function(e) {
       console.err(e)
     }
-    const posts = []
     req.onsuccess = function(e) {
-      resolve(Promise.all(e.target.result.filter(r => ![5, 31234].includes(r.data.kind)).map(r => {
+      const c = contacts.map(c => c.hpub)
+      const updates = e.target.result.filter(r => c.includes(r.data.pubkey))
+      resolve(Promise.all(updates.filter(r => ![5, 31234].includes(r.data.kind)).map(r => {
         return new Promise((resolve, reject) => {
           const req = tr.objectStore('updates-viewed').get(r.data.id)
           req.onerror = function(e) {
