@@ -34,7 +34,6 @@ export function encrypt(key44, stream) {
 
             let head = Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
             // console.log(`[${TAG}] head ${head.length} ${head}`)
-            bufPos += Math.min(BLOCKSIZE, inBuf[0].length)
             console.log(`[${TAG}] bufPos ${bufPos}`)
             while (head.length < BLOCKSIZE * 2) {
               const len = inBuf.pop().length
@@ -46,6 +45,7 @@ export function encrypt(key44, stream) {
             }
             var block = Buffer.from(head.substring(0, BLOCKSIZE * 2), 'hex')
             console.log(`[${TAG}] block ${block.length}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
+            bufPos += block.length
 
             const cipher = new chacha20.Chacha20(key, nonce, Math.floor(streamPos / BLOCKSIZE))
             const ret = Buffer.alloc(BLOCKSIZE)
@@ -84,7 +84,6 @@ export function encrypt(key44, stream) {
 
             let head = Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
             // console.log(`[${TAG}] head ${head.length} ${head}`)
-            bufPos += Math.min(BLOCKSIZE, inBuf[0].length)
             console.log(`[${TAG}] bufPos ${bufPos}`)
             while (head.length < BLOCKSIZE * 2) {
               const len = inBuf.pop().length
@@ -97,6 +96,7 @@ export function encrypt(key44, stream) {
             }
             var block = Buffer.from(head.substring(0, BLOCKSIZE * 2), 'hex')
             console.log(`[${TAG}] block ${block.length}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
+            bufPos += block.length
 
             const cipher = new chacha20.Chacha20(key, nonce, Math.floor(streamPos / BLOCKSIZE))
             const ret = Buffer.alloc(block.length)
