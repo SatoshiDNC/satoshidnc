@@ -140,7 +140,7 @@ export function noteDecode(bech32) {
   }
 }
 
-export function npubDecode(bech32) {
+export function hpubDecode(bech32) {
   try {
     const decoded = nip19.decode(bech32)
     if (decoded?.type == 'npub') {
@@ -150,6 +150,9 @@ export function npubDecode(bech32) {
       return decoded.data.pubkey
     }
   } catch(e) {
+  }
+  if (validKey(bech32)) {
+    return hex.toLowerCase()
   }
 }
 
