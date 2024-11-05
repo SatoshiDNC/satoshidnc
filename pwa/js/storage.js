@@ -13,8 +13,8 @@ export function encrypt(key44, stream) {
   const TAG = 'enc'
   const { readable, writable } = new TransformStream()
   let pos = 0
-  const key = Buffer.from(key44.toString('hex').substring(0, 32*2), 'hex')
-  const nonce = Buffer.from(key44.toString('hex').substring(32*2), 'hex')
+  const key = Buffer.from(key44.substring(0, 32*2), 'hex')
+  const nonce = Buffer.from(key44.substring(32*2), 'hex')
   return new Promise((resolve, reject) => {
     console.log(`[${TAG}] got stream`)
     const reader = stream.getReader()
