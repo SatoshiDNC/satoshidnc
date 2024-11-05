@@ -80,6 +80,54 @@ export function encrypt(key44, stream) {
 
         } else if (done) {
           console.log(`[${TAG}] done`)
+
+
+            let head = Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
+            // console.log(`[${TAG}] head ${head.length} ${head}`)
+            bufPos += Math.min(BLOCKSIZE, inBuf[0].length)
+            console.log(`[${TAG}] bufPos ${bufPos}`)
+            while (head.length < BLOCKSIZE * 2) {
+              const len = inBuf.pop().length
+              bufSize -= len
+              bufPos -= len
+              console.log(`[${TAG}] while < BLOCKSIZE, bufSize ${bufSize} bufPos ${bufPos}`)
+              head = head + Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
+              // console.log(`[${TAG}] head ${head.length} ${head}`)
+            }
+            var block = Buffer.from(head.substring(0, BLOCKSIZE * 2), 'hex')
+            console.log(`[${TAG}] block ${block.length}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
+
+            const cipher = new chacha20.Chacha20(key, nonce, Math.floor(streamPos / BLOCKSIZE))
+            const ret = Buffer.alloc(BLOCKSIZE)
+            ret.fill(0)
+            cipher.encrypt(ret, block, BLOCKSIZE)
+            outBuf.push(ret)
+            // console.log(ret.toString('hex'))
+
+            streamPos += BLOCKSIZE
+            console.log(`[${TAG}] streamPos ${streamPos}`)
+            console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
+
+          const totalLength = outBuf.reduce((p,c) => p + c.length, 0)
+          const data = new Uint8Array(totalLength)
+          let o = 0
+          for (const b of outBuf) {
+            data.set(b, o)
+            o += b.length
+          }
+          console.log(`writing ${data.length} bytes`)
+          if (data.length > 0) {
+            writer.write(data).then(() => {
+              while (outBuf.length > 0) {
+                outBuf.pop()
+              }
+              readFunc()
+            })
+          } else {
+            readFunc()
+          }
+
+
           writer.close()
         } else {
           console.log(`[${TAG}] invalid data`)
