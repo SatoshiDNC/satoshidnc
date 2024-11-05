@@ -13,10 +13,9 @@ export function encrypt(stream) {
   const TAG = 'enc'
   const { readable, writable } = new TransformStream()
   let pos = 0
-  var key = Buffer.alloc(32)
-  key.fill(0)
-  var nonce = Buffer.alloc(8)
-  nonce.fill(0)
+  const key44 = Buffer.from('0001020304050607080910111213141516171819202122232425262728293031323334353637383940414243', 'hex')
+  const key = Buffer.from(key44.toString('hex').substring(0, 32*2), 'hex')
+  const nonce = Buffer.from(key44.toString('hex').substring(32*2), 'hex')
   return new Promise((resolve, reject) => {
     console.log(`[${TAG}] got stream`)
     const reader = stream.getReader()
@@ -30,9 +29,6 @@ export function encrypt(stream) {
           const cipher = new chacha20.Chacha20(key, nonce, 0)
           var ret = Buffer.alloc(value.length)
           cipher.encrypt(ret, value, value.length)
-          // let ret = chacha20.encrypt(key, nonce, value)
-          console.log(key.toString('hex'))
-          console.log(nonce.toString('hex'))
           console.log(ret.toString('hex'))
         
           writer.write(new Uint8Array(ret)).then(() => {
