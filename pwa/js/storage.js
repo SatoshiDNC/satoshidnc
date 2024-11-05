@@ -26,6 +26,9 @@ export function encrypt(stream) {
         if (value) {
           console.log(`[${TAG}] ${value}`)
 
+          console.log(key.toString('hex'))
+          console.log(nonce.toString('hex'))
+
           const cipher = new chacha20.Chacha20(key, nonce, 0)
           var ret = Buffer.alloc(value.length)
           cipher.encrypt(ret, value, value.length)
