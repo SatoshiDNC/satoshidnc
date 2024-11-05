@@ -1,5 +1,5 @@
 import { menuView as trezorTools } from '../tools-trezor.js'
-import { npubDecode, validKey } from '../../../../nostor-util.js'
+import { hpubDecode, validKey } from '../../../../nostor-util.js'
 import { contacts, addNewContact, reloadContacts } from '../../../../contacts.js'
 
 let v, g
@@ -44,8 +44,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           }
           let n = 0, m = 0
           for (const npub of npubs) {
-            let hpub = npubDecode(npub) || npub
-            if (validKey(hpub)) {
+            let hpub = hpubDecode(npub)
+            if (hpub) {
               if (contacts.filter(c => c.hpub == hpub).length == 0) {
                 addNewContact(hpub)
                 n++
