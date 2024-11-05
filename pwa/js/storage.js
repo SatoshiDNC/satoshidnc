@@ -43,7 +43,7 @@ export function encrypt(key44, stream) {
               head = head + inBuf[0].toString('hex')
             }
             var block = Buffer.from(head.substring(0, BLOCKSIZE * 2), 'hex')
-            console.log(`[${TAG}] block ${block}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
+            console.log(`[${TAG}] block ${block.length}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
 
             const cipher = new chacha20.Chacha20(key, nonce, Math.floor(streamPos / BLOCKSIZE))
             const ret = Buffer.alloc(BLOCKSIZE)
@@ -54,6 +54,7 @@ export function encrypt(key44, stream) {
 
             streamPos += BLOCKSIZE
             console.log(`[${TAG}] streamPos ${streamPos}`)
+            console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
           }
 
           const data = new Uint8Array(outBuf.join())
