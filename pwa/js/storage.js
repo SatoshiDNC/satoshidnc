@@ -9,11 +9,10 @@ storageSystems.push({
   method: 'POST',
 })
 
-export function encrypt(stream) {
+export function encrypt(key44, stream) {
   const TAG = 'enc'
   const { readable, writable } = new TransformStream()
   let pos = 0
-  const key44 = Buffer.from('0001020304050607080910111213141516171819202122232425262728293031323334353637383940414243', 'hex')
   const key = Buffer.from(key44.toString('hex').substring(0, 32*2), 'hex')
   const nonce = Buffer.from(key44.toString('hex').substring(32*2), 'hex')
   return new Promise((resolve, reject) => {
