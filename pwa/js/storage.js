@@ -12,7 +12,9 @@ storageSystems.push({
 export function encrypt(key44, stream) {
   const TAG = 'enc'
   const { readable, writable } = new TransformStream()
-  let pos = 0
+  const inBuf = [], outBuf = []
+  let bufSize = 0, bufPos = 0, streamPos = 0
+  const BLOCKSIZE = 1024
   const key = Buffer.from(key44.substring(0, 32*2), 'hex')
   const nonce = Buffer.from(key44.substring(32*2), 'hex')
   return new Promise((resolve, reject) => {
@@ -23,19 +25,44 @@ export function encrypt(key44, stream) {
       console.log(`[${TAG}] read`)
       reader.read().then(({ done, value }) => {
         if (value) {
-          console.log(`[${TAG}] ${value}`)
+          console.log(`[${TAG}] read ${value.length} bytes to append to buffer`)
+          buf.push(value)
+          bufSize += value.length
 
-          console.log(key.toString('hex'))
-          console.log(nonce.toString('hex'))
+          console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
+          while (bufSize - bufPos >= BLOCKSIZE) {
 
-          const cipher = new chacha20.Chacha20(key, nonce, 0)
-          var ret = Buffer.alloc(value.length)
-          cipher.encrypt(ret, value, value.length)
-          console.log(ret.toString('hex'))
-        
-          writer.write(new Uint8Array(ret)).then(() => {
+            let head = buf[0].toString('hex').substring(bufPos * 2)
+            bufPos += Math.min(BLOCKSIZE, buf[0].length)
+            console.log(`[${TAG}] bufPos ${bufPos}`)
+            while (head.length < BLOCKSIZE * 2) {
+              const len = buf.pop().length
+              bufSize -= len
+              bufPos -= len
+              console.log(`[${TAG}] while < BLOCKSIZE, bufSize ${bufSize} bufPos ${bufPos}`)
+              head = head + buf[0].toString('hex')
+            }
+            var block = Buffer.from(head.substring(0, BLOCKSIZE * 2), 'hex')
+            console.log(`[${TAG}] block ${block}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
+
+            const cipher = new chacha20.Chacha20(key, nonce, Math.floor(streamPos / BLOCKSIZE))
+            const ret = Buffer.alloc(BLOCKSIZE)
+            ret.fill(0)
+            cipher.encrypt(ret, block, BLOCKSIZE)
+            outBuf.push(ret)
+            console.log(ret.toString('hex'))
+
+            streamPos += BLOCKSIZE
+            console.log(`[${TAG}] streamPos ${streamPos}`)
+          }
+
+          writer.write(new Uint8Array(outBuf.join())).then(() => {
+            while (outBuf.length > 0) {
+              outBuf.pop()
+            }
             readFunc()
           })
+
         } else if (done) {
           console.log(`[${TAG}] done`)
           writer.close()
