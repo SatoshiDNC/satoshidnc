@@ -55,7 +55,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
           }
           reloadContacts()
-          alert(icap(`${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public keys.`))
+          alert(icap(`${n||m?``:`no`}${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public keys${n||m?``:` found in clipboard`}.`))
         })
       }
     }, reason => {
