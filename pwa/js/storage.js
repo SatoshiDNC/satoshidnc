@@ -9,7 +9,7 @@ storageSystems.push({
   method: 'POST',
 })
 
-export function encrypt(key44, stream) {
+export const encrypt = decrypt = function(key44, stream) {
   const TAG = 'enc'
   const { readable, writable } = new TransformStream()
   const inBuf = [], outBuf = []
