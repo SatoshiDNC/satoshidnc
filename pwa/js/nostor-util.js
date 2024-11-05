@@ -152,7 +152,7 @@ export function hpubDecode(bech32) {
   } catch(e) {
   }
   if (validKey(bech32)) {
-    return hex.toLowerCase()
+    return bech32.toLowerCase()
   }
 }
 
