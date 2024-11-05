@@ -32,15 +32,14 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     navigator.clipboard.read().then(clipboardContents => {
       for (const item of clipboardContents) {
         if (!item.types.includes('text/plain')) {
-          throw new Error('Clipboard does not contain plain text data.')
+          alert(`Clipboard does not contain plain text data.`)
         }
         item.getType('text/plain').then(blob => blob.text()).then(rawText => {
           let npubs = []
           let text = rawText.replaceAll(',',' ').replaceAll('\n',' ').replaceAll('\r',' ').replaceAll('\t',' ')
+          npubs = text.split(' ').map(a => a.trim())
           if (text.includes(' ')) {
-            npubs = text.split(' ').map(a => a.trim())
           } else {
-            alert('Public keys should be delimited by whitespace or commas.')
           }
           let n = 0, m = 0
           for (const npub of npubs) {
@@ -55,7 +54,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             }
           }
           reloadContacts()
-          alert(icap(`${n||m?``:`no`}${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public keys${n||m?``:` found in clipboard`}.`))
+          if (n||m) {
+            alert(icap(`${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public keys.`))
+          } else {
+            alert(`Public keys should be delimited by whitespace or commas.`)
+          }
         })
       }
     }, reason => {
