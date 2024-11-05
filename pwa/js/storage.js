@@ -59,7 +59,7 @@ export function encrypt(key44, stream) {
             console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
           }
 
-          const data = new Uint8Array(outBuf.join())
+          const data = new Uint8Array(0).concat(...outBuf)
           console.log(`writing`, data)
           if (data.length > 0) {
             writer.write(data).then(() => {
