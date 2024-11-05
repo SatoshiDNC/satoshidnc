@@ -52,7 +52,7 @@ export function encrypt(key44, stream) {
             ret.fill(0)
             cipher.encrypt(ret, block, BLOCKSIZE)
             outBuf.push(ret)
-            console.log(ret.toString('hex'))
+            // console.log(ret.toString('hex'))
 
             streamPos += BLOCKSIZE
             console.log(`[${TAG}] streamPos ${streamPos}`)
