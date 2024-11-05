@@ -267,7 +267,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           console.log("recorder stopped", audioURL)
 
           const TAG = 'aud'
-          encrypt(blob.stream()).then(stream => {
+          const key = Buffer.from('0001020304050607080910111213141516171819202122232425262728293031323334353637383940414243', 'hex')
+          encrypt(key, blob.stream()).then(stream => {
             console.log(`[${TAG}] got stream`)
             const reader = stream.getReader()
             const readFunc = () => {
