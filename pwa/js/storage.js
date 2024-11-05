@@ -26,21 +26,21 @@ export function encrypt(key44, stream) {
       reader.read().then(({ done, value }) => {
         if (value) {
           console.log(`[${TAG}] read ${value.length} bytes to append to buffer`)
-          buf.push(value)
+          inBuf.push(value)
           bufSize += value.length
 
           console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
           while (bufSize - bufPos >= BLOCKSIZE) {
 
-            let head = buf[0].toString('hex').substring(bufPos * 2)
-            bufPos += Math.min(BLOCKSIZE, buf[0].length)
+            let head = inBuf[0].toString('hex').substring(bufPos * 2)
+            bufPos += Math.min(BLOCKSIZE, inBuf[0].length)
             console.log(`[${TAG}] bufPos ${bufPos}`)
             while (head.length < BLOCKSIZE * 2) {
-              const len = buf.pop().length
+              const len = inBuf.pop().length
               bufSize -= len
               bufPos -= len
               console.log(`[${TAG}] while < BLOCKSIZE, bufSize ${bufSize} bufPos ${bufPos}`)
-              head = head + buf[0].toString('hex')
+              head = head + inBuf[0].toString('hex')
             }
             var block = Buffer.from(head.substring(0, BLOCKSIZE * 2), 'hex')
             console.log(`[${TAG}] block ${block}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
