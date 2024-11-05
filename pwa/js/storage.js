@@ -33,7 +33,7 @@ export function encrypt(key44, stream) {
           while (bufSize - bufPos >= BLOCKSIZE) {
 
             let head = Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
-            console.log(`[${TAG}] head ${head.length} ${head}`)
+            // console.log(`[${TAG}] head ${head.length} ${head}`)
             bufPos += Math.min(BLOCKSIZE, inBuf[0].length)
             console.log(`[${TAG}] bufPos ${bufPos}`)
             while (head.length < BLOCKSIZE * 2) {
@@ -42,7 +42,7 @@ export function encrypt(key44, stream) {
               bufPos -= len
               console.log(`[${TAG}] while < BLOCKSIZE, bufSize ${bufSize} bufPos ${bufPos}`)
               head = head + Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
-              console.log(`[${TAG}] head ${head.length} ${head}`)
+              // console.log(`[${TAG}] head ${head.length} ${head}`)
             }
             var block = Buffer.from(head.substring(0, BLOCKSIZE * 2), 'hex')
             console.log(`[${TAG}] block ${block.length}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
@@ -66,7 +66,7 @@ export function encrypt(key44, stream) {
             data.set(b, o)
             o += b.length
           }
-          console.log(`writing`, data)
+          console.log(`writing ${data.length} bytes`)
           if (data.length > 0) {
             writer.write(data).then(() => {
               while (outBuf.length > 0) {
