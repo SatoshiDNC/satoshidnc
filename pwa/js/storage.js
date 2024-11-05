@@ -135,8 +135,6 @@ export function encrypt(key44, stream) {
     }
     readFunc()
     resolve(readable)
-
-    // chacha20.encrypt(key, nonce, new Buffer(plaintext))
   })
 }
 

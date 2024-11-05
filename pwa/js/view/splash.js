@@ -7,9 +7,11 @@ v.bgColor = [0,0,0,1]
 v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = `initializing...`
 v.setText = function(text) {
-  if (text == this.loadingText) return
-  this.loadingText = text
+  const v = this
+  if (text == v.loadingText) return
+  v.loadingText = text
   console.log('init:', text)
+  v.setRenderFlag(true)
 }
 v.renderFunc = function() {
   const v = this
