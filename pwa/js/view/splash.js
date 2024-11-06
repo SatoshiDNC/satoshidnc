@@ -4,7 +4,7 @@ export const splash = v = new fg.View(null)
 v.name = Object.keys({splash}).pop()
 v.designSize = 640*400
 v.bgColor = [0,0,0,1]
-v.loadingColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
+v.textColor = [1-v.bgColor[0],1-v.bgColor[1],1-v.bgColor[2],1]
 v.loadingText = `initializing...`
 v.setText = function(text) {
   const v = this
