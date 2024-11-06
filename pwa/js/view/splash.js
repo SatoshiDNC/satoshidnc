@@ -27,7 +27,7 @@ v.renderFunc = function() {
   const whitespace = true
   const maxWidth = v.sw - 42
   let t,tw,th,ts
-  ts = 50/14
+  ts = 14/14
   const paragraphs = v.loadingText.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
   const lines = []
   for (const para of paragraphs) {
@@ -61,7 +61,7 @@ v.renderFunc = function() {
     tw = defaultFont.calcWidth(line) * ts
     mat4.identity(m)
     mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65]*ts*2, 0])
-    // mat4.scale(m, m, [ts, ts, 1])
+    mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
   this.renderFinish?.()
