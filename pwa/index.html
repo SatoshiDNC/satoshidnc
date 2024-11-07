@@ -335,8 +335,11 @@
             if (registration.installing) {
               sw = registration.installing
             } else if (registration.waiting) {
+              clearStatus('installing_sw')
               sw = registration.waiting
             } else if (registration.active) {
+              clearStatus('installing_sw')
+              clearStatus('waiting_on_sw')
               sw = registration.active
             }
             if (sw) {
