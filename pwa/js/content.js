@@ -1,4 +1,5 @@
 import { db } from './db.js'
+import { kindInfo } from './nostor-util.js'
 import { homeRelay } from './nostor-app.js'
 import { contacts } from './contacts.js'
 
