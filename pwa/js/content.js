@@ -203,11 +203,8 @@ export function getFeed(hpub) {
           console.log('array:', cursor.value)
           posts.push(...cursor.value.filter(p => c.includes(p.data.pubkey)))
         } else {
-          console.log('non array:', cursor.value)
           posts.push(...[cursor.value].filter(p => c.includes(p.data.pubkey)))
         }
-        // console.log(cursor.value)
-        // posts.push(cursor.value.filter(p => c.includes(p.data.pubkey)))
         cursor.continue()
       } else {
         resolve(posts)
