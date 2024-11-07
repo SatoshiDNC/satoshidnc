@@ -4,8 +4,8 @@ export function sfx(name, fg) {
   if (!context) {
     context = new AudioContext()
     var osc1 = context.createOscillator(), osc2 = context.createOscillator()
-    osc1.type = 'triangle', osc1.frequency = 493.883 + 1
-    osc2.type = 'triangle', osc2.frequency = 493.883 - 2
+    osc1.type = 'triangle', osc1.frequency.value = 493.883 + 1
+    osc2.type = 'triangle', osc2.frequency.value = 493.883 - 2
     var volume = context.createGain()
     volume.gain.value = fg? 0.1 : 1.0
     osc1.connect(volume)
