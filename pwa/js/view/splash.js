@@ -24,7 +24,7 @@ v.renderFunc = function() {
   // const y = (v.sh)/2
   // defaultFont.draw(x,y, str, v.loadingColor, v.mat, mat)
 
-  const whitespace = true
+  const whitespace = false
   const maxWidth = v.sw - 42
   let t,tw,th,ts
   ts = 14/14
