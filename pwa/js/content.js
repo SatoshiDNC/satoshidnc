@@ -6,6 +6,8 @@ export const eventTrigger = []
 export const deletionTrigger = []
 export const profileTrigger = []
 
+const DAY_IN_SECONDS = 24/*hours*/ * 60/*minutes*/ * 60/*seconds*/
+
 export function aggregateEvent(e) {
   return new Promise((resolve, reject) => {
     if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid event')
@@ -158,7 +160,7 @@ export function reqFeed() {
       'feed',
       {
         'authors': contacts.map(c=>c.hpub),
-        'limit': 50,
+        'since': Math.floor(Date.now()/1000) - 2 * DAY_IN_SECONDS, // double long enough to retrieve current updates from contacts to display
       }
     ])
   })
@@ -211,7 +213,7 @@ export function getUpdates() {
     const tr = db.transaction(['events', 'updates-viewed'], 'readonly', { durability: 'strict' })
     const os = tr.objectStore('events')
     const DISTANT_FUTURE = 91729187740298
-    const ONE_DAY_AGO_IN_MILLISECONDS = Date.now() - 24 * 60 * 60 * 1000
+    const ONE_DAY_AGO_IN_MILLISECONDS = Date.now() - DAY_IN_SECONDS * 1000
     const ONE_DAY_AGO_IN_SECONDS = Math.floor(ONE_DAY_AGO_IN_MILLISECONDS / 1000)
     // console.log (`from ${ONE_DAY_AGO_IN_SECONDS} to ${DISTANT_FUTURE}`)
     const req = os.index('createdAt').getAll(IDBKeyRange.bound(ONE_DAY_AGO_IN_SECONDS, DISTANT_FUTURE))
