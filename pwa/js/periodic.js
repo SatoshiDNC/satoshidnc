@@ -17,7 +17,6 @@ export function minutelyUI() {
       relay.feedRequested = true
     }
 
-    console.log(relay.tempLastSend)
     if (now - (relay.tempLastSend||0) > 2 * ONE_MINUTE_IN_MILLISECONDS) {
       console.log('hacky send trigger')
       relay.tempLastSend = now
