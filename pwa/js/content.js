@@ -228,7 +228,11 @@ export function getUpdates() {
     req.onsuccess = function(e) {
       const c = contacts.map(c => c.hpub)
       const updates = e.target.result.filter(r => c.includes(r.data.pubkey))
-      resolve(Promise.all(updates.filter(r => ![5, 31234].includes(r.data.kind)).map(r => {
+      resolve(Promise.all(updates.filter(r => ![
+        5, // Event Deletion Request
+        7, // Reaction
+        31234, // Generic Draft Event
+      ].includes(r.data.kind)).map(r => {
         return new Promise((resolve, reject) => {
           const req = tr.objectStore('updates-viewed').get(r.data.id)
           req.onerror = function(e) {
