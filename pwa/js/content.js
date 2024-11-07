@@ -199,6 +199,7 @@ export function getFeed(hpub) {
     req.onsuccess = function(e) {
       let cursor = e.target.result
       if (cursor && cursor.value) {
+        console.log(cursor.value)
         posts.push(cursor.value.filter(p => c.includes(p.data.pubkey)))
         cursor.continue()
       } else {
