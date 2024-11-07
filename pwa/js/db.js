@@ -13,7 +13,7 @@ export function init() {
       reject(e)
     }
     req.onupgradeneeded = e => {
-      console.log(`[${TAG}] upgrading from ${e.oldVersion} to ${e.newVersion}`)
+      console.log(`[${TAG}] upgrading from version ${e.oldVersion} to ${e.newVersion}`)
       const db = e.target.result
       db.onerror = e => {
         console.error(`[${TAG}]`, e)

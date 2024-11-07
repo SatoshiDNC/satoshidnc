@@ -134,7 +134,7 @@ export function deleteExpiredEvents() {
     req.onerror = () => {
       reject()
     }
-    req.onsuccess = () => {
+    req.onsuccess = e => {
       let cursor = e.target.result
       if (cursor) {
         console.log(`event expired: ${cursor.value.id}`)
