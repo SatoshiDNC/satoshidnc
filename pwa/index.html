@@ -396,7 +396,10 @@
           reloadRelayStats()
           reloadKeys().then(() => {
             if (keys.length == 0) {
+              // It seems this is a first-time run, so initialize the database
               initDefaultKey()
+              addNewContact('51c63606c483dc9b44373e8ea240494b8101e4b23da579f17fec195029207e99', 'Satoshi, D.N.C.')
+              
             }
           })
           reloadPersonalData()

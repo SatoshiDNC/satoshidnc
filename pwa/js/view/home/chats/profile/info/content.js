@@ -95,7 +95,7 @@ profileTrigger.push(hpub => {
   getProfile(v.hpub).then(createProfileBlock)
 })
 eventTrigger.push(() => {
-  console.log('event trigger')
+  console.log('profile info event trigger')
 })
 v.setContact = function(hpub) {
   const v = this
