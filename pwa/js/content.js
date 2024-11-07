@@ -14,7 +14,7 @@ export function aggregateEvent(e) {
     if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid event')
     const TAG = 'aggregateEvent'
     const now = Date.now()
-    const tr = db.transaction(['events', 'profiles', 'deletions'], 'readwrite', { durability: 'strict' })
+    const tr = db.transaction(['events', 'profiles', 'deletions', 'expirations'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('events')
     const req = os.index('id').get(e.id)
     req.onerror = () => {
