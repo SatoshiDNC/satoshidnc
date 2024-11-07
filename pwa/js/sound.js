@@ -12,9 +12,9 @@ export function sfx(name, fg) {
     osc2.connect(volume)
     volume.connect(context.destination)
   }
-  var duration = 2
+  var duration = 1
   var startTime = context.currentTime
-  volume.gain.setValueAtTime(0.1, startTime + duration - 0.05)
+  volume.gain.setValueAtTime(0.1, startTime + 0.5)
   volume.gain.linearRampToValueAtTime(0, startTime + duration)
   osc1.start(startTime)
   osc2.start(startTime)
