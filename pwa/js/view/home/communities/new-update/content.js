@@ -73,7 +73,7 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = v.sh
   g.autoHull()
 }
-contactDependencies.push(v => v.setRenderFlag(true))
+contactDependencies.push(() => v.setRenderFlag(true))
 keyViewDependencies.push(v)
 personalDataViewDependencies.push(v)
 v.renderFunc = function() {

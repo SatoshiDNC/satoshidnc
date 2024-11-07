@@ -34,7 +34,7 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = v.sh
   g.autoHull()
 }
-contactDependencies.push(v => v.setRenderFlag(true))
+contactDependencies.push(() => v.setRenderFlag(true))
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)

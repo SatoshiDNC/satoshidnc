@@ -81,7 +81,7 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-contactDependencies.push(v => v.setRenderFlag(true))
+contactDependencies.push(() => v.setRenderFlag(true))
 keyViewDependencies.push(v)
 personalDataViewDependencies.push(v)
 v.renderFunc = function() {

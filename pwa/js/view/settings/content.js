@@ -149,7 +149,7 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-contactDependencies.push(v => v.setRenderFlag(true))
+contactDependencies.push(() => v.setRenderFlag(true))
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
