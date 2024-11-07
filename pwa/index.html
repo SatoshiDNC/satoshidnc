@@ -382,7 +382,11 @@
                   }
                 })
               }
-              if (sw.state == 'activated') {
+              if (sw.state == 'installed') {
+                clearStatus('installing_sw')
+              } else if (sw.state == 'activated') {
+                clearStatus('installing_sw')
+                clearStatus('waiting_on_sw')
                 setup()
               }
               sw.addEventListener('statechange', function(e) {
