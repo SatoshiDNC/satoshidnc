@@ -23,7 +23,7 @@ export function minutelyUI() {
       relay.tempLastSend = now
       sign(defaultKey, {
         kind: 1,
-        content: `Testing ${now % 100}`,
+        content: `Testing ${Math.floor(now/1000/60) % 100}`,
         tags: [
           ['expiration', `${now + 4 * ONE_MINUTE_IN_MILLISECONDS}`],
         ],
