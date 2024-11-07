@@ -344,7 +344,6 @@
               sw = registration.active
             }
             if (sw) {
-              console.log(`[${TAG}:sw] state: ${sw.state}`)
               const setup = () => {
                 registration.sync.register('startup-trigger').then(() => {
                   clearStatus('registering_sync')
@@ -382,6 +381,7 @@
                   }
                 })
               }
+              // console.log(`[${TAG}:sw] state: ${sw.state}`)
               if (sw.state == 'installed') {
                 clearStatus('installing_sw') // similar code 2 of 3
               } else if (sw.state == 'activated') {
@@ -390,7 +390,7 @@
                 setup()
               }
               sw.addEventListener('statechange', function(e) {
-                console.log(`[${TAG}:sw] state: ${e.target.state}`)
+                // console.log(`[${TAG}:sw] state: ${e.target.state}`)
                 if (e.target.state == 'installed') {
                   clearStatus('installing_sw') // similar code 3 of 3
                 } else if (e.target.state == 'activated') {
