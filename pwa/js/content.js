@@ -198,9 +198,8 @@ export function getFeed(hpub) {
     const c = contacts.map(c => c.hpub)
     req.onsuccess = function(e) {
       let cursor = e.target.result
-      if (cursor) {
-        let v = cursor.value
-        posts.push(v.filter(p => c.includes(p.data.pubkey)))
+      if (cursor && cursor.value) {
+        posts.push(cursor.value.filter(p => c.includes(p.data.pubkey)))
         cursor.continue()
       } else {
         resolve(posts)
