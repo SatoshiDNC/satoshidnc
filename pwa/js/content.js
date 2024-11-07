@@ -34,7 +34,7 @@ export function aggregateEvent(e) {
             resolve()
           } else {
             if ([31234].includes(e.kind)) {
-              console.log(`[${TAG}] skipping event`, JSON.stringify(e))
+              console.log(`[${TAG}] skipping event of kind ${e.kind} (${kind(kindInfo.filter(i => i.kind == e.kind)?.[0].desc)})`, JSON.stringify(e))
               resolve()
             } else if (e.kind == 5) {
               const ids = []
