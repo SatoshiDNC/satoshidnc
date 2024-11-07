@@ -200,10 +200,11 @@ export function getFeed(hpub) {
       let cursor = e.target.result
       if (cursor && cursor.value) {
         if (cursor.value.constructor === Array) {
-          posts.push(cursor.value.filter(p => c.includes(p.data.pubkey)))
+          console.log('array:', cursor.value)
+          posts.push(...cursor.value.filter(p => c.includes(p.data.pubkey)))
         } else {
-          console.log(cursor.value)
-          // posts.push([cursor.value].filter(p => c.includes(p.data.pubkey)))
+          console.log('non array:', cursor.value)
+          posts.push(...[cursor.value].filter(p => c.includes(p.data.pubkey)))
         }
         // console.log(cursor.value)
         // posts.push(cursor.value.filter(p => c.includes(p.data.pubkey)))
