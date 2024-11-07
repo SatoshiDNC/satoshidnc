@@ -1,4 +1,4 @@
-import { contacts, contactViewDependencies } from '../../../../contacts.js'
+import { contacts, contactDependencies } from '../../../../contacts.js'
 import { keys, keyViewDependencies } from '../../../../keys.js'
 import { getPersonalData as getAttr, personalData, personalDataViewDependencies } from '../../../../personal.js'
 import { contentView as chatRoomView } from '../../../chat-room/content.js'
@@ -81,7 +81,7 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-contactViewDependencies.push(v)
+contactDependencies.push(v => v.setRenderFlag(true))
 keyViewDependencies.push(v)
 personalDataViewDependencies.push(v)
 v.renderFunc = function() {

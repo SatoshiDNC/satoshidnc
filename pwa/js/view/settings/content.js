@@ -1,4 +1,4 @@
-import { device, contacts, contactViewDependencies } from '../../contacts.js'
+import { device, contacts, contactDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 import { contentView as chatRoomView } from '../chat-room/content.js'
 import { defaultKey } from '../../keys.js'
@@ -149,7 +149,7 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-contactViewDependencies.push(v)
+contactDependencies.push(v => v.setRenderFlag(true))
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)

@@ -2,6 +2,14 @@ import { homeRelay } from './nostor-app.js'
 import { reqFeed, deleteExpiredEvents } from './content.js'
 import { ONE_MINUTE_IN_MILLISECONDS } from './time.js'
 import { defaultKey, sign } from './keys.js'
+import { contactDependencies } from './contacts.js'
+
+contactDependencies.push(() => {
+  homeRelay().then(relay => {
+    reqFeed()
+    relay.feedRequested = true
+  })
+})
 
 let lastFulfillment = 0
 export function minutelyUI() {

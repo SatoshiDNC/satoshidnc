@@ -2,7 +2,7 @@ import { db } from './db.js'
 import * as nip19 from 'nostr-tools/nip19'
 import { setPersonalData, getPersonalData } from './personal.js'
 
-export const contactViewDependencies = []
+export const contactDependencies = []
 
 export const device = { hpub: '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef', name: 'Device', statusText: 'Come into Nostor!' }
 
@@ -46,7 +46,7 @@ export function reloadContacts() {
     } else {
       contacts.length = 0
       contacts.push(...newList)
-      contactViewDependencies.map(v => v.setRenderFlag(true))
+      contactDependencies.map(f => f())
     }
   }
 }
