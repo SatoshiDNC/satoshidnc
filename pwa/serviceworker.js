@@ -1,18 +1,19 @@
 import { startupTasks } from './js/sw/startup.js'
 import { minutelyTasks } from './js/sw/periodic.js'
 
+const TAG = 'sw'
 const DOMAIN = `dev.satoshidnc.com`
 const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
 const cacheDates = {}
 const offlineCache = 'oc-2024101401'
 
 self.addEventListener('install', event => {
-  console.log('[SW] installed')
+  console.log(`[${TAG}] installed`)
   self.skipWaiting()
 })
 
 self.addEventListener('activate', event => {
-  console.log('[SW] activated')
+  console.log(`[${TAG}] activated`)
   return self.clients.claim()
 })
 
@@ -30,12 +31,12 @@ self.addEventListener('sync', event => {
       minutelyTasks()
       break
     default:
-      console.log('[SW] sync', event.tag)
+      console.log(`[${TAG}] sync`, event.tag)
   }
 })
 
 self.addEventListener('periodicsync', event => {
-  console.log('[SW] periodicsync', event.tag)
+  console.log(`[${TAG}] periodicsync`, event.tag)
   // if (event.tag === 'sync-messages') {
   //   event.waitUntil(sendMessages())
   // }
@@ -62,7 +63,7 @@ async function cachedOrLive(event, request = event.request) {
           clearTimeout(logTimer)
         }
         logTimer = setTimeout(() => {
-          console.log(`[SW] cached ${numCached} files`)
+          console.log(`[${TAG}] cached ${numCached} files`)
           numCached = 0
           logTimer = undefined
         }, 1000)
@@ -80,7 +81,7 @@ async function decryptRange(event, request = event.request) {
   // const unit = headers.get('range').split('=')
   // if (unit[0] == 'bytes') {
   //   const byteRange = unit[1].split('-')
-  //   console.log('[SW] fetch encrypted range', request.url, byteRange[0])
+  //   console.log(`[${TAG}] fetch encrypted range`, request.url, byteRange[0])
   //   headers.set('range', `bytes=${byteRange[0]}-${+byteRange[0]+BUFFER_SIZE-1}`)
   // }
   const { url, req } = request
@@ -100,16 +101,16 @@ async function decryptRange(event, request = event.request) {
   })
 }
 self.addEventListener('fetch', (event) => {
-  // console.log('[SW] fetch', event.request.url)
+  // console.log(`[${TAG}] fetch`, event.request.url)
   if (event.request.headers.has('range')) {
     const url = event.request.url
     const parts = url.split('/')
     if (parts.length = 5 && parts[0] == 'https:' && parts[1] == '' && parts[3] == 'dec' && url.endsWith('.mp3')) {
-      console.log('[SW] detected fetch of audio from encrypted source', event.request.url)
+      console.log(`[${TAG}] detected fetch of audio from encrypted source`, event.request.url)
       event.respondWith(decryptRange(event))
       return
     } else {
-      console.log('[SW] fetch range', event.request.url)
+      console.log(`[${TAG}] fetch range`, event.request.url)
     }
   }
   event.respondWith(cachedOrLive(event))

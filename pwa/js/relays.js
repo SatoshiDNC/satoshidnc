@@ -1,6 +1,6 @@
 import { db } from './db.js'
 
-const TAG = 'RELAYS'
+const TAG = 'relays'
 
 export const relayViewDependencies = []
 
