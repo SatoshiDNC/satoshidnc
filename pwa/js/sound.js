@@ -1,4 +1,4 @@
-let context, source, volume
+let context, volume
 export function sfx(name, fg) {
   if (!context) {
     context = new AudioContext()
@@ -7,21 +7,20 @@ export function sfx(name, fg) {
     // osc1.type = 'triangle', osc1.frequency.value = 493.883 + 1
     // osc2.type = 'triangle', osc2.frequency.value = 493.883 - 2
 
-    volume = context.createGain()
-    volume.gain.value = fg? 0.1 : 1.0
+    // volume = context.createGain()
+    // volume.gain.value = fg? 0.1 : 1.0
 
     // osc1.connect(volume)
     // osc2.connect(volume)
 
-    source = context.createBufferSource();
-    fetch(`/sfx/soft-notification-1.mp3`).then(res => res.arrayBuffer()).then(arrayBuffer => context.decodeAudioData(arrayBuffer)).then(buffer => {
-      source.buffer = buffer
-      source.connect(volume)
-    })
 
-    volume.connect(context.destination)
   }
-  source.start()
+  fetch(`/sfx/soft-notification-1.mp3`).then(res => res.arrayBuffer()).then(arrayBuffer => context.decodeAudioData(arrayBuffer)).then(buffer => {
+    const source = context.createBufferSource()
+    source.buffer = buffer
+    source.connect(context.destination)
+    source.start()
+  })
   // var duration = 1
   // var startTime = context.currentTime
   // volume.gain.setValueAtTime(0.1, startTime + 0.5)
