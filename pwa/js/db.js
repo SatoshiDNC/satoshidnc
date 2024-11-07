@@ -2,7 +2,7 @@ export let db
 
 export function init() {
   return new Promise((resolve, reject) => {
-    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 3)
+    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 4)
     req.onsuccess = e => {
       db = req.result
       resolve()
@@ -36,6 +36,9 @@ export function init() {
       if (e.oldVersion < 3) {
         db.createObjectStore(`profiles`, { keyPath: 'hpub' })
         db.createObjectStore(`deletions`, { keyPath: 'id' })
+      }
+      if (e.oldVersion < 4) {
+        db.createObjectStore(`expirations`, { keyPath: 'expiry' })
       }
     }
   })

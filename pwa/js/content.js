@@ -96,8 +96,24 @@ export function aggregateEvent(e) {
                 reject()
               }
               req.onsuccess = () => {
-                resolve()
-                eventTrigger.map(f => f())
+                const finisher = () => {
+                  resolve()
+                  eventTrigger.map(f => f())
+                }
+                const expiry = e.tags.filter(t => t[0] == 'expiration')?.[0]?.[1]
+                if (expiry) {
+                  const os = tr.objectStore('expirations')
+                  const req = os.put({ expiry, id: e.id })
+                  req.onerror = () => {
+                    reject()
+                  }
+                  req.onsuccess = () => {
+                    console.log(`[${TAG}] added expiration record`)
+                    finisher()
+                  }
+                } else {
+                  finisher()
+                }
               }
             }
           }
@@ -105,6 +121,21 @@ export function aggregateEvent(e) {
       }
     }
 
+  })
+}
+
+export function deleteExpiredEvents() {
+  return new Promise((resolve, reject) => {
+    const TAG = 'deleteExpiredEvents'
+    const now = Date.now()
+    const tr = db.transaction(['events'], 'readwrite', { durability: 'strict' })
+    const os = tr.objectStore('events')
+    const req = os.index('id').get(e.id)
+    req.onerror = () => {
+      reject()
+    }
+    req.onsuccess = () => {
+    }
   })
 }
 
