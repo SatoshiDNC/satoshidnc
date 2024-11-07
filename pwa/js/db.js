@@ -1,3 +1,5 @@
+const TAG = 'db'
+
 export let db
 
 export function init() {
@@ -11,10 +13,10 @@ export function init() {
       reject(e)
     }
     req.onupgradeneeded = e => {
-      console.log(`db: upgrading from ${e.oldVersion} to ${e.newVersion}`)
+      console.log(`[${TAG}] upgrading from ${e.oldVersion} to ${e.newVersion}`)
       const db = e.target.result
       db.onerror = e => {
-        console.error(e)
+        console.error(`[${TAG}]`, e)
       }
       let os
       if (e.oldVersion < 1) {
@@ -38,7 +40,8 @@ export function init() {
         db.createObjectStore(`deletions`, { keyPath: 'id' })
       }
       if (e.oldVersion < 4) {
-        db.createObjectStore(`expirations`, { keyPath: 'expiry' })
+        db.createObjectStore(`expirations`, { autoIncrement: true })
+        os.createIndex(`expiry`, 'expiry')
       }
     }
   })
