@@ -1,5 +1,5 @@
 import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../../draw.js'
-import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorGetPassword, trezorSign, trezorWipe } from '../../../trezor.js'
+import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorGetPassword, trezorSign, trezorWipe, trezorClose } from '../../../trezor.js'
 import { contentView as newContactForm } from './new-chat/new-contact/content.js'
 import * as bjs from 'bitcoinjs-lib'
 import bm from 'bitcoinjs-message'
@@ -96,7 +96,9 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.x = 69, g.h = 104
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    menuRoot.easeOut()
+    trezorClose().then(() => {
+      menuRoot.easeOut()
+    })
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE

@@ -450,6 +450,18 @@ export function trezorConnect() {
   })
 }
 
+export function trezorClose() {
+  return new Promise((resolve, reject) => {
+    if (device) {
+      const promise = device.close()
+      device = undefined
+      resolve(promise)
+    } else {
+      reject('device not open')
+    }
+  })
+}
+
 export function trezorPing(text) {
   return new Promise((resolve, reject) => {
     const buf = paramString(1, text)
