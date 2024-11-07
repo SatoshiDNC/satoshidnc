@@ -246,7 +246,7 @@
     import { plainProgram } from './js/shaders.js'
     import { init as dbInit } from './js/db.js'
     import { homeRoot } from './js/view/home/chats/root.js'
-    import { reloadContacts } from './js/contacts.js'
+    import { reloadContacts, addNewContact } from './js/contacts.js'
     import { keys, reloadKeys, initDefaultKey } from './js/keys.js'
     import { reloadPersonalData } from './js/personal.js'
     import { reloadRelays } from './js/relays.js'
@@ -255,7 +255,7 @@
 
     const TAG = 'init'
     // This module demonstrates use of Fireglass and Rune.
-    document.addEventListener("DOMContentLoaded", (event) => {
+    document.addEventListener('DOMContentLoaded', (event) => {
 
       // initialize globals
       const canvas = document.querySelector('#app1')
