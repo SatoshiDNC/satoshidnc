@@ -253,6 +253,7 @@
     import { reloadRelayStats } from './js/stats.js'
     import { minutelyUI } from './js/periodic.js'
 
+    const TAG = 'init'
     // This module demonstrates use of Fireglass and Rune.
     document.addEventListener("DOMContentLoaded", (event) => {
 
@@ -343,7 +344,7 @@
               sw = registration.active
             }
             if (sw) {
-              console.log("sw current state", sw.state)
+              console.log(`[${TAG}:sw] state: ${sw.state}`)
               const setup = () => {
                 registration.sync.register('startup-trigger').then(() => {
                   clearStatus('registering_sync')
@@ -382,15 +383,11 @@
                 })
               }
               if (sw.state == 'activated') {
-                //If push subscription wasnt done yet have to do here
-                console.log("sw already activated - Do watever needed here")
                 setup()
               }
               sw.addEventListener('statechange', function(e) {
-                console.log("sw statechange : ", e.target.state)
+                console.log(`[${TAG}:sw] state: ${e.target.state}`)
                 if (e.target.state == 'activated') {
-                  // use pushManger for subscribing here.
-                  console.log("Just now activated. now we can subscribe for push notification")
                   setup()
                 }
               })

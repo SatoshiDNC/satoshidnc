@@ -10,7 +10,7 @@ v.setText = function(text) {
   const v = this
   if (text == v.loadingText) return
   v.loadingText = text
-  console.log('init:', text)
+  console.log(`[init] ${text}`)
   v.setRenderFlag(true)
 }
 v.renderFunc = function() {
