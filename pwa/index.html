@@ -384,8 +384,10 @@
               }
               console.log(sw.state)
               if (sw.state == 'installed') {
+                console.log('a')
                 clearStatus('installing_sw')
               } else if (sw.state == 'activated') {
+                console.log('b')
                 clearStatus('installing_sw')
                 clearStatus('waiting_on_sw')
                 setup()
