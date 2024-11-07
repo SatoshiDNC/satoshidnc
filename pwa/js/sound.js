@@ -15,7 +15,7 @@ export function sfx(name, fg) {
     // osc2.connect(volume)
 
     const source = context.createBufferSource();
-    fetch(url).then(res => res.arrayBuffer()).then(arrayBuffer => context.decodeAudioData(arrayBuffer)).then(buffer => {
+    fetch(`/sfx/soft-notification-1.mp3`).then(res => res.arrayBuffer()).then(arrayBuffer => context.decodeAudioData(arrayBuffer)).then(buffer => {
       source.buffer = buffer
       source.connect(volume)
     })
