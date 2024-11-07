@@ -344,52 +344,54 @@
             }
             if (sw) {
               console.log("sw current state", sw.state)
-              if (sw.state == "activated") {
-                //If push subscription wasnt done yet have to do here
-                console.log("sw already activated - Do watever needed here")
-              }
-              sw.addEventListener("statechange", function(e) {
-                console.log("sw statechange : ", e.target.state)
-                if (e.target.state == "activated") {
-                  // use pushManger for subscribing here.
-                  console.log("Just now activated. now we can subscribe for push notification")
+              const setup = () => {
+                registration.sync.register('startup-trigger').then(() => {
+                  clearStatus('registering_sync')
+                }, error => {
+                  pushError(`Sync registration failed: ${error}`)
+                })
 
-                  registration.sync.register('startup-trigger').then(() => {
-                    clearStatus('registering_sync')
+                setInterval(() => {
+                  registration.sync.register('minutely').then(() => {
                   }, error => {
                     pushError(`Sync registration failed: ${error}`)
                   })
+                  minutelyUI()
+                }, 60 * 1000)
 
-                  setInterval(() => {
-                    registration.sync.register('minutely').then(() => {
-                    }, error => {
-                      pushError(`Sync registration failed: ${error}`)
-                    })
-                    minutelyUI()
-                  }, 60 * 1000)
-
-                  navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
-                    if (status.state == 'granted' && 'periodicSync' in registration) {
-                      navigator.serviceWorker.ready.then(async sw => {
-                        await sw.periodicSync.register('periodicsync', {
-                          minInterval: 1000,
-                        })
-                        clearStatus('registering_periodic_sync')
+                navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
+                  if (status.state == 'granted' && 'periodicSync' in registration) {
+                    navigator.serviceWorker.ready.then(async sw => {
+                      await sw.periodicSync.register('periodicsync', {
+                        minInterval: 1000,
                       })
-
-                      // registration.periodicSync.register('periodicsync', {
-                      //   minInterval: 1000,
-                      // }).then(() => {
-                      //   clearStatus('registering_periodic_sync')
-                      // }, error => {
-                      //   pushError(`Periodic sync registration failed: ${error}`)
-                      // })
-                    } else {
-                      console.log('note: background sync is not available (requires install)')
                       clearStatus('registering_periodic_sync')
-                    }
-                  })
+                    })
 
+                    // registration.periodicSync.register('periodicsync', {
+                    //   minInterval: 1000,
+                    // }).then(() => {
+                    //   clearStatus('registering_periodic_sync')
+                    // }, error => {
+                    //   pushError(`Periodic sync registration failed: ${error}`)
+                    // })
+                  } else {
+                    console.log('note: background sync is not available (requires install)')
+                    clearStatus('registering_periodic_sync')
+                  }
+                })
+              }
+              if (sw.state == 'activated') {
+                //If push subscription wasnt done yet have to do here
+                console.log("sw already activated - Do watever needed here")
+                setup()
+              }
+              sw.addEventListener('statechange', function(e) {
+                console.log("sw statechange : ", e.target.state)
+                if (e.target.state == 'activated') {
+                  // use pushManger for subscribing here.
+                  console.log("Just now activated. now we can subscribe for push notification")
+                  setup()
                 }
               })
             } else {
