@@ -1,6 +1,7 @@
 import { drawPill, drawEllipse, alpha } from '../../draw.js'
 import { contentView } from './updates/content.js'
 import { eventTrigger } from '../../content.js'
+import { sfx } from '../../sound.js'
 
 let v, g
 export const barBot = v = new fg.View()
@@ -43,6 +44,9 @@ eventTrigger.push(() => {
   const updatePane = v.paneGads.filter(g => g.label == 'Updates')[0]
   if (updatePane.label != v.activeLabel) {
     updatePane.new = true
+    sfx('new update', false)
+  } else {
+    sfx('new update', true)
   }
   v.setRenderFlag(true)
 })
