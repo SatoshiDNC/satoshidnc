@@ -336,7 +336,7 @@
             if (registration.installing) {
               sw = registration.installing
             } else if (registration.waiting) {
-              clearStatus('installing_sw')
+              clearStatus('installing_sw') // similar code 1 of 3
               sw = registration.waiting
             } else if (registration.active) {
               clearStatus('installing_sw')
@@ -382,19 +382,20 @@
                   }
                 })
               }
-              console.log(sw.state)
               if (sw.state == 'installed') {
-                console.log('a')
-                clearStatus('installing_sw')
+                clearStatus('installing_sw') // similar code 2 of 3
               } else if (sw.state == 'activated') {
-                console.log('b')
                 clearStatus('installing_sw')
                 clearStatus('waiting_on_sw')
                 setup()
               }
               sw.addEventListener('statechange', function(e) {
                 console.log(`[${TAG}:sw] state: ${e.target.state}`)
-                if (e.target.state == 'activated') {
+                if (e.target.state == 'installed') {
+                  clearStatus('installing_sw') // similar code 3 of 3
+                } else if (e.target.state == 'activated') {
+                  clearStatus('installing_sw')
+                  clearStatus('waiting_on_sw')
                   setup()
                 }
               })
