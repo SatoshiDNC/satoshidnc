@@ -40,7 +40,7 @@ export function init() {
         db.createObjectStore(`deletions`, { keyPath: 'id' })
       }
       if (e.oldVersion < 4) {
-        db.createObjectStore(`expirations`, { autoIncrement: true })
+        os = db.createObjectStore(`expirations`, { autoIncrement: true })
         os.createIndex(`expiry`, 'expiry')
       }
     }
