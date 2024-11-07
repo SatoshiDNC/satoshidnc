@@ -128,13 +128,33 @@ export function deleteExpiredEvents() {
   return new Promise((resolve, reject) => {
     const TAG = 'deleteExpiredEvents'
     const now = Date.now()
-    const tr = db.transaction(['events'], 'readwrite', { durability: 'strict' })
-    const os = tr.objectStore('events')
-    const req = os.index('id').get(e.id)
+    const tr = db.transaction(['expirations', 'events'], 'readwrite', { durability: 'strict' })
+    const os = tr.objectStore('expirations')
+    const req = os.index('expiry').openCursor(IDBKeyRange.bound(0, Math.floor(now/1000)))
     req.onerror = () => {
       reject()
     }
     req.onsuccess = () => {
+      let cursor = e.target.result
+      if (cursor) {
+        console.log(`event expired: ${cursor.value.id}`)
+        const os2 = tr.objectStore('events')
+        const req = os2.delete(cursor.value.id)
+        req.onerror = () => {
+          reject()
+        }
+        req.onsuccess = () => {
+          const req = os.delete(cursor.key)
+          req.onerror = () => {
+            reject()
+          }
+          req.onsuccess = () => {
+            cursor.continue()
+          }
+        }
+      } else {
+        resolve()
+      }
     }
   })
 }
