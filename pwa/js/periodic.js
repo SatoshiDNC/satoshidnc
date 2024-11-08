@@ -4,11 +4,15 @@ import { ONE_MINUTE_IN_MILLISECONDS } from './time.js'
 import { defaultKey, sign } from './keys.js'
 import { contactDependencies } from './contacts.js'
 
+let timer
 contactDependencies.push(() => {
-  homeRelay().then(relay => {
-    reqFeed()
-    relay.feedRequested = true
-  })
+  if (timer) clearTimeout(timer)
+  timer = setTimeout(() => {
+    homeRelay().then(relay => {
+      reqFeed()
+      relay.feedRequested = true
+    })
+  }, 10)
 })
 
 let lastFulfillment = 0
