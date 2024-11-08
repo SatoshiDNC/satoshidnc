@@ -94,7 +94,6 @@ v.renderFunc = function() {
       v.setRenderFlag(true)
       if (elapsedTime > 4000) {
         pageTurn = true
-        setTimeout(setUpdatesFlag(v.updates[v.currentUpdate].hpub, false))
       }
     }
   }
@@ -143,6 +142,7 @@ v.renderFunc = function() {
         setTimeout(() => {
           v.backGad.clickFunc()
         })
+        setTimeout(setUpdatesFlag(v.updates[v.currentUpdate].hpub, false))
       }
     }
   }
