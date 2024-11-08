@@ -175,7 +175,7 @@ v.renderFunc = function() {
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => a+(c.viewed?1:0), 0)
     const y = i * 200 + (i >= v.keys.length? 96:0) + ((v.viewed.includes(hpub) && v.recents.length > 0)? 96:0)
     const g = i < v.keys.length? v.selfsGad: i < v.keys.length + v.recents.length? v.recentsGad: v.viewedGad
-    const index = i < v.keys.length? i: i < v.keys.length + v.recents.length? i - v.keys.legnth: i - v.keys.length - v.recents.length
+    const index = i < v.keys.length? i: i < v.keys.length + v.recents.length? i - v.keys.length: i - v.keys.length - v.recents.length
     drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
     if (numViewed) {
       drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
