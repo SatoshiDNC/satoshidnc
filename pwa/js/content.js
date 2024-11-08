@@ -100,7 +100,7 @@ export function aggregateEvent(e) {
                   resolve()
                   eventTrigger.map(f => f())
                 }
-                const expiry = e.tags.filter(t => t[0] == 'expiration')?.[0]?.[1]
+                const expiry = +(e.tags.filter(t => t[0] == 'expiration')?.[0]?.[1]||'0')
                 if (expiry) {
                   const os = tr.objectStore('expirations')
                   const req = os.put({ expiry, id: e.id })
