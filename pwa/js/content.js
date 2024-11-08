@@ -136,25 +136,31 @@ export function deleteExpiredEvents() {
     }
     req.onsuccess = e => {
       let cursor = e.target.result
+      const todo = []
       if (cursor) {
-        console.log(`event expired: ${cursor.value.id}`)
-        const key = cursor.key
-        const os2 = tr.objectStore('events')
-        const req = os2.delete(cursor.value.id)
-        req.onerror = () => {
-          reject()
-        }
-        req.onsuccess = () => {
-          console.log(`key to delete: ${key}`)
-          const req = os.delete(key)
+        todo.push(cursor)
+        cursor.continue()
+      } else {
+        slash = () => {
+          cursor = todo.pop()
+          console.log(`event expired: ${cursor.value.id}`)
+          const os2 = tr.objectStore('events')
+          const req = os2.delete(cursor.value.id)
           req.onerror = () => {
             reject()
           }
           req.onsuccess = () => {
-            cursor.continue()
+            console.log(`key to delete: ${cursor.key}`)
+            const req = os.delete(cursor.key)
+            req.onerror = () => {
+              reject()
+            }
+            req.onsuccess = () => {
+              slash()
+            }
           }
         }
-      } else {
+        slash()
         resolve()
       }
     }
