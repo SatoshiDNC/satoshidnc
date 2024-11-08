@@ -23,7 +23,7 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.recents.length) return
     const updates = v.query.results.filter(u => v.recents.includes(u.hpub))
-    displayView.setContext(updates, v.recents[index])
+    displayView.setContext(updates, v.recents[index], v.parent.parent)
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
@@ -34,7 +34,7 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.viewed.length) return
     const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
-    displayView.setContext(updates, updates[0].hpub)
+    displayView.setContext(updates, updates[0].hpub, v.parent.parent)
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))

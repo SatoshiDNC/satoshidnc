@@ -22,7 +22,6 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.fontSize = 13
   g.autoHull()
   g.clickFunc = function() {
-    console.log('back click')
     const g = this, v = this.viewport
     //g.root.easeOut(g.target)
     v.returnView.b.b.queryFunc()
@@ -54,8 +53,9 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
 //     v.returnView.easingValue = 0
 //     fg.setRoot(v.returnView)
 //   }
-v.setContext = function(updates, hpub) {
+v.setContext = function(updates, hpub, returnView) {
   const v = this
+  v.returnView = returnView
   v.pendingUpdates = updates.filter(u => u.hpub != hpub)
   v.updates = updates.filter(u => u.hpub == hpub)
   v.lastTime = 0
@@ -146,7 +146,7 @@ v.renderFunc = function() {
     if (v.currentUpdate >= v.updates.length) {
       if (v.pendingUpdates.length > 0) {
         console.log(`switching to ${v.pendingUpdates[0]}`)
-        v.parent.setContext(v.pendingUpdates, v.pendingUpdates[0].hpub)
+        v.parent.setContext(v.pendingUpdates, v.pendingUpdates[0].hpub, v.parent.parent)
         v.parent.relayout()
       } else {
         setTimeout(() => {

@@ -40,7 +40,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
         if (c.hasUpdates) {
           getUpdates().then(allUpdates => {
             const updates = allUpdates.filter(u => u.hpub == c.hpub)
-            g.target2.setContext(updates, c.hpub)
+            g.target2.setContext(updates, c.hpub, v.parent.parent)
             g.root.easeOut(g.target2)
           })
         } else {
