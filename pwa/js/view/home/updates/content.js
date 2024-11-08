@@ -176,11 +176,14 @@ v.renderFunc = function() {
     const y = i * 200 + (i >= v.keys.length? 96:0) + ((v.viewed.includes(hpub) && v.recents.length > 0)? 96:0)
     const g = i < v.keys.length? v.selfsGad: i < v.keys.length + v.recents.length? v.recentsGad: v.viewedGad
     const index = i < v.keys.length? i: i < v.keys.length + v.recents.length? i - v.keys.length: i - v.keys.length - v.recents.length
-    drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
+    // drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
+    drawEllipse(v, colors.accent, 32, g.y + 6 + index * 200, 147, 147)
     if (numViewed) {
-      drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
+      // drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
+      drawEllipse(v, colors.inactive, 32, g.y + 6 + index * 200 + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
     }
-    drawEllipse(v, v.bgColor, 38, 498 + y, 135, 135)
+    // drawEllipse(v, v.bgColor, 38, 498 + y, 135, 135)
+    drawEllipse(v, v.bgColor, 38, g.y + 12 + index * 200, 135, 135)
     if (numUpdates > 1) for (let i = 0; i < numUpdates; i++) {
       // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
       mainShapes.useProg2()
