@@ -50,3 +50,22 @@ export function reloadContacts() {
     }
   }
 }
+
+let reloadContactUpdates_timer
+export function reloadContactUpdates() {
+  if (reloadContactUpdates_timer) clearTimeout(reloadContactUpdates_timer)
+    reloadContactUpdates_timer = setTimeout(() => {
+    const tr = db.transaction(['updates-new'], 'readonly')
+    const os = tr.objectStore('updates-new')
+    const req = os.getAll()
+    req.onerror = function(e) {
+       console.err(e)
+    }
+    req.onsuccess = function(e) {
+      for (e of e.target.result) {
+        contacts.map(c => c.hasNewUpdates = false)
+        contacts.filter(c => c.hpub == e.hpub).map(c => c.hasNewUpdates = true)
+      }
+    }
+  }, 100)
+}

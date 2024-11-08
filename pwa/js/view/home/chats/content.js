@@ -1,4 +1,3 @@
-// import { hpub, npub } from '../../keys.js'
 import { contacts, contactDependencies } from '../../../contacts.js'
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
@@ -117,10 +116,11 @@ v.renderFunc = function() {
     hpub: c.hpub,
     name: getAttr(c.hpub, 'name') || 'Unnamed',
     xmitText: getAttr(c.hpub, 'about') || addedOn(c.added),
-    xmitDate: new Date()
+    xmitDate: new Date(),
+    hasNewUpdates: c.hasNewUpdates,
   }}) ]) {
 
-    if (true) {
+    if (c.hasNewUpdates) {
       drawEllipse(v, colors.accent, 31-4.5, 204-4.5 + 200 * i, 136, 136)
       drawEllipse(v, v.bgColor, 31+0.5, 204+0.5 + 200 * i, 126, 126)
       drawAvatar(v, c.hpub, 31+20, 204+20 + 200 * i, 87, 87)

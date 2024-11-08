@@ -1,7 +1,7 @@
 import { db } from './db.js'
 import { kindInfo } from './nostor-util.js'
 import { homeRelay } from './nostor-app.js'
-import { contacts } from './contacts.js'
+import { contacts, reloadContactUpdates } from './contacts.js'
 
 export const eventTrigger = []
 export const deletionTrigger = []
@@ -172,13 +172,12 @@ export function deleteExpiredEvents() {
 }
 
 eventTrigger.push(e => {
-//export function eventTriggerInit(e) {
   if (e) {
     const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('updates-new')
     os.put({ hpub: e.pubkey })
+    reloadContactUpdates()
   }
-//}
 })
 
 let reqNotes_requestTime
