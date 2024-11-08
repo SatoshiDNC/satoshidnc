@@ -122,7 +122,7 @@ v.renderFunc = function() {
   }}) ]) {
 
     if (c.hasUpdates) {
-      console.log('render', c)
+      //console.log('render', c)
       drawEllipse(v, c.hasNewUpdates?colors.accent:colors.inactive, 31-4.5, 204-4.5 + 200 * i, 136, 136)
       drawEllipse(v, v.bgColor, 31+0.5, 204+0.5 + 200 * i, 126, 126)
       drawAvatar(v, c.hpub, 31+20, 204+20 + 200 * i, 87, 87)

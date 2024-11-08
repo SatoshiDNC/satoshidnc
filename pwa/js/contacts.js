@@ -64,6 +64,7 @@ export function reloadContactUpdates() {
     }
     req.onsuccess = function(e) {
       for (e of e.target.result) {
+        console.log(e)
         contacts.map(c => c.hasNewUpdates = false)
         contacts.filter(c => c.hpub == e.hpub).map(c => {
           c.hasUpdates = true
