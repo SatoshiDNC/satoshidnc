@@ -130,7 +130,8 @@ export function deleteExpiredEvents() {
     const now = Date.now()
     const tr = db.transaction(['expirations', 'events'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('expirations')
-    const req = os.index('expiry').openCursor(IDBKeyRange.bound(2000000000, 2000000000000))
+    // const req = os.index('expiry').openCursor(IDBKeyRange.bound(2000000000, 2000000000000))
+    const req = os.index('expiry').openCursor(IDBKeyRange.bound(0, Math.floor(now/1000)))
     const todo = []
     req.onerror = () => {
       reject()
