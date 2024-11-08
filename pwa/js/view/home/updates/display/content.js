@@ -28,7 +28,7 @@ v.layoutFunc = function() {
 }
 v.renderFunc = function() {
   const v = this
-  const data = v.updates[overlayView.currentUpdate].data
+  const data = v.updates[overlayView.currentUpdate]?.data || { kind: -1, id: '0000000000000000000000000000000000000000000000000000000000000000' }
   if (data.kind == 1) {
     v.renderKind1(data)
     if (data.id != v.lastRenderedId) {
@@ -40,7 +40,7 @@ v.renderFunc = function() {
   } else {
     gl.clearColor(...v.bgColor)
     gl.clear(gl.COLOR_BUFFER_BIT)
-    if (data.id != v.lastRenderedId) {
+    if (data.kind != -1 && data.id != v.lastRenderedId) {
       v.lastRenderedId = data.id
       console.log(`[NOTE] unrecognized kind:`, data)
     }

@@ -28,11 +28,12 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
+    const rv = v.returnView || v.returnViewDefault
     //g.root.easeOut(g.target)
-    v.returnView.b.b.queryFunc()
-    v.returnView.easingState = 1
-    v.returnView.easingValue = 0
-    fg.setRoot(v.returnView)
+    rv.b?.b?.queryFunc?.()
+    rv.easingState = 1
+    rv.easingValue = 0
+    fg.setRoot(rv)
   }
 v.gadgets.push(g = v.emojiGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE

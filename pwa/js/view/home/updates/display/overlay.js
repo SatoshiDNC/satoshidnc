@@ -23,11 +23,12 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    v.returnView.b?.b?.queryFunc?.()
-    v.returnView.c = barBot; barBot.parent = v.returnView
-    v.returnView.easingState = 1
-    v.returnView.easingValue = 0
-    fg.setRoot(v.returnView)
+    const rv = v.returnView || v.returnViewDefault
+    rv.b?.b?.queryFunc?.()
+    rv.c = barBot; barBot.parent = v.returnView
+    rv.easingState = 1
+    rv.easingValue = 0
+    fg.setRoot(rv)
   }
 v.gadgets.push(g = v.profileGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -36,7 +37,7 @@ v.gadgets.push(g = v.profileGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     g.target.setContact(v.updates[v.currentUpdate].hpub)
-    g.target.backGad.target = v.returnView
+    g.target.backGad.target = v.returnView || v.returnViewDefault
     g.target.easingState = 1
     g.target.easingValue = 0
     fg.setRoot(g.target)
