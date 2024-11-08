@@ -65,7 +65,6 @@ v.queryFunc = function() {
         v.query.inProgress = false
         v.query.lastCompleted = Date.now()
         v.query.results = updates
-        console.log(updates.filter(u => u.data.id == 'f7c722ce349c3102c8bbab6f0b1110d10f2e843e3f47f960d8bb391f98bce480'))
         v.relayout()
       })
     } else {
