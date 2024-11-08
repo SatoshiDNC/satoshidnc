@@ -284,7 +284,7 @@ export function getUpdates() {
         5, // Event Deletion Request
         7, // Reaction
         31234, // Generic Draft Event
-      ].includes(r.data.kind) && +(r.data.tags.filter(t => t[0] == 'expiration')?.[0]?.[1]||`${now}`) >= now).map(r => {
+      ].includes(r.data.kind)).map(r => {
         return new Promise((resolve, reject) => {
           const req = tr.objectStore('updates-viewed').get(r.data.id)
           req.onerror = function(e) {
