@@ -52,6 +52,9 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.activeFilter = v.filterGads[0].label
+eventTrigger.push(() => {
+  v.relayout()
+})
 v.layoutFunc = function() {
   const v = this
   let x = 42

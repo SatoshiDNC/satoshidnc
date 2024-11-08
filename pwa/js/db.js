@@ -4,7 +4,7 @@ export let db
 
 export function init() {
   return new Promise((resolve, reject) => {
-    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 4)
+    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 5)
     req.onsuccess = e => {
       db = req.result
       resolve()
@@ -42,6 +42,9 @@ export function init() {
       if (e.oldVersion < 4) {
         os = db.createObjectStore(`expirations`, { keyPath: 'id' })
         os.createIndex(`expiry`, 'expiry')
+      }
+      if (e.oldVersion < 5) {
+        os = db.createObjectStore(`updates-new`, { keyPath: 'hpub' })
       }
     }
   })

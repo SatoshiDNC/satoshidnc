@@ -98,7 +98,7 @@ export function aggregateEvent(e) {
               req.onsuccess = () => {
                 const finisher = () => {
                   resolve()
-                  eventTrigger.map(f => f())
+                  eventTrigger.map(f => f(e))
                 }
                 const expiry = +(e.tags.filter(t => t[0] == 'expiration')?.[0]?.[1]||'0')
                 if (expiry) {
@@ -170,6 +170,14 @@ export function deleteExpiredEvents() {
     }
   })
 }
+
+eventTrigger.push(e => {
+  if (e) {
+    const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
+    const os = tr.objectStore('updates-new')
+    os.put({ hpub: e.hpub })
+  }
+})
 
 let reqNotes_requestTime
 export function reqNotes(hpub) {
