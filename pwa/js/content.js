@@ -171,12 +171,15 @@ export function deleteExpiredEvents() {
   })
 }
 
+export function setUpdatesFlag(hpub, newUpdates) {
+  const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
+  const os = tr.objectStore('updates-new')
+  os.put({ hpub: hpub, new: newUpdates })
+  reloadContactUpdates()
+}
 eventTrigger.push(e => {
   if (e) {
-    const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
-    const os = tr.objectStore('updates-new')
-    os.put({ hpub: e.pubkey, new: true })
-    reloadContactUpdates()
+    setUpdatesFlag(e.pubkey, true)
   }
 })
 

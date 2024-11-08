@@ -2,7 +2,7 @@ import { drawPill, drawEllipse, alpha } from '../../../../draw.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { updatePostedAsOf } from '../../../util.js'
 import { kindInfo } from '../../../../nostor-util.js'
-import { contentView } from './content.js'
+import { contentView, setUpdatesFlag } from './content.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -93,12 +93,7 @@ v.renderFunc = function() {
       v.setRenderFlag(true)
       if (elapsedTime > 4000) {
         pageTurn = true
-        setTimeout(() => {
-          const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
-          const os = tr.objectStore('updates-new')
-          os.put({ hpub: v.updates[v.currentUpdate].hpub, new: false })
-          reloadContactUpdates()
-        })
+        setTimeout(setUpdatesFlag(v.updates[v.currentUpdate].hpub, false))
       }
     }
   }
