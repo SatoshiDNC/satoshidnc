@@ -46,7 +46,7 @@ v.renderFunc = function() {
     }
   }
 
-  markUpdateAsViewed(data.id, data.created_at * 1000)
+  markUpdateAsViewed(data.id, data.pubkey, data.created_at * 1000)
 
 }
 v.renderKind1 = function(data) {
