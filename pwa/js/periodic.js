@@ -12,7 +12,7 @@ contactDependencies.push(() => {
       reqFeed()
       relay.feedRequested = true
     })
-  }, 10)
+  }, 100)
 })
 
 let lastFulfillment = 0
