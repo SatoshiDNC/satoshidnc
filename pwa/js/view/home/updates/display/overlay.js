@@ -68,6 +68,13 @@ v.renderFunc = function() {
   const v = this
   const m = mat4.create()
 
+  if (!v.updates[v.currentUpdate]) {
+    setTimeout(() => {
+      v.backGad.clickFunc()
+    })
+    return
+  }
+
   const numUpdates = v.updates.length
   const now = Date.now()
   if (!v.lastTime) {
