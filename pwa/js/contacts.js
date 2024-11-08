@@ -3,6 +3,7 @@ import * as nip19 from 'nostr-tools/nip19'
 import { setPersonalData, getPersonalData } from './personal.js'
 
 export const contactDependencies = []
+export const contactUpdatesDependencies = []
 
 export const device = { hpub: '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef', name: 'Device', statusText: 'Come into Nostor!' }
 
@@ -69,7 +70,7 @@ export function reloadContactUpdates() {
         c.hasUpdates = true
         c.hasNewUpdates = e.new || false
       }
-      contactDependencies.map(f => f())
+      contactUpdatesDependencies.map(f => f())
     }
   }, 100)
 }
