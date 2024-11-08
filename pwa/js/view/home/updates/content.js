@@ -215,7 +215,8 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
   
     mat4.identity(m)
-    mat4.translate(m, m, [211, 618 + y, 0])
+    // mat4.translate(m, m, [211, 618 + y, 0])
+    mat4.translate(m, m, [211, g.y + 132 + index * 200, 0])
     mat4.scale(m, m, [30/14, 30/14, 1])
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
