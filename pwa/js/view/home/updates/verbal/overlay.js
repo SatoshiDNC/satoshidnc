@@ -270,10 +270,10 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           const TAG = 'aud'
           const key = 'ff01020304050607080910111213141516171819202122232425262728293031323334353637383940414243'
           encrypt(key, blob.stream()).then(stream => decrypt(key, stream).then(stream => {
-            console.log(`[${TAG}] got stream`)
+            // console.log(`[${TAG}] got stream`)
             const reader = stream.getReader()
             const readFunc = () => {
-              console.log(`[${TAG}] read`)
+              // console.log(`[${TAG}] read`)
               reader.read().then(({ done, value }) => {
                 if (value) {
                   // console.log(`[${TAG}] ${value}`)
