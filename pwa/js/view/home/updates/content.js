@@ -196,7 +196,8 @@ v.renderFunc = function() {
     }
 
     // drawAvatar(v, hpub, 43,503 + y, 125,125)
-    drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
+    // drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
+    drawEllipse(v, colors.inactiveDark, 43, g.y + 17 + index * 200, 125, 125)
 
     mat4.identity(m)
     // mat4.translate(m, m, [211, 553 + y, 0])
