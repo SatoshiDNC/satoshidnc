@@ -24,9 +24,17 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     //g.root.easeOut(g.target)
     v.returnView.b.b.queryFunc()
+    v.returnView.c = barBot; barBot.parent = v.returnView
     v.returnView.easingState = 1
     v.returnView.easingValue = 0
     fg.setRoot(v.returnView)
+
+
+    // pane.view.c = barBot; barBot.parent = pane.view
+    // pane.view.easingValue = 1
+    // pane.view.setRenderFlag(true)
+    // fg.setRoot(pane.view)
+
   }
 v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
