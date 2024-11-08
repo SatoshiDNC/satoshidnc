@@ -142,6 +142,10 @@ export function deleteExpiredEvents() {
         cursor.continue()
       } else {
         const slash = () => {
+          if (todo.length == 0) {
+            resolve()
+            return
+          }
           cursor = todo.pop()
           console.log(`event expired: ${cursor.value.id}`)
           const os2 = tr.objectStore('events')
@@ -156,11 +160,7 @@ export function deleteExpiredEvents() {
               reject()
             }
             req.onsuccess = () => {
-              if (todo.length == 0) {
-                resolve()
-              } else {
-                slash()
-              }
+              slash()
             }
           }
         }
