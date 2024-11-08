@@ -63,7 +63,7 @@ export function reloadContactUpdates() {
        console.err(e)
     }
     req.onsuccess = function(e) {
-      contacts.map(c => c.hasNewUpdates = false)
+      contacts.map(c => { delete c.hasNewUpdates })
       for (e of e.target.result) {
         console.log('before', contacts)
         let c = contacts.find(c => c.hpub == e.hpub)
@@ -71,11 +71,6 @@ export function reloadContactUpdates() {
         c.hasNewUpdates = e.new || false
         console.log('after', contacts)
       }
-      contacts.map(c => {
-        if (!c.hasUpdates) {
-          delete c.hasNewUpdates
-        }
-      })
       contactDependencies.map(f => f())
     }
   }, 100)
