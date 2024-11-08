@@ -270,7 +270,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           const TAG = 'aud'
           //const key = 'ff01020304050607080910111213141516171819202122232425262728293031'+'323334353637383940414243'
           const key = '0000000000000000000000000000000000000000000000000000000000000000'+'000000000000000000000000'
-          encrypt(key, blob.stream()).then(stream => decrypt(key, stream).then(stream => {
+          encrypt(key, blob.stream()).then(stream => /*decrypt(key, stream).then(stream =>*/ {
             // console.log(`[${TAG}] got stream`)
             const reader = stream.getReader()
             const readFunc = () => {
@@ -289,7 +289,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
               })
             }
             readFunc()
-          }))
+          })//)
 
           // deleteButton.onclick = (e) => {
           //   const evtTgt = e.target
