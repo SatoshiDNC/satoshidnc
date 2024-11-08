@@ -336,7 +336,7 @@ export function markUpdateAsViewed(id, hpub, eventCreatedAtTime) {
     req.onsuccess = function(e) {
       getUpdates().then(updates => {
         const os = tr.objectStore('updates-new')
-        const req = os.put({ hpub, new: updates.filter(u => !u.viewed).length > 0 })
+        const req = os.put({ hpub, new: updates.filter(u => u.hpub == hpub && !u.viewed).length > 0 })
         req.onerror = function(e) {
           console.err(e)
         }
