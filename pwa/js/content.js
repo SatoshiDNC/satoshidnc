@@ -172,6 +172,7 @@ export function deleteExpiredEvents() {
 }
 
 export function setUpdatesFlag(hpub, newUpdates) {
+  console.log(hpub, newUpdates)
   const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('updates-new')
   os.put({ hpub: hpub, new: newUpdates })
