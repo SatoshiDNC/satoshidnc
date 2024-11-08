@@ -52,21 +52,31 @@ v.queryFunc = function() {
     clearTimeout(v.query.timer)
     v.query.timer = undefined
   }
-  if (!v.query.inProgress && v.query.lastCompleted < now - ONE_SECOND_IN_MILLISECONDS) {
-    v.query.inProgress = true
-    getUpdates().then(updates => {
-      v.query.inProgress = false
-      v.query.lastCompleted = Date.now()
-      v.query.results = updates
-      v.relayout()
-    })
-  } else {
+  if (v.query.inProgress) {
     v.query.timer = setTimeout(() => {
+      console.log('delayed query (was in progress)')
       v.query.timer = undefined
       v.queryFunc()
-    }, Math.max(0, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS))
-    console.log('query delay:', Math.max(0, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS))
+    }, ONE_SECOND_IN_MILLISECONDS)
+  } else {
+    if (v.query.lastCompleted < now - ONE_SECOND_IN_MILLISECONDS) {
+      v.query.inProgress = true
+      getUpdates().then(updates => {
+        v.query.inProgress = false
+        v.query.lastCompleted = Date.now()
+        v.query.results = updates
+        v.relayout()
+      })
+    } else {
+      console.log('delayed query (was recent)')
+      v.query.timer = setTimeout(() => {
+        v.query.timer = undefined
+        v.queryFunc()
+      }, Math.max(0, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS))
+      // console.log('query delay:', Math.max(0, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS))
+    }
   }
+
 }
 v.layoutFunc = function() {
   const v = this
