@@ -1,6 +1,6 @@
 // import { hpub, npub } from '../../keys.js'
 import { contacts, contactDependencies } from '../../../contacts.js'
-import { drawPill, drawAvatar } from '../../../draw.js'
+import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn } from '../../util.js'
@@ -115,6 +115,10 @@ v.renderFunc = function() {
     xmitText: getAttr(c.hpub, 'about') || addedOn(c.added),
     xmitDate: new Date()
   }}) ]) {
+
+    if (true) {
+      drawEllipse(v, colors.accent, 31-4, 204-4 + 200 * i, 136, 136)
+    }
 
     drawAvatar(v, c.hpub, 31, 204 + 200 * i, 127, 127)
     // mat4.identity(mat)

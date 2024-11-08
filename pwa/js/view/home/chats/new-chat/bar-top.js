@@ -28,7 +28,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.handler = function(item) {
     console.log(`id ${JSON.stringify(item)}`)
   }
-  g.importHandler = function(item) {
+  g.batchPasteHandler = function(item) {
     navigator.clipboard.read().then(clipboardContents => {
       for (const item of clipboardContents) {
         if (!item.types.includes('text/plain')) {
@@ -65,10 +65,15 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       alert(`error: ${reason}`)
     })
   }
+  // g.importHandler = function(item) {
+  // }
+  // g.exportHandler = function(item) {
+  // }
   g.items = [
-    { id: 1, label: 'Batch paste public keys', handler: g.importHandler },
-    // { id: 2, label: 'Copy all contacts', handler: g.exportHandler },
-    { id: 3, label: 'Trezor tools', handler: trezorTools.invoker },
+    { id: 1, label: 'Batch paste public keys', handler: g.batchPasteHandler },
+    // { id: 2, label: 'Import contacts...', handler: g.importHandler },
+    // { id: 3, label: 'Export contacts...', handler: g.exportHandler },
+    { id: 4, label: 'Trezor tools', handler: trezorTools.invoker },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
