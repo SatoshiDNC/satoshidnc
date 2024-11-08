@@ -47,6 +47,7 @@ export function reloadContacts() {
       contacts.length = 0
       contacts.push(...newList)
       contactDependencies.map(f => f())
+      reloadContactUpdates
     }
   }
 }
@@ -66,6 +67,7 @@ export function reloadContactUpdates() {
         contacts.map(c => c.hasNewUpdates = false)
         contacts.filter(c => c.hpub == e.hpub).map(c => c.hasNewUpdates = true)
       }
+      contactDependencies.map(f => f())
     }
   }, 100)
 }
