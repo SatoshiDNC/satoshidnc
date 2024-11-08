@@ -24,7 +24,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = this.viewport
     //g.root.easeOut(g.target)
-    v.returnView.b.b.queryFunc()
+    v.returnView.b?.b?.queryFunc()
     v.returnView.c = barBot; barBot.parent = v.returnView
     v.returnView.easingState = 1
     v.returnView.easingValue = 0
