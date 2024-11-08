@@ -323,16 +323,13 @@ export function getUpdates() {
 export function markUpdateAsViewed(id, eventCreatedAtTime) {
   // console.log(`[mark] ${id} ${eventCreatedAtTime}`)
   return new Promise((resolve, reject) => {
-    const tr = db.transaction(['updates-viewed', 'updates-new'], 'readwrite', { durability: 'strict' })
+    const tr = db.transaction('updates-viewed', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('updates-viewed')
     const req = os.put({ id, eventTimeStamp: eventCreatedAtTime })
     req.onerror = function(e) {
       console.err(e)
     }
     req.onsuccess = function(e) {
-      const os = tr.objectStore('updates-new')
-      os.put({ hpub: e.pubkey, new: false })
-      reloadContactUpdates()
       resolve()
     }
     reloadContactUpdates()

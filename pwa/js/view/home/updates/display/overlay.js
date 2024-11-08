@@ -93,6 +93,12 @@ v.renderFunc = function() {
       v.setRenderFlag(true)
       if (elapsedTime > 4000) {
         pageTurn = true
+        setTimeout(() => {
+          const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
+          const os = tr.objectStore('updates-new')
+          os.put({ hpub: v.updates[v.currentUpdate].hpub, new: false })
+          reloadContactUpdates()
+        })
       }
     }
   }
