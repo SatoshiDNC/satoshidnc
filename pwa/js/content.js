@@ -141,7 +141,7 @@ export function deleteExpiredEvents() {
         todo.push(cursor)
         cursor.continue()
       } else {
-        slash = () => {
+        const slash = () => {
           cursor = todo.pop()
           console.log(`event expired: ${cursor.value.id}`)
           const os2 = tr.objectStore('events')
