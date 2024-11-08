@@ -154,8 +154,8 @@ export function deleteExpiredEvents() {
             reject()
           }
           req.onsuccess = () => {
-            console.log(`key to delete: ${cursor.key}`)
-            const req = os.delete(cursor.key)
+            console.log(`key to delete: ${cursor.value.id}`)
+            const req = os.delete(cursor.value.id)
             req.onerror = () => {
               reject()
             }
