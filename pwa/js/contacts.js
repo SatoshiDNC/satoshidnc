@@ -66,10 +66,9 @@ export function reloadContactUpdates() {
       for (e of e.target.result) {
         contacts.map(c => c.hasNewUpdates = false)
         console.log('before', contacts)
-        contacts.filter(c => c.hpub == e.hpub).map(c => {
-          c.hasUpdates = true
-          c.hasNewUpdates = e.new || false
-        })
+        let c = contacts.find(c => c.hpub == e.hpub)
+        c.hasUpdates = true
+        c.hasNewUpdates = e.new || false
         console.log('after', contacts)
       }
       contactDependencies.map(f => f())
