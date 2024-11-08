@@ -22,14 +22,14 @@ export function encrypt(key44, stream) {
     const reader = stream.getReader()
     const writer = writable.getWriter()
     const readFunc = () => {
-      console.log(`[${TAG}] read`)
+      // console.log(`[${TAG}] read`)
       reader.read().then(({ done, value }) => {
         if (value) {
-          console.log(`[${TAG}] read ${value.length} bytes to append to buffer`)
+          // console.log(`[${TAG}] read ${value.length} bytes to append to buffer`)
           inBuf.push(value)
           bufSize += value.length
 
-          console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
+          // console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
           while (bufSize - bufPos >= BLOCKSIZE) {
 
             let head = Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
@@ -39,12 +39,12 @@ export function encrypt(key44, stream) {
               const len = inBuf.pop().length
               bufSize -= len
               bufPos -= len
-              console.log(`[${TAG}] while < BLOCKSIZE, bufSize ${bufSize} bufPos ${bufPos}`)
+              // console.log(`[${TAG}] while < BLOCKSIZE, bufSize ${bufSize} bufPos ${bufPos}`)
               head = head + Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
               // console.log(`[${TAG}] head ${head.length} ${head}`)
             }
             var block = Buffer.from(head.substring(0, BLOCKSIZE * 2), 'hex')
-            console.log(`[${TAG}] block ${block.length}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
+            // console.log(`[${TAG}] block ${block.length}, counter ${Math.floor(streamPos / BLOCKSIZE)}`)
             bufPos += block.length
 
             const cipher = new chacha20.Chacha20(key, nonce, Math.floor(streamPos / BLOCKSIZE))
@@ -55,8 +55,8 @@ export function encrypt(key44, stream) {
             // console.log(ret.toString('hex'))
 
             streamPos += BLOCKSIZE
-            console.log(`[${TAG}] streamPos ${streamPos}`)
-            console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
+            // console.log(`[${TAG}] streamPos ${streamPos}`)
+            // console.log(`[${TAG}] while bufSize ${bufSize} - bufPos ${bufPos} >= BLOCKSIZE ${BLOCKSIZE}`)
           }
 
           const totalLength = outBuf.reduce((p,c) => p + c.length, 0)
@@ -66,7 +66,7 @@ export function encrypt(key44, stream) {
             data.set(b, o)
             o += b.length
           }
-          console.log(`writing ${data.length} bytes`)
+          // console.log(`writing ${data.length} bytes`)
           if (data.length > 0) {
             writer.write(data).then(() => {
               while (outBuf.length > 0) {
