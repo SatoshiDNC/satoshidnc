@@ -119,9 +119,11 @@ v.renderFunc = function() {
     if (true) {
       drawEllipse(v, colors.accent, 31-4.5, 204-4.5 + 200 * i, 136, 136)
       drawEllipse(v, v.bgColor, 31+0.5, 204+0.5 + 200 * i, 126, 126)
+      drawAvatar(v, c.hpub, 31+5, 204+5 + 200 * i, 117, 117)
+    } else {
+      drawAvatar(v, c.hpub, 31, 204 + 200 * i, 127, 127)
     }
 
-    drawAvatar(v, c.hpub, 31, 204 + 200 * i, 127, 127)
     // mat4.identity(mat)
     // mat4.translate(mat, mat, [31, 204 + 200 * i, 0])
     // mat4.scale(mat, mat, [127/32, 127/32, 1])
