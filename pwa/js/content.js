@@ -327,7 +327,7 @@ export function getUpdates() {
 export function markUpdateAsViewed(id, hpub, eventCreatedAtTime) {
   // console.log(`[mark] ${id} ${eventCreatedAtTime}`)
   return new Promise((resolve, reject) => {
-    const tr = db.transaction(['updates-viewed', 'updates-new'], 'readwrite', { durability: 'strict' })
+    const tr = db.transaction(['updates-viewed'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('updates-viewed')
     const req = os.put({ id, eventTimeStamp: eventCreatedAtTime })
     req.onerror = function(e) {
@@ -335,6 +335,7 @@ export function markUpdateAsViewed(id, hpub, eventCreatedAtTime) {
     }
     req.onsuccess = function(e) {
       getUpdates().then(updates => {
+        const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
         const os = tr.objectStore('updates-new')
         const req = os.put({ hpub, new: updates.filter(u => u.hpub == hpub && !u.viewed).length > 0 })
         req.onerror = function(e) {
