@@ -22,9 +22,9 @@ v.gadgets.push(g = v.selfsGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     const y = (e.y - v.y) / v.viewScale + v.userY
     const index = Math.floor((y - g.y) / 200)
-    if (index < 0 || index >= v.recents.length) return
-    const updates = v.query.results.filter(u => v.recents.includes(u.hpub))
-    displayView.setContext(updates, v.recents[index], v.parent.parent)
+    if (index < 0 || index >= v.selfs.length) return
+    const updates = v.query.results.filter(u => v.selfs.includes(u.hpub))
+    displayView.setContext(updates, v.selfs[index], v.parent.parent)
     g.root.easeOut(g.target)
   }
 v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
@@ -111,7 +111,7 @@ v.layoutFunc = function() {
       }
     }
   }
-  v.keys = keys.map(k => k.hpub)
+  v.selfs = keys.map(k => k.hpub)
   v.recents = recents
   v.viewed = viewed
 
@@ -169,13 +169,13 @@ v.renderFunc = function() {
   }
 
   let i = 0
-  for (let hpub of [...v.keys, ...v.recents, ...v.viewed]) {
+  for (let hpub of [...v.selfs, ...v.recents, ...v.viewed]) {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => a+(c.viewed?1:0), 0)
-    const y = i * 200 + (i >= v.keys.length? 96:0) + ((v.viewed.includes(hpub) && v.recents.length > 0)? 96:0)
-    const g = i < v.keys.length? v.selfsGad: i < v.keys.length + v.recents.length? v.recentsGad: v.viewedGad
-    const index = i < v.keys.length? i: i < v.keys.length + v.recents.length? i - v.keys.length: i - v.keys.length - v.recents.length
+    const y = i * 200 + (i >= v.selfs.length? 96:0) + ((v.viewed.includes(hpub) && v.recents.length > 0)? 96:0)
+    const g = i < v.selfs.length? v.selfsGad: i < v.selfs.length + v.recents.length? v.recentsGad: v.viewedGad
+    const index = i < v.selfs.length? i: i < v.selfs.length + v.recents.length? i - v.selfs.length: i - v.selfs.length - v.recents.length
     // drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
     drawEllipse(v, colors.accent, 32, g.y + 6 + index * 200, 147, 147)
     if (numViewed) {
@@ -208,11 +208,11 @@ v.renderFunc = function() {
     mat4.translate(m, m, [211, g.y + 67 + index * 200, 0])
     mat4.scale(m, m, [35/14, 35/14, 1])
     let str
-    if (v.keys.includes(hpub)) {
-      if (v.keys.length == 1) {
+    if (v.selfs.includes(hpub)) {
+      if (v.selfs.length == 1) {
         str = 'My status'
       } else {
-        str = (getAttr(hpub, 'name') || 'Unnamed') + (v.keys.includes(hpub)?' (My status)':'')
+        str = `${getAttr(hpub, 'name') || 'Unnamed'} (My status)`
       }
     } else {
       str = getAttr(hpub, 'name') || 'Unnamed'
