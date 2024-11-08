@@ -94,7 +94,7 @@ v.renderFunc = function() {
       v.setRenderFlag(true)
       if (elapsedTime > 4000) {
         pageTurn = true
-        if (v.currentUpdate >= v.updates.length-1) {
+        if (v.currentUpdate + 1 == v.updates.length-1) {
           setTimeout(() => {
             const hpub = v.updates[v.currentUpdate].hpub
             setUpdatesFlag(hpub, false)
