@@ -131,7 +131,8 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m, m, [138, 118, 0])
   mat4.scale(m, m, [25/14, 25/14, 1])
-  defaultFont.draw(0,0, '# contacts'.replace('#', '123'), v.textColor, v.mat, m)
+  const n = contacts.length
+  defaultFont.draw(0,0, `${n} contact${n==1?'':'s'}`, v.textColor, v.mat, m)
 
   for (g of v.gadgets) {
     mat4.identity(m)
