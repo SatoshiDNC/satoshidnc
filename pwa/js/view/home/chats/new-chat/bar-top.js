@@ -36,7 +36,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
         }
         item.getType('text/plain').then(blob => blob.text()).then(rawText => {
           let npubs = []
-          let text = rawText.replaceAll(',',' ').replaceAll('\n',' ').replaceAll('\r',' ').replaceAll('\t',' ')
+          let text = rawText.replaceAll('"',' ').replaceAll(',',' ').replaceAll('\n',' ').replaceAll('\r',' ').replaceAll('\t',' ')
           npubs = text.split(' ').map(a => a.trim())
           if (text.includes(' ')) {
           } else {
@@ -57,7 +57,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           if (n||m) {
             alert(icap(`${n?`imported ${n} new`:``}${n&&m?` and `:``}${m?`skipped ${m} existing`:``} public key${n+m==1?``:`s`}.`))
           } else {
-            alert(`No public keys found in clipboard. Public keys should be delimited by whitespace or commas.`)
+            alert(`No public keys found in clipboard. Public keys should be delimited by whitespace, commas, or JSON.`)
           }
         })
       }
