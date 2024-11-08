@@ -64,8 +64,8 @@ v.queryFunc = function() {
     v.query.timer = setTimeout(() => {
       v.query.timer = undefined
       v.queryFunc()
-    }, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS)
-    console.log('query delay:', v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS)
+    }, Math.max(0, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS))
+    console.log('query delay:', Math.max(0, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS))
   }
 }
 v.layoutFunc = function() {
