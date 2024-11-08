@@ -5,6 +5,7 @@ import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn } from '../../util.js'
 import { popupRoot, popupView } from './profile/popup.js'
+import { eventTrigger } from '../../../content.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
