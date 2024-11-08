@@ -54,7 +54,7 @@ v.queryFunc = function() {
   }
   if (v.query.inProgress) {
     v.query.timer = setTimeout(() => {
-      console.log('delayed query (was in progress)')
+      // console.log('delayed query (was in progress)')
       v.query.timer = undefined
       v.queryFunc()
     }, ONE_SECOND_IN_MILLISECONDS)
@@ -68,12 +68,11 @@ v.queryFunc = function() {
         v.relayout()
       })
     } else {
-      console.log('delayed query (was recent)')
+      // console.log('delayed query (was recent)')
       v.query.timer = setTimeout(() => {
         v.query.timer = undefined
         v.queryFunc()
       }, Math.max(0, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS))
-      // console.log('query delay:', Math.max(0, v.query.lastCompleted - now + ONE_SECOND_IN_MILLISECONDS))
     }
   }
 
