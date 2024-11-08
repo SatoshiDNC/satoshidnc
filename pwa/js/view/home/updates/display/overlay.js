@@ -23,36 +23,20 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    //g.root.easeOut(g.target)
     v.returnView.b?.b?.queryFunc?.()
     v.returnView.c = barBot; barBot.parent = v.returnView
     v.returnView.easingState = 1
     v.returnView.easingValue = 0
     fg.setRoot(v.returnView)
-
-
-    // pane.view.c = barBot; barBot.parent = pane.view
-    // pane.view.easingValue = 1
-    // pane.view.setRenderFlag(true)
-    // fg.setRoot(pane.view)
-
   }
-// v.gadgets.push(g = v.backGad = new fg.Gadget(v))
-//   g.actionFlags = fg.GAF_CLICKABLE
-//   g.x = 39, g.y = 63, g.w = 48, g.h = 48
-//   g.label = '\x08'
-//   g.textColor = colors.white
-//   g.font = iconFont
-//   g.fontSize = 13
-//   g.autoHull()
-//   g.clickFunc = function() {
-//     const g = this, v = this.viewport
-//     //g.root.easeOut(g.target)
-//     v.returnView.b.b.queryFunc()
-//     v.returnView.easingState = 1
-//     v.returnView.easingValue = 0
-//     fg.setRoot(v.returnView)
-//   }
+v.gadgets.push(g = v.profileGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 126, g.y = 34, g.w = 105, g.h = 105
+  g.autoHull()
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    fg.setRoot(g.target)
+  }
 v.setContext = function(updates, hpub, returnView) {
   const v = this
   v.returnView = returnView

@@ -64,6 +64,7 @@ home_bot.panes.filter(p => p.label == 'Updates')[0].view = home_updates_root
 home_bot.panes.filter(p => p.label == 'Communities')[0].view = home_communities_root
 home_bot.panes.filter(p => p.label == 'Calls')[0].view = home_calls_root
 home_updates_display_overlay.returnView = home_updates_root
+home_updates_display_overlay.profileGad.target = profile_info_root
 home_updates_verbal_overlay.returnView = home_updates_root
 home_updates_content.recentsGad.root = home_updates_root, home_updates_content.recentsGad.target = home_updates_display_root
 home_updates_content.viewedGad.root = home_updates_root, home_updates_content.viewedGad.target = home_updates_display_root
