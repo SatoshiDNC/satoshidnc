@@ -1,4 +1,4 @@
-import { contacts, contactDependencies } from '../../../contacts.js'
+import { contacts, contactDependencies, contactUpdatesDependencies } from '../../../contacts.js'
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
