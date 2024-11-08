@@ -2,7 +2,8 @@ import { drawPill, drawEllipse, alpha } from '../../../../draw.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { updatePostedAsOf } from '../../../util.js'
 import { kindInfo } from '../../../../nostor-util.js'
-import { contentView, setUpdatesFlag } from './content.js'
+import { contentView } from './content.js'
+import { setUpdatesFlag } from '../../../../content.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
