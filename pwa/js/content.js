@@ -138,13 +138,14 @@ export function deleteExpiredEvents() {
       let cursor = e.target.result
       if (cursor) {
         console.log(`event expired: ${cursor.value.id}`)
+        const key = cursor.key
         const os2 = tr.objectStore('events')
         const req = os2.delete(cursor.value.id)
         req.onerror = () => {
           reject()
         }
         req.onsuccess = () => {
-          const req = os.delete(cursor.key)
+          const req = os.delete(key)
           req.onerror = () => {
             reject()
           }
