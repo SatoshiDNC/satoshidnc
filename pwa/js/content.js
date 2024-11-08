@@ -156,12 +156,15 @@ export function deleteExpiredEvents() {
               reject()
             }
             req.onsuccess = () => {
-              slash()
+              if (todo.length == 0) {
+                resolve()
+              } else {
+                slash()
+              }
             }
           }
         }
         slash()
-        resolve()
       }
     }
   })
