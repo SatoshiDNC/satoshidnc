@@ -138,7 +138,7 @@ export function deleteExpiredEvents() {
     req.onsuccess = e => {
       let cursor = e.target.result
       if (cursor) {
-        todo.push(cursor)
+        todo.push({ key: cursor.key, value: { id: cursor.value.id }})
         cursor.continue()
       } else {
         const slash = () => {
