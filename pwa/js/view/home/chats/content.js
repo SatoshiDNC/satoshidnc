@@ -77,6 +77,7 @@ v.layoutFunc = function() {
   g.layout.call(g)
 }
 contactDependencies.push(() => v.setRenderFlag(true))
+contactUpdatesDependencies.push(() => v.setRenderFlag(true))
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
