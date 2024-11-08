@@ -37,11 +37,19 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const c = contacts?.[index]
     if (c) {
       if (x < 175) {
-        popupView.setContact(c.hpub, 204 + 147 + 200 * index - v.userY)
-        if (fg.getRoot() !== popupRoot || popupRoot.easingState() == -1) {
-          popupRoot.easeIn()
+        if (c.hasUpdates) {
+          getUpdates().then(allUpdates => {
+            updates = allUpdates.filter(u => u.hpub == c.hpub)
+            g.target2.setContext(updates, c.hpub)
+            g.root.easeOut(g.target2)
+          })
         } else {
-          popupRoot.easeOut()
+          popupView.setContact(c.hpub, 204 + 147 + 200 * index - v.userY)
+          if (fg.getRoot() !== popupRoot || popupRoot.easingState() == -1) {
+            popupRoot.easeIn()
+          } else {
+            popupRoot.easeOut()
+          }
         }
       } else {
         chatRoomView.setContact(c.hpub)

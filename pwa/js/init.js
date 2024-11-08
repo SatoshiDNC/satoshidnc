@@ -7,7 +7,7 @@ import { homeRoot as home_chats_root } from './view/home/chats/root.js'
 import { homeRoot as home_updates_root } from './view/home/updates/root.js'
 import { homeRoot as home_communities_root } from './view/home/communities/root.js'
 import { homeRoot as home_calls_root } from './view/home/calls/root.js'
-import { contentView as homeChat_content, overlayView as homeChat_overlay } from './view/home/chats/content.js'
+import { contentView as home_chats_content, overlayView as home_chats_overlay } from './view/home/chats/content.js'
 import { newChatRoot as home_chats_new_root } from './view/home/chats/new-chat/root.js'
 import { contentView as homeChat_newChat_content} from './view/home/chats/new-chat/content.js'
 import { barTop as homeChat_newChat_newContact_top } from './view/home/chats/new-chat/new-contact/bar-top.js'
@@ -44,8 +44,8 @@ home_chats_new_top.menuGad.target = menuRoot
 home_chats_new_top.menuGad.target2 = homeChat_trezorTools_root
 chatRoomBar.backGad.root = chatRoom_root, chatRoomBar.backGad.target = home_chats_root
 chatRoomBar.menuGad.target = menuRoot
-homeChat_content.listGad.root = home_chats_root, homeChat_content.listGad.target = chatRoom_root
-homeChat_overlay.addGad.root = home_chats_root, homeChat_overlay.addGad.target = home_chats_new_root
+home_chats_content.listGad.root = home_chats_root, home_chats_content.listGad.target = chatRoom_root, home_chats_content.listGad.target2 = home_updates_display_root
+home_chats_overlay.addGad.root = home_chats_root, home_chats_overlay.addGad.target = home_chats_new_root
 homeChat_newChat_content.newContactGad.root = home_chats_new_root, homeChat_newChat_content.newContactGad.target = homeChat_newChat_newContact_root
 homeChat_newChat_content.listGad.root = home_chats_new_root, homeChat_newChat_content.listGad.target = chatRoom_root
 homeChat_newChat_newContact_top.backGad.root = homeChat_newChat_newContact_root, homeChat_newChat_newContact_top.backGad.target = home_chats_new_root
