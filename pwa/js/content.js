@@ -332,5 +332,6 @@ export function markUpdateAsViewed(id, eventCreatedAtTime) {
     req.onsuccess = function(e) {
       resolve()
     }
+    reloadContactUpdates()
   })
 }
