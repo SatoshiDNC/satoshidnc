@@ -71,7 +71,11 @@ export function reloadContactUpdates() {
         c.hasNewUpdates = e.new || false
         console.log('after', contacts)
       }
-      contacts.map(c => c.hasNewUpdates = c.hasUpdates?false:undefined)
+      contacts.map(c => {
+        if (!c.hasUpdates) {
+          delete c.hasNewUpdates
+        }
+      })
       contactDependencies.map(f => f())
     }
   }, 100)
