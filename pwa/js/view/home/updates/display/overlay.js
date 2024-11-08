@@ -27,6 +27,22 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
     v.returnView.easingValue = 0
     fg.setRoot(v.returnView)
   }
+v.gadgets.push(g = v.backGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 39, g.y = 63, g.w = 48, g.h = 48
+  g.label = '\x08'
+  g.textColor = colors.white
+  g.font = iconFont
+  g.fontSize = 13
+  g.autoHull()
+  g.clickFunc = function() {
+    const g = this, v = this.viewport
+    //g.root.easeOut(g.target)
+    v.returnView.b.b.queryFunc()
+    v.returnView.easingState = 1
+    v.returnView.easingValue = 0
+    fg.setRoot(v.returnView)
+  }
 v.setContext = function(updates, hpub) {
   const v = this
   v.pendingUpdates = updates.filter(u => u.hpub != hpub)
@@ -36,6 +52,8 @@ v.setContext = function(updates, hpub) {
   for (const update of v.updates) {
     if (update.viewed) {
       v.currentUpdate++
+    } else {
+      break
     }
   }
   if (v.currentUpdate >= v.updates.length) {
