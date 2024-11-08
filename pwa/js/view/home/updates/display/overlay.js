@@ -89,14 +89,16 @@ v.renderFunc = function() {
   const elapsedTime = v.elapsedTime
   const w = (v.sw-9-3-6*numUpdates)/numUpdates
   let pageTurn = false
+  const fullBright = [1,1,1, 1.0]
+  const halfBright = [1,1,1, 0.5]
   for (let i = 0; i < numUpdates; i++) {
     if (i < v.currentUpdate) {
-      drawPill(v, [1,1,1,1], 9+(w+6)*i,9, w,6)
+      drawPill(v, fullBright, 9+(w+6)*i,9, w,6)
     } else if (i > v.currentUpdate) {
-      drawPill(v, colors.inactive, 9+(w+6)*i,9, w,6)
+      drawPill(v, halfBright, 9+(w+6)*i,9, w,6)
     } else {
-      drawPill(v, colors.inactive, 9+(w+6)*i,9, w,6)
-      drawPill(v, [1,1,1,1], 9+(w+6)*i,9, 6+(w-6)*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
+      drawPill(v, halfBright, 9+(w+6)*i,9, w,6)
+      drawPill(v, fullBright, 9+(w+6)*i,9, 6+(w-6)*(Math.max(0,Math.min(1,elapsedTime / 4000))),6)
       v.setRenderFlag(true)
       if (elapsedTime > 4000) {
         pageTurn = true
@@ -124,7 +126,7 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m, m, [263, 131, 0])
   mat4.scale(m, m, [24/14, 24/14, 1])
-  defaultFont.draw(0,0, updatePostedAsOf(data.created_at * 1000, true), v.subtitleColor, v.mat, m)
+  defaultFont.draw(0,0, updatePostedAsOf(data.created_at * 1000, true), alpha(v.titleColor, halfBright[3]), v.mat, m)
 
   let t,tw,th,ts
 
@@ -134,7 +136,7 @@ v.renderFunc = function() {
   // mat4.identity(m)
   // mat4.translate(m, m, [15, 200, 0])
   mat4.scale(m, m, [0.85, 0.85, 1])
-  defaultFont.draw(20,0, t, alpha(colors.inactive, 0.5), v.mat, m)
+  defaultFont.draw(20,0, t, alpha(v.titleColor, halfBright[3]), v.mat, m)
 
   if (pageTurn) {
     v.currentUpdate += 1
