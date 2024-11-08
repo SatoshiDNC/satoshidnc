@@ -18,7 +18,7 @@ export function encrypt(key44, stream) {
   const key = Buffer.from(key44.substring(0, 32*2), 'hex')
   const nonce = Buffer.from(key44.substring(32*2), 'hex')
   return new Promise((resolve, reject) => {
-    console.log(`[${TAG}] got stream`)
+    // console.log(`[${TAG}] got stream`)
     const reader = stream.getReader()
     const writer = writable.getWriter()
     const readFunc = () => {
@@ -84,12 +84,12 @@ export function encrypt(key44, stream) {
 
             let head = Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
             // console.log(`[${TAG}] head ${head.length} ${head}`)
-            console.log(`[${TAG}] bufPos ${bufPos}`)
+            // console.log(`[${TAG}] bufPos ${bufPos}`)
             while (head.length < BLOCKSIZE * 2) {
               const len = inBuf.pop().length
               bufSize -= len
               bufPos -= len
-              console.log(`[${TAG}] while < BLOCKSIZE, bufSize ${bufSize} bufPos ${bufPos}`)
+              // console.log(`[${TAG}] while < BLOCKSIZE, bufSize ${bufSize} bufPos ${bufPos}`)
               if (inBuf.length == 0) break
               head = head + Buffer.from(inBuf[0].slice(bufPos, bufPos + BLOCKSIZE)).toString('hex')
               // console.log(`[${TAG}] head ${head.length} ${head}`)
@@ -106,7 +106,7 @@ export function encrypt(key44, stream) {
             // console.log(ret.toString('hex'))
 
             streamPos += block.length
-            console.log(`[${TAG}] streamPos ${streamPos}`)
+            // console.log(`[${TAG}] streamPos ${streamPos}`)
 
           const totalLength = outBuf.reduce((p,c) => p + c.length, 0)
           const data = new Uint8Array(totalLength)
@@ -115,7 +115,7 @@ export function encrypt(key44, stream) {
             data.set(b, o)
             o += b.length
           }
-          console.log(`writing ${data.length} bytes`)
+          // console.log(`writing ${data.length} bytes`)
           if (data.length > 0) {
             writer.write(data).then(() => {
               while (outBuf.length > 0) {
