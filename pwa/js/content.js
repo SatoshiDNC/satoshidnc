@@ -312,6 +312,7 @@ export function getUpdates() {
 }
 
 export function markUpdateAsViewed(id, eventCreatedAtTime) {
+  console.log(`[mark] ${id} ${eventCreatedAtTime}`)
   return new Promise((resolve, reject) => {
     const tr = db.transaction('updates-viewed', 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('updates-viewed')
