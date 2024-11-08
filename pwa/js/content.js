@@ -176,8 +176,7 @@ eventTrigger.push(e => {
   if (e) {
     const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('updates-new')
-    console.log(e)
-    os.put({ hpub: e.hpub })
+    os.put({ hpub: e.pubkey })
   }
 //}
 })
