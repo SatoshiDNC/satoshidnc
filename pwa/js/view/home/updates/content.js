@@ -5,6 +5,7 @@ import { addedOn, updatePostedAsOf } from '../../util.js'
 import { getUpdates, eventTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
 import { barBot } from '../bar-bot.js'
+import { keys } from '../../../keys.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -15,6 +16,17 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+v.gadgets.push(g = v.selfsGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function(e) {
+    const g = this, v = this.viewport
+    const y = (e.y - v.y) / v.viewScale + v.userY
+    const index = Math.floor((y - g.y) / 200)
+    if (index < 0 || index >= v.recents.length) return
+    const updates = v.query.results.filter(u => v.recents.includes(u.hpub))
+    displayView.setContext(updates, v.recents[index], v.parent.parent)
+    g.root.easeOut(g.target)
+  }
 v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
@@ -83,25 +95,32 @@ v.layoutFunc = function() {
   const recents = []
   const viewed = []
   for (const update of v.query.results) {
-    if (!update.viewed) {
-      if (!recents.includes(update.hpub)) {
-        recents.push(update.hpub)
-        const index = viewed.indexOf(update.hpub)
-        if (index > -1) {
-          viewed.splice(index, 1)
+    if (keys.filter(k => k.hpub == update.hpub).length == 0) {
+      if (!update.viewed) {
+        if (!recents.includes(update.hpub)) {
+          recents.push(update.hpub)
+          const index = viewed.indexOf(update.hpub)
+          if (index > -1) {
+            viewed.splice(index, 1)
+          }
         }
-      }
-    } else {
-      if (!recents.includes(update.hpub) && !viewed.includes(update.hpub)) {
-        viewed.push(update.hpub)
+      } else {
+        if (!recents.includes(update.hpub) && !viewed.includes(update.hpub)) {
+          viewed.push(update.hpub)
+        }
       }
     }
   }
+  v.keys = keys.map(k => k.hpub)
   v.recents = recents
   v.viewed = viewed
 
   let x = 42
   let g
+  g = v.selfsGad
+  g.x = 0, g.y = 170
+  g.w = v.sw, g.h = keys.length * 200
+  g.autoHull()
   g = v.recentsGad
   g.x = 0, g.y = 466
   g.w = v.sw, g.h = recents.length * 200
@@ -150,7 +169,7 @@ v.renderFunc = function() {
   }
 
   let i = 0
-  for (let hpub of [...v.recents, ...v.viewed]) {
+  for (let hpub of [...v.keys, ...v.recents, ...v.viewed]) {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => a+(c.viewed?1:0), 0)
