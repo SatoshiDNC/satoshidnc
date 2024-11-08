@@ -35,6 +35,7 @@ v.gadgets.push(g = v.profileGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
+    g.target.setContact(v.updates[v.currentUpdate].hpub)
     fg.setRoot(g.target)
   }
 v.setContext = function(updates, hpub, returnView) {
