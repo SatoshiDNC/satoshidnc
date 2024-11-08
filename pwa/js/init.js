@@ -33,7 +33,7 @@ import { overlayView as home_updates_display_overlay } from './view/home/updates
 import { rootView as home_updates_verbal_root } from './view/home/updates/verbal/root.js'
 import { overlayView as home_updates_verbal_overlay } from './view/home/updates/verbal/overlay.js'
 
-import { eventTrigger, eventTriggerInit } from './content.js'
+//import { eventTrigger, eventTriggerInit } from './content.js'
 
 home_chats_top.menuGad.root = home_chats_root
 home_chats_top.menuGad.target = menuRoot
@@ -73,4 +73,4 @@ home_updates_overlay.cameraGad.root = home_updates_root, home_updates_overlay.ca
 home_updates_overlay.pencilGad.root = home_updates_root, home_updates_overlay.pencilGad.target = home_updates_verbal_root
 home_updates_verbal_overlay.closeGad.root = home_updates_verbal_root, home_updates_verbal_overlay.closeGad.target = home_updates_root
 
-eventTrigger.push(eventTriggerInit)
+//eventTrigger.push(eventTriggerInit)

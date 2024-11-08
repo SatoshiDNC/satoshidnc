@@ -171,13 +171,15 @@ export function deleteExpiredEvents() {
   })
 }
 
-export function eventTriggerInit(e) {
+eventTrigger.push(e => {
+//export function eventTriggerInit(e) {
   if (e) {
     const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('updates-new')
     os.put({ hpub: e.hpub })
   }
-}
+//}
+})
 
 let reqNotes_requestTime
 export function reqNotes(hpub) {
