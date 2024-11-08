@@ -174,6 +174,7 @@ v.renderFunc = function() {
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => a+(c.viewed?1:0), 0)
     const y = i * 200 + (i >= v.keys.length? 96:0) + ((v.viewed.includes(hpub) && v.recents.length > 0)? 96:0)
+    const g = i < v.keys.length? v.selfsGad: i < v.keys.length + v.recents.length? v.recentsGad: v.viewedGad
     drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
     if (numViewed) {
       drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
@@ -197,7 +198,8 @@ v.renderFunc = function() {
     drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
 
     mat4.identity(m)
-    mat4.translate(m, m, [211, 553 + y, 0])
+    // mat4.translate(m, m, [211, 553 + y, 0])
+    mat4.translate(m, m, [211, g.y + 67, 0])
     mat4.scale(m, m, [35/14, 35/14, 1])
     let str
     if (v.keys.includes(hpub)) {
