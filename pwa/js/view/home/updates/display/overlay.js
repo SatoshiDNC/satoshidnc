@@ -3,6 +3,7 @@ import { getPersonalData as getAttr } from '../../../../personal.js'
 import { updatePostedAsOf } from '../../../util.js'
 import { kindInfo } from '../../../../nostor-util.js'
 import { contentView } from './content.js'
+import { barBot } from '../../bar-bot.js'
 import { setUpdatesFlag } from '../../../../content.js'
 
 let v, g
@@ -21,6 +22,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   g.fontSize = 13
   g.autoHull()
   g.clickFunc = function() {
+    console.log('back click')
     const g = this, v = this.viewport
     //g.root.easeOut(g.target)
     v.returnView.b.b.queryFunc()
