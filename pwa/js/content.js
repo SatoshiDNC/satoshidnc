@@ -108,7 +108,7 @@ export function aggregateEvent(e) {
                     reject()
                   }
                   req.onsuccess = () => {
-                    console.log(`[${TAG}] added expiration record`)
+                    // console.log(`[${TAG}] added expiration record`)
                     finisher()
                   }
                 } else {
