@@ -259,8 +259,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           // mainContainer.appendChild(clipContainer)
 
           audio.controls = true
-          // const blob = new Blob(['testing'], { type: 'text/plain' }) // new Blob(chunks, { type: "audio/ogg; codecs=opus" })
-          const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" })
+          const blob = new Blob(['testing'], { type: 'text/plain' }) // new Blob(chunks, { type: "audio/ogg; codecs=opus" })
+          // const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" })
           const audioURL = URL.createObjectURL(blob)
           audio.src = audioURL
           let tracks = stream.getTracks()
@@ -268,7 +268,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           console.log("recorder stopped", audioURL)
 
           const TAG = 'aud'
-          const key = 'ff01020304050607080910111213141516171819202122232425262728293031323334353637383940414243'
+          //const key = 'ff01020304050607080910111213141516171819202122232425262728293031'+'323334353637383940414243'
+          const key = '0000000000000000000000000000000000000000000000000000000000000000'+'000000000000000000000000'
           encrypt(key, blob.stream()).then(stream => decrypt(key, stream).then(stream => {
             // console.log(`[${TAG}] got stream`)
             const reader = stream.getReader()
@@ -276,7 +277,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
               // console.log(`[${TAG}] read`)
               reader.read().then(({ done, value }) => {
                 if (value) {
-                  // console.log(`[${TAG}] ${value}`)
+                  console.log(`[${TAG}] ${value}`)
                   readFunc()
                 } else if (done) {
                   console.log(`[${TAG}] done`)
