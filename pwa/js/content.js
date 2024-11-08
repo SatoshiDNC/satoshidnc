@@ -144,6 +144,7 @@ export function deleteExpiredEvents() {
       } else {
         const slash = () => {
           if (todo.length == 0) {
+            eventTrigger.map(f => f())
             resolve()
             return
           }
