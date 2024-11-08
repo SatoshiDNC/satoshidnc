@@ -117,11 +117,12 @@ v.renderFunc = function() {
     name: getAttr(c.hpub, 'name') || 'Unnamed',
     xmitText: getAttr(c.hpub, 'about') || addedOn(c.added),
     xmitDate: new Date(),
+    hasUpdates: c.hasUpdates,
     hasNewUpdates: c.hasNewUpdates,
   }}) ]) {
 
-    if (c.hasNewUpdates) {
-      drawEllipse(v, colors.accent, 31-4.5, 204-4.5 + 200 * i, 136, 136)
+    if (c.hasUpdates) {
+      drawEllipse(v, c.hasNewUpdates?colors.accent:colors.inactive, 31-4.5, 204-4.5 + 200 * i, 136, 136)
       drawEllipse(v, v.bgColor, 31+0.5, 204+0.5 + 200 * i, 126, 126)
       drawAvatar(v, c.hpub, 31+20, 204+20 + 200 * i, 87, 87)
     } else {
