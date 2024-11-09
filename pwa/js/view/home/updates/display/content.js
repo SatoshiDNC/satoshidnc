@@ -29,7 +29,7 @@ v.layoutFunc = function() {
 }
 v.renderFunc = function() {
   const v = this
-  v.bgColor = bgColor
+  v.bgColor = v.bgColorDefault
   const data = v.updates[overlayView.currentUpdate]?.data || { kind: -1, id: '0000000000000000000000000000000000000000000000000000000000000000' }
   if (data.kind == 1) {
     v.renderKind1(data)
