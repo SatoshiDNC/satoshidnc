@@ -4,7 +4,8 @@ import { markUpdateAsViewed } from '../../../../content.js'
 let v, g
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
-v.bgColor = [0,0,0, 1]
+v.bgColorDefault = [0,0,0, 1]
+v.bgColor = v.bgColorDefault
 v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
@@ -28,6 +29,7 @@ v.layoutFunc = function() {
 }
 v.renderFunc = function() {
   const v = this
+  v.bgColor = bgColor
   const data = v.updates[overlayView.currentUpdate]?.data || { kind: -1, id: '0000000000000000000000000000000000000000000000000000000000000000' }
   if (data.kind == 1) {
     v.renderKind1(data)
@@ -55,6 +57,7 @@ v.renderKind1 = function(data) {
   const hexColor = data.tags.filter(t => t[0] == 'bgcolor')?.[0]?.[1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
   const rgbColor = parseInt(hexColor,16)
   const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
+  v.bgColor = bgColor
   gl.clearColor(...bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
