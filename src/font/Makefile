@@ -47,7 +47,7 @@ nybbleFont.js: $(SRCFILE)
 VARNAME = iconFont
 SRCFILE = icon.font.png
 OUTFILE = $(VARNAME).js
-nybbleFont.js: $(SRCFILE)
+iconFont.js: $(SRCFILE)
 	echo "  $(VARNAME) = new df.GlyphSet()" > $(OUTFILE)
 	echo "  $(VARNAME).loadFromURL(" >> $(OUTFILE)
 	echo "    \"$(VARNAME)\"," >> $(OUTFILE)
