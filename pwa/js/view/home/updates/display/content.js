@@ -67,7 +67,7 @@ v.renderKind1 = function(data) {
   const paragraphs = 'A😊B'
   const lines = []
   for (const para of paragraphs) {
-    const words = para.split(' ')
+    const words = para // .split(' ')
     while (words.length > 0) {
       lines.push(words.shift())
       while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
