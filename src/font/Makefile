@@ -4,6 +4,7 @@
 # individual .js files on the fly before packaging them.
 
 AUTOGEN_FILES = \
+  defaultFont.js \
 	nybbleFont.js \
 	iconFont.js \
 
