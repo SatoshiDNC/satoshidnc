@@ -66,8 +66,8 @@ v.renderKind1 = function(data) {
   //const paragraphs = data.content.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
   const paragraphs = 'A😊B'
   const lines = []
-  console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
   for (const para of paragraphs) {
+    console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
     const words = [para] // .split(' ')
     console.log(`while (words.length ${words.length} > 0) {`)
     while (words.length > 0) {
