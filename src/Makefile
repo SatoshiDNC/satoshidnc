@@ -4,7 +4,7 @@ FILES = \
 
 
 bundle.js: $(FILES)
-	cat $(FILES) > bundle.js
+#	cat $(FILES) > bundle.js
 
 # Clean files from subdirs and this dir
 .PHONY: clean
