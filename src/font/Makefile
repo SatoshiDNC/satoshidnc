@@ -13,7 +13,7 @@ bundle.js: $(AUTOGEN_FILES)
 VARNAME = defaultFont
 SRCFILE = project.font.png
 OUTFILE = $(VARNAME).js
-nybbleFont.js: $(SRCFILE)
+defaultFont.js: $(SRCFILE)
 	echo "  $(VARNAME) = new df.GlyphSet()" > $(OUTFILE)
 	echo "  $(VARNAME).loadFromURL(" >> $(OUTFILE)
 	echo "    \"$(VARNAME)\"," >> $(OUTFILE)
