@@ -64,7 +64,7 @@ v.renderKind1 = function(data) {
   let t,tw,th,ts
   ts = 50/14
   //const paragraphs = data.content.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
-  const paragraphs = '\x01\xf6\x0a'
+  const paragraphs = 'A😊B'
   const lines = []
   for (const para of paragraphs) {
     const words = para.split(' ')
