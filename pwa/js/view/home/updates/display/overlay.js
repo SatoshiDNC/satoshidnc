@@ -136,7 +136,7 @@ v.renderFunc = function() {
   // mat4.identity(m)
   // mat4.translate(m, m, [15, 200, 0])
   mat4.scale(m, m, [0.85, 0.85, 1])
-  defaultFont.draw(20,0, t, alpha(v.titleColor, halfBright[3]), v.mat, m)
+  defaultFont.draw(20,0, t, halfBright, v.mat, m)
 
   if (pageTurn) {
     v.currentUpdate += 1
