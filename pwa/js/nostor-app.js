@@ -166,7 +166,7 @@ export function findEvent(id, url) {
   return new Promise((resolve, reject) => {
     console.log('a')
     const operator = () => {
-      console.log('.a')
+      console.log('.a', connections)
       if (connections > 10) {
         setTimeout(operator, 100)
         return
