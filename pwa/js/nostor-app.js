@@ -164,7 +164,9 @@ let connections = 0
 export function findEvent(id, url) {
   console.log('here')
   return new Promise((resolve, reject) => {
+    console.log('a')
     const operator = () => {
+      console.log('.a')
       if (connections > 10) {
         setTimeout(operator, 100)
         return
@@ -199,6 +201,8 @@ export function findEvent(id, url) {
         reject()
       })  
     }
+    console.log('b')
     operator()
+    console.log('c')
   })
 }
