@@ -3,6 +3,7 @@ import { aggregateEvent } from './content.js'
 import { getRelayStat, setRelayStat } from './stats.js'
 import { setHasData } from './relays.js'
 import { defaultKey, sign } from './keys.js'
+import { Relay } from 'nostr-tools/relay'
 
 let relays = []
 
