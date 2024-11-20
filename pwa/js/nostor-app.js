@@ -162,6 +162,7 @@ export function publishEvent(event, relay) {
 
 let connections = 0
 export function findEvent(id, url) {
+  console.log('here')
   return new Promise((resolve, reject) => {
     const operator = () => {
       if (connections > 10) {

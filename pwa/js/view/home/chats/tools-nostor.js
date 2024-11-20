@@ -173,8 +173,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                             queryRelayForNote(relay)
                           }
                         })
-                      }
-                      else if (!relay) {
+                      } else if (!relay) {
                         // alert(`Invalid relay name or url`)
                       } else if (allRelays.includes(relay)) {
                         // alert(`Relay was already checked`)
