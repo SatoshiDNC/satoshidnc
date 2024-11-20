@@ -172,15 +172,18 @@ export function findEvent(id, url) {
       connections++
       let foundEvent
       Relay.connect(relayUrl(url)).then(relay => {
+        console.log('connected to', url)
         const sub = relay.subscribe([
           {
             ids: [id],
           },
         ], {
           onevent(event) {
+            console.log('event from', url)
             foundEvent = event
           },
           oneose() {
+            console.log('eose from', url)
             connections--
             try {
               relay.close()
@@ -193,7 +196,9 @@ export function findEvent(id, url) {
             }
           }
         })
+        console.log('subscribed to', url)
       }).catch(() => {
+        console.log('error from', url)
         connections--
         reject()
       })  
