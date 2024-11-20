@@ -113,7 +113,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             let foundOnRelays = []
             allRelays.push(...relays.map(relay => relay.url))
             nostrWatchRelays().then(onlineRelays => {
-              allRelays.push(...onlineRelays)
+              // allRelays.push(...onlineRelays)
             }).then(() => {
               let hits = 0
               let pubkeys = [], kinds = []
@@ -142,7 +142,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   checksInProgress = []
                   let input = prompt(`${
                     pubkeys.length > 0?
-                      `Found ${pubkeys.length !== 1? `${pubkeys.length} ` : ``}event${pubkeys.length == 1? ``: `s`}`
+                      `Found ${pubkeys.length !== 1? `${pubkeys.length} `: ``}event${pubkeys.length !== 1? `s`: ``}`
                     :
                       `Not found`
                   } on ${hits?`${hits} of `:``}${allRelays.length} relays.${
@@ -156,7 +156,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     }.` : ``
                   } Enter ${
                     allRelays.length > 0 ? `additional relay(s) or continue` : `relay(s)`
-                  }:`)
+                  }:`, allRelays.length == 0? 'all': '')
                   if (input === null) {
                     clearSelection()
                   } else if (!input) {
@@ -164,7 +164,20 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   } else {
                     input.split(',').map(element => {
                       let relay = relayUrl(element.trim())
-                      if (!relay) {
+                      if (element == 'all') {
+                        onlineRelays.map(r => {
+                          let relay = relayUrl(r)
+                          if (!relay) {
+                            // alert(`Invalid relay name or url`)
+                          } else if (allRelays.includes(relay)) {
+                            // alert(`Relay was already checked`)
+                          } else {
+                            allRelays.push(relay)
+                            queryRelayForNote(relay)
+                          }
+                        })
+                      }
+                      else if (!relay) {
                         // alert(`Invalid relay name or url`)
                       } else if (allRelays.includes(relay)) {
                         // alert(`Relay was already checked`)
@@ -188,6 +201,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     let hsec = nsecDecode(secret) || secret
                     if (!validKey(hsec)) {
                       alert('Invalid key')
+                    } else if (!pubkeys.includes(getPublicKey(hexToBytes(hsec)))) {
+                      alert(`This key doesn’t correspond to the original event`)
                     } else {
                       const deletionEvent = finalizeEvent({
                         kind: 5,
