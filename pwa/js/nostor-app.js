@@ -168,7 +168,7 @@ export function findEvent(id, url) {
         setTimeout(operator, 100)
         return
       }
-      //console.log('connecting to', relay)
+      console.log('connecting to', relay)
       connections++
       let foundEvent
       Relay.connect(relayUrl(url)).then(relay => {
