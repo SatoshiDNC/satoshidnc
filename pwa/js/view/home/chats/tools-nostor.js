@@ -111,7 +111,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
 
             let allRelays = []
             let foundOnRelays = []
-            allRelays.push(...relays.map(relay => relay.url))
             nostrWatchRelays().then(onlineRelays => {
               let hits = 0
               let pubkeys = [], kinds = []
@@ -163,7 +162,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     input.split(',').map(element => {
                       let relay = relayUrl(element.trim())
                       if (element == 'all') {
-                        onlineRelays.map(r => {
+                        [...onlineRelays, ...relays.map(relay => relay.url)].map(r => {
                           let relay = relayUrl(r)
                           if (!relay) {
                             // alert(`Invalid relay name or url`)
