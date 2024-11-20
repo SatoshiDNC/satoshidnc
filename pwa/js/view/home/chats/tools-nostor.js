@@ -1,5 +1,5 @@
 import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../../draw.js'
-import { noteDecode, nsecDecode, validKey, relayUrl, npub, nostrWatchRelays } from '../../../nostor-util.js'
+import { noteDecode, nsecDecode, validKey, relayUrl, npub, nostrWatchRelays, getPubkey } from '../../../nostor-util.js'
 import { findEvent, publishEvent } from '../../../nostor-app.js'
 import { relays } from '../../../relays.js'
 import { finalizeEvent } from 'nostr-tools'
@@ -198,7 +198,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                     let hsec = nsecDecode(secret) || secret
                     if (!validKey(hsec)) {
                       alert('Invalid key')
-                    } else if (!pubkeys.includes(getPublicKey(hexToBytes(hsec)))) {
+                    } else if (!pubkeys.includes(getPubkey(hsec))) {
                       alert(`This key doesn’t correspond to the original event`)
                     } else {
                       const deletionEvent = finalizeEvent({
