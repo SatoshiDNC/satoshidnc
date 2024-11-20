@@ -162,16 +162,13 @@ export function publishEvent(event, relay) {
 
 let connections = 0
 export function findEvent(id, url) {
-  console.log('here')
   return new Promise((resolve, reject) => {
-    console.log('a')
     const operator = () => {
-      console.log('.a', connections)
       if (connections > 10) {
         setTimeout(operator, 100)
         return
       }
-      console.log('connecting to', relay)
+      console.log('connecting to', url)
       connections++
       let foundEvent
       Relay.connect(relayUrl(url)).then(relay => {
@@ -201,8 +198,6 @@ export function findEvent(id, url) {
         reject()
       })  
     }
-    console.log('b')
     operator()
-    console.log('c')
   })
 }
