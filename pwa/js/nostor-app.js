@@ -119,6 +119,7 @@ export function getRelay(name) {
 export function publishEvent(event, relay) {
   const TAG = 'PUB'
   return new Promise((resolve, reject) => {
+    let timer
     Relay.connect(relayUrl(relay)).then(relay => {
       console.log(`[${TAG}] connected to ${relay.url}`)
       relay.subscribe([
@@ -129,6 +130,10 @@ export function publishEvent(event, relay) {
         onevent(event) {
           console.log(`[${TAG}] publisher onevent: ${JSON.stringify(event)}`)
           relay.close()
+          if (timer) {
+            clearTimeout(timer)
+            timer = undefined
+          }
           resolve()
         },
         oneose() {
@@ -138,6 +143,12 @@ export function publishEvent(event, relay) {
       console.log(`[${TAG}] publishing...`)
       relay.publish(event).then(() => {
         console.log(`[${TAG}] published`)
+        timer = setTimeout(() => {
+          console.log(`[${TAG}] confirmation timed out`)
+          relay.close()
+          timer = undefined
+          reject()
+        }, 5000)
       }, e => {
         console.log(`[${TAG}] publish failed: ${e}`)
         reject(e)
