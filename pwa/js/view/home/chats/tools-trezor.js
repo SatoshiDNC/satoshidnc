@@ -98,6 +98,9 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     trezorClose().then(() => {
       menuRoot.easeOut()
+    }, reason => {
+      alert(reason)
+      menuRoot.easeOut()
     })
   }
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
