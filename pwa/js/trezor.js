@@ -453,15 +453,7 @@ export function trezorConnect() {
 export function trezorClose() {
   return new Promise((resolve, reject) => {
     if (device) {
-      let promise
-      try {
-        console.log('try')
-        promise = device.close()
-      } catch(e) {
-        console.log('catch')
-        console.log(e)
-      }
-      console.log('end try')
+      const promise = device.close()
       device = undefined
       resolve(promise)
     } else {

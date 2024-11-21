@@ -99,7 +99,6 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
     trezorClose().then(() => {
       menuRoot.easeOut()
     }, reason => {
-      alert(reason)
       menuRoot.easeOut()
     })
   }
