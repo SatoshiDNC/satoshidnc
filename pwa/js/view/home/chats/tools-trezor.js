@@ -146,37 +146,47 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               break
             }
 
-            let a, n = -1
-            while (!(n >= 0 && n < 2 ** 31)) {
-              a = prompt("Account number (0 and up):")
-              if (a === null) break
-              n = +a
-            }
-            if (a === null) {
+            // let a, n = -1
+            // while (!(n >= 0 && n < 2 ** 31)) {
+            //   a = prompt("Account number (0 and up):")
+            //   if (a === null) break
+            //   n = +a
+            // }
+            // if (a === null) {
+            //   clearSelection()
+            //   break
+            // }
+            const text = prompt('Name of account:')
+            if (text === null) {
               clearSelection()
               break
             }
-            trezorGetNostrPubKey(n).then(r => {
-              const bip32 = bip32f.BIP32Factory(ecc)
-              const { address } = bjs.payments.p2pkh({
-                pubkey: bip32.fromBase58(r.xpub).publicKey,
-              })
-              clearSelection()
-              item.hpub = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
-              item.npub = nip19.npubEncode(item.hpub)
-              item.subtitle = item.npub
-              v.setRenderFlag(true)
-              if (!getKeyInfo(item.hpub)) {
-                putTrezorKey(item.hpub, n)
-              }
-              if (!getPersonalData(item.hpub, 'name')) setPersonalData(item.hpub, 'name', `Trezor Account ${n}`)
-              // menuRoot.followUp = () => {
-              //   newContactForm.nameGad.text = ''
-              //   newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
-              //   fg.getRoot().easeOut(g.newContactRoot)
-              // }
-              // menuRoot.easeOut()
-            }).catch(handleError)
+            window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
+              const hash = Buffer.from(bytes).toString('hex')
+              const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
+              const n = +index
+              trezorGetNostrPubKey(n).then(r => {
+                const bip32 = bip32f.BIP32Factory(ecc)
+                const { address } = bjs.payments.p2pkh({
+                  pubkey: bip32.fromBase58(r.xpub).publicKey,
+                })
+                clearSelection()
+                item.hpub = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
+                item.npub = nip19.npubEncode(item.hpub)
+                item.subtitle = item.npub
+                v.setRenderFlag(true)
+                if (!getKeyInfo(item.hpub)) {
+                  putTrezorKey(item.hpub, n)
+                }
+                if (!getPersonalData(item.hpub, 'name')) setPersonalData(item.hpub, 'name', `Trezor Account ${n}`)
+                // menuRoot.followUp = () => {
+                //   newContactForm.nameGad.text = ''
+                //   newContactForm.pubkeyGad.text = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
+                //   fg.getRoot().easeOut(g.newContactRoot)
+                // }
+                // menuRoot.easeOut()
+              }).catch(handleError)
+            })
             }
           break
 
