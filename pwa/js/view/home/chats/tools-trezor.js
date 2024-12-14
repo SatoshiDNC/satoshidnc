@@ -206,20 +206,15 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 clearSelection()
                 break
               }
-              console.log('z')
               window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
                 const hash = Buffer.from(bytes).toString('hex')
                 const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
                 trezorGetPassword(index).then(r => {
-                  console.log('a')
-                  const bip32 = bip32f.BIP32Factory(ecc)
-                  console.log('b')
-                  const { address } = bjs.payments.p2pkh({
-                    pubkey: bip32.fromBase58(r.xpub).publicKey,
-                  })
-                  console.log('c')
+                  // const bip32 = bip32f.BIP32Factory(ecc)
+                  // const { address } = bjs.payments.p2pkh({
+                  //   pubkey: bip32.fromBase58(r.xpub).publicKey,
+                  // })
                   clearSelection()
-                  console.log('d')
                   item.passwd = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
                   item.subtitle = '********************************************'
                   v.setRenderFlag(true)
