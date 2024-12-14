@@ -156,6 +156,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             //   clearSelection()
             //   break
             // }
+
             const text = prompt('Name of account:')
             if (text === null) {
               clearSelection()
