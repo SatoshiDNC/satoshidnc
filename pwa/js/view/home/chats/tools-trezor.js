@@ -206,6 +206,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 clearSelection()
                 break
               }
+              console.log('z')
               window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
                 const hash = Buffer.from(bytes).toString('hex')
                 const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
