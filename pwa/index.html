@@ -291,6 +291,7 @@
           newStatus('registering_sync', 'Registering sync event...'),
           newStatus('initializing_db', 'Preparing database...'),
           newStatus('loading_fonts', 'Loading fonts...'),
+          newStatus('checking_persistence', 'Checking persistence of storage...'),
         ].sort((a, b) => a.expected_time - b.expected_time)
         const errors = []
         const clearStatus = key => {
@@ -444,6 +445,26 @@
         }).catch(e => {
           pushError(e)
         })
+
+        // check persistence
+        if (!navigator.storage) {
+          pushError(`Storage API required`)
+        } else {
+          navigator.storage.persisted().then(persisted => {
+            if (persisted)  {
+              clearStatus('checking_persistence')
+            } else {
+              navigator.storage.persist().then(persisted => {
+                if (persisted) {
+                  clearStatus('checking_persistence')
+                } else {
+                  alert(`Persistent storage should be allowed or data should be back up regularly.`)
+                }
+              })
+            }
+          })
+        }
+
       })
     })
   </script>
