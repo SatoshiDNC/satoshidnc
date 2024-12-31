@@ -32,9 +32,10 @@ export function drawAvatar(v, hpub, x,y,w,h) {
   const color = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
   const mat = mat4.create()
   const m = mat4.create()
+  const px = nybbleFont.calcWidth('0')
   mat4.identity(mat)
   mat4.translate(mat, mat, [x, y, 0])
-  mat4.scale(mat, mat, [w/32, h/32, 1])
+  mat4.scale(mat, mat, [w/16/px, h/16/px, 1])
   let dx = -0.5, dy = 8.5
   hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
     mat4.copy(m, mat)
