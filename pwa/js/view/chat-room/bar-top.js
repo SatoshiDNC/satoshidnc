@@ -80,7 +80,6 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  const mat = mat4.create()  
   // mat4.identity(mat)
   // mat4.translate(mat, mat, [75, 27, 0])
   // mat4.scale(mat, mat, [1/32*92, 1/32*92, 1])
@@ -104,10 +103,11 @@ v.renderFunc = function() {
   const f1 = v.subtitleOpacity
   const f0 = 1 - f1
 
+  const mat = mat4.create()  
   mat4.identity(mat)
   mat4.translate(mat, mat, [190, v.VPOS0 * f0 + v.VPOS1 * f1, 0])
   mat4.scale(mat, mat, [35/14, 35/14, 1])
-  x = 0, y = 0
+  let x = 0, y = 0
   defaultFont.draw(x,y, contact.name, v.textColor, v.mat, mat)
   
   mat4.identity(mat)
