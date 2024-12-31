@@ -2,6 +2,7 @@ import { contacts, contactDependencies } from '../../../../contacts.js'
 import { keys, keyViewDependencies } from '../../../../keys.js'
 import { getPersonalData as getAttr, personalData, personalDataViewDependencies } from '../../../../personal.js'
 import { contentView as chatRoomView } from '../../../chat-room/content.js'
+import { drawAvatar } from '../../../../draw.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -103,14 +104,15 @@ v.renderFunc = function() {
     iconFont.draw(0,0, icon, v.buttonTextColor, v.mat, m)
   }
   const npubRender = (c, x, y) => {
-    mat4.identity(mat)
-    mat4.translate(mat, mat, [x, y, 0])
-    mat4.scale(mat, mat, [105/32, 105/32, 1])
-    let ox = -0.5, oy = 8.5
-    c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
-      mat4.copy(m, mat)
-      nybbleFont.draw(ox,oy + i*8, str, v.titleColor, v.mat, m)
-    })  
+    // mat4.identity(mat)
+    // mat4.translate(mat, mat, [x, y, 0])
+    // mat4.scale(mat, mat, [105/32, 105/32, 1])
+    // let ox = -0.5, oy = 8.5
+    // c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
+    //   mat4.copy(m, mat)
+    //   nybbleFont.draw(ox,oy + i*8, str, v.titleColor, v.mat, m)
+    // })  
+    drawAvatar(v, c.hpub, x, y, 105, 105)
   }
   const titleRender = (title, x, y) => {
     mat4.identity(m)

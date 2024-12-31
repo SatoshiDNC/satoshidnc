@@ -80,14 +80,6 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  // mat4.identity(mat)
-  // mat4.translate(mat, mat, [75, 27, 0])
-  // mat4.scale(mat, mat, [1/32*92, 1/32*92, 1])
-  // let x = -0.5, y = 8.5
-  // contact.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
-  //   mat4.copy(m, mat)
-  //   nybbleFont.draw(x,y + i*8, str, v.textColor, v.mat, m)
-  // })
   drawAvatar(v, contact.hpub, 75, 27, 92, 92)
 
   const subtitle = ''
