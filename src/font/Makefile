@@ -29,7 +29,7 @@ defaultFont.js: $(SRCFILE1)
 	cp $(OUTFILE1) ../../pwa/js/font/
 
 VARNAME2 = nybbleFont
-SRCFILE2 = nybble.font.png
+SRCFILE2 = hex.font.png
 OUTFILE2 = $(VARNAME2).js
 nybbleFont.js: $(SRCFILE2)
 	echo "  $(VARNAME2) = new df.GlyphSet()" > $(OUTFILE2)
