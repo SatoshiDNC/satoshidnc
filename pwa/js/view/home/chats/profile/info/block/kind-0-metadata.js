@@ -37,9 +37,9 @@ export function kind0(v, post) {
   }
   g.remainingKeys = Object.keys(g.content)
   g.standardKeys = [
-    // ['name', 'Name'], // index 0
-    // ['display_name', 'Name'],
-    // ['website', 'Website'],
+    ['name', 'Name'], // index 0
+    ['display_name', 'Name'],
+    ['picture', 'Picture'],
   ]
   g.tabWidth = 0
   for (const standardKey of g.standardKeys) {
