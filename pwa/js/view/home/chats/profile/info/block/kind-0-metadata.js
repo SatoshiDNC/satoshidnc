@@ -92,7 +92,7 @@ export function kind0(v, post) {
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
       const is = 316
-      drawRect(v, themeColors.inactiveDark, 15 + g.tabWidth * ts, g.y + y, is, is)
+      drawRect(v, themeColors.inactiveDark, 15 + g.tabWidth * ts, g.y + y + rowHeight - 14 * ts, is, is)
       y += Math.max(rowHeight, is + 12)
     }
     const displayLine = (key, keyName) => {
