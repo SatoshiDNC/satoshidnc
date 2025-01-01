@@ -61,7 +61,10 @@ export function kind0(v, post) {
       y += rowHeight
     }
     const remainingKeys = Object.keys(g.content)
-    const name = remainingKeys.includes('name')? remainingKeys.splice(remainingKeys.indexOf('name'), 1) && g.content['name']: ''
+    console.log(remainingKeys)
+    console.log(remainingKeys.indexOf('name'))
+    if (remainingKeys.indexOf('name') >= 0) remainingKeys.splice(remainingKeys.indexOf('name'), 1)
+    console.log(remainingKeys)
     displayLine('name', 'Name')
     
     for (const key of remainingKeys) {
