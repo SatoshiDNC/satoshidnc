@@ -84,6 +84,15 @@ export function kind0(v, post) {
       defaultFont.draw(g.tabWidth,0, t2, v.titleColor, v.mat, mat)
       y += rowHeight
     }
+    const displayPictureLine = (key, keyName) => {
+      const t1 = `${keyName||key}:`
+      const ts = 32/14
+      mat4.identity(mat)
+      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
+      mat4.scale(mat, mat, [ts, ts, 1])
+      defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
+      y += Math.max(rowHeight, 316 + 12)
+    }
     const displayLine = (key, keyName) => {
       const color = ['displayName', 'username'].includes(key)? v.titleColorDeprecated: v.titleColor
       const t = `${keyName||key}: ${g.content[key]}`
@@ -96,13 +105,7 @@ export function kind0(v, post) {
     }
     for (const standardKey of g.standardKeys) {
       if (standardKey[0] == 'picture') {
-        const t1 = `${keyName||key}:`
-        const ts = 32/14
-        mat4.identity(mat)
-        mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
-        mat4.scale(mat, mat, [ts, ts, 1])
-        defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
-        y += Math.max(rowHeight, 316 + 12)
+        displayPictureLine(standardKey[0], standardKey[1])
       } else {
         displayStandardLine(standardKey[0], standardKey[1])
       }
