@@ -39,8 +39,8 @@ export function kind0(v, post) {
   g.standardKeys = [
     ['name', 'Name'],
   ]
-  for (standardKey of standardKeys) {
-    if (remainingKeys.indexOf(standardKey[0]) >= 0) remainingKeys.splice(remainingKeys.indexOf(standardKey[0]), 1)
+  for (standardKey of g.standardKeys) {
+    if (g.remainingKeys.indexOf(standardKey[0]) >= 0) g.remainingKeys.splice(g.remainingKeys.indexOf(standardKey[0]), 1)
   }
   g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length) + 15
   g.renderFunc = function() {
@@ -67,11 +67,11 @@ export function kind0(v, post) {
       defaultFont.draw(0,0, t, color, v.mat, mat)
       y += rowHeight
     }
-    for (const standardKey of standardKeys) {
+    for (const standardKey of g.standardKeys) {
       displayLine(standardKey[0], standardKey[1])
     }
     
-    for (const key of remainingKeys) {
+    for (const key of g.remainingKeys) {
       displayLine(key)
     }
   }
