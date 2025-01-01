@@ -269,7 +269,7 @@ const createProfileBlock = post => {
 
     let y = 50
     for (const key of Object.keys(g.content)) {
-      const color = ['displayName', 'username'].includes(g.content[key])? v.titleColorDeprecated: v.titleColor
+      const color = ['displayName', 'username'].includes(key)? v.titleColorDeprecated: v.titleColor
       t = `${key}: ${g.content[key]}`
       ts = 32/14
       mat4.identity(mat)
