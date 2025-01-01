@@ -39,8 +39,10 @@ export function kind0(v, post) {
   g.standardKeys = [
     ['name', 'Name'],
   ]
+  g.tabWidth = 0
   for (const standardKey of g.standardKeys) {
     if (g.remainingKeys.indexOf(standardKey[0]) >= 0) g.remainingKeys.splice(g.remainingKeys.indexOf(standardKey[0]), 1)
+    g.tabWidth = Math.max(g.tabWidth, defaultFont.calcWidth(`${standardKey[1]}: `))
   }
   g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length) + 15
   g.renderFunc = function() {
@@ -57,6 +59,20 @@ export function kind0(v, post) {
     defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
 
     let y = 50
+    const displayStandardLine = (key, keyName) => {
+      t1 = `${keyName||key}:`
+      t2 = `${g.content[key]}`
+      ts = 32/14
+      mat4.identity(mat)
+      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
+      mat4.scale(mat, mat, [ts, ts, 1])
+      defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
+      mat4.identity(mat)
+      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
+      mat4.scale(mat, mat, [ts, ts, 1])
+      defaultFont.draw(g.tabWidth,0, t2, v.titleColor, v.mat, mat)
+      y += rowHeight
+    }
     const displayLine = (key, keyName) => {
       const color = ['displayName', 'username'].includes(key)? v.titleColorDeprecated: v.titleColor
       t = `${keyName||key}: ${g.content[key]}`
@@ -68,7 +84,7 @@ export function kind0(v, post) {
       y += rowHeight
     }
     for (const standardKey of g.standardKeys) {
-      displayLine(standardKey[0], standardKey[1])
+      displayStandardLine(standardKey[0], standardKey[1])
     }
     
     for (const key of g.remainingKeys) {
