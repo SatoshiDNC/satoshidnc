@@ -1,4 +1,4 @@
-import { alpha } from '../../../../../../draw.js'
+import { alpha, drawRect } from '../../../../../../draw.js'
 import { kindInfo } from '../../../../../../nostor-util.js'
 
 export function kind0(v, post) {
@@ -91,7 +91,9 @@ export function kind0(v, post) {
       mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
-      y += Math.max(rowHeight, 316 + 12)
+      const is = 316
+      drawRect(v, themeColors.inactiveDark, 15 + g.tabWidth * ts, g.y + y, is, is)
+      y += Math.max(rowHeight, is + 12)
     }
     const displayLine = (key, keyName) => {
       const color = ['displayName', 'username'].includes(key)? v.titleColorDeprecated: v.titleColor
