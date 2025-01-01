@@ -121,21 +121,17 @@ v.renderFunc = function() {
   }
 
   let i = 0
-  for (const c of [ ...keys.map(k => { return {
-    hpub: k.hpub,
-    name: (getAttr(k.hpub, 'name') || 'Unnamed') + ' (You)',
-    xmitText: getAttr(k.hpub, 'about') || addedOn(c.added),
-    xmitDate: new Date(),
-    hasUpdates: c.hasUpdates,
-    hasNewUpdates: c.hasNewUpdates,
-  }}), ...contacts.map(c => { return {
-    hpub: c.hpub,
-    name: getAttr(c.hpub, 'name') || 'Unnamed',
-    xmitText: getAttr(c.hpub, 'about') || addedOn(c.added),
-    xmitDate: new Date(),
-    hasUpdates: c.hasUpdates,
-    hasNewUpdates: c.hasNewUpdates,
-  }}) ]) {
+  for (const c of [...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)].map(hpub => {
+    const c = contacts.filter(c=>c.hpub == hpub)?.[0]
+    return {
+      hpub,
+      name: (getAttr(hpub, 'name') || 'Unnamed') + keys.map(k=>k.hpub).includes(hpub)?' (You)':'',
+      xmitText: getAttr(hpub, 'about') || addedOn(c?.added || Date.now()),
+      xmitDate: new Date(),
+      hasUpdates: c?.hasUpdates,
+      hasNewUpdates: c?.hasNewUpdates,
+    }
+  })) {
 
     if (false && c.hasUpdates) {
       //console.log('render', c)
