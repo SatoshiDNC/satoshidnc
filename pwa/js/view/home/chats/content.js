@@ -89,8 +89,8 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-keyDependencies.push(() => v.setRenderFlag(true))
-contactDependencies.push(() => v.setRenderFlag(true))
+keyDependencies.push(() => v.queueLayout())
+contactDependencies.push(() => v.queueLayout())
 contactUpdatesDependencies.push(() => v.setRenderFlag(true))
 v.renderFunc = function() {
   const v = this
