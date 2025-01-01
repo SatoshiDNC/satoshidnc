@@ -53,7 +53,7 @@ v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
   v.nameGad.text = getPersonalData(hpub, 'name')
-  v.pubkeyGad.text = hpub
+  // v.pubkeyGad.text = hpub
   v.setRenderFlag(true)
 }
 v.layoutFunc = function() {
