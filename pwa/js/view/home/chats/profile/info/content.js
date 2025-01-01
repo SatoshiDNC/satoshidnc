@@ -41,16 +41,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     console.log(`id ${JSON.stringify(item)}`)
   }
   g.handleEdit = function(item, parentRoot) {
-    console.log('a')
     const handleAction = () => {
-      console.log('b')
       v.menuGad.root.easeOut(v.menuGad.targetEdit)
     }
     if (fg.getRoot() === parentRoot) {
-      console.log('c')
       parentRoot.followUp = handleAction
     } else {
-      console.log('d')
       handleAction()
     }
   }

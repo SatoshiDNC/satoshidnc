@@ -42,7 +42,7 @@ v.renderFunc = function() {
   mat4.identity(mat)
   mat4.translate(mat, mat, [141, 98, 0])
   mat4.scale(mat, mat, [46/14, 46/14, 1])
-  defaultFont.draw(0,0, 'New contact', v.textColor, v.mat, mat)
+  defaultFont.draw(0,0, 'Edit contact', v.textColor, v.mat, mat)
 
   for (g of v.gadgets) {
     mat4.identity(mat)
