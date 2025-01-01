@@ -1,6 +1,6 @@
 import { contacts, contactDependencies } from '../../../../contacts.js'
-import { keys, keyViewDependencies } from '../../../../keys.js'
-import { getPersonalData as getAttr, personalData, personalDataViewDependencies } from '../../../../personal.js'
+import { keys, keyDependencies } from '../../../../keys.js'
+import { getPersonalData as getAttr, personalData, personalDataDependencies } from '../../../../personal.js'
 import { contentView as chatRoomView } from '../../../chat-room/content.js'
 import { drawAvatar } from '../../../../draw.js'
 
@@ -83,8 +83,8 @@ v.layoutFunc = function() {
   g.layout.call(g)
 }
 contactDependencies.push(() => v.setRenderFlag(true))
-keyViewDependencies.push(v)
-personalDataViewDependencies.push(v)
+keyDependencies.push(() => v.setRenderFlag(true))
+personalDataDependencies.push(() => v.setRenderFlag(true))
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)

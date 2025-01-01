@@ -1,5 +1,5 @@
 import { contacts, contactDependencies, contactUpdatesDependencies } from '../../../contacts.js'
-import { keys } from '../../../keys.js'
+import { keys, keyDependencies } from '../../../keys.js'
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
@@ -89,6 +89,7 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
+keyDependencies.push(() => v.setRenderFlag(true))
 contactDependencies.push(() => v.setRenderFlag(true))
 contactUpdatesDependencies.push(() => v.setRenderFlag(true))
 v.renderFunc = function() {

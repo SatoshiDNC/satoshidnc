@@ -1,6 +1,6 @@
 import { db } from './db.js'
 
-export const personalDataViewDependencies = []
+export const personalDataDependencies = []
 
 export const personalData = []
 
@@ -34,7 +34,7 @@ export function reloadPersonalData() {
     } else {
       personalData.length = 0
       personalData.push(...newList)
-      personalDataViewDependencies.map(v => v.setRenderFlag(true))
+      personalDataDependencies.map(f => f())
     }
   }
 }

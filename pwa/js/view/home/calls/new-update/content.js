@@ -1,6 +1,6 @@
 import { contacts, contactDependencies } from '../../../../../contacts.js'
-import { keys, keyViewDependencies } from '../../../../../keys.js'
-import { getPersonalData as getAttr, personalData, personalDataViewDependencies } from '../../../../../personal.js'
+import { keys, keyDependencies } from '../../../../../keys.js'
+import { getPersonalData as getAttr, personalData, personalDataDependencies } from '../../../../../personal.js'
 import { contentView as chatRoomView } from '../../../../chat-room/content.js'
 
 let v, g
@@ -73,9 +73,9 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = v.sh
   g.autoHull()
 }
-contactDependencies.push(v)
-keyViewDependencies.push(v)
-personalDataViewDependencies.push(v => v.setRenderFlag(true))
+contactDependencies.push(() => v.setRenderFlag(true))
+keyDependencies.push(() => v.setRenderFlag(true))
+personalDataDependencies.push(() => v.setRenderFlag(true))
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)

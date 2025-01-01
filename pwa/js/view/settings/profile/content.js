@@ -1,4 +1,4 @@
-import { personalData, setPersonalData, personalDataViewDependencies } from '../../../personal.js'
+import { personalData, setPersonalData, personalDataDependencies } from '../../../personal.js'
 import { drawPill } from '../../../draw.js'
 import { defaultKey } from '../../../keys.js'
 import * as nip19 from 'nostr-tools/nip19'
@@ -88,7 +88,7 @@ v.layoutFunc = function() {
   g.w = v.sw
   g.autoHull()
 }
-personalDataViewDependencies.push(v)
+personalDataDependencies.push(() => v.setRenderFlag(true))
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)

@@ -7,7 +7,7 @@ import { db } from './db.js'
 
 /* TODO: need to encrypt secret keys in database */
 
-export const keyViewDependencies = []
+export const keyDependencies = []
 
 export const keys = []
 export let defaultKey = window.localStorage.getItem('hpub')
@@ -88,7 +88,7 @@ export function reloadKeys() {
             defaultKey = info.hpub
           }
         }
-        keyViewDependencies.map(v => v.setRenderFlag(true))
+        keyDependencies.map(f => f())
         resolve()
       }
     }
