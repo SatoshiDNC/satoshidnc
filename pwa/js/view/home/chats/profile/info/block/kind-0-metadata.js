@@ -39,6 +39,7 @@ export function kind0(v, post) {
   g.standardKeys = [
     ['name', 'Name'], // index 0
     ['display_name', 'Name'],
+    ['website', 'Website'],
   ]
   g.tabWidth = 0
   for (const standardKey of g.standardKeys) {
