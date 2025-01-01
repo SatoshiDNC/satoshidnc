@@ -60,9 +60,9 @@ export function kind0(v, post) {
 
     let y = 50
     const displayStandardLine = (key, keyName) => {
-      t1 = `${keyName||key}:`
-      t2 = `${g.content[key]}`
-      ts = 32/14
+      const t1 = `${keyName||key}:`
+      const t2 = `${g.content[key]}`
+      const ts = 32/14
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
@@ -75,8 +75,8 @@ export function kind0(v, post) {
     }
     const displayLine = (key, keyName) => {
       const color = ['displayName', 'username'].includes(key)? v.titleColorDeprecated: v.titleColor
-      t = `${keyName||key}: ${g.content[key]}`
-      ts = 32/14
+      const t = `${keyName||key}: ${g.content[key]}`
+      const ts = 32/14
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
