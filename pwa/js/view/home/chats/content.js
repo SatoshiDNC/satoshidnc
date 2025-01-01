@@ -90,8 +90,8 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-keyDependencies.push(() => { console.log('key trig'); setTimeout(() => { v.layoutFunc(); v.queueLayout() }) })
-contactDependencies.push(() => { console.log('contact trig'); setTimeout(() => { v.layoutFunc(); v.queueLayout() }) })
+keyDependencies.push(() => { console.log('key trig'); console.log(v); setTimeout(() => { v.layoutFunc(); v.queueLayout() }) })
+contactDependencies.push(() => { console.log('contact trig'); console.log(v); setTimeout(() => { v.layoutFunc(); v.queueLayout() }) })
 contactUpdatesDependencies.push(() => { console.log('contact trig 2'); v.setRenderFlag(true) })
 v.renderFunc = function() {
   console.log('render')
