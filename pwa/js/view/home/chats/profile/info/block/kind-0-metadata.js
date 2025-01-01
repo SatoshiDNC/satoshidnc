@@ -55,7 +55,7 @@ export function kind0(v, post) {
     }
     g.standardKeys.splice(0 /* see index 0 */, 1)
   }
-  g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length) + 15
+  g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length - 1) + 15 + Math.max(rowHeight, 316 + 12)
   g.renderFunc = function() {
     const g = this, v = g.viewport
     const mat = mat4.create()
