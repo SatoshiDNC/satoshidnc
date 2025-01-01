@@ -130,7 +130,7 @@ v.renderFunc = function() {
     const c = contacts.filter(c=>c.hpub == hpub)?.[0]
     return {
       hpub,
-      name: (getAttr(hpub, 'name') || 'Unnamed') + keys.map(k=>k.hpub).includes(hpub)?' (You)':'',
+      name: (getAttr(hpub, 'name') || 'Unnamed') + (keys.map(k=>k.hpub).includes(hpub)?' (You)':''),
       xmitText: getAttr(hpub, 'about') || addedOn(c?.added || Date.now()),
       xmitDate: new Date(),
       hasUpdates: c?.hasUpdates,
