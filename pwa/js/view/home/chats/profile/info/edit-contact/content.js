@@ -46,7 +46,7 @@ v.clear = function() {
   const v = this
   v.hpub = undefined
   v.nameGad.text = ''
-  v.pubkeyGad.text = ''
+  // v.pubkeyGad.text = ''
   v.setRenderFlag(true)
 }
 v.setContact = function(hpub) {
