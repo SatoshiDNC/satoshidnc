@@ -35,7 +35,14 @@ export function kind0(v, post) {
   } catch {
     g.content = g.data.content
   }
-  g.h = 50 + rowHeight * Object.keys(g.content).length + 15
+  g.remainingKeys = Object.keys(g.content)
+  g.standardKeys = [
+    ['name', 'Name'],
+  ]
+  for (standardKey of standardKeys) {
+    if (remainingKeys.indexOf(standardKey[0]) >= 0) remainingKeys.splice(remainingKeys.indexOf(standardKey[0]), 1)
+  }
+  g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length) + 15
   g.renderFunc = function() {
     const g = this, v = g.viewport
     const mat = mat4.create()
@@ -60,12 +67,9 @@ export function kind0(v, post) {
       defaultFont.draw(0,0, t, color, v.mat, mat)
       y += rowHeight
     }
-    const remainingKeys = Object.keys(g.content)
-    console.log(remainingKeys)
-    console.log(remainingKeys.indexOf('name'))
-    if (remainingKeys.indexOf('name') >= 0) remainingKeys.splice(remainingKeys.indexOf('name'), 1)
-    console.log(remainingKeys)
-    displayLine('name', 'Name')
+    for (const standardKey of standardKeys) {
+      displayLine(standardKey[0], standardKey[1])
+    }
     
     for (const key of remainingKeys) {
       displayLine(key)
