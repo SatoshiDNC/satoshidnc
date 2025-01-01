@@ -89,9 +89,9 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-keyDependencies.push(() => v.queueLayout())
-contactDependencies.push(() => v.queueLayout())
-contactUpdatesDependencies.push(() => v.setRenderFlag(true))
+keyDependencies.push(() => { console.log('key trig'); v.queueLayout() })
+contactDependencies.push(() => { console.log('contact trig'); v.queueLayout() })
+contactUpdatesDependencies.push(() => { console.log('contact trig 2'); v.setRenderFlag(true) })
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
