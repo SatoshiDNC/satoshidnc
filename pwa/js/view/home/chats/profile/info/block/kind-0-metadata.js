@@ -50,15 +50,22 @@ export function kind0(v, post) {
     defaultFont.draw(0,0, t, alpha(colors.inactive, 0.5), v.mat, mat)
 
     let y = 50
-    for (const key of Object.keys(g.content)) {
+    const displayLine = (key, keyName) => {
       const color = ['displayName', 'username'].includes(key)? v.titleColorDeprecated: v.titleColor
-      t = `${key}: ${g.content[key]}`
+      t = `${keyName||key}: ${g.content[key]}`
       ts = 32/14
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t, color, v.mat, mat)
       y += rowHeight
+    }
+    const remainingKeys = Object.keys(g.content)
+    const name = remainingKeys.includes('name')? delete remainingKeys['name'] && g.content['name']: ''
+    displayLine('name', 'Name')
+    
+    for (const key of remainingKeys) {
+      displayLine(key)
     }
   }
 
