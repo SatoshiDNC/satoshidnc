@@ -57,7 +57,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.items = [
     // { id: 1, label: 'Share', handler: () => { navigator.clipboard.writeText(v.hpub).catch(e => console.error(e)) } },
     { id: 2, label: 'Copy public key', handler: () => { navigator.clipboard.writeText(v.hpub).catch(e => console.error(e)) } },
-    { id: 3, handler: g.handler, label: 'Edit' },
+    { id: 3, label: 'Edit', handler: g.handleEdit },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
