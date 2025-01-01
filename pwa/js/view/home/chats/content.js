@@ -75,7 +75,7 @@ v.layoutFunc = function() {
     x += g.w + 15
   }
 
-  v.hpubs = [...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)]
+  v.hpubs = [ ...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)]) ]
 
   let g
   g = v.listGad
