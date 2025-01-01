@@ -1,4 +1,4 @@
-import { kindInfo } from '../../../../../nostor-util.js'
+import { kindInfo } from '../../../../../../nostor-util.js'
 
 export function kind0(v, post) {
 
