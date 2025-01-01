@@ -61,7 +61,7 @@ export function kind0(v, post) {
       y += rowHeight
     }
     const remainingKeys = Object.keys(g.content)
-    const name = remainingKeys.includes('name')? delete remainingKeys['name'] && g.content['name']: ''
+    const name = remainingKeys.includes('name')? remainingKeys.splice(remainingKeys.indexOf('name'), 1) && g.content['name']: ''
     displayLine('name', 'Name')
     
     for (const key of remainingKeys) {
