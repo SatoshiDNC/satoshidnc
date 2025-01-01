@@ -27,6 +27,8 @@ import { popupDissolveRoot as profile_popup_root2, popupView as profile_popup_co
 import { contentView as home_chats_profile_info_root } from './view/home/chats/profile/info/content.js'
 import { editContactRoot as home_chats_profile_info_editContact_root } from './view/home/chats/profile/info/edit-contact/root.js'
 import { barTop as home_chats_profile_info_editContact_top } from './view/home/chats/profile/info/edit-contact/bar-top.js'
+import { barBot as home_chats_profile_info_editContact_bot } from './view/home/chats/profile/info/edit-contact/bar-bot.js'
+import { contentView as home_chats_profile_info_editContact_content } from './view/home/chats/profile/info/edit-contact/content.js'
 import { barBot as home_bot } from './view/home/bar-bot.js'
 import { overlayView as home_updates_overlay } from './view/home/updates/overlay.js'
 import { contentView as home_updates_content } from './view/home/updates/content.js'
@@ -54,6 +56,7 @@ home_chats_newChat_newContact_top.backGad.root = home_chats_newChat_newContact_t
 home_chats_newChat_newContact_bot.saveGad.formView = home_chats_newChat_newContact_content
 home_chats_newChat_newContact_bot.saveGad.root = home_chats_newChat_newContact_root, home_chats_newChat_newContact_bot.saveGad.target = home_chats_new_root
 home_chats_profile_info_editContact_top.backGad.root = home_chats_profile_info_editContact_root, home_chats_profile_info_editContact_top.backGad.target = home_chats_profile_info_root
+home_chats_profile_info_editContact_bot.saveGad.formView = home_chats_profile_info_editContact_content
 chatRoom_bot.sendGad.root = chatRoom_root, chatRoom_bot.sendGad.target = chatRoom_sendAs_root
 home_chats_trezorToolsView.menuGad.newContactRoot = home_chats_newChat_newContact_root
 home_chats_nostorToolsView.menuGad.newContactRoot = home_chats_newChat_newContact_root
