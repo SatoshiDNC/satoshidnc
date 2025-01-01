@@ -37,9 +37,9 @@ export function kind0(v, post) {
   }
   g.remainingKeys = Object.keys(g.content)
   g.standardKeys = [
-    ['name', 'Name'], // index 0
-    ['display_name', 'Name'],
-    ['website', 'Website'],
+    // ['name', 'Name'], // index 0
+    // ['display_name', 'Name'],
+    // ['website', 'Website'],
   ]
   g.tabWidth = 0
   for (const standardKey of g.standardKeys) {
@@ -52,7 +52,7 @@ export function kind0(v, post) {
   if (!g.standardKeys.filter(a => a[0] == 'display_name')[0]?.[2]) {
     g.standardKeys.filter(a => a[0] == 'display_name')[0][2] = g.standardKeys.filter(a => a[0] == 'name')[0]?.[2]
   }
-  g.standardKeys.splice(0 /* see index 0 */, 1)
+  if (g.standardKeys.length > 0) g.standardKeys.splice(0 /* see index 0 */, 1)
   g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length) + 15
   g.renderFunc = function() {
     const g = this, v = g.viewport
