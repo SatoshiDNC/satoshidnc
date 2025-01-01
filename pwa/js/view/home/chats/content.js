@@ -66,6 +66,7 @@ eventTrigger.push(() => {
   v.relayout()
 })
 v.layoutFunc = function() {
+  console.log('layout')
   const v = this
   let x = 42
   for (const g of v.filterGads) {
@@ -93,6 +94,7 @@ keyDependencies.push(() => { console.log('key trig'); v.queueLayout() })
 contactDependencies.push(() => { console.log('contact trig'); v.queueLayout() })
 contactUpdatesDependencies.push(() => { console.log('contact trig 2'); v.setRenderFlag(true) })
 v.renderFunc = function() {
+  console.log('render')
   const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
