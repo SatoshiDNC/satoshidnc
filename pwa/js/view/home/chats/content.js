@@ -121,7 +121,14 @@ v.renderFunc = function() {
   }
 
   let i = 0
-  for (const c of [ ...contacts.map(c => { return {
+  for (const c of [ ...keys.map(k => { return {
+    hpub: k.hpub,
+    name: (getAttr(k.hpub, 'name') || 'Unnamed') + ' (You)',
+    xmitText: getAttr(k.hpub, 'about') || addedOn(c.added),
+    xmitDate: new Date(),
+    hasUpdates: c.hasUpdates,
+    hasNewUpdates: c.hasNewUpdates,
+  }}), ...contacts.map(c => { return {
     hpub: c.hpub,
     name: getAttr(c.hpub, 'name') || 'Unnamed',
     xmitText: getAttr(c.hpub, 'about') || addedOn(c.added),
