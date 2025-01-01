@@ -3,8 +3,8 @@ import { barBot } from './bar-bot.js'
 import { contentView } from './content.js'
 import { setEasingParameters } from '../../../../../util.js'
 
-export const newContactRoot = v = new fg.DualSliceView(null, 'v', 147, 211)
-v.name = Object.keys({newContactRoot}).pop()
+export const editContactRoot = v = new fg.DualSliceView(null, 'v', 147, 211)
+v.name = Object.keys({editContactRoot}).pop()
 v.designSize = 1080 * 2183
 v.bgColor = [0,0,0,1]
 v.a = barTop; barTop.parent = v
