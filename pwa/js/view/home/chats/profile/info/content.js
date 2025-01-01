@@ -220,7 +220,7 @@ v.layoutFunc = function() {
   g = v.swipeGad
   g.layout.call(g)
 }
-const createProfileBlock = kind0
+const createProfileBlock = post => kind0(v, post)
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
