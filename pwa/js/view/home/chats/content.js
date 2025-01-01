@@ -12,9 +12,9 @@ export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
 v.splashMode = 0
 v.frameTimes = []
-v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
-v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
-v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+v.bgColor = themeColors.background
+v.titleColor = themeColors.title
+v.subtitleColor = themeColors.inactive
 v.filterGads = []
 for (const label of ['All', 'Unread', 'Favorites', 'Groups']) {
   v.gadgets.push(g = new fg.Gadget(v))

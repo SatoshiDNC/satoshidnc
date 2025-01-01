@@ -12,8 +12,9 @@ v.name = Object.keys({contentView}).pop()
 v.designSize = 1080 * 2183
 v.splashMode = 0
 v.frameTimes = []
-v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
-v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
+v.bgColor = themeColors.background
+v.titleColor = themeColors.title
+v.titleColorDeprecated = themeColors.inactive
 v.hintColor = [0xb5/0xff, 0xb9/0xff, 0xbc/0xff, 1]
 v.textColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.iconColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
@@ -268,12 +269,13 @@ const createProfileBlock = post => {
 
     let y = 50
     for (const key of Object.keys(g.content)) {
+      const color = ['displayName', 'username'].includes(g.content[key])? v.titleColorDeprecated: v.titleColor
       t = `${key}: ${g.content[key]}`
       ts = 32/14
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
-      defaultFont.draw(0,0, t, v.titleColor, v.mat, mat)
+      defaultFont.draw(0,0, t, color, v.mat, mat)
       y += rowHeight
     }
   }
