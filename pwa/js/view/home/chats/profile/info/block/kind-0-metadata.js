@@ -95,7 +95,17 @@ export function kind0(v, post) {
       y += rowHeight
     }
     for (const standardKey of g.standardKeys) {
-      displayStandardLine(standardKey[0], standardKey[1])
+      if (standardKey[0] == 'picture') {
+        const t1 = `${keyName||key}:`
+        const ts = 32/14
+        mat4.identity(mat)
+        mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
+        mat4.scale(mat, mat, [ts, ts, 1])
+        defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
+        y += Math.max(rowHeight, 316 + 12)
+      } else {
+        displayStandardLine(standardKey[0], standardKey[1])
+      }
     }
     
     for (const key of g.remainingKeys) {
