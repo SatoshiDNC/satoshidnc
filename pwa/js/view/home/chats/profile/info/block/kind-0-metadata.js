@@ -39,7 +39,7 @@ export function kind0(v, post) {
   g.standardKeys = [
     ['name', 'Name'],
   ]
-  for (standardKey of g.standardKeys) {
+  for (const standardKey of g.standardKeys) {
     if (g.remainingKeys.indexOf(standardKey[0]) >= 0) g.remainingKeys.splice(g.remainingKeys.indexOf(standardKey[0]), 1)
   }
   g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length) + 15
