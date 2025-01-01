@@ -1,3 +1,5 @@
+import { kindInfo } from '../../../../../nostor-util.js'
+
 export function kind0(v, post) {
 
   if (!post) {
