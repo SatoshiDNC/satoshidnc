@@ -47,6 +47,12 @@ v.clear = function() {
   v.pubkeyGad.text = ''
   v.setRenderFlag(true)
 }
+v.setContact = function(hpub) {
+  const v = this
+  v.nameGad.text = 'tbd'
+  v.pubkeyGad.text = hpub
+  v.setRenderFlag(true)
+}
 v.layoutFunc = function() {
   const v = this
   let g
