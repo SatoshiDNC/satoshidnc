@@ -63,8 +63,8 @@ export function kind0(v, post) {
   if (index >= 0) {
     v.gadgets.splice(index, 2, g1, g2)
   } else {
-    v.gadgets.splice(fixedGads, 0, g1, g2)
-    fixedGads += 2
+    v.gadgets.splice(v.fixedGads, 0, g1, g2)
+    v.fixedGads += 2
   }
   v.relayout()
 }

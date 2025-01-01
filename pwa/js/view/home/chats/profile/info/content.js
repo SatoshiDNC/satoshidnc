@@ -78,7 +78,7 @@ v.gadgets.push(g = v.lawGad = new fg.Gadget(v))
     console.log(`click '${g.label}'`)
   }
 const originalFixedGads = v.gadgets.length
-let fixedGads = v.gadgets.length
+v.fixedGads = v.gadgets.length
 v.gadgets.push(g = v.lastSep = new fg.Gadget(v))
   g.type = '-', g.h = 22
   g.renderFunc = function() {
@@ -95,7 +95,7 @@ v.gadgets.push(g = v.lastSep = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
-const tailGads = v.gadgets.length - fixedGads - 1
+const tailGads = v.gadgets.length - v.fixedGads - 1
 profileTrigger.push(hpub => {
   if (hpub !== v.hpub) return
   console.log('profile trigger')
@@ -109,7 +109,7 @@ v.setContact = function(hpub) {
   v.hpub = hpub
   v.userY = 0
   v.deltaTime = undefined
-  v.gadgets.splice(fixedGads, v.gadgets.length - fixedGads - tailGads - 1)
+  v.gadgets.splice(v.fixedGads, v.gadgets.length - v.fixedGads - tailGads - 1)
   getProfile(v.hpub).then(createProfileBlock)
   reqProfile(v.hpub)
   reqNotes(v.hpub)
