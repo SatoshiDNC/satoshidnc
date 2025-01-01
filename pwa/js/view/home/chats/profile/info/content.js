@@ -42,6 +42,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
   g.handleEdit = function(item, parentRoot) {
     const handleAction = () => {
+      v.menuGad.targetEdit.setContact(v.hpub)
       v.menuGad.root.easeOut(v.menuGad.targetEdit)
     }
     if (fg.getRoot() === parentRoot) {

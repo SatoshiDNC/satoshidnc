@@ -48,6 +48,7 @@ v.clear = function() {
   v.setRenderFlag(true)
 }
 v.setContact = function(hpub) {
+  console.log('a')
   const v = this
   v.nameGad.text = 'tbd'
   v.pubkeyGad.text = hpub
