@@ -42,14 +42,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     console.log(`id ${JSON.stringify(item)}`)
   }
   g.items = [
-    { id: 1, label: 'Copy id', handler: () => { navigator.clipboard.writeText(v.contact.hpub).catch(e => console.error(e)) } },
-    { id: 2, handler: g.handler, label: 'View contact' },
-    { id: 3, handler: g.handler, label: 'Media, links, and docs' },
-    { id: 4, handler: g.handler, label: 'Search' },
-    { id: 5, handler: g.handler, label: 'Mute notifications' },
-    { id: 6, handler: g.handler, label: 'Disappearing messages' },
-    { id: 7, handler: g.handler, label: 'Wallpaper' },
-    { id: 8, handler: g.handler, label: 'More' },
+    { id: 1, label: 'Share', handler: () => { navigator.clipboard.writeText(v.contact.hpub).catch(e => console.error(e)) } },
+    { id: 2, handler: g.handler, label: 'Edit' },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
