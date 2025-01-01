@@ -1,8 +1,8 @@
-import { contacts, addNewContact } from '../../../../../contacts.js'
-import { getPersonalData} from '../../../../../personal.js'
-import { detectRelay } from '../../../../../relays.js'
-import { addRelayContactRelation, R_KNOWS_C } from '../../../../../graph.js'
-import { drawPill } from '../../../../../draw.js'
+import { contacts, addNewContact } from '../../../../../../contacts.js'
+import { getPersonalData} from '../../../../../../personal.js'
+import { detectRelay } from '../../../../../../relays.js'
+import { addRelayContactRelation, R_KNOWS_C } from '../../../../../../graph.js'
+import { drawPill } from '../../../../../../draw.js'
 import * as nip19 from 'nostr-tools/nip19'
 
 let v, g
