@@ -44,12 +44,14 @@ v.gadgets.push(g = v.pubkeyGad = new fg.Gadget(v))
   g.clickFunc = v.nameGad.clickFunc
 v.clear = function() {
   const v = this
+  v.hpub = undefined
   v.nameGad.text = ''
   v.pubkeyGad.text = ''
   v.setRenderFlag(true)
 }
 v.setContact = function(hpub) {
   const v = this
+  v.hpub = hpub
   v.nameGad.text = getPersonalData(hpub, 'name')
   v.pubkeyGad.text = hpub
   v.setRenderFlag(true)

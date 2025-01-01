@@ -17,69 +17,12 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
   g.label = 'Save'
   g.clickFunc = function() {
     const g = this, v = g.viewport
+    const hpub = g.formView.hpub
     const name = g.formView.nameGad.text
-    const pubkey = g.formView.pubkeyGad.text
-    if (name && pubkey) {
-      let hpub, relays
-
-      // If it's a hex key, use it verbatim
-      if (pubkey.length == 64 && Array.from(pubkey.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
-        hpub = pubkey.toLowerCase()
-      }
-
-      // Otherwise...
-      if (!hpub) {
-
-        // Strip the nostr: URL scheme, if present
-        let bech32 = pubkey
-        if (pubkey.startsWith('nostr:')) {
-          bech32 = pubkey.substring(6)
-        }
-
-        // Handle Bech32-encoded formats
-        try {
-          const decoded = nip19.decode(bech32)
-          if (decoded?.type == 'nprofile') {
-            hpub = decoded.data.pubkey
-            relays = decoded.data.relays
-          } else if (decoded?.type == 'npub') {
-            hpub = decoded.data
-          }
-        } catch(e) {
-          if (bech32.startsWith('nprofile') || bech32.startsWith('npub')) {
-            alert(`${e}`)
-            return
-          }
-        }
-      }
-
-      // If we couldn't recognize the key, error and return early
-      if (!hpub) {
-        alert(`Unrecognized public key format. Supported formats include: nprofile, npub, hex`)
-        return
-      }
-
-      // We have the hex public key; import the contact
-      let cancel = false
-      const existing = contacts.filter(c => c.hpub == hpub)?.[0]
-      if (existing) {
-        const existingName = getPersonalData(existing.hpub, 'name')
-        if (name != existingName) {
-          if (confirm(`Contact exists as '${existingName}'.\nUpdate name?`)) {
-            setPersonalData(hpub, 'name', name)
-          } else {
-            cancel = true
-          }
-        }
-      } else {
-        addNewContact(hpub, name)
-        relays?.map(r => detectRelay(r))
-        relays?.map(r => addRelayContactRelation(r, hpub, R_KNOWS_C))
-      }
-      if (!cancel) {
-        g.root.easeOut(g.target)
-        g.formView.clear()
-      }
+    if (name) {
+      setPersonalData(hpub, 'name', name)
+      g.root.easeOut(g.target)
+      g.formView.clear()
     }
   }
 v.layoutFunc = function() {
