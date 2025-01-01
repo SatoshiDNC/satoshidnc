@@ -37,7 +37,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const c = contacts?.[index]
     if (c) {
       if (x < 175) {
-        if (c.hasUpdates) {
+        if (false && c.hasUpdates) {
           getUpdates().then(allUpdates => {
             const updates = allUpdates.filter(u => u.hpub == c.hpub)
             g.target2.setContext(updates, c.hpub, v.parent.parent)
