@@ -11,7 +11,6 @@ v.a = barTop; barTop.parent = v
 v.b = contentView; contentView.parent = v
 v.c = barBot; barBot.parent = v
 v.setContact = function(hpub) {
-  console.log('b')
   const v = this
   v.a.setContact?.(hpub)
   v.b.setContact?.(hpub)
