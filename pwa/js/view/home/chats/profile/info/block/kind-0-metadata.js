@@ -37,13 +37,21 @@ export function kind0(v, post) {
   }
   g.remainingKeys = Object.keys(g.content)
   g.standardKeys = [
-    ['name', 'Name'],
+    ['name', 'Name'], // index 0
+    ['display_name', 'Name'],
   ]
   g.tabWidth = 0
   for (const standardKey of g.standardKeys) {
-    if (g.remainingKeys.indexOf(standardKey[0]) >= 0) g.remainingKeys.splice(g.remainingKeys.indexOf(standardKey[0]), 1)
+    if (g.remainingKeys.indexOf(standardKey[0]) >= 0) {
+      g.remainingKeys.splice(g.remainingKeys.indexOf(standardKey[0]), 1)
+      g.standardKeys.filter(a => a[0] == standardKey[0])[2] = g.content[standardKey[0]]
+    }
     g.tabWidth = Math.max(g.tabWidth, defaultFont.calcWidth(`${standardKey[1]}: `))
   }
+  if (!g.standardKeys.filter(a => a[0] == 'display_name')[0]?.[2]) {
+    g.standardKeys.filter(a => a[0] == 'display_name')[0][2] = g.standardKeys.filter(a => a[0] == 'name')[0]?.[2]
+  }
+  g.standardKeys.splice(0 /* see index 0 */, 1)
   g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length) + 15
   g.renderFunc = function() {
     const g = this, v = g.viewport
