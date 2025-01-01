@@ -130,7 +130,7 @@ v.renderFunc = function() {
     hasNewUpdates: c.hasNewUpdates,
   }}) ]) {
 
-    if (c.hasUpdates) {
+    if (false && c.hasUpdates) {
       //console.log('render', c)
       drawEllipse(v, c.hasNewUpdates?colors.accent:colors.inactive, 31-4.5, 204-4.5 + 200 * i, 136, 136)
       drawEllipse(v, v.bgColor, 31+0.5, 204+0.5 + 200 * i, 126, 126)
@@ -139,15 +139,6 @@ v.renderFunc = function() {
       drawAvatar(v, c.hpub, 31, 204 + 200 * i, 127, 127)
     }
 
-    // mat4.identity(mat)
-    // mat4.translate(mat, mat, [31, 204 + 200 * i, 0])
-    // mat4.scale(mat, mat, [127/32, 127/32, 1])
-    // let x = -0.5, y = 8.5
-    // c.hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
-    //   mat4.copy(m, mat)
-    //   nybbleFont.draw(x,y + i*8, str, v.titleColor, v.mat, m)
-    // })
-      
     mat4.identity(m)
     mat4.translate(m,m, [v.sw - 45, 247 + 200 * i, 0])
     const s2 = 25/14
