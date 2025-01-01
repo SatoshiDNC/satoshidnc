@@ -59,6 +59,7 @@ settings_content.profileGad.root = settings_root, settings_content.profileGad.ta
 settings_profile_top.backGad.root = settings_profile_root, settings_profile_top.backGad.target = settings_root
 profile_popup_content.infoGad.target = profile_info_root, profile_popup_content.infoGad.root = profile_popup_root2
 profile_info_root.backGad.target = home_chats_root, profile_info_root.backGad.root = profile_info_root
+profile_info_root.menuGad.target = menuRoot, profile_info_root.menuGad.root = profile_info_root
 home_bot.panes.filter(p => p.label == 'Chats')[0].view = home_chats_root
 home_bot.panes.filter(p => p.label == 'Updates')[0].view = home_updates_root
 home_bot.panes.filter(p => p.label == 'Communities')[0].view = home_communities_root
