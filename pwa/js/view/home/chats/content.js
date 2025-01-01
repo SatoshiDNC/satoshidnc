@@ -35,17 +35,18 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const x = (e.x - v.x) / v.viewScale + v.userX
     const y = (e.y - v.y) / v.viewScale + v.userY
     const index = Math.floor((y - 167.5) / 200)
-    const c = contacts?.[index]
-    if (c) {
+    const hpub = v.hpubs[index]
+    //const c = contacts?.[index]
+    //if (c) {
       if (x < 175) {
         if (false && c.hasUpdates) {
           getUpdates().then(allUpdates => {
-            const updates = allUpdates.filter(u => u.hpub == c.hpub)
-            g.target2.setContext(updates, c.hpub, v.parent.parent)
+            const updates = allUpdates.filter(u => u.hpub == hpub)
+            g.target2.setContext(updates, hpub, v.parent.parent)
             g.root.easeOut(g.target2)
           })
         } else {
-          popupView.setContact(c.hpub, 204 + 147 + 200 * index - v.userY)
+          popupView.setContact(hpub, 204 + 147 + 200 * index - v.userY)
           if (fg.getRoot() !== popupRoot || popupRoot.easingState() == -1) {
             popupRoot.easeIn()
           } else {
@@ -53,10 +54,10 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
           }
         }
       } else {
-        chatRoomView.setContact(c.hpub)
+        chatRoomView.setContact(hpub)
         g.root.easeOut(g.target)
       }
-    }
+    //}
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
@@ -73,10 +74,13 @@ v.layoutFunc = function() {
     g.autoHull()
     x += g.w + 15
   }
+
+  v.hpubs = [...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)]
+
   let g
   g = v.listGad
   g.x = 0, g.y = 168
-  g.w = v.sw, g.h = 200 * contacts.length
+  g.w = v.sw, g.h = 200 * v.hpubs.length
   g.autoHull()
 
   v.minX = 0, v.maxX = v.sw
@@ -122,7 +126,7 @@ v.renderFunc = function() {
   }
 
   let i = 0
-  for (const c of [...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)].map(hpub => {
+  for (const c of v.hpubs.map(hpub => {
     const c = contacts.filter(c=>c.hpub == hpub)?.[0]
     return {
       hpub,
