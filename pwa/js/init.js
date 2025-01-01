@@ -25,6 +25,7 @@ import { profileRoot as settings_profile_root } from './view/settings/profile/ro
 import { barTop as settings_profile_top } from './view/settings/profile/bar-top.js'
 import { popupDissolveRoot as profile_popup_root2, popupView as profile_popup_content } from './view/home/chats/profile/popup.js'
 import { contentView as profile_info_root } from './view/home/chats/profile/info/content.js'
+import { rootView as home_chats_profile_info_editContact_root } from './view/home/chats/profile/info/edit-contact/root.js'
 import { barBot as home_bot } from './view/home/bar-bot.js'
 import { overlayView as home_updates_overlay } from './view/home/updates/overlay.js'
 import { contentView as home_updates_content } from './view/home/updates/content.js'
@@ -60,6 +61,7 @@ settings_profile_top.backGad.root = settings_profile_root, settings_profile_top.
 profile_popup_content.infoGad.target = profile_info_root, profile_popup_content.infoGad.root = profile_popup_root2
 profile_info_root.backGad.target = home_chats_root, profile_info_root.backGad.root = profile_info_root
 profile_info_root.menuGad.target = menuRoot, profile_info_root.menuGad.root = profile_info_root
+profile_info_root.menuGad.targetEdit = home_chats_profile_info_editContact_root
 home_bot.panes.filter(p => p.label == 'Chats')[0].view = home_chats_root
 home_bot.panes.filter(p => p.label == 'Updates')[0].view = home_updates_root
 home_bot.panes.filter(p => p.label == 'Communities')[0].view = home_communities_root

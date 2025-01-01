@@ -38,8 +38,17 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.font = iconFont
   g.fontSize = 11
   g.handler = function(item) {
-    cas
     console.log(`id ${JSON.stringify(item)}`)
+  }
+  g.handleEdit = function(item, parentRoot) {
+    const handleAction = () => {
+      v.menuGad.root.easeOut(v.menuGad.targetEdit)
+    }
+    if (fg.getRoot() === parentRoot) {
+      parentRoot.followUp = handleAction
+    } else {
+      handleAction()
+    }
   }
   g.items = [
     // { id: 1, label: 'Share', handler: () => { navigator.clipboard.writeText(v.hpub).catch(e => console.error(e)) } },
