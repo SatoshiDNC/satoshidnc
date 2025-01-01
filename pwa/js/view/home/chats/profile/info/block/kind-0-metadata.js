@@ -49,10 +49,12 @@ export function kind0(v, post) {
     }
     g.tabWidth = Math.max(g.tabWidth, defaultFont.calcWidth(`${standardKey[1]}: `))
   }
-  if (!g.standardKeys.filter(a => a[0] == 'display_name')[0]?.[2]) {
-    g.standardKeys.filter(a => a[0] == 'display_name')[0][2] = g.standardKeys.filter(a => a[0] == 'name')[0]?.[2]
+  if (g.standardKeys.length > 0) {
+    if (!g.standardKeys.filter(a => a[0] == 'display_name')[0]?.[2]) {
+      g.standardKeys.filter(a => a[0] == 'display_name')[0][2] = g.standardKeys.filter(a => a[0] == 'name')[0]?.[2]
+    }
+    g.standardKeys.splice(0 /* see index 0 */, 1)
   }
-  if (g.standardKeys.length > 0) g.standardKeys.splice(0 /* see index 0 */, 1)
   g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length) + 15
   g.renderFunc = function() {
     const g = this, v = g.viewport
