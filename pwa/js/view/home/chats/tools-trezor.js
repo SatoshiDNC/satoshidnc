@@ -167,10 +167,10 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
               const n = +index
               trezorGetNostrPubKey(n).then(r => {
-                const bip32 = bip32f.BIP32Factory(ecc)
-                const { address } = bjs.payments.p2pkh({
-                  pubkey: bip32.fromBase58(r.xpub).publicKey,
-                })
+                // const bip32 = bip32f.BIP32Factory(ecc)
+                // const { address } = bjs.payments.p2pkh({
+                //   pubkey: bip32.fromBase58(r.xpub).publicKey,
+                // })
                 clearSelection()
                 item.hpub = r.nodeType.publicKey.slice(1).map(e => (e<15?'0':'')+e.toString(16)).join('')
                 item.npub = nip19.npubEncode(item.hpub)
