@@ -54,6 +54,7 @@ v.clear = function() {
   const v = this
   v.nameGad.text = ''
   v.pubkeyGad.text = ''
+  v.relayGad.text = ''
   v.setRenderFlag(true)
 }
 v.layoutFunc = function() {
