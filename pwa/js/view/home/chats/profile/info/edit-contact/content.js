@@ -56,6 +56,7 @@ v.clear = function() {
   v.hpub = undefined
   v.nameGad.text = ''
   // v.pubkeyGad.text = ''
+  v.relayGad.text = ''
   v.setRenderFlag(true)
 }
 v.setContact = function(hpub) {
