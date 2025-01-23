@@ -64,6 +64,7 @@ v.setContact = function(hpub) {
   v.hpub = hpub
   v.nameGad.text = getPersonalData(hpub, 'name')
   // v.pubkeyGad.text = hpub
+  v.relayGad.text = getPersonalData(hpub, 'relay')
   v.setRenderFlag(true)
 }
 v.layoutFunc = function() {
