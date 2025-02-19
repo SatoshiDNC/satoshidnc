@@ -246,7 +246,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 console.log(r.xpub)
                 console.log(bip32.fromBase58(r.xpub).publicKey)
                 const { address } = bjs.payments.p2pkh({
-                  pubkey: bip32.fromBase58(r.xpub).publicKey,
+                  pubkey: Array.from(bip32.fromBase58(r.xpub).publicKey),
                 })
                 console.log(address)
                 clearSelection()
