@@ -248,7 +248,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 let info
                 try {
                   info = bjs.payments.p2tr({
-                    pubkey: bip32.fromBase58(r.xpub).publicKey,
+                    pubkey: Buffer.from(bip32.fromBase58(r.xpub).publicKey),
                   })
                 } catch(e) {
                   console.log(e)
