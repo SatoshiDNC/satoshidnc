@@ -7,6 +7,7 @@ import * as ecc from '@bitcoinerlab/secp256k1'
 import * as bip32f from 'bip32'
 //import { Buffer } from 'buffer'
 import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-tools'
+//import { bech32, bech32m } from 'bech32'
 
 import * as nip19 from 'nostr-tools/nip19'
 import { Buffer } from 'buffer'
@@ -259,7 +260,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 //   console.log(e)
                 // }
                 // console.log(info)
-                console.log(bech32m.encode('bc', tuple.slice(1)))
+                console.log(bjs.bech32m.encode('bc', tuple.slice(1)))
                 clearSelection()
                 item.addr = r.nodeType.publicKey.map(v => (v > 15?'':'0') + v.toString(16)).join('')
                 item.subtitle = '********************************************'
