@@ -251,14 +251,15 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   alert("WARNING: not x coordiante!")
                   console.log("WARNING: not x coordiante!")
                 }
-                try {
-                  info = bjs.payments.p2tr({
-                    pubkey: Buffer.from(tuple.slice(1)),
-                  })
-                } catch(e) {
-                  console.log(e)
-                }
-                console.log(info)
+                // try {
+                //   info = bjs.payments.p2tr({
+                //     pubkey: Buffer.from(tuple.slice(1)),
+                //   })
+                // } catch(e) {
+                //   console.log(e)
+                // }
+                // console.log(info)
+                console.log(bech32m.encode('bc', tuple.slice(1)))
                 clearSelection()
                 item.addr = r.nodeType.publicKey.map(v => (v > 15?'':'0') + v.toString(16)).join('')
                 item.subtitle = '********************************************'
