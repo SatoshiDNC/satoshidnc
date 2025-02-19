@@ -246,8 +246,8 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 //   pubkey: bip32.fromBase58(r.xpub).publicKey,
                 // })
                 clearSelection()
-                console.log(new Uint8Array(r.nodeType.publicKey))
-                item.addr = (new Uint8Array(r.nodeType.publicKey)).map(v => (v > 15?' ':' 0-') + v.toString(16)).join('')
+                console.log(r.nodeType.publicKey)
+                item.addr = r.nodeType.publicKey.map(v => (v > 15?' ':' 0-') + v.toString(16)).join('')
                 item.subtitle = '********************************************'
                 v.setRenderFlag(true)
               }).catch(handleError)
