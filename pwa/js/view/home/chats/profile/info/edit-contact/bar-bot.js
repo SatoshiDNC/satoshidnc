@@ -19,8 +19,14 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const g = this, v = g.viewport
     const hpub = g.formView.hpub
     const name = g.formView.nameGad.text
-    if (name) {
-      setPersonalData(hpub, 'name', name)
+    const relay = g.formView.relayGad.text
+    if (name || relay) {
+      if (name) {
+        setPersonalData(hpub, 'name', name)
+      }
+      if (relay) {
+        setPersonalData(hpub, 'relay', relay)
+      }
       g.root.easeOut(g.target)
       g.formView.clear()
     }

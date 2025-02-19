@@ -42,11 +42,21 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
 //   g.focusValue = 0
 //   g.focused = false
 //   g.clickFunc = v.nameGad.clickFunc
+v.gadgets.push(g = v.relayGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 183, g.y = 100 + 212, g.h = 70
+  g.label = 'Relay'
+  g.text = '', g.defaultValue = 'relay.satoshidnc.com'
+  g.animValue = 0
+  g.focusValue = 0
+  g.focused = false
+  g.clickFunc = v.nameGad.clickFunc
 v.clear = function() {
   const v = this
   v.hpub = undefined
   v.nameGad.text = ''
   // v.pubkeyGad.text = ''
+  v.relayGad.text = ''
   v.setRenderFlag(true)
 }
 v.setContact = function(hpub) {
@@ -54,6 +64,7 @@ v.setContact = function(hpub) {
   v.hpub = hpub
   v.nameGad.text = getPersonalData(hpub, 'name')
   // v.pubkeyGad.text = hpub
+  v.relayGad.text = getPersonalData(hpub, 'relay')
   v.setRenderFlag(true)
 }
 v.layoutFunc = function() {
@@ -65,6 +76,9 @@ v.layoutFunc = function() {
   // g = v.pubkeyGad
   // g.w = v.sw - 183 - 73
   // g.autoHull()
+  g = v.relayGad
+  g.w = v.sw - 183 - 73
+  g.autoHull()
 }
 v.renderFunc = function() {
   const v = this
@@ -153,6 +167,14 @@ v.renderFunc = function() {
   // iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
 
   // drawTextInput(v.pubkeyGad)
+
+  mat4.identity(m)
+  mat4.translate(m,m, [73, 158 + 212, 0])
+  s = 43/iconFont.calcWidth('\x06')
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
+
+  drawTextInput(v.relayGad)
   
   for (g of v.gadgets) {
     if (g.animValue != 0 && g.animValue != 1) {

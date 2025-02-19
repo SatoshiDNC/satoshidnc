@@ -19,6 +19,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const g = this, v = g.viewport
     const name = g.formView.nameGad.text
     const pubkey = g.formView.pubkeyGad.text
+    const relay = g.formView.relayGad.text
     if (name && pubkey) {
       let hpub, relays
 
@@ -71,8 +72,17 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
             cancel = true
           }
         }
+        const existingRelay = getPersonalData(existing.hpub, 'relay')
+        if (relay != existingRelay) {
+          if (confirm(`Contact exists with relay '${existingRelay}'.\nUpdate relay?`)) {
+            setPersonalData(hpub, 'relay', relay)
+          } else {
+            cancel = true
+          }
+        }
       } else {
         addNewContact(hpub, name)
+        setPersonalData(hpub, 'relay', relay)
         relays?.map(r => detectRelay(r))
         relays?.map(r => addRelayContactRelation(r, hpub, R_KNOWS_C))
       }
