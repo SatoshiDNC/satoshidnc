@@ -7,7 +7,7 @@ import * as ecc from '@bitcoinerlab/secp256k1'
 import * as bip32f from 'bip32'
 //import { Buffer } from 'buffer'
 import { serializeEvent, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-tools'
-import { bech32, bech32m } from '@bitcoinjs/bech32'
+import { bech32, bech32m } from '@bitcoinerlab/bech32'
 
 import * as nip19 from 'nostr-tools/nip19'
 import { Buffer } from 'buffer'
