@@ -1,5 +1,5 @@
 import { drawRect, drawPill, drawRoundedRect, alpha, blend } from '../../../draw.js'
-import { trezorConnect, trezorPing, trezorRestore, trezorGetNostrPubKey, trezorGetPassword, trezorSign, trezorWipe, trezorClose } from '../../../trezor.js'
+import { trezorConnect, trezorPing, trezorRestore, trezorGetAddress, trezorGetNostrPubKey, trezorGetPassword, trezorSign, trezorWipe, trezorClose } from '../../../trezor.js'
 import { contentView as newContactForm } from './new-chat/new-contact/content.js'
 import * as bjs from 'bitcoinjs-lib'
 import bm from 'bitcoinjs-message'
