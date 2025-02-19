@@ -246,9 +246,14 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 console.log(r.xpub)
                 console.log(bip32.fromBase58(r.xpub).publicKey)
                 let info
+                const tuple = bip32.fromBase58(r.xpub).publicKey
+                if (tuple[0] != 2) {
+                  alert("WARNING: not x coordiante!")
+                  console.log("WARNING: not x coordiante!")
+                }
                 try {
                   info = bjs.payments.p2tr({
-                    pubkey: Buffer.from(bip32.fromBase58(r.xpub).publicKey),
+                    pubkey: Buffer.from(tuple.slice(1)),
                   })
                 } catch(e) {
                   console.log(e)
