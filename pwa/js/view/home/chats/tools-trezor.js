@@ -241,13 +241,12 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 break
               }
               trezorGetAddress(+text).then(r => {
-                // const bip32 = bip32f.BIP32Factory(ecc)
-                // const { address } = bjs.payments.p2pkh({
-                //   pubkey: bip32.fromBase58(r.xpub).publicKey,
-                // })
+                const bip32 = bip32f.BIP32Factory(ecc)
+                const { address } = bjs.payments.p2pkh({
+                  pubkey: bip32.fromBase58(r.xpub).publicKey,
+                })
                 clearSelection()
-                console.log(r.nodeType.publicKey)
-                item.addr = r.nodeType.publicKey.map(v => (v > 15?' ':' 0-') + v.toString(16)).join('')
+                item.addr = r.nodeType.publicKey.map(v => (v > 15?'':'0') + v.toString(16)).join('')
                 item.subtitle = '********************************************'
                 v.setRenderFlag(true)
               }).catch(handleError)
