@@ -248,7 +248,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 let info
                 try {
                   info = bjs.payments.p2pkh({
-                    pubkey: bip32.fromBase58(r.xpub).publicKey,
+                    pubkey: bip32.fromBase58(r.xpub).derive(0).derive(1).publicKey,
                   })
                 } catch(e) {
                   console.log(e)
