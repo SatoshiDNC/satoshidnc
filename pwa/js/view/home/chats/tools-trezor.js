@@ -250,7 +250,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   info = bjs.payments.p2pkh({
                     pubkey: bip32.fromBase58(r.xpub).publicKey,
                   })
-                } catch {}
+                } catch(e) {
+                  console.log(e)
+                }
                 console.log(info)
                 clearSelection()
                 item.addr = r.nodeType.publicKey.map(v => (v > 15?'':'0') + v.toString(16)).join('')
