@@ -481,6 +481,24 @@ export function trezorRestore() {
   })
 }
 
+export function trezorGetAddress(i) {
+  return writeFunc(IN_Initialize, []).then(r => {
+    return handleResult(r).then(() => {
+      const buf = [
+        ...paramVarInt(1, (  86 | 0x80000000) >>> 0), // 86' hardened purpose code (BIP 43/44)
+        ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened wallet type (BIP 44/SLIP 44)
+        ...paramVarInt(1, (   0 | 0x80000000) >>> 0), // 0' hardened account number (BIP 44/NIP 06)
+        ...paramVarInt(1, (   0 & 0x7fffffff) >>> 0), // 0 non-hardened (non-)change slot
+        ...paramVarInt(1, (   i & 0x7fffffff) >>> 0), // 0 non-hardened address slot
+      // ...paramVarInt(3, 1), // show on display
+      ]
+      return writeFunc(IN_GetPublicKey, buf).then(r => {
+        return handleButtonsAndResult(r)
+      })
+    })
+  })
+}
+
 export function trezorGetNostrPubKey(i) {
   return writeFunc(IN_Initialize, []).then(r => {
     return handleResult(r).then(() => {

@@ -32,6 +32,7 @@ const BOT_SPACE = 203
 const ENTER_SEED = 'ENTER_SEED'
 const GEN_HPUB = 'GEN_HPUB'
 const GEN_PW = 'GEN_PW'
+const GEN_ADDR = 'GEN_ADDR'
 const SIGN_MSG = 'SIGN_MSG'
 const WIPE_SEED = 'WIPE_SEED'
 
@@ -68,6 +69,7 @@ v.items = [
   { key: ENTER_SEED, copyAnim: 0, name: 'Enter seed words on Trezor'},
   { key: GEN_HPUB,   copyAnim: 0, name: 'Select Nostor public key'},
   { key: GEN_PW,     copyAnim: 0, name: 'Select password'},
+  { key: GEN_ADDR,   copyAnim: 0, name: 'Select taproot address'},
   { key: SIGN_MSG,   copyAnim: 0, name: 'Sign message'},
   { key: WIPE_SEED,  copyAnim: 0, name: 'Wipe seed from Trezor'},
 ]
@@ -220,6 +222,34 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   v.setRenderFlag(true)
                 }).catch(handleError)    
               })
+            }
+            break
+  
+          case GEN_ADDR:
+            {
+              if (item.addr) {
+                navigator.clipboard.writeText(item.addr)
+                item.addr = undefined
+                item.subtitle = undefined
+                clearSelection()
+                break
+              }
+
+              const text = prompt('Address index:')
+              if (text === null) {
+                clearSelection()
+                break
+              }
+              trezorGetAddress(+text).then(r => {
+                // const bip32 = bip32f.BIP32Factory(ecc)
+                // const { address } = bjs.payments.p2pkh({
+                //   pubkey: bip32.fromBase58(r.xpub).publicKey,
+                // })
+                clearSelection()
+                item.addr = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
+                item.subtitle = '********************************************'
+                v.setRenderFlag(true)
+              }).catch(handleError)
             }
             break
   
