@@ -170,6 +170,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
               const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
               const n = +index
               trezorGetNostrPubKey(n).then(r => {
+                if (r.msgType == 3 && r.code == 99) {
+                  throw r.message
+                }
                 // const bip32 = bip32f.BIP32Factory(ecc)
                 // const { address } = bjs.payments.p2pkh({
                 //   pubkey: bip32.fromBase58(r.xpub).publicKey,
@@ -213,6 +216,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 const hash = Buffer.from(bytes).toString('hex')
                 const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
                 trezorGetPassword(index).then(r => {
+                  if (r.msgType == 3 && r.code == 99) {
+                    throw r.message
+                  }
                   // const bip32 = bip32f.BIP32Factory(ecc)
                   // const { address } = bjs.payments.p2pkh({
                   //   pubkey: bip32.fromBase58(r.xpub).publicKey,
@@ -244,6 +250,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 break
               }
               trezorGetAddress(+text).then(r => {
+                if (r.msgType == 3 && r.code == 99) {
+                  throw r.message
+                }
                 const bip32 = bip32f.BIP32Factory(ecc)
                 console.log(r.nodeType.publicKey)
                 console.log(r.xpub)
@@ -294,6 +303,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
             const hash = Array.prototype.map.call(new Uint8Array(h), n => n.toString(16).padStart(2, "0")).join("")
             console.log('hash:', hash)
             trezorSign(0, hash).then(r => {
+              if (r.msgType == 3 && r.code == 99) {
+                throw r.message
+              }
               console.log('trezor returns:', r)
               if (!r.sig) {
                 clearSelection()
