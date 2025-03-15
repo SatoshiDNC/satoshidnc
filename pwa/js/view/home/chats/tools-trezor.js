@@ -195,9 +195,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
           break
 
           case GEN_PW:
-            console.log('A')
             {
-              console.log('B')
               if (item.passwd) {
                 navigator.clipboard.writeText(item.passwd)
                 item.passwd = undefined
@@ -206,13 +204,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                 break
               }
 
-              console.log('C')
               const text = prompt('Name of account:')
               if (text === null) {
                 clearSelection()
                 break
               }
-              console.log('D')
               window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
                 const hash = Buffer.from(bytes).toString('hex')
                 const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
@@ -222,7 +218,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   //   pubkey: bip32.fromBase58(r.xpub).publicKey,
                   // })
                   clearSelection()
-                  console.log('a')
+                  console.log('a', r)
                   item.passwd = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
                   console.log('b')
                   item.subtitle = '********************************************'
