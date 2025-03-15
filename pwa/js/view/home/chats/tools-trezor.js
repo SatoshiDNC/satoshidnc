@@ -218,7 +218,9 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
                   //   pubkey: bip32.fromBase58(r.xpub).publicKey,
                   // })
                   clearSelection()
+                  console.log('a')
                   item.passwd = btoa(String.fromCharCode(...new Uint8Array(r.nodeType.publicKey)))
+                  console.log('b')
                   item.subtitle = '********************************************'
                   v.setRenderFlag(true)
                 }).catch(handleError)    
