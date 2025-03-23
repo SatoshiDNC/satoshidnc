@@ -201,7 +201,14 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         console.log(`signed: ${JSON.stringify(event)}`)
         console.log(`signed note: ${JSON.stringify(signed_note)}`)
         return Promise.resolve([event, signed_note])
-      }).catch(error => Promise.reject(`error while signing: ${error}`)).then(([event, signed_note]) => {
+      }).catch(error => {
+        if (error.endsWith(': user canceled')) {
+          console.log(error)
+          return new Promise(()=>{}) // terminate the chain
+        } else {
+          return Promise.reject(`error while signing: ${error}`)
+        }
+      }).then(([event, signed_note]) => {
         console.log('fetching')
         return fetch(`${bapi_baseurl}${signed_note.tags.filter(t => t[0] == 'IOU')[0][3]}`, {
           method: 'GET',
@@ -217,12 +224,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         }).catch(error => Promise.reject(`error: ${error}`))
       }).catch(error => {
         let m = `publish failed: ${error}`
-        if (!error.endsWith(': user canceled')) {
-          console.error(m)
-          alert(m)
-        } else {
-          console.log(m)
-        }
+        console.error(m)
+        alert(m)
         return new Promise(()=>{}) // terminate the chain
       }).then(event => {
         console.log('Published. (so we believe)')
