@@ -186,18 +186,15 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     if (contentView.textGad.text) {
       console.log('send')
-      const note = {
-        kind: 1,
-        created_at: Math.floor(Date.now() / 1000),
-        content: `${contentView.textGad.text}`,
-        tags: [
-          ['bgcolor', `${rrggbb(contentView.bgColor)}`],
-        ],
-      }
-      sign(v.hpub, [note, {
-        kind: 555,
-        tags: [['IOU','1','sat','GET /'], ['p',`${satoshi_hpub}`]],
-      }]).then(([event, signed_note]) => {
+      sign(v.hpub, [
+        {
+          kind: 1, content: `${contentView.textGad.text}`,
+          tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`]],
+        }, {
+          kind: 555,
+          tags: [['IOU','1','sat','GET /'], ['p',`${satoshi_hpub}`]],
+        }
+      ]).then(([event, signed_note]) => {
         console.log(`signed: ${JSON.stringify(event)}`)
         console.log(`signed note: ${JSON.stringify(signed_note)}`)
         return Promise.resolve([event, signed_note])
