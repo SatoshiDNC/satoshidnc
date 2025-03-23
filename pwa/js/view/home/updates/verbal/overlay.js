@@ -217,7 +217,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': `SatoshiDNC ${JSON.stringify(signed_note)}`,
-          }
+          },
+          body: JSON.stringify(event)
         }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => {
           if (response.ok) {
             return Promise.resolve(response.json())
