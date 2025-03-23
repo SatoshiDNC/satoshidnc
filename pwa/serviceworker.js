@@ -102,6 +102,7 @@ async function decryptRange(event, request = event.request) {
 }
 self.addEventListener('fetch', (event) => {
   // console.log(`[${TAG}] fetch`, event.request.url)
+  if (event.request.method != 'GET') return
   if (event.request.headers.has('range')) {
     const url = event.request.url
     const parts = url.split('/')
