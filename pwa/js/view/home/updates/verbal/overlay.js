@@ -192,7 +192,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`]],
         }, {
           kind: 555,
-          tags: [['IOU','1','sat','GET /'], ['p',`${satoshi_hpub}`]],
+          tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
         }
       ]).then(([event, signed_note]) => {
         console.log(`signed: ${JSON.stringify(event)}`)
