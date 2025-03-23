@@ -46,8 +46,11 @@ let numCached = 0
 let logTimer
 async function cachedOrLive(event, request = event.request) {
   const cache = await caches.open(offlineCache)
-  const cachedResponse = undefined // await cache.match(request)
+  const cachedResponse = await cache.match(request) // undefined
   const asOf = cacheDates[request.url]
+
+  // dev
+  if (request.url.includes(`satoshidnc.com`)) cachedResponse = undefined
 
   let networkResponsePromise
   if ((!cachedResponse) || (!asOf) || (Date.now() - asOf > ONE_DAY_IN_MILLISECONDS)) {
