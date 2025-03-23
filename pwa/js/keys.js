@@ -203,6 +203,7 @@ function signBatchWithSecretKey(hsec, templates) {
     let userSummary = templates.map(e => JSON.stringify(e)).join(`\n`)
     if (confirm(`Sign the following?\n${userSummary}`)) {
       try {
+        let hpub = getPublicKey(hexToBytes(hsec))
         const signed = templates.map(e => {
           const event = {...e}
           if (!event.content) event.content = ''
