@@ -195,7 +195,29 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         ],
       }
       sign(v.hpub, note).then(event => {
-        console.log(event)
+        console.log(`signed: ${JSON.stringify(event)}`)
+
+        console.log(`--- begin new logic ---`)
+        sign(v.hpub, {
+          kind: 555,
+          tags: [['IOU','1','sat','/'], ['p',`${satoshi_pubkey_hex}`]],
+        }).catch(error => Promise.reject(`failed to sign: ${error}`)).then(signed_note => {
+          console.log(`signed note: ${JSON.stringify(signed_note)}`)
+          return fetch(`${bapi_baseurl}${signed_note.tags.filter(t => t[0] == 'IOU')[0][3]}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': `SatoshiDNC ${JSON.stringify(signed_note)}`,
+            }
+          })
+        }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => response.json()).then(json => {
+          console.log(`fetch succeeded: ${JSON.stringify(json)}`)
+        }).catch(error => {
+          console.error(`error: ${error}`)
+        })
+
         console.log('sending...')
         const name = 'relay.satoshidnc.com'
         homeRelay().then(relay => {

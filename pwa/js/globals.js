@@ -47,3 +47,14 @@ const icap = function(s) {
     return s
   }
 }
+
+const hash = function(input) {
+  return new Promise((resolve, reject) => {
+    const inputBuf = new TextEncoder().encode(input)
+    window.crypto.subtle.digest('SHA-256', inputBuf).then(outBuf => {
+      resolve(Array.from(new Uint8Array(outBuf)).map((i) => i.toString(16).padStart(2, '0')).join(''))
+    }, error => {
+      reject(`error while hashing: ${error}`)
+    })
+  })
+}
