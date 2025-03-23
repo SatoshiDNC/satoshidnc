@@ -211,8 +211,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             'Authorization': `SatoshiDNC ${JSON.stringify(signed_note)}`,
           }
         }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => response.json()).then(json => {
-          return Promise.resolve(event)
           console.log(`fetch succeeded: ${JSON.stringify(json)}`)
+          return Promise.resolve(event)
         }).catch(error => Promise.reject(`error: ${error}`))
       }).catch(error => {
         if (error !== 'canceled by user') {
