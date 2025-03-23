@@ -217,10 +217,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         }).catch(error => Promise.reject(`error: ${error}`))
       }).catch(error => {
         let m = `publish failed: ${error}`
-        console.error(m)
-        if (error !== 'canceled by user') {
-          alert(m)
-        }
+        console.error(m); if (!error.endsWith(': user canceled')) alert(m)
         return new Promise(()=>{}) // terminate the chain
       }).then(event => {
         console.log('Published. (so we believe)')
