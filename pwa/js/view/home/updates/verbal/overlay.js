@@ -196,7 +196,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       }
       sign(v.hpub, [note, {
         kind: 555,
-        tags: [['IOU','1','sat','/'], ['p',`${satoshi_hpub}`]],
+        tags: [['IOU','1','sat','GET /'], ['p',`${satoshi_hpub}`]],
       }]).then(([event, signed_note]) => {
         console.log(`signed: ${JSON.stringify(event)}`)
         console.log(`signed note: ${JSON.stringify(signed_note)}`)
@@ -209,9 +209,12 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           return Promise.reject(`error while signing: ${error}`)
         }
       }).then(([event, signed_note]) => {
-        console.log('fetching')
-        return fetch(`${bapi_baseurl}${signed_note.tags.filter(t => t[0] == 'IOU')[0][3]}`, {
-          method: 'GET',
+        let req = signed_note.tags.filter(t => t[0] == 'IOU')[0][3]
+        let method = req.split(' ')[0]
+        let route = req.substring(method.length).trim()
+        console.log(`${method} ${route}`)
+        return fetch(`${bapi_baseurl}${route}`, {
+          method: `${method}`,
           credentials: 'include',
           headers: {
             'Accept': 'application/json',
