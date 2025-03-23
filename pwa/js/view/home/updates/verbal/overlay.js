@@ -202,6 +202,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         console.log(`signed note: ${JSON.stringify(signed_note)}`)
         return Promise.resolve([event, signed_note])
       }).catch(error => Promise.reject(`error while signing: ${error}`)).then(([event, signed_note]) => {
+        console.log('fetching')
         return fetch(`${bapi_baseurl}${signed_note.tags.filter(t => t[0] == 'IOU')[0][3]}`, {
           method: 'GET',
           credentials: 'include',
@@ -220,6 +221,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         if (error !== 'canceled by user') {
           alert(m)
         }
+        return Promise.reject(m)
       }).then(event => {
         console.log('Published. (so we believe)')
         v.closeGad.clickFunc()
