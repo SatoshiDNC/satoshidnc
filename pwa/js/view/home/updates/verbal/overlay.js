@@ -222,8 +222,14 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             'Authorization': `SatoshiDNC ${JSON.stringify(signed_note)}`,
           }
         }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => {
-          return response.ok? Promise.resolve(response.json()): Promise.reject(response.json())
-        }).catch(error => Promise.reject(`request failed: ${error.message}`)).then(json => {
+          if (response.ok) {
+            return Promise.resolve(response.json())
+          } else {
+            return new Promise((resolve, reject) => {
+              response.json().then(json => reject(json.message))
+            })
+          }
+        }).catch(error => Promise.reject(`request failed: ${error}`)).then(json => {
           console.log(`fetch succeeded: ${JSON.stringify(json)}`)
           return Promise.resolve(event)
         }).catch(error => Promise.reject(`error: ${error}`))
