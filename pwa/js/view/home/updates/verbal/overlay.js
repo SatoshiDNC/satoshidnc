@@ -228,6 +228,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             })
           }
         }).catch(error => Promise.reject(`request failed: ${error}`)).then(json => {
+          console.log(json)
           if (json.message == 'done') {
             return Promise.resolve()
           } else {
