@@ -221,7 +221,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         if (error !== 'canceled by user') {
           alert(m)
         }
-        return new Promise() // terminate the chain
+        return new Promise(()=>{}) // terminate the chain
       }).then(event => {
         console.log('Published. (so we believe)')
         v.closeGad.clickFunc()
