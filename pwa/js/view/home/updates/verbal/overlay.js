@@ -200,7 +200,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         console.log(`--- begin new logic ---`)
         sign(v.hpub, {
           kind: 555,
-          tags: [['IOU','1','sat','/'], ['p',`${satoshi_pubkey_hex}`]],
+          tags: [['IOU','1','sat','/'], ['p',`${satoshi_hpub}`]],
         }).catch(error => Promise.reject(`failed to sign: ${error}`)).then(signed_note => {
           console.log(`signed note: ${JSON.stringify(signed_note)}`)
           return fetch(`${bapi_baseurl}${signed_note.tags.filter(t => t[0] == 'IOU')[0][3]}`, {

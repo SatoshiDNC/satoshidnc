@@ -4,6 +4,9 @@ let gl, glp // OpenGL contexts
 let prog2
 let mainShapes
 
+let satoshi_hpub = '51c63606c483dc9b44373e8ea240494b8101e4b23da579f17fec195029207e99'
+let bapi_baseurl = 'https://bapi.satoshidnc.com'
+
 const fixedColors = {
   black: [0x00/0xff, 0x00/0xff, 0x00/0xff, 1],
   softWhite: [0xe6/0xff, 0xe6/0xff, 0xe6/0xff, 1],
