@@ -1,6 +1,6 @@
 import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
-import { sign, keys, getKeyInfo, putDeviceKey, putVolatileKey, useVolatileKey } from '../../../../keys.js'
+import { signBatch as sign, keys, getKeyInfo, putDeviceKey, putVolatileKey, useVolatileKey } from '../../../../keys.js'
 import { homeRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
@@ -194,50 +194,49 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           ['bgcolor', `${rrggbb(contentView.bgColor)}`],
         ],
       }
-      sign(v.hpub, note).then(event => {
+      sign(v.hpub, [note, {
+        kind: 555,
+        tags: [['IOU','1','sat','/'], ['p',`${satoshi_hpub}`]],
+      }]).then(([event, signed_note]) => {
         console.log(`signed: ${JSON.stringify(event)}`)
-
-        console.log(`--- begin new logic ---`)
-        sign(v.hpub, {
-          kind: 555,
-          tags: [['IOU','1','sat','/'], ['p',`${satoshi_hpub}`]],
-        }).catch(error => Promise.reject(`failed to sign: ${error}`)).then(signed_note => {
-          console.log(`signed note: ${JSON.stringify(signed_note)}`)
-          return fetch(`${bapi_baseurl}${signed_note.tags.filter(t => t[0] == 'IOU')[0][3]}`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': `SatoshiDNC ${JSON.stringify(signed_note)}`,
-            }
-          })
+        console.log(`signed note: ${JSON.stringify(signed_note)}`)
+        return Promise.resolve([event, signed_note])
+      }).catch(error => Promise.reject(`error while signing: ${error}`)).then(([event, signed_note]) => {
+        return fetch(`${bapi_baseurl}${signed_note.tags.filter(t => t[0] == 'IOU')[0][3]}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `SatoshiDNC ${JSON.stringify(signed_note)}`,
+          }
         }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => response.json()).then(json => {
+          return Promise.resolve(event)
           console.log(`fetch succeeded: ${JSON.stringify(json)}`)
-        }).catch(error => {
-          console.error(`error: ${error}`)
-        })
-
-        console.log('sending...')
-        const name = 'relay.satoshidnc.com'
-        homeRelay().then(relay => {
-          let sent = false
-          try {
-            relay.sendEvent(event)
-            sent = true
-          } catch (reason) {
-            alert(`send to ${relay.url} failed: ${reason}`)
-          }
-          if (sent) {
-            v.closeGad.clickFunc()
-          }
-        }, reason => {
-          alert(`connect to ${name} failed: ${reason}`)
-        })
-      }).catch(reason => {
-        if (reason !== 'canceled by user') {
-          alert(reason)
+        }).catch(error => Promise.reject(`error: ${error}`))
+      }).catch(error => {
+        if (error !== 'canceled by user') {
+          alert(`publish failed: ${error}`)
         }
+      }).then(event => {
+        console.log('Published. (so we believe)')
+        v.closeGad.clickFunc()
+        // console.log('sending...')
+        // const name = 'relay.satoshidnc.com'
+        // homeRelay().then(relay => {
+        //   let sent = false
+        //   try {
+        //     relay.sendEvent(event)
+        //     sent = true
+        //   } catch (reason) {
+        //     alert(`send to ${relay.url} failed: ${reason}`)
+        //   }
+        //   if (sent) {
+        //     v.closeGad.clickFunc()
+        //   }
+        // }, reason => {
+        //   alert(`connect to ${name} failed: ${reason}`)
+        // })
       })
     } else {
       console.log('mic')

@@ -197,3 +197,110 @@ export function sign(hpub, eventTemplate, silent) {
     }
   })
 }
+
+function signBatchWithSecretKey(hsec, templates) {
+  return new Promise((resolve, reject) => {
+    let userSummary = templates.map(e => JSON.stringify(e)).join(`\n`)
+    if (confirm(`Sign the following?\n${userSummary}`)) {
+      try {
+        const signed = templates.map(e => {
+          const event = {...e}
+          if (!event.content) event.content = ''
+          if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
+          if (!event.pubkey) event.pubkey = hpub
+          return finalizeEvent(event, hexToBytes(hsec))
+        })
+        resolve(signed)
+      } catch(error) {
+        reject(`unable to sign: ${error}`)
+      }
+    } else {
+      reject(`user canceled`)
+    }
+  })
+}
+
+export function signBatch(hpub, templates) {
+  return new Promise((resolve, reject) => {
+    const info = getKeyInfo(hpub)
+    if (info.keyType == 'device') {
+      const tr = db.transaction('keys', 'readonly')
+      const os = tr.objectStore('keys')
+      const req = os.get(hpub)
+      req.onerror = function(e) {
+        reject(`unable to sign: ${e}`)
+      }
+      req.onsuccess = function(e) {
+        const hsec = e.target.result.hsec
+        if (hsec) {
+          signBatchWithSecretKey(hsec, templates).then(signed => {
+            putDeviceKey(hpub, hsec) // to update 'lastUsed' time stamp
+            resolve(signed)
+          }, error => {
+            reject(`signing error: ${error}`)
+          })
+        } else {
+          reject(`unable to sign: secret key not found`)
+        }
+      }
+    } else if (info.keyType == 'volatile') {
+      const value = prompt('Nostor secret key', '')
+      if (value !== null) {
+
+        let hsec, relays
+
+        // If it's a hex key, use it verbatim
+        if (value.length == 64 && Array.from(value.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
+          hsec = value.toLowerCase()
+        }
+
+        // Otherwise...
+        if (!hsec) {
+
+          // Strip the nostr: URL scheme, if present
+          let bech32 = value
+          if (value.startsWith('nostr:')) {
+            bech32 = value.substring(6)
+          }
+
+          // Handle Bech32-encoded formats
+          try {
+            const decoded = nip19.decode(bech32)
+            if (decoded?.type == 'nsec') {
+              hsec = decoded.data
+            }
+          } catch(e) {
+            if (bech32.startsWith('nsec')) {
+              reject(`${e}`)
+              return
+            }
+          }
+        }
+
+        // If we couldn't recognize the key, error and return early
+        if (!hsec) {
+          reject(`unable to sign: unrecognized secret key format`)
+          return
+        }
+        const matching_hpub = getPublicKey(Buffer.from(hsec, 'hex'))
+        if (matching_hpub !== hpub) {
+          reject(`unable to sign: secret key does not match public key`)
+          return
+        }
+
+        // We have the matching hex secret key; use it
+        useVolatileKey(hpub, hsec)
+        signBatchWithSecretKey(hsec, templates).then(signed => {
+          putVolatileKey(hpub, hsec) // to update 'lastUsed' time stamp
+          resolve(signed)
+        }, error => {
+          reject(`signing error: ${error}`)
+        })
+      } else {
+        reject(`canceled by user`)
+      }
+    } else {
+      reject(`unable to sign: key type '${info.keyType}' not implemented`)
+    }
+  })
+}
