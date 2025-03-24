@@ -206,7 +206,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           return Promise.reject(`error while signing: ${error}`)
         }
       }).then(([event, signed_note]) => {
-        JSON.stringify(event)
+        console.log(`signed: ${JSON.stringify(event)}`)
         let req = signed_note.tags.filter(t => t[0] == 'IOU')[0][3]
         let method = req.split(' ')[0]
         let route = req.substring(method.length).trim()
