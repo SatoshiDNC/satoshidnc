@@ -23,6 +23,7 @@ export function aggregateEvent(e) {
     }
     req.onsuccess = () => {
       if (req.result) { // this event is already in our database
+        console.log(`[${TAG}] skipping duplicate event`, JSON.stringify(e))
         resolve()
       } else {
         const del_os = tr.objectStore('deletions')
