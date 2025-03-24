@@ -308,16 +308,13 @@ export function getUpdates() {
     req.onsuccess = function(e) {
       console.log('day old success')
       const c = [...contacts.map(c => c.hpub), ...keys.map(k => k.hpub)]
-      console.log('contacts', c)
       const updates = e.target.result.filter(r => c.includes(r.data.pubkey))
-      console.log('updates', updates)
       const now = Date.now()
       resolve(Promise.all(updates.filter(r => ![
         5, // Event Deletion Request
         7, // Reaction
         31234, // Generic Draft Event
       ].includes(r.data.kind)).map(r => {
-        console.log('mapping', r)
         return new Promise((resolve, reject) => {
           const req = tr.objectStore('updates-viewed').get(r.data.id)
           req.onerror = function(e) {
