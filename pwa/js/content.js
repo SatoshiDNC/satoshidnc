@@ -307,7 +307,7 @@ export function getUpdates() {
     }
     req.onsuccess = function(e) {
       console.log('day old success')
-      const c = contacts.map(c => c.hpub)
+      const c = [...contacts.map(c => c.hpub), ...keys.map(k => k.hpub)]
       console.log('contacts', c)
       const updates = e.target.result.filter(r => c.includes(r.data.pubkey))
       console.log('updates', updates)
