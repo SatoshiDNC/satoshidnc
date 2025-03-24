@@ -23,7 +23,7 @@ export function aggregateEvent(e) {
     }
     req.onsuccess = () => {
       if (req.result) { // this event is already in our database
-        console.log(`[${TAG}] skipping duplicate event`, JSON.stringify(e))
+        //console.log(`[${TAG}] skipping duplicate event`, JSON.stringify(e))
         resolve()
       } else {
         const del_os = tr.objectStore('deletions')
@@ -292,7 +292,9 @@ export function getFeed(hpub) {
 }
 
 export function getUpdates() {
+  console.log('getUpdates')
   return new Promise((resolve, reject) => {
+    console.log('getUpdates=>')
     const tr = db.transaction(['events', 'updates-viewed'], 'readonly', { durability: 'strict' })
     const os = tr.objectStore('events')
     const DISTANT_FUTURE = 91729187740298
@@ -304,14 +306,18 @@ export function getUpdates() {
       console.err(e)
     }
     req.onsuccess = function(e) {
+      console.log('day old success')
       const c = contacts.map(c => c.hpub)
+      console.log('contacts', c)
       const updates = e.target.result.filter(r => c.includes(r.data.pubkey))
+      console.log('updates', updates)
       const now = Date.now()
       resolve(Promise.all(updates.filter(r => ![
         5, // Event Deletion Request
         7, // Reaction
         31234, // Generic Draft Event
       ].includes(r.data.kind)).map(r => {
+        console.log('mapping', r)
         return new Promise((resolve, reject) => {
           const req = tr.objectStore('updates-viewed').get(r.data.id)
           req.onerror = function(e) {
