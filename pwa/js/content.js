@@ -336,6 +336,7 @@ export function markUpdateAsViewed(id, hpub, eventCreatedAtTime) {
     const os = tr.objectStore('updates-viewed')
     const req = os.add({ id, eventTimeStamp: eventCreatedAtTime })
     req.onerror = function(e) {
+      if (e?.target?.error?.name === 'ConstraintError') return
       console.error(e)
     }
     req.onsuccess = function(e) {
