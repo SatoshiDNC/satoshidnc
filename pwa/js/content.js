@@ -334,7 +334,7 @@ export function markUpdateAsViewed(id, hpub, eventCreatedAtTime) {
   return new Promise((resolve, reject) => {
     const tr = db.transaction(['updates-viewed'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('updates-viewed')
-    const req = os.put({ id, eventTimeStamp: eventCreatedAtTime })
+    const req = os.add({ id, eventTimeStamp: eventCreatedAtTime })
     req.onerror = function(e) {
       console.err(e)
     }
