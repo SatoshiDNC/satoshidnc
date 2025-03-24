@@ -246,7 +246,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       }).then(event => {
         console.log('Published. (so we believe)')
         console.log(pendingNote)
-        aggregateEvent(pendingNote)
+        aggregateEvent(pendingNote).then(() => { console.log('aggregated') })
         v.closeGad.clickFunc()
         // console.log('sending...')
         // const name = 'relay.satoshidnc.com'
