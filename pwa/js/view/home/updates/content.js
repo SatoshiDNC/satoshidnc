@@ -24,6 +24,7 @@ v.gadgets.push(g = v.selfsGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.selfs.length) return
     const updates = v.query.results.filter(u => v.selfs.includes(u.hpub))
+    console.log(`DISPLAY:`, updates, index, v.selfs[index], v.parent.parent)
     displayView.setContext(updates, v.selfs[index], v.parent.parent)
     g.root.easeOut(g.target)
   }
