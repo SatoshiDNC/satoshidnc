@@ -22,7 +22,7 @@ export function reloadPersonalData() {
   const os = tr.objectStore('personal')
   const req = os.openCursor()
   req.onerror = function(e) {
-     console.err(e)
+     console.error(e)
   }
   const newList = []
   req.onsuccess = function(e) {

@@ -25,7 +25,7 @@ export function reloadRelayContactGraph() {
   const os = tr.objectStore('relay-contact-relations')
   const req = os.openCursor()
   req.onerror = function(e) {
-     console.err(e)
+     console.error(e)
   }
   req.onsuccess = function(e) {
     relays.map(r => r.contacts = [])

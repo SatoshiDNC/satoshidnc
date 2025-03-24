@@ -34,7 +34,7 @@ export function reloadRelays() {
     const os = tr.objectStore('relays')
     const req = os.openCursor()
     req.onerror = function(e) {
-       console.err(e)
+       console.error(e)
     }
     const newList = []
     req.onsuccess = function(e) {

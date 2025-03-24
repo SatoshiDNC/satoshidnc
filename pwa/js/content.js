@@ -270,7 +270,7 @@ export function getFeed(hpub) {
     const os = tr.objectStore('events')
     const req = os.index('hpub_firstSeen').openCursor(window.IDBKeyRange.bound([hpub, 0], [hpub, 91729187740298]), 'prev')
     req.onerror = function(e) {
-      console.err(e)
+      console.error(e)
     }
     const posts = []
     const c = contacts.map(c => c.hpub)
@@ -303,7 +303,7 @@ export function getUpdates() {
     // console.log (`from ${ONE_DAY_AGO_IN_SECONDS} to ${DISTANT_FUTURE}`)
     const req = os.index('createdAt').getAll(IDBKeyRange.bound(ONE_DAY_AGO_IN_SECONDS, DISTANT_FUTURE))
     req.onerror = function(e) {
-      console.err(e)
+      console.error(e)
     }
     req.onsuccess = function(e) {
       console.log('day old success')
@@ -318,7 +318,7 @@ export function getUpdates() {
         return new Promise((resolve, reject) => {
           const req = tr.objectStore('updates-viewed').get(r.data.id)
           req.onerror = function(e) {
-            console.err(e)
+            console.error(e)
           }
           req.onsuccess = function(e) {
             resolve({ ...r, viewed: e.target.result !== undefined })
@@ -336,7 +336,7 @@ export function markUpdateAsViewed(id, hpub, eventCreatedAtTime) {
     const os = tr.objectStore('updates-viewed')
     const req = os.add({ id, eventTimeStamp: eventCreatedAtTime })
     req.onerror = function(e) {
-      console.err(e)
+      console.error(e)
     }
     req.onsuccess = function(e) {
       getUpdates().then(updates => {
@@ -344,7 +344,7 @@ export function markUpdateAsViewed(id, hpub, eventCreatedAtTime) {
         const os = tr.objectStore('updates-new')
         const req = os.put({ hpub, new: updates.filter(u => u.hpub == hpub && !u.viewed).length > 0 })
         req.onerror = function(e) {
-          console.err(e)
+          console.error(e)
         }
         req.onsuccess = function(e) {
           resolve()

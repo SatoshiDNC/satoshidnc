@@ -35,7 +35,7 @@ export function reloadContacts() {
   const os = tr.objectStore('contacts')
   const req = os.openCursor()
   req.onerror = function(e) {
-     console.err(e)
+     console.error(e)
   }
   const newList = []
   req.onsuccess = function(e) {
@@ -61,7 +61,7 @@ export function reloadContactUpdates() {
     const os = tr.objectStore('updates-new')
     const req = os.getAll()
     req.onerror = function(e) {
-       console.err(e)
+       console.error(e)
     }
     req.onsuccess = function(e) {
       contacts.map(c => { delete c.hasNewUpdates })

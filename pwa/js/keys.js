@@ -70,7 +70,7 @@ export function reloadKeys() {
     const os = tr.objectStore('keys')
     const req = os.openCursor()
     req.onerror = function(e) {
-       console.err(e)
+       console.error(e)
     }
     const newList = []
     req.onsuccess = function(e) {
