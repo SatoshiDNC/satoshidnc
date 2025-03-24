@@ -1,6 +1,7 @@
 import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
 import { signBatch as sign, keys, getKeyInfo, putDeviceKey, putVolatileKey, useVolatileKey } from '../../../../keys.js'
+import { aggregateEvent } from '../../../../content.js'
 import { homeRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
@@ -186,6 +187,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     if (contentView.textGad.text) {
       console.log('send')
+      let pendingNote
       sign(v.hpub, [
         {
           kind: 1, content: `${contentView.textGad.text}`,
@@ -206,7 +208,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           return Promise.reject(`error while signing: ${error}`)
         }
       }).then(([event, signed_note]) => {
-        console.log(`signed2: ${JSON.stringify(event)}`)
+        pendingNote = event
         let req = signed_note.tags.filter(t => t[0] == 'IOU')[0][3]
         let method = req.split(' ')[0]
         let route = req.substring(method.length).trim()
@@ -243,6 +245,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         return new Promise(()=>{}) // terminate the chain
       }).then(event => {
         console.log('Published. (so we believe)')
+        console.log(pendingNote)
+        aggregateEvent(pendingNote)
         v.closeGad.clickFunc()
         // console.log('sending...')
         // const name = 'relay.satoshidnc.com'
