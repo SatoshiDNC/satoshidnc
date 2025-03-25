@@ -51,7 +51,7 @@ export function kind0(v, post) {
       }
     }
     if (!duplicate) {
-      keys.push([[remaining], g.content[remaining]])
+      g.keys.push([[remaining], g.content[remaining]])
     }
   }
   // g.tabWidth = 0
