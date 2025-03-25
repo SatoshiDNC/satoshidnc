@@ -72,12 +72,12 @@ export function kind0(v, post) {
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 0.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
-      defaultFont.draw(0,0, t1, v.subtitleColor, v.mat, mat)
+      defaultFont.draw(0,0, t1, colors.inactive, v.mat, mat)
       ts = textHeight/14
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + 7 + textHeight * 1.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
-      defaultFont.draw(0,0, t2, v.titleColor, v.mat, mat)
+      defaultFont.draw(0,0, t2, colors.title, v.mat, mat)
       y += rowHeight
     }
     const displayPictureLine = (key, keyName) => {
@@ -86,13 +86,12 @@ export function kind0(v, post) {
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 0.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
-      defaultFont.draw(0,0, t1, v.subtitleColor, v.mat, mat)
+      defaultFont.draw(0,0, t1, colors.inactive, v.mat, mat)
       const is = imageSize
       drawRect(v, themeColors.inactiveDark, 15, g.y + y + 7 + textHeight * 0.5 - 14 * ts + textHeight * 0.5, is, is)
       y += Math.max(rowHeight, is + 12 + textHeight * 0.5)
     }
     for (const key of g.keys) {
-      console.log(key)
       if (key[0].includes('picture')) {
         displayPictureLine(key[0][0], key[0].join(' / '))
       } else {
