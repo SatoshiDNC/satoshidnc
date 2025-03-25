@@ -25,7 +25,7 @@ export function kind0(v, post) {
   g.renderFunc = v.lastSep.renderFunc
 
   const textHeight = 32
-  const rowHeight = 10 + textHeight * 1.5
+  const rowHeight = 12 + textHeight * 1.5
 
   const g2 = g = new fg.Gadget(v)
   g.type = 'post'
@@ -36,17 +36,11 @@ export function kind0(v, post) {
   } catch {
     g.content = g.data.content
   }
-  // g.remainingKeys = Object.keys(g.content)
-  // g.standardKeys = [
-  //   ['name', 'Name'], // index 0
-  //   ['display_name', 'Name'],
-  //   ['picture', 'Picture'],
-  // ]
   g.keys = []
   for (const remaining of Object.keys(g.content)) {
     let duplicate = false
     for (const key of g.keys) {
-      if (key[1] == g.content[remaining]) {
+      if (key[1] === g.content[remaining]) {
         key[0].push(remaining)
         duplicate = true
       }
@@ -55,21 +49,6 @@ export function kind0(v, post) {
       g.keys.push([[remaining], g.content[remaining]])
     }
   }
-  // g.tabWidth = 0
-  // for (const standardKey of g.standardKeys) {
-  //   if (g.remainingKeys.indexOf(standardKey[0]) >= 0) {
-  //     g.remainingKeys.splice(g.remainingKeys.indexOf(standardKey[0]), 1)
-  //     g.standardKeys.filter(a => a[0] == standardKey[0])[2] = g.content[standardKey[0]]
-  //   }
-  //   g.tabWidth = Math.max(g.tabWidth, defaultFont.calcWidth(`${standardKey[1]}: `))
-  // }
-  // if (g.standardKeys.length > 0) {
-  //   if (!g.standardKeys.filter(a => a[0] == 'display_name')[0]?.[2]) {
-  //     g.standardKeys.filter(a => a[0] == 'display_name')[0][2] = g.standardKeys.filter(a => a[0] == 'name')[0]?.[2]
-  //   }
-  //   g.standardKeys.splice(0 /* see index 0 */, 1)
-  // }
-  // g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length - 1) + 15 + Math.max(rowHeight, 316 + 12)
   g.h = 50 + rowHeight * (g.keys.length - 1) + 15 + Math.max(rowHeight, 316 + 12)
   g.renderFunc = function() {
     const g = this, v = g.viewport
@@ -95,7 +74,7 @@ export function kind0(v, post) {
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
       ts = textHeight/14
       mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 1.5, 0])
+      mat4.translate(mat, mat, [15, g.y + y + 7 + textHeight * 1.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t2, v.titleColor, v.mat, mat)
       y += rowHeight
@@ -108,18 +87,8 @@ export function kind0(v, post) {
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
       const is = 316
-      drawRect(v, themeColors.inactiveDark, 15, g.y + y + 5 + textHeight * 0.5 - 14 * ts + textHeight * 0.5, is, is)
+      drawRect(v, themeColors.inactiveDark, 15, g.y + y + 7 + textHeight * 0.5 - 14 * ts + textHeight * 0.5, is, is)
       y += Math.max(rowHeight, is + 12 + textHeight * 0.5)
-    }
-    const displayLine = (key, keyName) => {
-      const color = ['displayName', 'username'].includes(key)? v.titleColorDeprecated: v.titleColor
-      const t = `${keyName||key}: ${g.content[key]}`
-      const ts = 32/14
-      mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
-      mat4.scale(mat, mat, [ts, ts, 1])
-      defaultFont.draw(0,0, t, color, v.mat, mat)
-      y += rowHeight
     }
     for (const key of g.keys) {
       if (key[0].includes('picture')) {
@@ -128,10 +97,6 @@ export function kind0(v, post) {
         displayStandardLine(key[0][0], key[0].join(' / '))
       }
     }
-    
-    // for (const key of g.remainingKeys) {
-    //   displayLine(key)
-    // }
   }
 
   let index = v.gadgets.findIndex(o => o.key == 'profile')
