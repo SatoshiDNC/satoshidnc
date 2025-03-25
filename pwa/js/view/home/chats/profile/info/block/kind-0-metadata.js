@@ -68,6 +68,10 @@ export function kind0(v, post) {
     const displayStandardLine = (key, keyName) => {
       const t1 = `${keyName||key}:`
       const t2 = `${g.content[key]}`
+      let t3 = ''
+      if (key === 'created_at' && `${g.content[key]}` === `${+g.content[key]}`) {
+        t3 = new Date(g.content[key]).toLocaleString()
+      }
       let ts = textHeight/14 * 0.5
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 0.5, 0])
@@ -77,7 +81,7 @@ export function kind0(v, post) {
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + 7 + textHeight * 1.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
-      defaultFont.draw(0,0, t2, colors.title, v.mat, mat)
+      defaultFont.draw(0,0, t2 + ' ' + t3, colors.title, v.mat, mat)
       y += rowHeight
     }
     const displayPictureLine = (key, keyName) => {
