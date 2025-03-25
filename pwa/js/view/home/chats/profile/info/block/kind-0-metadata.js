@@ -89,12 +89,12 @@ export function kind0(v, post) {
       const t2 = `${g.content[key]}`
       let ts = 32/14 * 0.25
       mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
+      mat4.translate(mat, mat, [15, g.y + y + rowHeight * 0.25, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
       ts = 32/14 * 0.75
       mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + rowHeight + rowHeight * 0.25, 0])
+      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t2, v.titleColor, v.mat, mat)
       y += rowHeight
@@ -103,7 +103,7 @@ export function kind0(v, post) {
       const t1 = `${keyName||key}:`
       const ts = 32/14 * 0.25
       mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
+      mat4.translate(mat, mat, [15, g.y + y + rowHeight * 0.25, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
       const is = 316
