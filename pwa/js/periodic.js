@@ -17,12 +17,13 @@ contactDependencies.push(() => {
 
 let lastFulfillment = 0
 export function minutelyUI() {
-  homeRelay().then(relay => {
 
-    // floodgate
-    const now = Date.now()
-    if (now - lastFulfillment < ONE_MINUTE_IN_MILLISECONDS) return
-    lastFulfillment = now
+  // floodgate
+  const now = Date.now()
+  if (now - lastFulfillment < ONE_MINUTE_IN_MILLISECONDS) return
+  lastFulfillment = now
+
+  homeRelay().then(relay => {
 
     if (!relay.feedRequested) {
       reqFeed()
@@ -33,7 +34,7 @@ export function minutelyUI() {
     deleteExpiredEvents().then(() => {
 
       // send test message
-      if (now - (relay.tempLastSend||0) > 2 * ONE_MINUTE_IN_MILLISECONDS) {
+      if (now - (relay.tempLastSend||now) > 2 * ONE_MINUTE_IN_MILLISECONDS) {
         relay.tempLastSend = now
         sign(defaultKey, {
           kind: 1,
