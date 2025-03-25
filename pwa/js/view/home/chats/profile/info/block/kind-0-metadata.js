@@ -70,7 +70,7 @@ export function kind0(v, post) {
       const t2 = `${g.content[key]}`
       let t3 = ''
       if (key === 'created_at' && `${g.content[key]}` === `${+g.content[key]}`) {
-        t3 = new Date(g.content[key]).toLocaleString()
+        t3 = new Date(g.content[key] * 1000).toLocaleString()
       }
       let ts = textHeight/14 * 0.5
       mat4.identity(mat)
