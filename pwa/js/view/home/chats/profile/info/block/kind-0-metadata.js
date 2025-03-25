@@ -35,27 +35,41 @@ export function kind0(v, post) {
   } catch {
     g.content = g.data.content
   }
-  g.remainingKeys = Object.keys(g.content)
-  g.standardKeys = [
-    ['name', 'Name'], // index 0
-    ['display_name', 'Name'],
-    ['picture', 'Picture'],
-  ]
-  g.tabWidth = 0
-  for (const standardKey of g.standardKeys) {
-    if (g.remainingKeys.indexOf(standardKey[0]) >= 0) {
-      g.remainingKeys.splice(g.remainingKeys.indexOf(standardKey[0]), 1)
-      g.standardKeys.filter(a => a[0] == standardKey[0])[2] = g.content[standardKey[0]]
+  // g.remainingKeys = Object.keys(g.content)
+  // g.standardKeys = [
+  //   ['name', 'Name'], // index 0
+  //   ['display_name', 'Name'],
+  //   ['picture', 'Picture'],
+  // ]
+  g.keys = []
+  for (const remaining of Object.keys(g.content)) {
+    let duplicate = false
+    for (const key of g.keys) {
+      if (key[1] == g.content[remaining]) {
+        key[0].push(remaining)
+        duplicate = true
+      }
     }
-    g.tabWidth = Math.max(g.tabWidth, defaultFont.calcWidth(`${standardKey[1]}: `))
-  }
-  if (g.standardKeys.length > 0) {
-    if (!g.standardKeys.filter(a => a[0] == 'display_name')[0]?.[2]) {
-      g.standardKeys.filter(a => a[0] == 'display_name')[0][2] = g.standardKeys.filter(a => a[0] == 'name')[0]?.[2]
+    if (!duplicate) {
+      keys.push([[remaining], g.content[remaining]])
     }
-    g.standardKeys.splice(0 /* see index 0 */, 1)
   }
-  g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length - 1) + 15 + Math.max(rowHeight, 316 + 12)
+  // g.tabWidth = 0
+  // for (const standardKey of g.standardKeys) {
+  //   if (g.remainingKeys.indexOf(standardKey[0]) >= 0) {
+  //     g.remainingKeys.splice(g.remainingKeys.indexOf(standardKey[0]), 1)
+  //     g.standardKeys.filter(a => a[0] == standardKey[0])[2] = g.content[standardKey[0]]
+  //   }
+  //   g.tabWidth = Math.max(g.tabWidth, defaultFont.calcWidth(`${standardKey[1]}: `))
+  // }
+  // if (g.standardKeys.length > 0) {
+  //   if (!g.standardKeys.filter(a => a[0] == 'display_name')[0]?.[2]) {
+  //     g.standardKeys.filter(a => a[0] == 'display_name')[0][2] = g.standardKeys.filter(a => a[0] == 'name')[0]?.[2]
+  //   }
+  //   g.standardKeys.splice(0 /* see index 0 */, 1)
+  // }
+  // g.h = 50 + rowHeight * (g.standardKeys.length + g.remainingKeys.length - 1) + 15 + Math.max(rowHeight, 316 + 12)
+  g.h = 50 + rowHeight * (g.keys.length - 1) + 15 + Math.max(rowHeight, 316 + 12)
   g.renderFunc = function() {
     const g = this, v = g.viewport
     const mat = mat4.create()
@@ -105,17 +119,17 @@ export function kind0(v, post) {
       defaultFont.draw(0,0, t, color, v.mat, mat)
       y += rowHeight
     }
-    for (const standardKey of g.standardKeys) {
-      if (standardKey[0] == 'picture') {
-        displayPictureLine(standardKey[0], standardKey[1])
+    for (const key of g.keys) {
+      if (key[0].includes('picture')) {
+        displayPictureLine(key[0][0], key[0].join(' / '))
       } else {
-        displayStandardLine(standardKey[0], standardKey[1])
+        displayStandardLine(key[0][0], key[0].join(' / '))
       }
     }
     
-    for (const key of g.remainingKeys) {
-      displayLine(key)
-    }
+    // for (const key of g.remainingKeys) {
+    //   displayLine(key)
+    // }
   }
 
   let index = v.gadgets.findIndex(o => o.key == 'profile')
