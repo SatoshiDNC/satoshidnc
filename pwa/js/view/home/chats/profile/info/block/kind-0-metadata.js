@@ -87,27 +87,28 @@ export function kind0(v, post) {
     const displayStandardLine = (key, keyName) => {
       const t1 = `${keyName||key}:`
       const t2 = `${g.content[key]}`
-      const ts = 32/14
+      let ts = 32/14 * 0.25
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
+      ts = 32/14 * 0.75
       mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
+      mat4.translate(mat, mat, [15, g.y + y + rowHeight + rowHeight * 0.25, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
-      defaultFont.draw(g.tabWidth,0, t2, v.titleColor, v.mat, mat)
+      defaultFont.draw(0,0, t2, v.titleColor, v.mat, mat)
       y += rowHeight
     }
     const displayPictureLine = (key, keyName) => {
       const t1 = `${keyName||key}:`
-      const ts = 32/14
+      const ts = 32/14 * 0.25
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
       const is = 316
-      drawRect(v, themeColors.inactiveDark, 15 + g.tabWidth * ts, g.y + y + rowHeight - 14 * ts, is, is)
-      y += Math.max(rowHeight, is + 12)
+      drawRect(v, themeColors.inactiveDark, 15, g.y + y + rowHeight - 14 * ts + rowHeight * 0.25, is, is)
+      y += Math.max(rowHeight, is + 12 + rowHeight * 0.25)
     }
     const displayLine = (key, keyName) => {
       const color = ['displayName', 'username'].includes(key)? v.titleColorDeprecated: v.titleColor
