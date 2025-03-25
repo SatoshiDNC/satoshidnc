@@ -24,7 +24,8 @@ export function kind0(v, post) {
   g.type = '-', g.h = 22
   g.renderFunc = v.lastSep.renderFunc
 
-  const rowHeight = 42
+  const textHeight = 32
+  const rowHeight = 10 + textHeight * 1.5
 
   const g2 = g = new fg.Gadget(v)
   g.type = 'post'
@@ -87,28 +88,28 @@ export function kind0(v, post) {
     const displayStandardLine = (key, keyName) => {
       const t1 = `${keyName||key}:`
       const t2 = `${g.content[key]}`
-      let ts = 32/14 * 0.25
+      let ts = textHeight/14 * 0.5
       mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + rowHeight * 0.25, 0])
+      mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 0.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
-      ts = 32/14 * 0.75
+      ts = textHeight/14
       mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + rowHeight, 0])
+      mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 1.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t2, v.titleColor, v.mat, mat)
       y += rowHeight
     }
     const displayPictureLine = (key, keyName) => {
       const t1 = `${keyName||key}:`
-      const ts = 32/14 * 0.25
+      const ts = textHeight/14 * 0.5
       mat4.identity(mat)
-      mat4.translate(mat, mat, [15, g.y + y + rowHeight * 0.25, 0])
+      mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 0.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.titleColor, v.mat, mat)
       const is = 316
-      drawRect(v, themeColors.inactiveDark, 15, g.y + y + rowHeight - 14 * ts + rowHeight * 0.25, is, is)
-      y += Math.max(rowHeight, is + 12 + rowHeight * 0.25)
+      drawRect(v, themeColors.inactiveDark, 15, g.y + y + 5 + textHeight * 0.5 - 14 * ts + textHeight * 0.5, is, is)
+      y += Math.max(rowHeight, is + 12 + textHeight * 0.5)
     }
     const displayLine = (key, keyName) => {
       const color = ['displayName', 'username'].includes(key)? v.titleColorDeprecated: v.titleColor
