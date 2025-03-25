@@ -81,7 +81,7 @@ export function kind0(v, post) {
       mat4.identity(mat)
       mat4.translate(mat, mat, [15, g.y + y + 7 + textHeight * 1.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
-      defaultFont.draw(0,0, t2 + ' ' + t3, colors.title, v.mat, mat)
+      defaultFont.draw(0,0, t2, colors.title, v.mat, mat)
       if (t3) {
         defaultFont.draw(0,0, ' / ', colors.inactive, v.mat, mat)
         defaultFont.draw(0,0, t3, colors.title, v.mat, mat)
