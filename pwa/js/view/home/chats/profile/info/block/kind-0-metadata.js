@@ -49,7 +49,7 @@ export function kind0(v, post) {
       g.keys.push([[remaining], g.content[remaining]])
     }
   }
-  g.h = 50 + rowHeight * (g.keys.length - 1) + 15 + Math.max(rowHeight, 316 + 12)
+  g.h = 50 + rowHeight * (g.keys.length - 1) + 15 + Math.max(rowHeight, is + 12 + textHeight * 0.5)
   g.renderFunc = function() {
     const g = this, v = g.viewport
     const mat = mat4.create()
