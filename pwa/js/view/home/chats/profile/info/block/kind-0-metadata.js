@@ -92,6 +92,7 @@ export function kind0(v, post) {
       y += Math.max(rowHeight, is + 12 + textHeight * 0.5)
     }
     for (const key of g.keys) {
+      console.log(key)
       if (key[0].includes('picture')) {
         displayPictureLine(key[0][0], key[0].join(' / '))
       } else {
