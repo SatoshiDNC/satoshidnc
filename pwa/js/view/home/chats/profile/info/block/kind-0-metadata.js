@@ -26,6 +26,7 @@ export function kind0(v, post) {
 
   const textHeight = 32
   const rowHeight = 12 + textHeight * 1.5
+  const imageSize = 316
 
   const g2 = g = new fg.Gadget(v)
   g.type = 'post'
@@ -49,7 +50,7 @@ export function kind0(v, post) {
       g.keys.push([[remaining], g.content[remaining]])
     }
   }
-  g.h = 50 + rowHeight * (g.keys.length - 1) + 15 + Math.max(rowHeight, is + 12 + textHeight * 0.5)
+  g.h = 50 + rowHeight * (g.keys.length - 1) + 15 + Math.max(rowHeight, imageSize + 12 + textHeight * 0.5)
   g.renderFunc = function() {
     const g = this, v = g.viewport
     const mat = mat4.create()
@@ -86,7 +87,7 @@ export function kind0(v, post) {
       mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 0.5, 0])
       mat4.scale(mat, mat, [ts, ts, 1])
       defaultFont.draw(0,0, t1, v.subtitleColor, v.mat, mat)
-      const is = 316
+      const is = imageSize
       drawRect(v, themeColors.inactiveDark, 15, g.y + y + 7 + textHeight * 0.5 - 14 * ts + textHeight * 0.5, is, is)
       y += Math.max(rowHeight, is + 12 + textHeight * 0.5)
     }
