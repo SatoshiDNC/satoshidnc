@@ -192,15 +192,11 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       const cryption_key = randomBytes(44) // generate a fresh encryption/decryption key for every upload
       console.log(cryption_key)
       const plaintext = new Uint8Array(new TextEncoder().encode(contentView.textGad.text))
-      console.log('plaintext:', plaintext)
       const ciphertext = crypt(0, plaintext, cryption_key)
-      console.log('ciphertext:', ciphertext)
-      const deciphered = crypt(0, ciphertext, cryption_key)
-      console.log('deciphered:', deciphered)
       let pendingNote
       sign(v.hpub, [
         {
-          kind: 1, content: `${plaintext}`,
+          kind: 1, content: `${ciphertext.map(v => (v<16?'0':'')+v.toString(16))}`,
           tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`], ['encryption', 'cc20']],
         }, {
           kind: 555,
