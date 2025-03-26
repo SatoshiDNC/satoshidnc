@@ -16,6 +16,11 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+v.displayAction = function(updates, hpub, returnView, target) {
+  console.log(`DISPLAY ACTION:`, updates, hpub, returnView, target)
+  displayView.setContext(updates, hpub, returnView)
+  g.root.easeOut(target)
+}
 v.gadgets.push(g = v.selfsGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(e) {
@@ -24,9 +29,7 @@ v.gadgets.push(g = v.selfsGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.selfs.length) return
     const updates = v.query.results.filter(u => v.selfs.includes(u.hpub))
-    console.log(`DISPLAY:`, updates, index, v.selfs[index], v.parent.parent)
-    displayView.setContext(updates, v.selfs[index], v.parent.parent)
-    g.root.easeOut(g.target)
+    v.displayAction(updates, v.selfs[index], v.parent.parent, g.target)
   }
 v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -36,9 +39,7 @@ v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.recents.length) return
     const updates = v.query.results.filter(u => v.recents.includes(u.hpub))
-    console.log(`DISPLAY:`, updates, index, v.recents[index], v.parent.parent)
-    displayView.setContext(updates, v.recents[index], v.parent.parent)
-    g.root.easeOut(g.target)
+    v.displayAction(updates, v.recents[index], v.parent.parent, g.target)
   }
 v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -48,9 +49,7 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.viewed.length) return
     const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
-    console.log(`DISPLAY:`, updates, updates[0].hpub, v.parent.parent)
-    displayView.setContext(updates, updates[0].hpub, v.parent.parent)
-    g.root.easeOut(g.target)
+    v.displayAction(updates, updates[0].hpub, v.parent.parent, g.target)
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
