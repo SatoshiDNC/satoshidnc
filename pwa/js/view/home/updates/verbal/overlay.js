@@ -193,11 +193,11 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       console.log(cryption_key)
       const plaintext = new Uint8Array(new TextEncoder().encode(contentView.textGad.text))
       const ciphertext = crypt(0, plaintext, cryption_key)
-      console.log(ciphertext, ciphertext.map(v => (v<16?'0':'')+v.toString(16)).join())
+      console.log(ciphertext, Array.from(ciphertext).map(v => (v<16?'0':'')+v.toString(16)).join())
       let pendingNote
       sign(v.hpub, [
         {
-          kind: 1, content: `${ciphertext.map(v => v).join()}`,
+          kind: 1, content: `${Array.from(ciphertext).map(v => (v<16?'0':'')+v.toString(16)).join()}`,
           tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`], ['encryption', 'cc20']],
         }, {
           kind: 555,
