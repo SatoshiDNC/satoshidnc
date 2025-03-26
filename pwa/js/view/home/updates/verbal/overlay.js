@@ -197,7 +197,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       let pendingNote
       sign(v.hpub, [
         {
-          kind: 1, content: `${ciphertext.map(v => (v<16?'0':'')+v.toString(16)).join()}`,
+          kind: 1, content: `${ciphertext.map(v => v).join()}`,
           tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`], ['encryption', 'cc20']],
         }, {
           kind: 555,
