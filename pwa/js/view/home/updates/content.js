@@ -26,6 +26,7 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
   let new_count = 0
   let to_sign = []
   let keys_owed = []
+  let total_cost = 0
   for (const u of updates) if (u.hpub == hpub && !u.viewed) {
     new_count += 1
     to_sign.push({
@@ -34,20 +35,33 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
       tags: [['e',`${u.data.id}`], ['p',`${u.hpub}`], ['k',`${u.data.kind}`]],
     })
     keys_owed.push(u.data.id)
+    total_cost += (u.data.tags.filter(t => t[0] == 'c')?.[0][1] || 0)
   }
-  to_sign.unshift({
-    kind: 555,
-    tags: [['IOU',`${new_count}`,'sat',`updates`], ...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['p',`${hpub}`]],
-  })
+  if (total_cost > 0) {
+    to_sign.unshift({
+      kind: 555,
+      tags: [['IOU',`${total_cost}`,'sat',`updates`], ...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['IOU',`${new_count}`,'x',`reaction`], ['p',`${hpub}`]],
+    })
+  } else if (total_cost < 0) {
+    to_sign.unshift({
+      kind: 555,
+      tags: [['UOI',`${-total_cost}`,'sat',`updates`], ...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['IOU',`${new_count}`,'x',`reaction`], ['p',`${hpub}`]],
+    })
+  } else {
+    to_sign.unshift({
+      kind: 555,
+      tags: [...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['IOU',`${new_count}`,'x',`reaction`], ['p',`${hpub}`]],
+    })
+  }
   to_sign.unshift({
     kind: 555,
     tags: [['IOU','1','sat',`POST /unlock?id=${keys_owed.join(',')}`], ['p',`${satoshi_hpub}`]],
   })
-  sign(defaultKey, to_sign).then(([auth, tip, ...checkmarks]) => {
+  sign(defaultKey, to_sign).then(([auth, deal, ...checkmarks]) => {
     console.log(`auth: ${JSON.stringify(auth)}`)
-    console.log(`tip: ${JSON.stringify(tip)}`)
+    console.log(`tip: ${JSON.stringify(deal)}`)
     console.log(`reactions: ${JSON.stringify(checkmarks)}`)
-    return Promise.resolve([auth, tip, ...checkmarks])
+    return Promise.resolve([auth, deal, ...checkmarks])
   }).catch(error => {
     if (error.endsWith?.(': user canceled')) {
       console.log(error)
@@ -55,7 +69,7 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
     } else {
       return Promise.reject(`error while signing: ${error}`)
     }
-  }).then(([auth, tip, ...checkmarks]) => {
+  }).then(([auth, deal, ...checkmarks]) => {
     checkmark_events = checkmarks
     let req = auth.tags.filter(t => t[0] == 'IOU')[0][3]
     let method = req.split(' ')[0]
@@ -69,7 +83,7 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
         'Content-Type': 'application/json',
         'Authorization': `SatoshiDNC ${JSON.stringify(auth)}`,
       },
-      body: JSON.stringify(tip)
+      body: JSON.stringify(deal)
     }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => {
       if (response.ok) {
         return Promise.resolve(response.json())
