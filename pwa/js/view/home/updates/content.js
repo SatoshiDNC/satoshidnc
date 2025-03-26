@@ -48,7 +48,7 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
     console.log(`reactions: ${JSON.stringify(checkmarks)}`)
     return Promise.resolve([auth, tip, ...checkmarks])
   }).catch(error => {
-    if (error.endsWith(': user canceled')) {
+    if (error.endsWith?.(': user canceled')) {
       console.log(error)
       return new Promise(()=>{}) // terminate the chain
     } else {
