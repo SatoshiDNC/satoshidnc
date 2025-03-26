@@ -35,7 +35,7 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
       tags: [['e',`${u.data.id}`], ['p',`${u.hpub}`], ['k',`${u.data.kind}`]],
     })
     keys_owed.push(u.data.id)
-    total_cost += (u.data.tags.filter(t => t[0] == 'c')?.[0][1] || 0)
+    total_cost += (u.data.tags.filter(t => t[0] == 'c')?.[0]?.[1] || 0)
   }
   if (total_cost > 0) {
     to_sign.unshift({
