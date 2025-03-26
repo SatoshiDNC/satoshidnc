@@ -197,7 +197,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       sign(v.hpub, [
         {
           kind: 1, content: `${Array.from(ciphertext).map(v => (v<16?'0':'')+v.toString(16)).join('')}`,
-          tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`], ['encryption', 'cc20']],
+          tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`], ['encryption', 'cc20s10' /*chacha20 stream, 2^10 bytes per chunk*/]],
         }, {
           kind: 555,
           tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
