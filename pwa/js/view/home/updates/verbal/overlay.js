@@ -191,7 +191,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       console.log('send')
       const cryption_key = randomBytes(44) // generate a fresh encryption/decryption key for every upload
       console.log(cryption_key)
-      const plaintext = contentView.textGad.text
+      const plaintext = new Uint8Array(contentView.textGad.text)
       console.log('plaintext:', plaintext)
       const ciphertext = crypt(0, plaintext, cryption_key)
       console.log('ciphertext:', ciphertext)
