@@ -8,6 +8,7 @@ import { getPubkey } from '../../../../nostor-util.js'
 import { getKeyboardInput } from '../../../util.js'
 import * as nip19 from 'nostr-tools/nip19'
 import { encrypt, decrypt } from '../../../../storage.js'
+import { randomBytes } from '@noble/hashes/utils'
 
 let v, g
 export const overlayView = v = new fg.View(null)
