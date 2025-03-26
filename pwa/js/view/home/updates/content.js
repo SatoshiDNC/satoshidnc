@@ -5,7 +5,7 @@ import { addedOn, updatePostedAsOf } from '../../util.js'
 import { getUpdates, eventTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
 import { barBot } from '../bar-bot.js'
-import { signBatch as sign, keys } from '../../../keys.js'
+import { signBatch as sign, defaultKey, keys } from '../../../keys.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -43,7 +43,7 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
     kind: 555,
     tags: [['IOU','1','sat',`POST /unlock?id=${keys_owed.join(',')}`], ['p',`${satoshi_hpub}`]],
   })
-  sign(v.hpub, to_sign).then(([auth, tip, ...checkmarks]) => {
+  sign(defaultKey, to_sign).then(([auth, tip, ...checkmarks]) => {
     console.log(`auth: ${JSON.stringify(auth)}`)
     console.log(`tip: ${JSON.stringify(tip)}`)
     console.log(`reactions: ${JSON.stringify(checkmarks)}`)
