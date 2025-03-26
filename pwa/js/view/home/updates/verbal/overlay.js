@@ -196,10 +196,10 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           kind: 555,
           tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
         }
-      ]).then(([event, signed_note]) => {
-        console.log(`signed: ${JSON.stringify(event)}`)
-        console.log(`signed note: ${JSON.stringify(signed_note)}`)
-        return Promise.resolve([event, signed_note])
+      ]).then(([event_object, auth]) => {
+        console.log(`object: ${JSON.stringify(event_object)}`)
+        console.log(`auth: ${JSON.stringify(auth)}`)
+        return Promise.resolve([event_object, auth])
       }).catch(error => {
         if (error.endsWith(': user canceled')) {
           console.log(error)
@@ -207,9 +207,9 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         } else {
           return Promise.reject(`error while signing: ${error}`)
         }
-      }).then(([event, signed_note]) => {
-        pendingNote = event
-        let req = signed_note.tags.filter(t => t[0] == 'IOU')[0][3]
+      }).then(([event_object, auth]) => {
+        pendingNote = event_object
+        let req = auth.tags.filter(t => t[0] == 'IOU')[0][3]
         let method = req.split(' ')[0]
         let route = req.substring(method.length).trim()
         console.log(`${method} ${route}`)
@@ -219,9 +219,9 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': `SatoshiDNC ${JSON.stringify(signed_note)}`,
+            'Authorization': `SatoshiDNC ${JSON.stringify(auth)}`,
           },
-          body: JSON.stringify(event)
+          body: JSON.stringify({ object: event_object })
         }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => {
           if (response.ok) {
             return Promise.resolve(response.json())
@@ -243,7 +243,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         console.error(m)
         alert(m)
         return new Promise(()=>{}) // terminate the chain
-      }).then(event => {
+      }).then(() => {
         console.log('Published. (so we believe)')
         console.log(pendingNote)
         aggregateEvent(pendingNote).then(() => {
