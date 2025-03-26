@@ -11,6 +11,8 @@ import { encrypt, decrypt } from '../../../../storage.js'
 import { randomBytes } from '@noble/hashes/utils'
 import { crypt } from '../../../../cryption.js'
 
+const ONE_DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
+
 let v, g
 export const overlayView = v = new fg.View(null)
 v.name = Object.keys({overlayView}).pop()
@@ -197,7 +199,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       sign(v.hpub, [
         {
           kind: 1, content: `${Array.from(ciphertext).map(v => (v<16?'0':'')+v.toString(16)).join('')}`,
-          tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`], ['encryption', 'cc20s10' /*chacha20 stream, 2^10 bytes per chunk*/], ['c', '1']],
+          tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`], ['expiration', `${Math.ceil((now + ONE_DAY_IN_MILLISECONDS)/1000)}`], ['encryption', 'cc20s10' /*chacha20 stream, 2^10 bytes per chunk*/], ['c', '1']],
         }, {
           kind: 555,
           tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
