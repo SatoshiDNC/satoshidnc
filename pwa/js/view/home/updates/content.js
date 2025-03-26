@@ -35,31 +35,27 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
       tags: [['e',`${u.data.id}`], ['p',`${u.hpub}`], ['k',`${u.data.kind}`]],
     })
     keys_owed.push(u.data.id)
-    total_cost += +(u.data.tags.filter(t => t[0] == 'c')?.[0]?.[1] || '0')
+    total_cost += Math.max(1 /* enforce non-zero cost (at all costs) */, +(u.data.tags.filter(t => t[0] == 'c')?.[0]?.[1] || '0'))
   }
-  if (total_cost > 0) {
-    to_sign.unshift({
-      kind: 555,
-      tags: [['IOU',`${total_cost}`,'sat',`updates`], ...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['IOU',`${new_count}`,'x',`reaction`], ['p',`${hpub}`]],
-    })
-  } else if (total_cost < 0) {
-    to_sign.unshift({
-      kind: 555,
-      tags: [['UOI',`${-total_cost}`,'sat',`updates`], ...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['IOU',`${new_count}`,'x',`reaction`], ['p',`${hpub}`]],
-    })
-  } else {
-    to_sign.unshift({
-      kind: 555,
-      tags: [...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['IOU',`${new_count}`,'x',`reaction`], ['p',`${hpub}`]],
-    })
+  if (new_count <= 0) {
+    console.log('unexpected: no updates')
+    return
   }
+  if (total_cost <= 0) {
+    console.log('unexpected: no cost')
+    return
+  }
+  to_sign.unshift({
+    kind: 555,
+    tags: [['IOU',`${total_cost}`,'sat',`updates`], ...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['IOU',`${new_count}`,'x',`reaction`], ['p',`${hpub}`]],
+  })
   to_sign.unshift({
     kind: 555,
     tags: [['IOU','1','sat',`POST /unlock?id=${keys_owed.join(',')}`], ['p',`${satoshi_hpub}`]],
   })
   sign(defaultKey, to_sign).then(([auth, deal, ...checkmarks]) => {
     console.log(`auth: ${JSON.stringify(auth)}`)
-    console.log(`tip: ${JSON.stringify(deal)}`)
+    console.log(`deal: ${JSON.stringify(deal)}`)
     console.log(`reactions: ${JSON.stringify(checkmarks)}`)
     return Promise.resolve([auth, deal, ...checkmarks])
   }).catch(error => {
