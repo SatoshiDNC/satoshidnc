@@ -9,6 +9,7 @@ import { getKeyboardInput } from '../../../util.js'
 import * as nip19 from 'nostr-tools/nip19'
 import { encrypt, decrypt } from '../../../../storage.js'
 import { randomBytes } from '@noble/hashes/utils'
+import { crypt } from '../../../../cryption.js'
 
 let v, g
 export const overlayView = v = new fg.View(null)
@@ -190,10 +191,16 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       console.log('send')
       const cryption_key = randomBytes(44) // generate a fresh encryption/decryption key for every upload
       console.log(cryption_key)
+      const plaintext = contentView.textGad.text
+      console.log('plaintext:', plaintext)
+      const ciphertext = crypt(0, plaintext, cryption_key)
+      console.log('ciphertext:', ciphertext)
+      const deciphered = crypt(0, ciphertext, cryption_key)
+      console.log('deciphered:', deciphered)
       let pendingNote
       sign(v.hpub, [
         {
-          kind: 1, content: `${contentView.textGad.text}`,
+          kind: 1, content: `${plaintext}`,
           tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`], ['encryption', 'cc20']],
         }, {
           kind: 555,
