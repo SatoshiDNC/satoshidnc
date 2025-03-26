@@ -228,7 +228,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             'Authorization': `SatoshiDNC ${JSON.stringify(auth)}`,
           },
           body: JSON.stringify({
-            object: event_object,
+            event: event_object,
             key: Array.from(cryption_key).map(v => (v<16?'0':'')+v.toString(16)).join('')
           }),
         }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => {
