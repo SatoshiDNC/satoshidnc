@@ -5,7 +5,7 @@ import { addedOn, updatePostedAsOf } from '../../util.js'
 import { getUpdates, eventTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
 import { barBot } from '../bar-bot.js'
-import { keys } from '../../../keys.js'
+import { signBatch as sign, keys } from '../../../keys.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
