@@ -18,8 +18,84 @@ v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.displayAction = function(updates, hpub, returnView, root, target) {
   console.log(`DISPLAY ACTION:`, updates, hpub, returnView, root, target)
-  displayView.setContext(updates, hpub, returnView)
-  root.easeOut(target)
+
+  // TODO: sign pledge to zap author in exchange for decryption key
+  console.log('send')
+  let checkmark_events = []
+  let new_count = 0
+  let to_sign = []
+  let keys_owed = []
+  for (const u of updates) if (u.hpub == hpub && !u.viewed) {
+    new_count += 1
+    to_sign.push({
+      kind: 7,
+      content: '✓',
+      tags: [['e',`${u.data.id}`], ['p',`${u.hpub}`], ['k',`${u.data.kind}`]],
+    })
+    keys_owed.push(u.data.id)
+  }
+  to_sign.unshift({
+    kind: 555,
+    tags: [['IOU',`${new_count}`,'sat',`updates`], ...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['p',`${hpub}`]],
+  })
+  to_sign.unshift({
+    kind: 555,
+    tags: [['IOU','1','sat',`POST /unlock?id=${keys_owed.join(',')}`], ['p',`${satoshi_hpub}`]],
+  })
+  sign(v.hpub, to_sign).then(([auth, tip, ...checkmarks]) => {
+    console.log(`auth: ${JSON.stringify(auth)}`)
+    console.log(`tip: ${JSON.stringify(tip)}`)
+    console.log(`reactions: ${JSON.stringify(checkmarks)}`)
+    return Promise.resolve([auth, tip, ...checkmarks])
+  }).catch(error => {
+    if (error.endsWith(': user canceled')) {
+      console.log(error)
+      return new Promise(()=>{}) // terminate the chain
+    } else {
+      return Promise.reject(`error while signing: ${error}`)
+    }
+  }).then(([auth, tip, ...checkmarks]) => {
+    checkmark_events = checkmarks
+    let req = auth.tags.filter(t => t[0] == 'IOU')[0][3]
+    let method = req.split(' ')[0]
+    let route = req.substring(method.length).trim()
+    console.log(`${method} ${route}`)
+    return fetch(`${bapi_baseurl}${route}`, {
+      method: `${method}`,
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `SatoshiDNC ${JSON.stringify(auth)}`,
+      },
+      body: JSON.stringify(tip)
+    }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => {
+      if (response.ok) {
+        return Promise.resolve(response.json())
+      } else {
+        return new Promise((resolve, reject) => {
+          response.json().then(json => reject(json.message))
+        })
+      }
+    }).catch(error => Promise.reject(`request failed: ${error}`)).then(json => {
+      console.log(json)
+      console.log('pending checkmarks:', checkmark_events)
+      if (json.message == 'done') {
+        return Promise.resolve(json)
+      } else {
+        return Promise.reject(json.message)
+      }
+    }).catch(error => Promise.reject(`error: ${error}`))
+  }).catch(error => {
+    let m = `view failed: ${error}`
+    console.error(m)
+    alert(m)
+    return new Promise(()=>{}) // terminate the chain
+  }).then(json => {
+    console.log('Result:', json)
+    displayView.setContext(updates, hpub, returnView)
+    root.easeOut(target)
+  })
 }
 v.gadgets.push(g = v.selfsGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
