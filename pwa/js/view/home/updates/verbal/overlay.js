@@ -187,11 +187,13 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     if (contentView.textGad.text) {
       console.log('send')
+      const cryption_key = randomBytes(44) // generate a fresh encryption/decryption key for every upload
+      console.log(cryption_key)
       let pendingNote
       sign(v.hpub, [
         {
           kind: 1, content: `${contentView.textGad.text}`,
-          tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`]],
+          tags: [['bgcolor', `${rrggbb(contentView.bgColor)}`], ['encryption', 'cc20']],
         }, {
           kind: 555,
           tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
