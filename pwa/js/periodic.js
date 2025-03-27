@@ -33,21 +33,21 @@ export function minutelyUI() {
     // delete expired events
     deleteExpiredEvents().then(() => {
 
-      // send test message
-      if (now - (relay.tempLastSend||now) > 2 * ONE_MINUTE_IN_MILLISECONDS) {
-        relay.tempLastSend = now
-        sign(defaultKey, {
-          kind: 1,
-          content: `Testing ${Math.floor(now/1000/60) % 100}`,
-          tags: [
-            ['expiration', `${Math.ceil((now + 4 * ONE_MINUTE_IN_MILLISECONDS)/1000)}`],
-          ],
-        }, true).then(event => {
-          relay.send(['EVENT', event])
-        }).catch(reason => {
-          console.error(`could not sign event: ${reason}`)
-        })
-      }
+      // // send test message
+      // if (now - (relay.tempLastSend||now) > 2 * ONE_MINUTE_IN_MILLISECONDS) {
+      //   relay.tempLastSend = now
+      //   sign(defaultKey, {
+      //     kind: 1,
+      //     content: `Testing ${Math.floor(now/1000/60) % 100}`,
+      //     tags: [
+      //       ['expiration', `${Math.ceil((now + 4 * ONE_MINUTE_IN_MILLISECONDS)/1000)}`],
+      //     ],
+      //   }, true).then(event => {
+      //     relay.send(['EVENT', event])
+      //   }).catch(reason => {
+      //     console.error(`could not sign event: ${reason}`)
+      //   })
+      // }
     })
 
 
