@@ -37,10 +37,10 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
     keys_owed.push(u.data.id)
     total_cost += Math.max(1 /* enforce non-zero cost (at all costs) */, +(u.data.tags.filter(t => t[0] == 'c')?.[0]?.[1] || '0'))
   }
-  if (new_count <= 0) {
-    console.log('unexpected: no updates')
-    return
-  }
+  // if (new_count <= 0) {
+  //   console.log('unexpected: no updates')
+  //   return
+  // }
   if (total_cost <= 0) {
     console.log('unexpected: no cost')
     return
