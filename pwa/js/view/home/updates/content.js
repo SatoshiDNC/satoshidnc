@@ -90,8 +90,8 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
       }
     }).catch(error => Promise.reject(`request failed: ${error}`)).then(json => {
       console.log(json)
-      console.log('pending checkmarks:', checkmark_events)
       let result_list = json
+      console.log(checkmark_events.length, result_list.length)
       if (json.message == 'done' || result_list.length == checkmark_events.length /*kludge*/) {
         return Promise.resolve(json)
       } else {
