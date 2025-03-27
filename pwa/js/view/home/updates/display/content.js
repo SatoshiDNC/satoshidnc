@@ -67,7 +67,7 @@ v.renderKind1 = function(data) {
   const m = mat4.create()
   let t,tw,th,ts
   ts = 50/14
-  const plaintext = data.content
+  let plaintext = data.content
   if (encryption == 'cc20s10') {
     plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))))
   }
