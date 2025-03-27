@@ -59,13 +59,18 @@ v.renderKind1 = function(data) {
   const hexColor = data.tags.filter(t => t[0] == 'bgcolor')?.[0]?.[1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
   const rgbColor = parseInt(hexColor,16)
   const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
+  const encryption = data.tags.filter(t => t[1] == 'encryption')?.[0]?.[1] || ''
   v.bgColor = bgColor
   gl.clearColor(...bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   let t,tw,th,ts
   ts = 50/14
-  const paragraphs = data.content.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
+  const plaintext = data.content
+  if (encryption == 'cc20s10') {
+    plaintext = new TextDecoder().decode(crypt(0, Uint8Array.fromHex(data.content)))
+  }
+  const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
   //const paragraphs = ['A😊B']
   const lines = []
   for (const para of paragraphs) {
