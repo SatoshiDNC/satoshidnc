@@ -69,7 +69,7 @@ v.renderKind1 = function(data) {
   ts = 50/14
   const plaintext = data.content
   if (encryption == 'cc20s10') {
-    plaintext = new TextDecoder().decode(crypt(0, Uint8Array.fromHex(data.content)))
+    plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))))
   }
   const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
   //const paragraphs = ['A😊B']
