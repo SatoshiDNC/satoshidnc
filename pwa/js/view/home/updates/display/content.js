@@ -1,5 +1,6 @@
 import { overlayView } from './overlay.js'
 import { markUpdateAsViewed } from '../../../../content.js'
+import { crypt } from '../../../../cryption.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
