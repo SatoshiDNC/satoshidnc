@@ -203,6 +203,7 @@ export function prepEvent(hpub, template) {
   if (!event.content) event.content = ''
   if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
   if (!event.pubkey) event.pubkey = hpub
+  event.id = hash(serializeEvent(event))
   return event
 }
 
