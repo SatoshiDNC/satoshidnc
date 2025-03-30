@@ -171,7 +171,6 @@ v.queryFunc = function() {
   } else {
     if (v.query.lastCompleted < now - ONE_SECOND_IN_MILLISECONDS) {
       v.query.inProgress = true
-      console.log('getUpdates()...')
       getUpdates().then(updates => {
         v.query.inProgress = false
         v.query.lastCompleted = Date.now()

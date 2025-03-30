@@ -347,7 +347,6 @@ export function getUpdates() {
       console.error(e)
     }
     req.onsuccess = function(e) {
-      console.log('day old success')
       const c = [...contacts.map(c => c.hpub), ...keys.map(k => k.hpub)]
       const updates = e.target.result.filter(r => c.includes(r.data.pubkey))
       const now = Date.now()
