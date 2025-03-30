@@ -129,11 +129,13 @@ v.renderDefault = function(data) {
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
+  let i = 0
+  let n = data.tags.length
   data.tags.map(t => {
     const line = t.join(' ')
     const ts = 50/14
     mat4.identity(m)
-    mat4.translate(m, m, [50, (v.sh - 14)/2, 0])
+    mat4.translate(m, m, [50, (v.sh - 14*n)/2 + 14*i, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   })
