@@ -80,7 +80,7 @@ v.renderKind1 = function(data) {
   const lines = []
   for (const para of paragraphs) {
     if (debug) console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
-    const words = [para] // .split(' ')
+    const words = para.split(' ')
     if (debug) console.log(`while (words.length ${words.length} > 0) {`)
     while (words.length > 0) {
       lines.push(words.shift())
