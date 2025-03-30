@@ -204,6 +204,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           ['encryption', 'cc20s10' /*chacha20 stream, 2^10 bytes per chunk*/],
         ],
       })
+      console.log(content_template)
       sign(v.hpub, [
         {
           ...content_template
