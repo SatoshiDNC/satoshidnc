@@ -135,7 +135,7 @@ v.renderDefault = function(data) {
   data.tags.map(t => {
     const line = t.join(' ')
     const th = 50
-    const ts = th/14
+    const ts = th/2/14
     mat4.identity(m)
     mat4.translate(m, m, [50, (v.sh - th*n)/2 + th*i, 0])
     mat4.scale(m, m, [ts, ts, 1])
