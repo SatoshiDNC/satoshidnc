@@ -110,11 +110,11 @@ export function aggregateEvent(e) {
                         console.log('unlocking')
                         ids.push(toUnlock)
                         req.result.data._key = e.key.content
-                        const req = os.put(req.result.data)
-                        req.onerror = () => {
+                        const req2 = os.put(req.result.data)
+                        req2.onerror = () => {
                           reject()
                         }
-                        req.onsuccess = () => {
+                        req2.onsuccess = () => {
                           unlockProcessing()
                         }
                       } else {
