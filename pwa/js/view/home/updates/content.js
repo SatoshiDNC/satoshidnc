@@ -110,6 +110,14 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
     console.log('Result:', json)
     json.map(r => {
       if (r[1] == 'ok') {
+        r[2].tags.filter(t => t[0] == 'e').map(t => t[1]).map(id => {
+          console.log('map1')
+          updates.filter(u => u.data.id == id).map(u => {
+            console.log('map2', r[2].content)
+            u.data._key = r[2].content
+            console.log(u)
+          })
+        })
         aggregateEvent(r[2])
       }
     })
