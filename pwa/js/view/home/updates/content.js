@@ -27,7 +27,7 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
   let to_sign = []
   let keys_owed = []
   let total_cost = 0
-  for (const u of updates) if (u.hpub == hpub) {
+  for (const u of updates) if (u.hpub == hpub && !u.viewed && u.data.encryption) {
     new_count += 1
     to_sign.push({
       kind: 7,
