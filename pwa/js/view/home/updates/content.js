@@ -27,7 +27,7 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
   let to_sign = []
   let keys_owed = []
   let total_cost = 0
-  for (const u of updates) if (u.hpub == hpub /*&& !u.viewed*/) {
+  for (const u of updates) if (u.hpub == hpub && !u.viewed && u.data.encryption) {
     new_count += 1
     to_sign.push({
       kind: 7,
@@ -36,6 +36,11 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
     })
     keys_owed.push(u.data.id)
     total_cost += Math.max(1 /* enforce non-zero cost (at all costs) */, +(u.data.tags.filter(t => t[0] == 'c')?.[0]?.[1] || '0'))
+  }
+  if (new_count == 0 && total_cost == 0) {
+    displayView.setContext(updates, hpub, returnView)
+    root.easeOut(target)
+    return
   }
   if (new_count <= 0) {
     console.log('unexpected: no updates')
