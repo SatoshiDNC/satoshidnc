@@ -202,12 +202,17 @@ export function serializeEvent(e) {
   return `[0,"${e.pubkey}",${e.created_at},${e.kind},${JSON.stringify(e.tags)},"${e.content}"]`
 }
 
+function prepForSigning(hpub, template) {
+  const event = {...template}
+  if (!event.content) event.content = ''
+  if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
+  if (!event.pubkey) event.pubkey = hpub
+  return event
+}
+
 export function prepEvent(hpub, template) {
   return new Promise((resolve, reject) => {
-    const event = {...template}
-    if (!event.content) event.content = ''
-    if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
-    if (!event.pubkey) event.pubkey = hpub
+    const event = prepForSigning(template)
     hash(serializeEvent(event)).then(hash => {
       event.id = hash
       resolve(event)
@@ -215,14 +220,6 @@ export function prepEvent(hpub, template) {
       reject(error)
     })
   })
-}
-
-function prepForSigning(hpub, template) {
-  const event = {...template}
-  if (!event.content) event.content = ''
-  if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
-  if (!event.pubkey) event.pubkey = hpub
-  return event
 }
 
 function signBatchWithSecretKey(hsec, templates) {
