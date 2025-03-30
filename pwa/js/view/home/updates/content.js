@@ -2,7 +2,7 @@ import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
-import { getUpdates, eventTrigger } from '../../../content.js'
+import { aggregateEvent, getUpdates, eventTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
 import { barBot } from '../bar-bot.js'
 import { signBatch as sign, defaultKey, keys } from '../../../keys.js'
@@ -103,6 +103,11 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
     return new Promise(()=>{}) // terminate the chain
   }).then(json => {
     console.log('Result:', json)
+    json.map(r => {
+      if (r[1] == 'ok') {
+        aggregateEvent(r[2])
+      }
+    })
     displayView.setContext(updates, hpub, returnView)
     root.easeOut(target)
   })
