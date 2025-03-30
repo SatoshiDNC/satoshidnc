@@ -138,5 +138,6 @@ v.renderDefault = function(data) {
     mat4.translate(m, m, [50, (v.sh - 14*n)/2 + 14*i, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+    i++
   })
 }
