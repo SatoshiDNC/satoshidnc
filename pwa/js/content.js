@@ -333,9 +333,7 @@ export function getFeed(hpub) {
 }
 
 export function getUpdates() {
-  console.log('getUpdates')
   return new Promise((resolve, reject) => {
-    console.log('getUpdates=>')
     const tr = db.transaction(['events', 'updates-viewed'], 'readonly', { durability: 'strict' })
     const os = tr.objectStore('events')
     const DISTANT_FUTURE = 91729187740298
