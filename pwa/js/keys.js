@@ -198,6 +198,14 @@ export function sign(hpub, eventTemplate, silent) {
   })
 }
 
+export function prepEvent(template) {
+  const event = {...template}
+  if (!event.content) event.content = ''
+  if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
+  if (!event.pubkey) event.pubkey = hpub
+  return event
+}
+
 function signBatchWithSecretKey(hsec, templates) {
   return new Promise((resolve, reject) => {
     let userSummary = templates.map(e => JSON.stringify(e)).join(`\n`)
@@ -205,10 +213,7 @@ function signBatchWithSecretKey(hsec, templates) {
       try {
         let hpub = getPublicKey(hexToBytes(hsec))
         const signed = templates.map(e => {
-          const event = {...e}
-          if (!event.content) event.content = ''
-          if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
-          if (!event.pubkey) event.pubkey = hpub
+          const event = prepEvent(e)
           return finalizeEvent(event, hexToBytes(hsec))
         })
         resolve(signed)

@@ -1,6 +1,6 @@
 import { drawPill, drawRect, drawEllipse, drawAvatar, alpha, rrggbb } from '../../../../draw.js'
 import { contentView } from './content.js'
-import { signBatch as sign, keys, getKeyInfo, putDeviceKey, putVolatileKey, useVolatileKey } from '../../../../keys.js'
+import { signBatch as sign, prepEvent as prep, keys, getKeyInfo, putDeviceKey, putVolatileKey, useVolatileKey } from '../../../../keys.js'
 import { aggregateEvent } from '../../../../content.js'
 import { homeRelay } from '../../../../nostor-app.js'
 import { getPersonalData as getAttr } from '../../../../personal.js'
@@ -196,14 +196,20 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       const plaintext = new Uint8Array(new TextEncoder().encode(contentView.textGad.text))
       const ciphertext = crypt(0, plaintext, cryption_key)
       let pendingNote
+      let content_template = prep({
+        kind: 1, content: `${hex(ciphertext)}`,
+        tags: [
+          ['bgcolor', `${rrggbb(contentView.bgColor)}`],
+          ['expiration', `${Math.ceil((Date.now() + ONE_DAY_IN_MILLISECONDS)/1000)}`],
+          ['encryption', 'cc20s10' /*chacha20 stream, 2^10 bytes per chunk*/],
+        ],
+      })
       sign(v.hpub, [
         {
-          kind: 1, content: `${Array.from(ciphertext).map(v => (v<16?'0':'')+v.toString(16)).join('')}`,
-          tags: [
-            ['bgcolor', `${rrggbb(contentView.bgColor)}`],
-            ['expiration', `${Math.ceil((Date.now() + ONE_DAY_IN_MILLISECONDS)/1000)}`],
-            ['encryption', 'cc20s10' /*chacha20 stream, 2^10 bytes per chunk*/],
-            ['c', '1']],
+          ...content_template
+        }, {
+          kind: 24, content: `${hex(cryption_key)}`,
+          tags: [['e', `${content_template.id}`]],
         }, {
           kind: 555,
           tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],

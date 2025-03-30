@@ -61,3 +61,7 @@ const hash = function(input) {
     })
   })
 }
+
+const hex = function(a) {
+  return Array.from(a).map(v => (v<16?'0':'')+v.toString(16)).join('')  
+}
