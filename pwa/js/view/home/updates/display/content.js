@@ -54,7 +54,7 @@ v.renderFunc = function() {
   }
 
 }
-let debug = true
+let debug = false
 v.renderKind1 = function(data) {
   const v = this
   const whitespace = false
