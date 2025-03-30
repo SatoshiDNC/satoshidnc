@@ -39,7 +39,8 @@ for (const pane of v.panes) {
     }
   }
 }
-eventTrigger.push(() => {
+eventTrigger.push(e => {
+  console.log('new status update (?):', e)
   const updatePane = v.paneGads.filter(g => g.label == 'Updates')[0]
   if (updatePane.label != v.activeLabel) {
     updatePane.new = true
