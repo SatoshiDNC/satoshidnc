@@ -196,7 +196,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       const plaintext = new Uint8Array(new TextEncoder().encode(contentView.textGad.text))
       const ciphertext = crypt(0, plaintext, cryption_key)
       let pendingNote
-      let content_template = prep({
+      let content_template = prep(v.hpub, {
         kind: 1, content: `${hex(ciphertext)}`,
         tags: [
           ['bgcolor', `${rrggbb(contentView.bgColor)}`],

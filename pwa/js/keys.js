@@ -198,7 +198,7 @@ export function sign(hpub, eventTemplate, silent) {
   })
 }
 
-export function prepEvent(template) {
+export function prepEvent(hpub, template) {
   const event = {...template}
   if (!event.content) event.content = ''
   if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
