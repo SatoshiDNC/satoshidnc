@@ -203,8 +203,20 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           ['expiration', `${Math.ceil((Date.now() + ONE_DAY_IN_MILLISECONDS)/1000)}`],
           ['encryption', 'cc20s10' /*chacha20 stream, 2^10 bytes per chunk*/],
         ],
-      }).catch(error => {return Promise.reject(`bad event: ${error}`)}).then(content_template => {
-        console.log(content_template)
+      }).catch(error => {
+        return Promise.reject(`bad event: ${error}`)
+      }).then(content_template => {
+        console.log([
+          {
+            ...content_template
+          }, {
+            kind: 24, content: `${hex(cryption_key)}`,
+            tags: [['e', `${content_template.id}`]],
+          }, {
+            kind: 555,
+            tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
+          }
+        ])
         return sign(v.hpub, [
           {
             ...content_template
@@ -217,7 +229,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           }
         ])
       }).then(([note, key, auth]) => {
-        console.log(`object: ${JSON.stringify(note)}`)
+        console.log(`note: ${JSON.stringify(note)}`)
+        console.log(`key: ${JSON.stringify(key)}`)
         console.log(`auth: ${JSON.stringify(auth)}`)
         return Promise.resolve([note, key, auth])
       }).catch(error => {
