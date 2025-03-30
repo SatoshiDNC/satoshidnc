@@ -110,7 +110,7 @@ export function aggregateEvent(e) {
                         console.log('unlocking')
                         ids.push(toUnlock)
                         req.result.data._key = e.content
-                        const req2 = os.put({ hpub: req.hpub, firstSeen: req.firstSeen, data: req.result.data })
+                        const req2 = os.put({ hpub: req.result.hpub, firstSeen: req.result.firstSeen, data: req.result.data })
                         req2.onerror = () => {
                           reject()
                         }
