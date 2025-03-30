@@ -196,29 +196,30 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       const plaintext = new Uint8Array(new TextEncoder().encode(contentView.textGad.text))
       const ciphertext = crypt(0, plaintext, cryption_key)
       let pendingNote
-      let content_template = prep(v.hpub, {
+      prep(v.hpub, {
         kind: 1, content: `${hex(ciphertext)}`,
         tags: [
           ['bgcolor', `${rrggbb(contentView.bgColor)}`],
           ['expiration', `${Math.ceil((Date.now() + ONE_DAY_IN_MILLISECONDS)/1000)}`],
           ['encryption', 'cc20s10' /*chacha20 stream, 2^10 bytes per chunk*/],
         ],
-      })
-      console.log(content_template)
-      sign(v.hpub, [
-        {
-          ...content_template
-        }, {
-          kind: 24, content: `${hex(cryption_key)}`,
-          tags: [['e', `${hash(ser(content_template))}`]],
-        }, {
-          kind: 555,
-          tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
-        }
-      ]).then(([event_object, auth]) => {
-        console.log(`object: ${JSON.stringify(event_object)}`)
+      }).catch(error => {return Promise.reject(`bad event: ${error}`)}).then(content_template => {
+        console.log(content_template)
+        return sign(v.hpub, [
+          {
+            ...content_template
+          }, {
+            kind: 24, content: `${hex(cryption_key)}`,
+            tags: [['e', `${content_template.id}`]],
+          }, {
+            kind: 555,
+            tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
+          }
+        ])
+      }).then(([note, key, auth]) => {
+        console.log(`object: ${JSON.stringify(note)}`)
         console.log(`auth: ${JSON.stringify(auth)}`)
-        return Promise.resolve([event_object, auth])
+        return Promise.resolve([note, key, auth])
       }).catch(error => {
         if (error.endsWith(': user canceled')) {
           console.log(error)
@@ -226,8 +227,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         } else {
           return Promise.reject(`error while signing: ${error}`)
         }
-      }).then(([event_object, auth]) => {
-        pendingNote = event_object
+      }).then(([note, key, auth]) => {
+        pendingNote = note
         let req = auth.tags.filter(t => t[0] == 'IOU')[0][3]
         let method = req.split(' ')[0]
         let route = req.substring(method.length).trim()
@@ -241,8 +242,8 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             'Authorization': `SatoshiDNC ${JSON.stringify(auth)}`,
           },
           body: JSON.stringify({
-            event: event_object,
-            key: Array.from(cryption_key).map(v => (v<16?'0':'')+v.toString(16)).join('')
+            note,
+            key,
           }),
         }).catch(error => Promise.reject(`failed to fetch: ${error}`)).then(response => {
           if (response.ok) {
