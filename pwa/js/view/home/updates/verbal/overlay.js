@@ -205,7 +205,9 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         ],
       }).catch(error => {
         return Promise.reject(`bad event: ${error}`)
-      }).then(content_template => {
+      }).then(prepped => {
+        let { id, ...rest } = prepped
+        let content_template = { ...rest }
         console.log([
           {
             ...content_template
