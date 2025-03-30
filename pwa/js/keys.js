@@ -225,8 +225,10 @@ function signBatchWithSecretKey(hsec, templates) {
         let hpub = getPublicKey(hexToBytes(hsec))
         const signed = templates.map(e => {
           const event = prepEvent(hpub, e)
-          delete event.id
-          return finalizeEvent(event, hexToBytes(hsec))
+          console.log('a')
+          let x = finalizeEvent(event, hexToBytes(hsec))
+          console.log('b')
+          return x
         })
         resolve(signed)
       } catch(error) {
