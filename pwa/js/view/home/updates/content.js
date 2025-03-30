@@ -262,7 +262,7 @@ v.renderFunc = function() {
 
   if (v.recents.length > 0) {
     mat4.identity(m)
-    mat4.translate(m, m, [45, 434, 0])
+    mat4.translate(m, m, [45, v.recentsGad.y-32 /*434*/, 0])
     mat4.scale(m, m, [28/14, 28/14, 1])
     defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
   }
