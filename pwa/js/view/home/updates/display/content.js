@@ -41,8 +41,7 @@ v.renderFunc = function() {
       }
     }
   } else {
-    gl.clearColor(...v.bgColor)
-    gl.clear(gl.COLOR_BUFFER_BIT)
+    v.renderDefault(data)
     if (data.kind != -1 && data.id != v.lastRenderedId) {
       v.lastRenderedId = data.id
       console.log(`[NOTE] unrecognized kind:`, data)
@@ -64,7 +63,7 @@ v.renderKind1 = function(data) {
   const encryption = data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
   v.bgColor = bgColor
   gl.clearColor(...bgColor)
-  gl.clear(gl.COLOR_BUFFER_BIT)  
+  gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
   let t,tw,th,ts
   ts = 50/14
@@ -118,4 +117,23 @@ v.renderKind1 = function(data) {
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
+}
+
+v.renderDefault = function(data) {
+  const v = this
+  const hexColor = data.tags.filter(t => t[0] == 'bgcolor')?.[0]?.[1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
+  const rgbColor = parseInt(hexColor,16)
+  const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
+  const encryption = data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
+  v.bgColor = bgColor
+  gl.clearColor(...v.bgColor)
+  gl.clear(gl.COLOR_BUFFER_BIT)
+  data.tags.map(t => {
+    const line = t.join(' ')
+    const ts = 50/14
+    mat4.identity(m)
+    mat4.translate(m, m, [50, (v.sh - 14)/2, 0])
+    mat4.scale(m, m, [ts, ts, 1])
+    defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+  })
 }
