@@ -127,7 +127,7 @@ v.renderDefault = function(data) {
   const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
   const encryption = data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
   v.bgColor = blend(bgColor, [0,0,0,1], 0.25)
-  gl.clearColor(...bgColor)
+  gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
   let i = 0
