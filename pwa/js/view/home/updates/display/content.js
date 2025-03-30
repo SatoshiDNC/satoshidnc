@@ -54,6 +54,7 @@ v.renderFunc = function() {
   }
 
 }
+let debug = true
 v.renderKind1 = function(data) {
   const v = this
   const whitespace = false
@@ -74,17 +75,19 @@ v.renderKind1 = function(data) {
   }
   const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
   //const paragraphs = ['A😊B']
+  if (debug) paragraphs.pop()
+  if (debug) paragraphs.push('This is a test of the emergency broadcasting system. This is only a test.')
   const lines = []
   for (const para of paragraphs) {
-    //console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
+    if (debug) console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
     const words = [para] // .split(' ')
-    //console.log(`while (words.length ${words.length} > 0) {`)
+    if (debug) console.log(`while (words.length ${words.length} > 0) {`)
     while (words.length > 0) {
       lines.push(words.shift())
-      //console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
+      if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
       while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
         let buf = ''
-        //console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
+        if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
         while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
           let l = lines.pop()
           buf = l.substring(l.length-1) + buf
@@ -93,12 +96,13 @@ v.renderKind1 = function(data) {
         }
         lines.push(buf)
       }
-      //console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
+      if (debug) console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
       while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
         lines.push(lines.pop() + ' ' + words.shift())
       }
     }
   }
+  debug = false
   // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
   th = lines.length * defaultFont.glyphHeights[65] * ts * 2
   let i = 1
