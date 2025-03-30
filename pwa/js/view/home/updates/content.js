@@ -18,7 +18,7 @@ v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.displayAction = function(updates, hpub, returnView, root, target) {
   const v = this
-  console.log(`DISPLAY ACTION:`, updates, hpub, returnView, root, target)
+  //console.log(`DISPLAY ACTION:`, updates, hpub, returnView, root, target)
 
   // TODO: sign pledge to zap author in exchange for decryption key
   console.log('send')
@@ -27,7 +27,7 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
   let to_sign = []
   let keys_owed = []
   let total_cost = 0
-  for (const u of updates) if (u.hpub == hpub && u.data.tags.filter(t=>t[0]=='encryption').length>0 && (!u.viewed || !u.data._key)) {
+  for (const u of updates) if (u.hpub == hpub && u.data.tags.filter(t=>t[0]=='encryption').length>0 && !u.viewed) {
     new_count += 1
     to_sign.push({
       kind: 7,
