@@ -198,16 +198,23 @@ export function sign(hpub, eventTemplate, silent) {
   })
 }
 
-export function prepEvent(hpub, template) {
-  const event = {...template}
-  if (!event.content) event.content = ''
-  if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
-  if (!event.pubkey) event.pubkey = hpub
-  return event
-}
-
 export function serializeEvent(e) {
   return `[0,"${e.pubkey}",${e.created_at},${e.kind},${JSON.stringify(e.tags)},"${e.content}"]`
+}
+
+export function prepEvent(hpub, template) {
+  return new Promise((resolve, reject) => {
+    const event = {...template}
+    if (!event.content) event.content = ''
+    if (!event.created_at) event.created_at = Math.floor(Date.now() / 1000)
+    if (!event.pubkey) event.pubkey = hpub
+    hash(serializeEvent(event)).then(hash => {
+      event.id = hash
+      resolve(event)
+    }).catch(error => {
+      reject(error)
+    })
+  })
 }
 
 function signBatchWithSecretKey(hsec, templates) {
