@@ -42,7 +42,7 @@ export function aggregateEvent(e) {
               resolve()
             } else if (e.kind == 5) {
               const ids = []
-              const todo = e.tags.filter(t => t[0] == 'e')
+              const todo = e.tags.filter(t => t[0] == 'e').map(t => t[1])
               const deletionProcessing = () => {
                 if (todo.length > 0) {
                   const toDelete = todo.pop()
@@ -95,7 +95,7 @@ export function aggregateEvent(e) {
               }
             } else if (e.kind == 24) {
               const ids = []
-              const todo = e.tags.filter(t => t[0] == 'e')
+              const todo = e.tags.filter(t => t[0] == 'e').map(t => t[1])
               console.log('unlock', todo, e)
               const unlockProcessing = () => {
                 if (todo.length > 0) {
