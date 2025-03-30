@@ -1,4 +1,4 @@
-import { getPublicKey, serializeEvent, finalizeEvent } from 'nostr-tools'
+import { getPublicKey, finalizeEvent } from 'nostr-tools'
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
 import { Buffer } from 'buffer'
 import { db } from './db.js'
