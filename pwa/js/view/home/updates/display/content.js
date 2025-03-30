@@ -36,7 +36,7 @@ v.renderFunc = function() {
     v.renderKind1(data)
     if (data.id != v.lastRenderedId) {
       v.lastRenderedId = data.id
-      if (data.tags.filter(t => !['bgcolor', 'expiration'].includes(t[0])).length > 0) {
+      if (data.tags.filter(t => !['bgcolor', 'expiration', 'encryption'].includes(t[0])).length > 0) {
         console.log(`[NOTE] unrecognized tags are present:`, data)
       }
     }
@@ -69,7 +69,8 @@ v.renderKind1 = function(data) {
   ts = 50/14
   let plaintext = data.content
   if (encryption == 'cc20s10') {
-    plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))).map(v => v>32 && v<127? v: 63))
+    let key = ''
+    plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => v>32 && v<127? v: 63))
   }
   const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
   //const paragraphs = ['A😊B']
