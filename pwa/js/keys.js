@@ -212,7 +212,7 @@ function prepForSigning(hpub, template) {
 
 export function prepEvent(hpub, template) {
   return new Promise((resolve, reject) => {
-    const event = prepForSigning(template)
+    const event = prepForSigning(hpub, template)
     hash(serializeEvent(event)).then(hash => {
       event.id = hash
       resolve(event)
