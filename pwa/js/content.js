@@ -96,6 +96,7 @@ export function aggregateEvent(e) {
             } else if (e.kind == 24) {
               const ids = []
               const todo = e.tags.filter(t => t[0] == 'e')
+              console.log('unlock', todo, e)
               const unlockProcessing = () => {
                 if (todo.length > 0) {
                   const toUnlock = todo.pop()
@@ -106,6 +107,7 @@ export function aggregateEvent(e) {
                   req.onsuccess = () => {
                     if (req.result) { // the event to unlock is in our database
                       if (req.result.data.pubkey == e.pubkey) {
+                        console.log('unlocking')
                         ids.push(toUnlock)
                         req.result.data._key = e.key.content
                         const req = os.put(req.result.data)
