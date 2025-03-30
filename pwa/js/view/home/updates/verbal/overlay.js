@@ -205,9 +205,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         ],
       }).catch(error => {
         return Promise.reject(`bad event: ${error}`)
-      }).then(prepped => {
-        let { id, pubkey, created_at, ...rest } = prepped
-        let content_template = { ...rest }
+      }).then(content_template => {
         console.log([
           {
             ...content_template
@@ -222,6 +220,12 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         return sign(v.hpub, [
           {
             ...content_template
+          }, {
+            kind: 24, content: `${hex(cryption_key)}`,
+            tags: [['e', `${content_template.id}`]],
+          }, {
+            kind: 555,
+            tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
           }
         ])
       }).then(([note, key, auth]) => {
