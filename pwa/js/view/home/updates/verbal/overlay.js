@@ -222,12 +222,6 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         return sign(v.hpub, [
           {
             ...content_template
-          }, {
-            kind: 24, content: `${hex(cryption_key)}`,
-            tags: [['e', `${content_template.id}`]],
-          }, {
-            kind: 555,
-            tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
           }
         ])
       }).then(([note, key, auth]) => {
