@@ -135,7 +135,7 @@ v.renderDefault = function(data) {
     const line = t.join(' ')
     const ts = 50/14
     mat4.identity(m)
-    mat4.translate(m, m, [50, (v.sh - 14*n)/2 + 14*i, 0])
+    mat4.translate(m, m, [50, (v.sh - ts*n)/2 + ts*i, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
     i++
