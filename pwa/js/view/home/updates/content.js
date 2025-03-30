@@ -175,7 +175,6 @@ v.queryFunc = function() {
         v.query.inProgress = false
         v.query.lastCompleted = Date.now()
         v.query.results = updates
-        console.log(v.query.results)
         v.relayout()
       })
     } else {
