@@ -219,8 +219,6 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
         ])
         return sign(v.hpub, [
           {
-            ...content_template
-          }, {
             kind: 24, content: `${hex(cryption_key)}`,
             tags: [['e', `${content_template.id}`]],
           }, {
