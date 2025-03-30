@@ -208,7 +208,7 @@ export function deleteExpiredEvents() {
             }
           }
         }
-        slash()
+        if (todo.length) slash()
       }
     }
   })
