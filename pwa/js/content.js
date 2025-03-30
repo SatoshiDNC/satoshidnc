@@ -109,7 +109,7 @@ export function aggregateEvent(e) {
                       if (req.result.data.pubkey == e.pubkey) {
                         console.log('unlocking')
                         ids.push(toUnlock)
-                        req.result.data._key = e.key.content
+                        req.result.data._key = e.content
                         const req2 = os.put(req.result.data)
                         req2.onerror = () => {
                           reject()
