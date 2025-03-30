@@ -128,6 +128,7 @@ v.renderDefault = function(data) {
   v.bgColor = bgColor
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
+  const m = mat4.create()
   data.tags.map(t => {
     const line = t.join(' ')
     const ts = 50/14
