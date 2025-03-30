@@ -6,6 +6,7 @@ import { keys } from './keys.js'
 
 export const eventTrigger = []
 export const deletionTrigger = []
+export const unlockTrigger = []
 export const profileTrigger = []
 
 const DAY_IN_SECONDS = 24/*hours*/ * 60/*minutes*/ * 60/*seconds*/
@@ -50,7 +51,7 @@ export function aggregateEvent(e) {
                     reject()
                   }
                   req.onsuccess = () => {
-                    req = os.index('id').get(toDelete)
+                    const req = os.index('id').get(toDelete)
                     req.onerror = () => {
                       reject()
                     }
@@ -66,7 +67,7 @@ export function aggregateEvent(e) {
                             deletionProcessing()
                           }
                         } else {
-                          console.log(`warning: deletion attempt by different pubkey: ${deleterPubkey} tried to delete post by ${req.result.data.pubkey}`)
+                          console.log(`warning: deletion attempt by different pubkey: ${e.pubkey} tried to delete post by ${req.result.data.pubkey}`)
                           deletionProcessing()
                         }
                       } else {
@@ -80,6 +81,7 @@ export function aggregateEvent(e) {
                   resolve()
                 }
               }
+              deletionProcessing()
             } else if (e.kind == 0) {
               const os = tr.objectStore('profiles')
               const req = os.put({ hpub: e.pubkey, asOf: now, data: e })
@@ -91,6 +93,43 @@ export function aggregateEvent(e) {
                 resolve()
                 profileTrigger.map(f => f(e.pubkey))
               }
+            } else if (e.kind == 24) {
+              const ids = []
+              const todo = e.tags.filter(t => t[0] == 'e')
+              const unlockProcessing = () => {
+                if (todo.length > 0) {
+                  const toUnlock = todo.pop()
+                  const req = os.index('id').get(toUnlock)
+                  req.onerror = () => {
+                    reject()
+                  }
+                  req.onsuccess = () => {
+                    if (req.result) { // the event to unlock is in our database
+                      if (req.result.data.pubkey == e.pubkey) {
+                        ids.push(toUnlock)
+                        req.result.data._key = e.key.content
+                        const req = os.put(req.result.data)
+                        req.onerror = () => {
+                          reject()
+                        }
+                        req.onsuccess = () => {
+                          unlockProcessing()
+                        }
+                      } else {
+                        console.log(`warning: unlock attempt by different pubkey: ${e.pubkey} tried to delete post by ${req.result.data.pubkey}`)
+                        unlockProcessing()
+                      }
+                    } else {
+                      unlockProcessing()
+                    }
+                  }
+                } else {
+                  console.log(`[${TAG}] unlocked:`, ids)
+                  unlockTrigger.map(f => f(ids))
+                  resolve()
+                }
+              }
+              unlockProcessing()
             } else {
               console.log(`[${TAG}] new event`, JSON.stringify(e))
               const req = os.add({ hpub: e.pubkey, firstSeen: now, data: e })
