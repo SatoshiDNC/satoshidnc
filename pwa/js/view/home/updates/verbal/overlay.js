@@ -210,7 +210,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
           ...content_template
         }, {
           kind: 24, content: `${hex(cryption_key)}`,
-          tags: [['e', `${hash(ser(content_template.id))}`]],
+          tags: [['e', `${hash(ser(content_template))}`]],
         }, {
           kind: 555,
           tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
