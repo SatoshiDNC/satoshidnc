@@ -308,10 +308,6 @@ v.renderFunc = function() {
     // drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
     drawEllipse(v, colors.inactiveDark, 43, g.y + 17 + index * 200, 125, 125)
 
-    mat4.identity(m)
-    // mat4.translate(m, m, [211, 553 + y, 0])
-    mat4.translate(m, m, [211, g.y + 67 + index * 200, 0])
-    mat4.scale(m, m, [35/14, 35/14, 1])
     let str
     if (v.selfs.includes(hpub)) {
       if (v.selfs.length == 1) {
@@ -323,13 +319,17 @@ v.renderFunc = function() {
         drawEllipse(v, v.bgColor,     115, g.y + 85 + index * 200, 63, 63)
         drawEllipse(v, colors.accent, 118, g.y + 88 + index * 200, 57, 57)
         mat4.identity(m)
-        mat4.translate(m, m, [145, g.y + 105 + index * 200, 0])
+        mat4.translate(m, m, [135, g.y + 135 + index * 200, 0])
         mat4.scale(m, m, [35/14, 35/14, 1])
         defaultFont.draw(0,0, '+', v.bgColor, v.mat, m)
       }
     } else {
       str = getAttr(hpub, 'name') || 'Unnamed'
     }
+    mat4.identity(m)
+    // mat4.translate(m, m, [211, 553 + y, 0])
+    mat4.translate(m, m, [211, g.y + 67 + index * 200, 0])
+    mat4.scale(m, m, [35/14, 35/14, 1])
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
   
     mat4.identity(m)
