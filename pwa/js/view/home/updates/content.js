@@ -133,7 +133,7 @@ v.gadgets.push(g = v.selfsGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.selfs.length) return
     const updates = v.query.results.filter(u => v.selfs.includes(u.hpub))
-    if (updates.length == 0) return
+    console.log(updates)
     v.displayAction(updates, v.selfs[index], v.parent.parent, g.root, g.target)
   }
 v.gadgets.push(g = v.recentsGad = new fg.Gadget(v))
