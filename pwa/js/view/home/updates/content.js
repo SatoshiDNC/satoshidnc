@@ -315,7 +315,7 @@ v.renderFunc = function() {
       } else {
         str = `${getAttr(hpub, 'name') || 'Unnamed'} (My status)`
       }
-      if (true) {
+      if (!numUpdates) {
         drawEllipse(v, v.bgColor,     115, g.y + 85 + index * 200, 63, 63)
         drawEllipse(v, colors.accent, 118, g.y + 88 + index * 200, 57, 57)
         mat4.identity(m)
