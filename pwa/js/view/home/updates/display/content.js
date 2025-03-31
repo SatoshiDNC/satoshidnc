@@ -125,7 +125,7 @@ v.renderDefault = function(data) {
   const hexColor = data.tags?.filter(t => t[0] == 'bgcolor')?.[0]?.[1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
   const rgbColor = parseInt(hexColor,16)
   const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
-  const encryption = data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
+  const encryption = data.tags?.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
   v.bgColor = blend(bgColor, [0,0,0,1], 0.25)
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
