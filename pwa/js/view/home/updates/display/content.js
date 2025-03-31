@@ -131,8 +131,8 @@ v.renderDefault = function(data) {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
   let i = 0
-  let n = data.tags.length
-  data.tags.map(t => {
+  let n = data.tags?.length || 0
+  data.tags?.map(t => {
     const line = t.join(': ')
     const th = 50
     const ts = th/2/14
