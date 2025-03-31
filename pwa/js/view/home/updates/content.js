@@ -1,5 +1,4 @@
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
-import { contentView as chatRoomView } from '../../chat-room/content.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
 import { aggregateEvent, getUpdates, eventTrigger } from '../../../content.js'
@@ -134,8 +133,8 @@ v.gadgets.push(g = v.selfsGad = new fg.Gadget(v))
     if (index < 0 || index >= v.selfs.length) return
     const updates = v.query.results.filter(u => v.selfs.includes(u.hpub))
     if (updates.filter(u => u.hpub == v.selfs[index]).length == 0) {
-      g.target.setContext(v.selfs[index])
-      g.root.easeOut(g.target)
+      g.target2.setContext(v.selfs[index])
+      g.root.easeOut(g.target2)
     } else {
       v.displayAction(updates, v.selfs[index], v.parent.parent, g.root, g.target)
     }
