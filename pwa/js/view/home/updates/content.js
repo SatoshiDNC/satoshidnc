@@ -282,27 +282,26 @@ v.renderFunc = function() {
     const y = i * 200 + (i >= v.selfs.length? 96:0) + ((v.viewed.includes(hpub) && v.recents.length > 0)? 96:0)
     const g = i < v.selfs.length? v.selfsGad: i < v.selfs.length + v.recents.length? v.recentsGad: v.viewedGad
     const index = i < v.selfs.length? i: i < v.selfs.length + v.recents.length? i - v.selfs.length: i - v.selfs.length - v.recents.length
-    // drawEllipse(v, colors.accent, 32, 492 + y, 147, 147)
-    drawEllipse(v, colors.accent, 32, g.y + 6 + index * 200, 147, 147)
-    if (numViewed) {
-      // drawEllipse(v, colors.inactive, 32, 492 + y + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
-      drawEllipse(v, colors.inactive, 32, g.y + 6 + index * 200 + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
-    }
-    // drawEllipse(v, v.bgColor, 38, 498 + y, 135, 135)
-    drawEllipse(v, v.bgColor, 38, g.y + 12 + index * 200, 135, 135)
-    if (numUpdates > 1) for (let i = 0; i < numUpdates; i++) {
-      // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
-      mainShapes.useProg2()
-      gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
-      gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
-      mat4.identity(m)
-      // mat4.translate(m,m, [105, 565.5 + y, 0])
-      mat4.translate(m,m, [105, g.y + 79.5 + index * 200, 0])
-      mat4.rotate(m,m, 2*Math.PI*i/numUpdates, [0, 0, 1])
-      mat4.translate(m,m, [-3, -74.5, 0])
-      mat4.scale(m,m, [6, 8, 1])
-      gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
-      mainShapes.drawArrays2('rect')
+    if (numUpdates) {
+      drawEllipse(v, colors.accent, 32, g.y + 6 + index * 200, 147, 147)
+      if (numViewed) {
+        drawEllipse(v, colors.inactive, 32, g.y + 6 + index * 200 + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
+      }
+      drawEllipse(v, v.bgColor, 38, g.y + 12 + index * 200, 135, 135)
+      if (numUpdates > 1) for (let i = 0; i < numUpdates; i++) {
+        // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
+        mainShapes.useProg2()
+        gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
+        gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
+        mat4.identity(m)
+        // mat4.translate(m,m, [105, 565.5 + y, 0])
+        mat4.translate(m,m, [105, g.y + 79.5 + index * 200, 0])
+        mat4.rotate(m,m, 2*Math.PI*i/numUpdates, [0, 0, 1])
+        mat4.translate(m,m, [-3, -74.5, 0])
+        mat4.scale(m,m, [6, 8, 1])
+        gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
+        mainShapes.drawArrays2('rect')
+      }
     }
 
     // drawAvatar(v, hpub, 43,503 + y, 125,125)
