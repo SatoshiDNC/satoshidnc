@@ -320,10 +320,12 @@ v.renderFunc = function() {
         str = `${getAttr(hpub, 'name') || 'Unnamed'} (My status)`
       }
       if (true) {
-        // drawEllipse(v, v.bgColor,     115, g.y + 105 + index * 200, 63, 63)
-        // drawEllipse(v, colors.accent, 118, g.y + 108 + index * 200, 57, 57)
         drawEllipse(v, v.bgColor,     115, g.y + 85 + index * 200, 63, 63)
         drawEllipse(v, colors.accent, 118, g.y + 88 + index * 200, 57, 57)
+        mat4.identity(m)
+        mat4.translate(m, m, [145, g.y + 105 + index * 200, 0])
+        mat4.scale(m, m, [35/14, 35/14, 1])
+        defaultFont.draw(0,0, '+', v.bgColor, v.mat, m)
       }
     } else {
       str = getAttr(hpub, 'name') || 'Unnamed'
