@@ -81,7 +81,7 @@ export function updatePostedAsOf(timeStamp, full = false) {
       return `Yesterday`+(full?`, ${new Date(timeStamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`:``)
     }
   }
-  return addedOn(timeStamp)
+  return `Tap to add status update`
 }
 
 export function addedOn(timeStamp) {
