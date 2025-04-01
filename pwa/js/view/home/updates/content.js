@@ -351,6 +351,7 @@ v.renderFunc = function() {
     mat4.scale(m, m, [iconScale, iconScale, 1])
     while (rank > 0) {
       defaultFont.draw(-32,0, icon, v.subtitleColor, v.mat, m)
+      rank -= 1
     }
 
     i++
