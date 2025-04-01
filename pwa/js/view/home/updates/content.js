@@ -347,10 +347,11 @@ v.renderFunc = function() {
     let icon = balance > 0? '❤': '💔'
     mat4.identity(m)
     let iconScale = 20/14
+    let d = 4/iconScale
     mat4.translate(m, m, [v.sw - 32+28, g.y + 67 + index * 200, 0])
     mat4.scale(m, m, [iconScale, iconScale, 1])
     for (let r = 0; r < rank; r++) {
-      defaultFont.draw(-32 - ((r%3)==0?28:0), 0, '💗', v.bgColor, v.mat, m)
+      defaultFont.draw(-28-d - ((r%3)==0?28:0), 0, '💗', v.bgColor, v.mat, m)
       defaultFont.draw(-28, 0, icon, [1,0,0,1], v.mat, m)
     }
 
