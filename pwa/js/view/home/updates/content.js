@@ -353,15 +353,17 @@ v.renderFunc = function() {
     mat4.scale(m, m, [30/14, 30/14, 1])
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
-    mat4.identity(m)
-    let iconScale = 20/14
-    let d = 4*iconScale
-    mat4.translate(m, m, [v.sw - 32+28+4+26/iconScale, g.y + 65 + index * 200, 0])
-    mat4.scale(m, m, [iconScale, iconScale, 1])
-    for (let r = 0; r < rank; r++) {
-      defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
-      defaultFont.draw(-28, 0, '❤', v.bgColor, v.mat, m)
-      defaultFont.draw(-28, 0, rankIcon, rankColor, v.mat, m)
+    if (!v.selfs.includes(hpub)) {
+      mat4.identity(m)
+      let iconScale = 20/14
+      let d = 4*iconScale
+      mat4.translate(m, m, [v.sw - 32+28+4+26/iconScale, g.y + 65 + index * 200, 0])
+      mat4.scale(m, m, [iconScale, iconScale, 1])
+      for (let r = 0; r < rank; r++) {
+        defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
+        defaultFont.draw(-28, 0, '❤', v.bgColor, v.mat, m)
+        defaultFont.draw(-28, 0, rankIcon, rankColor, v.mat, m)
+      }
     }
 
     i++
