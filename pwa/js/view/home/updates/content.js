@@ -353,7 +353,7 @@ v.renderFunc = function() {
     mat4.scale(m, m, [30/14, 30/14, 1])
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
-    if (!v.selfs.includes(hpub)) {
+    if (rank && !v.selfs.includes(hpub)) {
       mat4.identity(m)
       let iconScale = 20/14
       let d = 4*iconScale
