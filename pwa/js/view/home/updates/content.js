@@ -352,7 +352,7 @@ v.renderFunc = function() {
     mat4.translate(m, m, [v.sw - 32+28+4+28/iconScale, g.y + 67 + index * 200, 0])
     mat4.scale(m, m, [iconScale, iconScale, 1])
     for (let r = 0; r < rank; r++) {
-      defaultFont.draw(-28-d - ((r%3)==0?28:0), 0, '💗', v.bgColor, v.mat, m)
+      defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
       defaultFont.draw(-28, 0, '❤', v.bgColor, v.mat, m)
       defaultFont.draw(-28, 0, icon, color, v.mat, m)
     }
