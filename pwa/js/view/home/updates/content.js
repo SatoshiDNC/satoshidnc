@@ -337,7 +337,7 @@ v.renderFunc = function() {
     } else {
       str = getAttr(hpub, 'name') || 'Unnamed'
     }
-    while (str.length > 1 && defaultFont.calcWidth(str)*textScale > v.sw-211-32 - 2*(20/14) - Math.ceil(rank/3)*26*(20/14) - rank*4) {
+    while (str.length > 1 && defaultFont.calcWidth(str)*textScale > -32 + v.sw-211-32 - 2*(20/14) - Math.ceil(rank/3)*26*(20/14) - rank*4) {
       str = str.replace(/…$/,'')
       str = str.replace(/.$/,'') + '…'
     }
