@@ -344,7 +344,7 @@ v.renderFunc = function() {
 
     mat4.identity(m)
     let iconScale = 30/14
-    mat4.translate(m, m, [g.x + g.w - 28*iconScale, g.y + 67 + index * 200, 0])
+    mat4.translate(m, m, [v.sw - 135 - 28*iconScale, g.y + 67 + index * 200, 0])
     mat4.scale(m, m, [iconScale, iconScale, 1])
     defaultFont.draw(0,0, '😀', v.subtitleColor, v.mat, m)
 
