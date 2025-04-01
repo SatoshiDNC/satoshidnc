@@ -350,7 +350,8 @@ v.renderFunc = function() {
     mat4.translate(m, m, [v.sw - 32, g.y + 67 + index * 200, 0])
     mat4.scale(m, m, [iconScale, iconScale, 1])
     while (rank > 0) {
-      defaultFont.draw(-32,0, icon, v.subtitleColor, v.mat, m)
+      defaultFont.draw(-32,0, '💗', v.bgColor, v.mat, m)
+      defaultFont.draw(-28,0, icon, [1,0,0,1], v.mat, m)
       rank -= 1
     }
 
