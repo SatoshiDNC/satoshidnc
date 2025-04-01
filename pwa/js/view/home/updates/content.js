@@ -342,7 +342,7 @@ v.renderFunc = function() {
     mat4.scale(m, m, [30/14, 30/14, 1])
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
-    let balance = 1
+    let balance = 10
     let rank = balance? `${Math.abs(balance)}`.length: 0
     let icon = balance > 0? '❤': '💔'
     mat4.identity(m)
