@@ -312,6 +312,13 @@ v.renderFunc = function() {
     // drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
     drawEllipse(v, colors.inactiveDark, 43, g.y + 17 + index * 200, 125, 125)
 
+    let balance = -1000000
+    let rank = balance? `${Math.abs(balance)}`.length: 0
+    let rankIcon = balance > 0? '❤': '💔'
+    let rankColor = [1,0,0, 1]
+
+    let textScale = 35/14
+
     let str
     if (v.selfs.includes(hpub)) {
       if (v.selfs.length == 1) {
@@ -324,16 +331,20 @@ v.renderFunc = function() {
         drawEllipse(v, colors.accent, 118, g.y + 88 + index * 200, 57, 57)
         mat4.identity(m)
         mat4.translate(m, m, [135, g.y + 135 + index * 200, 0])
-        mat4.scale(m, m, [35/14, 35/14, 1])
+        mat4.scale(m, m, [textScale, textScale, 1])
         defaultFont.draw(0,0, '+', v.bgColor, v.mat, m)
       }
     } else {
       str = getAttr(hpub, 'name') || 'Unnamed'
     }
+    while (str.length > 1 && defaultFont.calcWidth(str)*textScale > v.sw-211-32 - Math.ceil(rank/3)*26*(20/14) - rank*4) {
+      str = str.replace(/…$/,'')
+      str = str.replace(/.$/,'') + '…'
+    }
     mat4.identity(m)
     // mat4.translate(m, m, [211, 553 + y, 0])
     mat4.translate(m, m, [211, g.y + 67 + index * 200, 0])
-    mat4.scale(m, m, [35/14, 35/14, 1])
+    mat4.scale(m, m, [textScale, textScale, 1])
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
   
     mat4.identity(m)
@@ -342,10 +353,6 @@ v.renderFunc = function() {
     mat4.scale(m, m, [30/14, 30/14, 1])
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
-    let balance = -1000000
-    let rank = balance? `${Math.abs(balance)}`.length: 0
-    let icon = balance > 0? '❤': '💔'
-    let color = [1,0,0, 1]
     mat4.identity(m)
     let iconScale = 20/14
     let d = 4*iconScale
@@ -354,7 +361,7 @@ v.renderFunc = function() {
     for (let r = 0; r < rank; r++) {
       defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
       defaultFont.draw(-28, 0, '❤', v.bgColor, v.mat, m)
-      defaultFont.draw(-28, 0, icon, color, v.mat, m)
+      defaultFont.draw(-28, 0, rankIcon, rankColor, v.mat, m)
     }
 
     i++
