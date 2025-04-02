@@ -147,7 +147,6 @@ v.render_kind1_json = function(data, json) {
   const v = this
   const m = mat4.create()
   const textHeight = 128
-  const rowHeight = textHeight * 3/8 + textHeight * 3/2
 
   let keys = []
   for (const remaining of Object.keys(json)) {
@@ -163,7 +162,9 @@ v.render_kind1_json = function(data, json) {
     }
   }
 
-  let y = 200
+  let usable_height = v.sh - 200
+  let rowHeight = Math.min(usable_height / keys.length, textHeight * 3/8 + textHeight * 3/2)
+  let y = 200 + (usable_height - rowHeight * keys.length)/2
   const displayStandardLine = (key, keyName, value) => {
     const t1 = `${keyName||key}:`
     const t2 = `${value}`
