@@ -167,6 +167,7 @@ v.render_kind1_json = function(data, json) {
   const displayStandardLine = (key, keyName, value) => {
     const t1 = `${keyName||key}:`
     const t2 = `${value}`
+    const name_color = blend(colors.title, v.bgColor, 0.5)
     let t3 = ''
     if (key === 'created_at' && `${value}` === `${+value}`) {
       t3 = new Date(value * 1000).toLocaleString()
@@ -175,14 +176,14 @@ v.render_kind1_json = function(data, json) {
     mat4.identity(m)
     mat4.translate(m, m, [15, g.y + y + 5 + textHeight * 0.5, 0])
     mat4.scale(m, m, [ts, ts, 1])
-    defaultFont.draw(0,0, t1, colors.inactive, v.mat, m)
+    defaultFont.draw(0,0, t1, name_color, v.mat, m)
     ts = textHeight/14
     mat4.identity(m)
     mat4.translate(m, m, [15, g.y + y + 7 + textHeight * 1.5, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, t2, colors.title, v.mat, m)
     if (t3) {
-      defaultFont.draw(0,0, ' | ', colors.inactive, v.mat, m)
+      defaultFont.draw(0,0, ' | ', name_color, v.mat, m)
       defaultFont.draw(0,0, t3, colors.title, v.mat, m)
     }
     y += rowHeight
