@@ -64,7 +64,6 @@ v.renderKind1 = function(data) {
   v.bgColor = bgColor
   gl.clearColor(...bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
-  const m = mat4.create()
   let plaintext = data.content
   if (encryption == 'cc20s10') {
     let key = data._key && Uint8Array.from(data._key.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))
@@ -89,6 +88,7 @@ v.renderKind1 = function(data) {
 
 v.render_kind1_plaintext = function(plaintext) {
   const v = this
+  const m = mat4.create()
   const whitespace = false
   let t,tw,th,ts
   ts = 50/14
@@ -141,6 +141,7 @@ v.render_kind1_plaintext = function(plaintext) {
 
 v.render_kind1_json = function(data, json) {
   const v = this
+  const m = mat4.create()
 }
 
 v.renderDefault = function(data) {
