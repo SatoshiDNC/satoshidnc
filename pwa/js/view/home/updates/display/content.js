@@ -171,18 +171,18 @@ v.render_kind1_json = function(data, json) {
       t3 = new Date(value * 1000).toLocaleString()
     }
     let ts = textHeight/14 * 0.5
-    mat4.identity(mat)
-    mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 0.5, 0])
-    mat4.scale(mat, mat, [ts, ts, 1])
-    defaultFont.draw(0,0, t1, colors.inactive, v.mat, mat)
+    mat4.identity(m)
+    mat4.translate(m, m, [15, g.y + y + 5 + textHeight * 0.5, 0])
+    mat4.scale(m, m, [ts, ts, 1])
+    defaultFont.draw(0,0, t1, colors.inactive, v.mat, m)
     ts = textHeight/14
-    mat4.identity(mat)
-    mat4.translate(mat, mat, [15, g.y + y + 7 + textHeight * 1.5, 0])
-    mat4.scale(mat, mat, [ts, ts, 1])
-    defaultFont.draw(0,0, t2, colors.title, v.mat, mat)
+    mat4.identity(m)
+    mat4.translate(m, m, [15, g.y + y + 7 + textHeight * 1.5, 0])
+    mat4.scale(m, m, [ts, ts, 1])
+    defaultFont.draw(0,0, t2, colors.title, v.mat, m)
     if (t3) {
-      defaultFont.draw(0,0, ' | ', colors.inactive, v.mat, mat)
-      defaultFont.draw(0,0, t3, colors.title, v.mat, mat)
+      defaultFont.draw(0,0, ' | ', colors.inactive, v.mat, m)
+      defaultFont.draw(0,0, t3, colors.title, v.mat, m)
     }
     y += rowHeight
   }
