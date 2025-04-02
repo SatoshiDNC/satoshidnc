@@ -72,9 +72,11 @@ v.renderKind1 = function(data) {
     plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => key? v: v>32 && v<127? v: 63))
   }
 
+  let json = v.last_json
   if (data !== v.lastData) {
     v.lastData = data
     json = JSON.parse(plaintext)
+    v.last_json = json
   }
   console.log(json)
 
