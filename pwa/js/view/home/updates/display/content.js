@@ -73,7 +73,11 @@ v.renderKind1 = function(data) {
   let json = v.last_json
   if (data !== v.lastData) {
     v.lastData = data
-    json = JSON.parse(plaintext)
+    try {
+      json = JSON.parse(plaintext)
+    } catch {
+      json = undefined
+    }
     v.last_json = json
   }
   console.log(json)
@@ -142,6 +146,48 @@ v.render_kind1_plaintext = function(plaintext) {
 v.render_kind1_json = function(data, json) {
   const v = this
   const m = mat4.create()
+  let keys = []
+  for (const remaining of Object.keys(json)) {
+    let duplicate = false
+    for (const key of keys) {
+      if (key[1] === g.content[remaining]) {
+        key[0].push(remaining)
+        duplicate = true
+      }
+    }
+    if (!duplicate) {
+      keys.push([[remaining], g.content[remaining]])
+    }
+  }
+
+  const displayStandardLine = (key, keyName, value) => {
+    const t1 = `${keyName||key}:`
+    const t2 = `${value}`
+    let t3 = ''
+    if (key === 'created_at' && `${value}` === `${+value}`) {
+      t3 = new Date(value * 1000).toLocaleString()
+    }
+    let ts = textHeight/14 * 0.5
+    mat4.identity(mat)
+    mat4.translate(mat, mat, [15, g.y + y + 5 + textHeight * 0.5, 0])
+    mat4.scale(mat, mat, [ts, ts, 1])
+    defaultFont.draw(0,0, t1, colors.inactive, v.mat, mat)
+    ts = textHeight/14
+    mat4.identity(mat)
+    mat4.translate(mat, mat, [15, g.y + y + 7 + textHeight * 1.5, 0])
+    mat4.scale(mat, mat, [ts, ts, 1])
+    defaultFont.draw(0,0, t2, colors.title, v.mat, mat)
+    if (t3) {
+      defaultFont.draw(0,0, ' | ', colors.inactive, v.mat, mat)
+      defaultFont.draw(0,0, t3, colors.title, v.mat, mat)
+    }
+    y += rowHeight
+  }
+
+  for (const key of keys) {
+    displayStandardLine(key[0][0], key[0].join(' / '), key[1])
+  }
+
 }
 
 v.renderDefault = function(data) {
