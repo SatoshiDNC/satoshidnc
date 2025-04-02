@@ -124,7 +124,6 @@ export function aggregateEvent(e) {
                     }
                   }
                 } else {
-                  console.log(`[${TAG}] unlocked:`, ids)
                   unlockTrigger.map(f => f(ids))
                   resolve()
                 }
