@@ -150,13 +150,13 @@ v.render_kind1_json = function(data, json) {
   for (const remaining of Object.keys(json)) {
     let duplicate = false
     for (const key of keys) {
-      if (key[1] === g.content[remaining]) {
+      if (key[1] === json[remaining]) {
         key[0].push(remaining)
         duplicate = true
       }
     }
     if (!duplicate) {
-      keys.push([[remaining], g.content[remaining]])
+      keys.push([[remaining], json[remaining]])
     }
   }
 
