@@ -147,7 +147,7 @@ v.render_kind1_json = function(data, json) {
   const v = this
   const m = mat4.create()
   const textHeight = 128
-  const rowHeight = 12 + textHeight * 1.5
+  const rowHeight = 48 + textHeight * 1.5
 
   let keys = []
   for (const remaining of Object.keys(json)) {
