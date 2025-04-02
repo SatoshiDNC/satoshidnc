@@ -57,7 +57,6 @@ v.renderFunc = function() {
 let debug = false
 v.renderKind1 = function(data) {
   const v = this
-  const whitespace = false
   const hexColor = data.tags.filter(t => t[0] == 'bgcolor')?.[0]?.[1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
   const rgbColor = parseInt(hexColor,16)
   const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
@@ -80,6 +79,17 @@ v.renderKind1 = function(data) {
   }
   console.log(json)
 
+  if (false) {
+    v.render_kind1_json(data, json)
+  } else {
+    v.render_kind1_plaintext(plaintext)
+  }
+
+}
+
+v.render_kind1_plaintext = function(plaintext) {
+  const v = this
+  const whitespace = false
   let t,tw,th,ts
   ts = 50/14
   const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
@@ -127,6 +137,10 @@ v.renderKind1 = function(data) {
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
+}
+
+v.render_kind1_json = function(data, json) {
+  const v = this
 }
 
 v.renderDefault = function(data) {
