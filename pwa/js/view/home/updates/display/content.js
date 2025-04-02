@@ -78,7 +78,7 @@ v.renderKind1 = function(data) {
   }
   console.log(json)
 
-  if (false) {
+  if (json) {
     v.render_kind1_json(data, json)
   } else {
     v.render_kind1_plaintext(plaintext)
