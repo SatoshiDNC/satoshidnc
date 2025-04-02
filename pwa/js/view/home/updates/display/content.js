@@ -147,7 +147,7 @@ v.render_kind1_json = function(data, json) {
   const v = this
   const m = mat4.create()
   const textHeight = 128
-  const rowHeight = 48 + textHeight * 1.5
+  const rowHeight = textHeight * 3/8 + textHeight * 3/2
 
   let keys = []
   for (const remaining of Object.keys(json)) {
@@ -174,12 +174,12 @@ v.render_kind1_json = function(data, json) {
     }
     let ts = textHeight/14 * 0.5
     mat4.identity(m)
-    mat4.translate(m, m, [15, g.y + y + 5 + textHeight * 0.5, 0])
+    mat4.translate(m, m, [15, g.y + y + textHeight * 0.5, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, t1, name_color, v.mat, m)
     ts = textHeight/14
     mat4.identity(m)
-    mat4.translate(m, m, [15, g.y + y + 7 + textHeight * 1.5, 0])
+    mat4.translate(m, m, [15, g.y + y + textHeight * 1.5 + textHeight * 2/16, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, t2, colors.title, v.mat, m)
     if (t3) {
