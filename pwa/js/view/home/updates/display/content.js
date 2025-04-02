@@ -174,12 +174,16 @@ v.render_kind1_json = function(data, json) {
       t3 = new Date(value * 1000).toLocaleString()
     }
     let ts = textHeight/14 * 0.5
+    let tw = defaultFont.calcWidth(t1)
+    if (tw * ts > v.sw - 30) {
+      ts = (v.sw - 30) / tw
+    }
     mat4.identity(m)
     mat4.translate(m, m, [15, g.y + y + textHeight * 0.5, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, t1, name_color, v.mat, m)
     ts = textHeight/14
-    let tw = defaultFont.calcWidth(t2 + (t3?' | ' + t3:''))
+    tw = defaultFont.calcWidth(t2 + (t3?' | ' + t3:''))
     if (tw * ts > v.sw - 30) {
       ts = (v.sw - 30) / tw
     }
