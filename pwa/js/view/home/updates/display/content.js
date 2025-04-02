@@ -80,7 +80,6 @@ v.renderKind1 = function(data) {
     }
     v.last_json = json
   }
-  console.log(json)
 
   if (json) {
     v.render_kind1_json(data, json)
@@ -162,7 +161,7 @@ v.render_kind1_json = function(data, json) {
   }
 
   let max_text_height = 128
-  let usable_height = v.sh - 200
+  let usable_height = v.sh - 400
   let rowHeight = Math.min(usable_height / keys.length, max_text_height * 3/8 + max_text_height * 3/2)
   let textHeight = rowHeight * 8/15
   let y = 200 + (usable_height - rowHeight * keys.length)/2
