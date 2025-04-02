@@ -74,7 +74,6 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
     let req = auth.tags.filter(t => t[0] == 'IOU')[0][3]
     let method = req.split(' ')[0]
     let route = req.substring(method.length).trim()
-    console.log(`${method} ${route}`)
     return fetch(`${bapi_baseurl}${route}`, {
       method: `${method}`,
       credentials: 'include',
@@ -93,7 +92,6 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
         })
       }
     }).catch(error => Promise.reject(`request failed: ${error}`)).then(json => {
-      console.log(json)
       if (json.message == 'done') {
         return Promise.resolve(json.results)
       } else {
@@ -106,15 +104,11 @@ v.displayAction = function(updates, hpub, returnView, root, target) {
     alert(m)
     return new Promise(()=>{}) // terminate the chain
   }).then(json => {
-    console.log('Result:', json)
     json.map(r => {
       if (r[1] == 'ok') {
         r[2].tags.filter(t => t[0] == 'e').map(t => t[1]).map(id => {
-          console.log('map1')
           updates.filter(u => u.data.id == id).map(u => {
-            console.log('map2', r[2].content)
             u.data._key = r[2].content
-            console.log(u)
           })
         })
         aggregateEvent(r[2])
