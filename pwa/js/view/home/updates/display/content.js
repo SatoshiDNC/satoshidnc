@@ -183,7 +183,7 @@ v.render_kind1_json = function(data, json) {
       ts = (v.sw - 30) / tw
     }
     mat4.identity(m)
-    mat4.translate(m, m, [15, g.y + y + textHeight * 0.5 + textHeight * ts/14 + textHeight * 2/16, 0])
+    mat4.translate(m, m, [15, g.y + y + textHeight * 0.5 + ts*14 + textHeight * 2/16, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, t2, colors.title, v.mat, m)
     if (t3) {
