@@ -146,7 +146,7 @@ v.render_kind1_plaintext = function(plaintext) {
 v.render_kind1_json = function(data, json) {
   const v = this
   const m = mat4.create()
-  const textHeight = 32
+  const textHeight = 128
   const rowHeight = 12 + textHeight * 1.5
 
   let keys = []
