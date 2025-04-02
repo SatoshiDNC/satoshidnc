@@ -163,7 +163,7 @@ v.render_kind1_json = function(data, json) {
     }
   }
 
-  let y = 50
+  let y = 200
   const displayStandardLine = (key, keyName, value) => {
     const t1 = `${keyName||key}:`
     const t2 = `${value}`
