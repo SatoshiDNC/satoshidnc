@@ -2,6 +2,7 @@ import { overlayView } from './overlay.js'
 import { markUpdateAsViewed } from '../../../../content.js'
 import { blend } from '../../../../draw.js'
 import { render_kind1 } from './kind/1-short-text-note.js'
+import { render_kind30023 } from './kind/30023-long-form-note.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -34,7 +35,15 @@ v.renderFunc = function() {
   v.bgColor = v.bgColorDefault
   const data = v.updates[overlayView.currentUpdate]?.data || { kind: -1, id: '0000000000000000000000000000000000000000000000000000000000000000' }
   if (data.kind == 1) {
-    v.renderKind1(data)
+    v.render_kind1(data)
+    if (data.id != v.lastRenderedId) {
+      v.lastRenderedId = data.id
+      if (data.tags.filter(t => !['bgcolor', 'expiration', 'encryption'].includes(t[0])).length > 0) {
+        console.log(`[NOTE] unrecognized tags are present:`, data)
+      }
+    }
+  } else if (data.kind == 30023) {
+    v.render_kind30023(data)
     if (data.id != v.lastRenderedId) {
       v.lastRenderedId = data.id
       if (data.tags.filter(t => !['bgcolor', 'expiration', 'encryption'].includes(t[0])).length > 0) {
@@ -55,9 +64,8 @@ v.renderFunc = function() {
 
 }
 let debug = false
-v.renderKind1 = function(data) {
-  return render_kind1(this, data)
-}
+v.render_kind1 = function(data) { return render_kind1(this, data) }
+v.render_kind30023 = function(data) { return render_kind30023(this, data) }
 
 v.renderDefault = function(data) {
   const v = this
