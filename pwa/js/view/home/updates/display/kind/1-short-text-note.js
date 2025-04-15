@@ -1,5 +1,7 @@
 import { crypt } from '../../../../../cryption.js'
 
+const debug = false
+
 export function render_kind1(view, data) {
   const v = view
   const hexColor = data.tags.filter(t => t[0] == 'bgcolor')?.[0]?.[1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
