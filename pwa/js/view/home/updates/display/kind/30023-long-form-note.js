@@ -1,6 +1,6 @@
 import { crypt } from '../../../../../cryption.js'
 
-let debug = true
+let debug = false
 
 export function render_kind30023(view, data) {
   const v = view
@@ -11,11 +11,11 @@ export function render_kind30023(view, data) {
   v.bgColor = bgColor
   gl.clearColor(...bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
-  let plaintext = data.content
-  if (encryption == 'cc20s10') {
-    let key = data._key && Uint8Array.from(data._key.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))
-    plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => key? v: v>32 && v<127? v: 63))
-  }
+  let plaintext = data.tags.filter(t => t[0] == 'summary')[0][1]
+  // if (encryption == 'cc20s10') {
+  //   let key = data._key && Uint8Array.from(data._key.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))
+  //   plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => key? v: v>32 && v<127? v: 63))
+  // }
 
   const m = mat4.create()
   const whitespace = false
