@@ -82,7 +82,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
         }
       } else {
         addNewContact(hpub, name)
-        setPersonalData(hpub, 'relay', relay)
+        //setPersonalData(hpub, 'relay', relay) // FIX needed
         relays?.map(r => detectRelay(r))
         relays?.map(r => addRelayContactRelation(r, hpub, R_KNOWS_C))
       }
