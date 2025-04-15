@@ -1,6 +1,6 @@
 import { crypt } from '../../../../../cryption.js'
 
-const debug = false
+let debug = false
 
 export function render_kind1(view, data) {
   const v = view

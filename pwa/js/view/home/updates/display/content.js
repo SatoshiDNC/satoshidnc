@@ -1,7 +1,6 @@
 import { overlayView } from './overlay.js'
 import { markUpdateAsViewed } from '../../../../content.js'
 import { blend } from '../../../../draw.js'
-import { crypt } from '../../../../cryption.js'
 import { render_kind1 } from './kind/1-short-text-note.js'
 
 let v, g
