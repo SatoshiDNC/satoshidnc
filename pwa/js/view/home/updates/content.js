@@ -295,7 +295,19 @@ v.renderFunc = function() {
 
   if (v.channels.length > 0) {
     mat4.identity(m)
-    mat4.translate(m, m, [45, v.channelsGad.y-32 /*434 + (v.recents.length>0 ? v.recents.length * 200 + 98 : 0)*/, 0])
+    mat4.translate(m, m, [45, v.channelsGad.y-32-267, 0])
+    mat4.scale(m, m, [42/14, 42/14, 1])
+    defaultFont.draw(x,y, 'Channels', v.titleColor, v.mat, m)
+    mat4.identity(m)
+    mat4.translate(m, m, [45, v.channelsGad.y-32-197, 0])
+    mat4.scale(m, m, [28/14, 28/14, 1])
+    defaultFont.draw(x,y, 'Stay updated on topics that matter to you.', v.subtitleColor, v.mat, m)
+    mat4.identity(m)
+    mat4.translate(m, m, [45, v.channelsGad.y-32-139, 0])
+    mat4.scale(m, m, [28/14, 28/14, 1])
+    defaultFont.draw(x,y, 'Find channels to follow below.', v.subtitleColor, v.mat, m)
+    mat4.identity(m)
+    mat4.translate(m, m, [45, v.channelsGad.y-32, 0])
     mat4.scale(m, m, [28/14, 28/14, 1])
     defaultFont.draw(x,y, 'Find channels to follow', v.subtitleColor, v.mat, m)
   }
