@@ -378,7 +378,7 @@ v.renderFunc = function() {
     } else {
       str = getAttr(hpub, 'name') || 'Unnamed'
     }
-    max_len = -32 + v.sw-211-32 + ((rank && !v.selfs.includes(hpub))? -2*(20/14) - Math.ceil(rank/3)*26*(20/14) - rank*4: 0)
+    const max_len = -32 + v.sw-211-32 + ((rank && !v.selfs.includes(hpub))? -2*(20/14) - Math.ceil(rank/3)*26*(20/14) - rank*4: 0)
     while (str.length > 1 && defaultFont.calcWidth(str)*textScale > max_len) {
       str = str.replace(/…$/,'')
       str = str.replace(/.$/,'') + '…'
