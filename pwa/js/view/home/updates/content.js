@@ -378,9 +378,16 @@ v.renderFunc = function() {
     } else {
       str = getAttr(hpub, 'name') || 'Unnamed'
     }
-    while (str.length > 1 && defaultFont.calcWidth(str)*textScale > -32 + v.sw-211-32 - 2*(20/14) - Math.ceil(rank/3)*26*(20/14) - rank*4) {
-      str = str.replace(/…$/,'')
-      str = str.replace(/.$/,'') + '…'
+    if (rank && !v.selfs.includes(hpub)) {
+      while (str.length > 1 && defaultFont.calcWidth(str)*textScale > -32 + v.sw-211-32 - 2*(20/14) - Math.ceil(rank/3)*26*(20/14) - rank*4) {
+        str = str.replace(/…$/,'')
+        str = str.replace(/.$/,'') + '…'
+      }
+    } else {
+      while (str.length > 1 && defaultFont.calcWidth(str)*textScale > -32 + v.sw-211-32) {
+        str = str.replace(/…$/,'')
+        str = str.replace(/.$/,'') + '…'
+      }
     }
     mat4.identity(m)
     // mat4.translate(m, m, [211, 553 + y, 0])
