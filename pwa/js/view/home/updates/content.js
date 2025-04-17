@@ -159,7 +159,7 @@ v.gadgets.push(g = v.channelsGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     const y = (e.y - v.y) / v.viewScale + v.userY
     const index = Math.floor((y - g.y) / 200)
-    if (index < 0 || index >= v.viewed.length) return
+    if (index < 0 || index >= v.channels.length) return
     console.log(index)
     // const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
     // v.displayAction(updates, updates[0].hpub, v.parent.parent, g.root, g.target)
