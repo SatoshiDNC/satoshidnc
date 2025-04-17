@@ -211,19 +211,26 @@ v.layoutFunc = function() {
   const viewed = []
   const channels = []
   for (const update of v.query.results) {
-    console.log(update)
-    if (keys.filter(k => k.hpub == update.hpub).length == 0) {
-      if (!update.viewed) {
-        if (!recents.includes(update.hpub)) {
-          recents.push(update.hpub)
-          const index = viewed.indexOf(update.hpub)
-          if (index > -1) {
-            viewed.splice(index, 1)
-          }
+    if (update.data.kind == 30023) { // channel
+      if (keys.filter(k => k.hpub == update.hpub).length == 0) {
+        if (!channels.includes(update.hpub)) {
+          channels.push(update.hpub)
         }
-      } else {
-        if (!recents.includes(update.hpub) && !viewed.includes(update.hpub)) {
-          viewed.push(update.hpub)
+      }
+    } else { // status
+      if (keys.filter(k => k.hpub == update.hpub).length == 0) {
+        if (!update.viewed) {
+          if (!recents.includes(update.hpub)) {
+            recents.push(update.hpub)
+            const index = viewed.indexOf(update.hpub)
+            if (index > -1) {
+              viewed.splice(index, 1)
+            }
+          }
+        } else {
+          if (!recents.includes(update.hpub) && !viewed.includes(update.hpub)) {
+            viewed.push(update.hpub)
+          }
         }
       }
     }
