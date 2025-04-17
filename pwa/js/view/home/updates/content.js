@@ -153,6 +153,17 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
     const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
     v.displayAction(updates, updates[0].hpub, v.parent.parent, g.root, g.target)
   }
+v.gadgets.push(g = v.channelsGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function(e) {
+    const g = this, v = this.viewport
+    const y = (e.y - v.y) / v.viewScale + v.userY
+    const index = Math.floor((y - g.y) / 200)
+    if (index < 0 || index >= v.viewed.length) return
+    console.log(index)
+    // const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
+    // v.displayAction(updates, updates[0].hpub, v.parent.parent, g.root, g.target)
+  }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.clearQuery = function() {
@@ -198,7 +209,9 @@ v.layoutFunc = function() {
 
   const recents = []
   const viewed = []
+  const channels = []
   for (const update of v.query.results) {
+    console.log(update)
     if (keys.filter(k => k.hpub == update.hpub).length == 0) {
       if (!update.viewed) {
         if (!recents.includes(update.hpub)) {
@@ -215,9 +228,13 @@ v.layoutFunc = function() {
       }
     }
   }
+  if (channels.length == 0) {
+    channels.push('51c63606c483dc9b44373e8ea240494b8101e4b23da579f17fec195029207e99')
+  }
   v.selfs = keys.map(k => k.hpub)
   v.recents = recents
   v.viewed = viewed
+  v.channels = channels
 
   let x = 42
   let g
@@ -232,6 +249,10 @@ v.layoutFunc = function() {
   g = v.viewedGad
   g.x = 0, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
   g.w = v.sw, g.h = viewed.length * 200
+  g.autoHull()
+  g = v.channelsGad
+  g.x = 0, g.y = v.viewedGad.y + ((viewed.length > 0) ? v.viewedGad.h + 393 : 0)
+  g.w = v.sw, g.h = channels.length * 200
   g.autoHull()
 
   v.minX = 0, v.maxX = v.sw
@@ -272,13 +293,20 @@ v.renderFunc = function() {
     defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
   }
 
+  if (v.channels.length > 0) {
+    mat4.identity(m)
+    mat4.translate(m, m, [45, v.channelsGad.y-32 /*434 + (v.recents.length>0 ? v.recents.length * 200 + 98 : 0)*/, 0])
+    mat4.scale(m, m, [28/14, 28/14, 1])
+    defaultFont.draw(x,y, 'Find channels to follow', v.subtitleColor, v.mat, m)
+  }
+
   let i = 0
-  for (let hpub of [...v.selfs, ...v.recents, ...v.viewed]) {
+  for (let hpub of [...v.selfs, ...v.recents, ...v.viewed, ...v.channels]) {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => a+(c.viewed?1:0), 0)
     const y = i * 200 + (i >= v.selfs.length? 96:0) + ((v.viewed.includes(hpub) && v.recents.length > 0)? 96:0)
-    const g = i < v.selfs.length? v.selfsGad: i < v.selfs.length + v.recents.length? v.recentsGad: v.viewedGad
+    const g = i < v.selfs.length? v.selfsGad: i < v.selfs.length + v.recents.length? v.recentsGad: i < v.selfs.length + v.recents.lenght + v.viewed.length? v.viewedGad: v.channelsGad
     const index = i < v.selfs.length? i: i < v.selfs.length + v.recents.length? i - v.selfs.length: i - v.selfs.length - v.recents.length
     if (numUpdates) {
       drawEllipse(v, colors.accent, 32, g.y + 6 + index * 200, 147, 147)
