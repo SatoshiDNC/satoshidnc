@@ -211,7 +211,9 @@ v.layoutFunc = function() {
   const viewed = []
   const channels = []
   for (const update of v.query.results) {
-    if (update.data.kind == 30023) { // channel
+    if (update.data.kind == 30023
+    || (update.data.kind == 1 && update.data.tags.filter(t => t[0] == 'expiration').length == 0)
+    ) { // channel
       if (keys.filter(k => k.hpub == update.hpub).length == 0) {
         if (!channels.includes(update.hpub)) {
           channels.push(update.hpub)
