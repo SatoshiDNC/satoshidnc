@@ -3,6 +3,7 @@ import { drawRoundedRect, blend } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023 } from './kind/30023-long-form-note.js'
 import * as geom from './geometry.js'
+import { kindInfo } from '../../../../nostor-util.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -70,6 +71,10 @@ v.renderFunc = function() {
       } else if (p.preloaded.data.kind == 30023) {
         prep_kind30023(v, p)
       } else {
+        p.lines = [ `Posted ${kindInfo.filter(r => p.preloaded.data.kind >= r.kind && p.preloaded.data.kind <= (r.kindMax || r.kind))?.[0].desc || 'something'}` ]
+        p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
+        p.type = 'default'
+        
         console.log(`no rendering implemented:`, p)
         p.type = 'error'
       }
