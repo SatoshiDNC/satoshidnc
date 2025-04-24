@@ -43,7 +43,7 @@ v.insertPost = function(preloaded) {
 v.layoutFunc = function() {
   const v = this
   v.minX = 0, v.maxX = v.sw
-  v.minY = Math.min(0, -v.posts.reduce((p,c)=>p+geom.SPACE_BELOW+(c.total_height?c.total_height:0)+geom.SPACE_ABOVE,0)), v.maxY = v.sh
+  v.minY = Math.min(0, v.sh-v.posts.reduce((p,c)=>p+geom.SPACE_BELOW+(c.total_height?c.total_height:0)+geom.SPACE_ABOVE,0)), v.maxY = v.sh
   let g
   g = v.screenGad
   g.x = 0, g.y = 0
