@@ -43,7 +43,6 @@ v.insertPost = function(preloaded) {
 v.layoutFunc = function() {
   const v = this
   v.minX = 0, v.maxX = v.sw
-  console.log(Math.min(0, -v.posts.reduce((p,c)=>p+geom.SPACE_BELOW+c.total_height+geom.SPACE_ABOVE,0)))
   v.minY = Math.min(0, -v.posts.reduce((p,c)=>p+geom.SPACE_BELOW+(c.total_height?c.total_height:0)+geom.SPACE_ABOVE,0)), v.maxY = v.sh
   let g
   g = v.screenGad
@@ -129,8 +128,8 @@ v.render_default = function(post, y) {
   let line_offset = p.lines.length
   for (const line of p.lines) {
     line_offset -= 1
-    if (v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING+geom.TEXT_HEIGHT < 0) { continue }
-    if (v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING-geom.TEXT_HEIGHT > v.sh) { continue }
+    if (v.userY+v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING+geom.TEXT_HEIGHT < 0) { continue }
+    if (v.userY+v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING-geom.TEXT_HEIGHT > v.sh) { continue }
     mat4.identity(m)
     mat4.translate(m, m, [geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING, 0])
     mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
