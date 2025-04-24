@@ -77,6 +77,7 @@ v.renderFunc = function() {
     if (!p.lines) {
       let lines = []
 
+      debug = true
       const plaintext = p.preloaded.data.content
       const whitespace = false
       const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
@@ -94,6 +95,7 @@ v.renderFunc = function() {
             let i = 1, fit = 1
             while (defaultFont.calcWidth(l.substring(0,i)) * ts <= max_width) {
               fit = i
+              i += 1
             }
             lines.push(l.substring(0, fit))
             lines.push(l.substring(fit))
