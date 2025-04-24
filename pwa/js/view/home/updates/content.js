@@ -112,8 +112,8 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     alert(m)
     return new Promise(()=>{}) // terminate the chain
   }).then(json => {
-    console.log('processing', json)
-    ([['','ok','{"content":"6dfbc98024b8e4370999e52f91127e5287a7cfa262ee6e1be4b250a04d564784932446008a55bb3ad76baa05","created_at":1745516654,"id":"1c42c21bef7eeb3b7d3a46971e2ea3116dba53282e2e846c474d923a1bb366ff","kind":24,"pubkey":"d98a11b4be2839cd9d4495e163852aa037e3cdafdd1e6ce730307d0d05f468c3","sig":"385f9588efc85be5aaa2967125bea475b56dad4de784f1e094870733bfc6296295417036b1e5a3763f3d59b20cb4e2788a28e4f2f1caf13cbd682c818d6db156","tags":[["e","28161deb8e775b3a79e848d5655e7e307d650aabfabb8a673e0e8707a3c12aba"]]}'], ...json]).map(r => {
+    console.log('processing', json);
+    [['','ok','{"content":"6dfbc98024b8e4370999e52f91127e5287a7cfa262ee6e1be4b250a04d564784932446008a55bb3ad76baa05","created_at":1745516654,"id":"1c42c21bef7eeb3b7d3a46971e2ea3116dba53282e2e846c474d923a1bb366ff","kind":24,"pubkey":"d98a11b4be2839cd9d4495e163852aa037e3cdafdd1e6ce730307d0d05f468c3","sig":"385f9588efc85be5aaa2967125bea475b56dad4de784f1e094870733bfc6296295417036b1e5a3763f3d59b20cb4e2788a28e4f2f1caf13cbd682c818d6db156","tags":[["e","28161deb8e775b3a79e848d5655e7e307d650aabfabb8a673e0e8707a3c12aba"]]}'], ...json].map(r => {
       if (r[1] == 'ok') {
         r[2].tags.filter(t => t[0] == 'e').map(t => t[1]).map(id => {
           updates.filter(u => u.data.id == id).map(u => {
