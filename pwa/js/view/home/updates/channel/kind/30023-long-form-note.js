@@ -59,6 +59,7 @@ export function prep_kind30023(view, post) {
       }
     }
     p.lines = lines
+    p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
   }
 
 }

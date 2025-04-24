@@ -73,14 +73,13 @@ v.renderFunc = function() {
     if (p.type == 'default') {
       v.render_default(p)
     }
-    y -= geom.SPACE_BELOW+total_height+geom.SPACE_ABOVE
+    y -= geom.SPACE_BELOW+p.total_height+geom.SPACE_ABOVE
   }
 }
 v.render_default = function(post) {
   const v = this, p = post
 
-  let total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
-  drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-geom.SPACE_BELOW-total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,total_height)
+  drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-geom.SPACE_BELOW-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,total_height)
 
   let line_offset = p.lines.length
   for (const line of p.lines) {
