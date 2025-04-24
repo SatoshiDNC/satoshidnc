@@ -42,7 +42,7 @@ v.renderFunc = function() {
   let y = 0
   for (u of updates) {
     let total_height = 100
-    drawRoundedRect(v, [.2,.2,.2,1], 10, 20,y, v.sw - 20,total_height)
+    drawRoundedRect(v, [.2,.2,.2,1], 10, 20,v.sh-y-total_height, v.sw - 20,total_height)
 
     y = y - total_height
   }
