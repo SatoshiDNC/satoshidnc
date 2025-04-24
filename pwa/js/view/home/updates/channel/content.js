@@ -77,6 +77,7 @@ v.renderFunc = function() {
       p.lines = []
 
       const plaintext = p.preloaded.data.content
+      const whitespace = false
       const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
 
       for (const para of paragraphs) {
