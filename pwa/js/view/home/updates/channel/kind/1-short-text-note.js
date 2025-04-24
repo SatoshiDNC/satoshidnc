@@ -2,8 +2,8 @@ import { crypt } from '../../../../../cryption.js'
 
 let debug = false
 
-export function prep_kind1(view, data) {
-  const v = view
+export function prep_kind1(view, post) {
+  const v = view, p = post, data = p.preloaded.data
   const encryption = data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
   let plaintext = data.content
   if (encryption == 'cc20s10') {
@@ -23,13 +23,13 @@ export function prep_kind1(view, data) {
   }
 
   if (json) {
-    render_kind1_json(v, data, json)
+    prep_kind1_json(v, data, json)
   } else {
-    render_kind1_plaintext(v, plaintext)
+    prep_kind1_plaintext(v, plaintext)
   }
 }
 
-export function render_kind1_plaintext(view, plaintext) {
+export function prep_kind1_plaintext(view, plaintext) {
   const v = view
   const m = mat4.create()
   const whitespace = false
@@ -64,25 +64,12 @@ export function render_kind1_plaintext(view, plaintext) {
       }
     }
   }
-  debug = false
-  // tw = lines.reduce((a,c) => Math.max(a, defaultFont.calcWidth(c) * ts, 0))
-  th = lines.length * defaultFont.glyphHeights[65] * ts * 2
-  let i = 1
-  for (let line of lines) {
-    i++
-    if (!line) continue
-    if (whitespace) {
-      line = line.replaceAll(' ', '·')
-    }
-    tw = defaultFont.calcWidth(line) * ts
-    mat4.identity(m)
-    mat4.translate(m, m, [(v.sw - tw)/2, (v.sh - th)/2 + i*defaultFont.glyphHeights[65]*ts*2, 0])
-    mat4.scale(m, m, [ts, ts, 1])
-    defaultFont.draw(0,0, line, v.textColor, v.mat, m)
-  }
+  p.lines = lines
+  p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
+  p.type = 'default'
 }
 
-export function render_kind1_json(view, data, json) {
+export function prep_kind1_json(view, data, json) {
   const v = view
   const m = mat4.create()
 
@@ -100,46 +87,11 @@ export function render_kind1_json(view, data, json) {
     }
   }
 
-  let max_text_height = 128
-  let usable_height = v.sh - 400
-  let rowHeight = Math.min(usable_height / keys.length, max_text_height * 3/8 + max_text_height * 3/2)
-  let textHeight = rowHeight * 8/15
-  let y = 200 + (usable_height - rowHeight * keys.length)/2
-  const displayStandardLine = (key, keyName, value) => {
-    const t1 = `${keyName||key}:`
-    const t2 = `${value}`
-    const name_color = blend(colors.title, v.bgColor, 0.5)
-    let t3 = ''
-    if (key === 'created_at' && `${value}` === `${+value}`) {
-      t3 = new Date(value * 1000).toLocaleString()
-    }
-    let ts = textHeight/14 * 0.5
-    let tw = defaultFont.calcWidth(t1)
-    if (tw * ts > v.sw - 30) {
-      ts = (v.sw - 30) / tw
-    }
-    mat4.identity(m)
-    mat4.translate(m, m, [15, g.y + y + textHeight * 0.5, 0])
-    mat4.scale(m, m, [ts, ts, 1])
-    defaultFont.draw(0,0, t1, name_color, v.mat, m)
-    ts = textHeight/14
-    tw = defaultFont.calcWidth(t2 + (t3?' | ' + t3:''))
-    if (tw * ts > v.sw - 30) {
-      ts = (v.sw - 30) / tw
-    }
-    mat4.identity(m)
-    mat4.translate(m, m, [15, g.y + y + textHeight * 0.5 + ts*14 + textHeight * 2/16, 0])
-    mat4.scale(m, m, [ts, ts, 1])
-    defaultFont.draw(0,0, t2, colors.title, v.mat, m)
-    if (t3) {
-      defaultFont.draw(0,0, ' | ', name_color, v.mat, m)
-      defaultFont.draw(0,0, t3, colors.title, v.mat, m)
-    }
-    y += rowHeight
-  }
-
+  let lines = []
   for (const key of keys) {
-    displayStandardLine(key[0][0], key[0].join(' / '), key[1])
+    lines.push(key[0].join(' / ') + ': ' + key[1])
   }
-
+  p.lines = lines
+  p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
+  p.type = 'default'
 }
