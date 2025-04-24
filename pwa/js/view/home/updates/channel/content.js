@@ -73,13 +73,30 @@ v.renderFunc = function() {
       } else {
         p.lines = [ `Posted ${kindInfo.filter(r => p.preloaded.data.kind >= r.kind && p.preloaded.data.kind <= (r.kindMax || r.kind))?.[0].desc || 'something'}` ]
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
-        p.type = 'default'
+        p.type = 'notice'
       }
     }
-    if (p.type == 'default') {
+    if (p.type == 'notice') {
+      v.render_notice(p, y)
+    } else if (p.type == 'default') {
       v.render_default(p, y)
     }
     y += geom.SPACE_BELOW+p.total_height+geom.SPACE_ABOVE
+  }
+}
+v.render_notice = function(post, y) {
+  const v = this, p = post
+  const m = mat4.create()
+
+  drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-geom.NOTICE_SPACE_BELOW-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
+
+  let line_offset = p.lines.length
+  for (const line of p.lines) {
+    line_offset -= 1
+    mat4.identity(m)
+    mat4.translate(m, m, [geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT, v.sh-y-geom.NOTICE_SPACE_BELOW-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING, 0])
+    mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
+    defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
 }
 v.render_default = function(post, y) {
