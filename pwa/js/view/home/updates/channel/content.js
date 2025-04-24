@@ -17,6 +17,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
 v.setContext = function(updates, hpub) {
   const v = this
+  v.hpub = hpub
   v.pendingUpdates = updates.filter(u => u.hpub != hpub)
   v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
@@ -32,6 +33,11 @@ v.layoutFunc = function() {
 v.renderFunc = function() {
   const v = this
   v.bgColor = v.bgColorDefault
+  const hexColor = hpub[61] + hpub[61] + hpub[62] + hpub[62] + hpub[63] + hpub[63]
+  const rgbColor = parseInt(hexColor,16)
+  const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
+  v.bgColor = blend(bgColor, [0,0,0,1], 0.25)
+
   const data = v.updates[0]?.data || { kind: -1, id: '0000000000000000000000000000000000000000000000000000000000000000' }
   if (data.kind == 1) {
     v.render_kind1(data)
@@ -68,11 +74,7 @@ v.render_kind30023 = function(data) { return render_kind30023(this, data) }
 
 v.renderDefault = function(data) {
   const v = this
-  const hexColor = data.tags?.filter(t => t[0] == 'bgcolor')?.[0]?.[1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
-  const rgbColor = parseInt(hexColor,16)
-  const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
   const encryption = data.tags?.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
-  v.bgColor = blend(bgColor, [0,0,0,1], 0.25)
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
