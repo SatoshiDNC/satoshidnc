@@ -1,6 +1,5 @@
-export const SPACE_ABOVE = 11
-export const SPACE_BELOW = 84
-export const NOTICE_SPACE_BELOW = 18
+export const SPACE_ABOVE = 16
+export const SPACE_BELOW = 16
 export const SPACE_LEFT = 44
 export const SPACE_RIGHT = 43
 export const BUBBLE_RADIUS = 32
