@@ -18,6 +18,8 @@ v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
+v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
+  g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.setContext = function(updates, hpub) {
   const v = this
   v.hpub = hpub
@@ -51,6 +53,7 @@ v.layoutFunc = function() {
     reset_posts.push({ preloaded: p.preloaded })
   }
   v.posts = reset_posts
+  v.swipeGad?.layout()
 }
 v.renderFunc = function() {
   const v = this
