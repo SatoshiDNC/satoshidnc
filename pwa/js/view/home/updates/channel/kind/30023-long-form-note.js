@@ -11,7 +11,7 @@ export function prep_kind30023(view, post) {
   let plaintext = data.content
   if (encryption == 'cc20s10') {
     let key = data._key && Uint8Array.from(data._key.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))
-    plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => key? v: v>32 && v<127? v: 63))
+    plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => false? v: v>32 && v<127? v: 63))
   }
 
   const m = mat4.create()
