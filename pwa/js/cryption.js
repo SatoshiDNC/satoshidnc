@@ -40,7 +40,7 @@ function cryptContinuous(plaintext /*Uint8Array*/, key = randomBytes(44), counte
     throw new Error(`key must be 44 bytes long (found ${key.length} bytes)`)
   if (counter < 0 || counter > 0xffffffff)
     throw new Error(`counter must be in range [0, 2^32) (found ${counter})`)
-  console.log(`plaintext: ${plaintext}, key: ${key}, counter: ${counter}`)
+  if (debug) console.log(`plaintext: ${plaintext}, key: ${key}, counter: ${counter}`)
   const key32 = key.slice(0, 32)
   const nonce12 = key.slice(32)
   const ciphertext = chacha20(key32, nonce12, plaintext, undefined, counter)

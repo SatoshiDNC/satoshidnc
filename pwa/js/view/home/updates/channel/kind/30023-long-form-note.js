@@ -1,7 +1,7 @@
 import { crypt } from '../../../../../cryption.js'
 import * as geom from '../geometry.js'
 
-let debug = false
+//let debug = false
 let flag = true
 
 export function prep_kind30023(view, post) {
@@ -28,13 +28,14 @@ export function prep_kind30023(view, post) {
   }
 
   if (flag) {
+    debug = true
     let key = Uint8Array.from("0102030405060708090001020304050607080900010203040506070809000102030405060708090001020304".match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))
     console.log(key)
     let test = "abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456abcdefghijklmnopqrstuvwxyz123456ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     let x = crypt(0, new TextEncoder().encode(test), key)
     let y = crypt(0, x, key)
-    console.log(new TextDecoder().decode(y))
     flag = false
+    debug = false
   }
 
   const m = mat4.create()
