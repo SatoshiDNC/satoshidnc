@@ -29,11 +29,11 @@ export function prep_kind30023(view, post) {
     if (debug) console.log(`while (words.length ${words.length} > 0) {`)
     while (words.length > 0) {
       lines.push(words.shift())
-      if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
-      while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= max_width) {
+      if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${(defaultFont.calcWidth(lines[lines.length-1])||0)} * ts ${ts} >= v.sw ${v.sw}) {`)
+      while (lines[lines.length-1] && (defaultFont.calcWidth(lines[lines.length-1])||0) * ts >= max_width) {
         let l = lines.pop()
         let i = 1, fit = 1
-        while (defaultFont.calcWidth(l.substring(0,i)) * ts <= max_width) {
+        while ((defaultFont.calcWidth(l.substring(0,i))||0) * ts <= max_width) {
           fit = i
           i += 1
         }
@@ -52,12 +52,12 @@ export function prep_kind30023(view, post) {
         // lines.push(buf)
       }
       if (debug) console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
-      while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= max_width) {
+      while (words.length > 0 && (defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])||0) * ts <= max_width) {
         lines.push(lines.pop() + ' ' + words.shift())
       }
     }
   }
-  p.lines = lines //[ title, lines[0], lines[1], lines[2], lines[3], lines[4] ]
+  p.lines = lines // [ lines[0], lines[1], lines[2], lines[3], lines[4], lines[5], lines[6], lines[7], lines[8], lines[9] ]
   p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
   p.type = 'default'
 }
