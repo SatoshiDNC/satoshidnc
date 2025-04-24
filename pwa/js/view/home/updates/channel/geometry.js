@@ -8,4 +8,5 @@ export const TEXT_SPACE_BELOW = 31
 export const TEXT_SPACE_LEFT = 30
 export const TEXT_SPACE_RIGHT = 30
 export const TEXT_HEIGHT = 33
+export const TEXT_SCALE = TEXT_HEIGHT/14
 export const TEXT_LINE_SPACING = 54

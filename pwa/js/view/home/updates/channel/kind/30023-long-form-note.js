@@ -13,7 +13,7 @@ export function prep_kind30023(view, post) {
   // }
 
   const m = mat4.create()
-  const ts = geom.TEXT_HEIGHT/14
+  const ts = geom.TEXT_SCALE
 
   // re-calculate geometry on first re-draw
   if (!p.lines) {
