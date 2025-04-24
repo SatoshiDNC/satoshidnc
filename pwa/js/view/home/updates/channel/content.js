@@ -71,6 +71,7 @@ v.renderFunc = function() {
 
   let y = 0
   for (const p of v.posts) {
+    const ts = TEXT_HEIGHT/14
 
     // re-calculate geometry on first re-draw
     if (!p.lines) {
@@ -79,6 +80,7 @@ v.renderFunc = function() {
       const plaintext = p.preloaded.data.content
       const whitespace = false
       const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
+      const max_width = v.sw - SPACE_LEFT - SPACE_RIGHT - TEXT_SPACE_LEFT - TEXT_SPACE_RIGHT
 
       for (const para of paragraphs) {
         if (debug) console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
@@ -87,10 +89,10 @@ v.renderFunc = function() {
         while (words.length > 0) {
           lines.push(words.shift())
           if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
-          while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
+          while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= max_width) {
             let buf = ''
             if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
-            while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
+            while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= max_width) {
               let l = lines.pop()
               buf = l.substring(l.length-1) + buf
               l = l.substring(0, l.length-1)
@@ -99,7 +101,7 @@ v.renderFunc = function() {
             lines.push(buf)
           }
           if (debug) console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
-          while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
+          while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= max_width) {
             lines.push(lines.pop() + ' ' + words.shift())
           }
         }
@@ -111,7 +113,6 @@ v.renderFunc = function() {
     drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
     let line = p.lines[0]
-    let ts = TEXT_HEIGHT/14
     mat4.identity(m)
     mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW, 0])
     mat4.scale(m, m, [ts, ts, 1])
