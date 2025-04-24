@@ -160,7 +160,7 @@ v.gadgets.push(g = v.viewedGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.viewed.length) return
     const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
-    v.displayAction(updates, updates[0].hpub, v.parent.parent, g.root, g.target)
+    v.displayAction(updates, v.viewed[index], v.parent.parent, g.root, g.target)
   }
 v.gadgets.push(g = v.channelsGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
@@ -171,7 +171,7 @@ v.gadgets.push(g = v.channelsGad = new fg.Gadget(v))
     if (index < 0 || index >= v.channels.length) return
     console.log(index)
     const updates = v.query.results.filter(u => u.hpub == v.channels[index])
-    v.displayAction(updates, updates[0].hpub, v.parent.parent, g.root, g.target, 1)
+    v.displayAction(updates, v.channels[index], v.parent.parent, g.root, g.target, 1)
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
