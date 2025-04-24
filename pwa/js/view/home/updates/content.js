@@ -3,6 +3,7 @@ import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
 import { aggregateEvent, getUpdates, eventTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
+import { rootView as channelView } from './channel/root.js'
 import { barBot } from '../bar-bot.js'
 import { signBatch as sign, defaultKey, keys } from '../../../keys.js'
 
@@ -18,6 +19,13 @@ v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.displayAction = function(updates, hpub, returnView, root, target, mode) {
   const v = this
   console.log(`DISPLAY ACTION:`, updates, hpub, returnView, root, target, mode)
+
+  let targetView
+  if (mode == 1) {
+    targetView = channelView
+  } else {
+    targetView = displayView
+  }
 
   // TODO: sign pledge to zap author in exchange for decryption key
   console.log('send')
@@ -37,7 +45,7 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     total_cost += Math.max(1 /* enforce non-zero cost (at all costs) */, +(u.data.tags.filter(t => t[0] == 'c')?.[0]?.[1] || '0'))
   }
   if (new_count == 0 && total_cost == 0) {
-    displayView.setContext(updates, hpub, returnView)
+    targetView.setContext(updates, hpub, returnView)
     root.easeOut(target)
     return
   }
@@ -114,7 +122,7 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
         aggregateEvent(r[2])
       }
     })
-    displayView.setContext(updates, hpub, returnView)
+    targetView.setContext(updates, hpub, returnView)
     root.easeOut(target)
   })
 }
