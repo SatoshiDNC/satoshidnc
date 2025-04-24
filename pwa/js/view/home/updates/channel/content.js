@@ -1,4 +1,3 @@
-import { overlayView } from './overlay.js'
 import { markUpdateAsViewed } from '../../../../content.js'
 import { blend } from '../../../../draw.js'
 import { render_kind1 } from './kind/1-short-text-note.js'
@@ -33,7 +32,7 @@ v.layoutFunc = function() {
 v.renderFunc = function() {
   const v = this
   v.bgColor = v.bgColorDefault
-  const data = v.updates[overlayView.currentUpdate]?.data || { kind: -1, id: '0000000000000000000000000000000000000000000000000000000000000000' }
+  const data = v.updates[0]?.data || { kind: -1, id: '0000000000000000000000000000000000000000000000000000000000000000' }
   if (data.kind == 1) {
     v.render_kind1(data)
     if (data.id != v.lastRenderedId) {
