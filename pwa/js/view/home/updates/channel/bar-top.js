@@ -1,4 +1,4 @@
-import { drawAvatar } from '../../draw.js'
+import { drawAvatar } from '../../../../draw.js'
 
 let v, g
 export const barTop = v = new fg.View()

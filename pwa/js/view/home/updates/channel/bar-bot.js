@@ -1,6 +1,6 @@
-import { drawPill, drawRect } from '../../draw.js'
-import { getKeyboardInput } from '../util.js'
-import { contacts } from '../../contacts.js'
+import { drawPill, drawRect } from '../../../../draw.js'
+import { getKeyboardInput } from '../../../util.js'
+import { contacts } from '../../../../contacts.js'
 
 let v, g
 export const barBot = v = new fg.View()
