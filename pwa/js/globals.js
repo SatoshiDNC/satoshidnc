@@ -4,6 +4,8 @@ let gl, glp // OpenGL contexts
 let prog2
 let mainShapes
 
+let debug = false
+
 let satoshi_hpub = '51c63606c483dc9b44373e8ea240494b8101e4b23da579f17fec195029207e99'
 let bapi_baseurl = 'https://bapi.satoshidnc.com'
 
