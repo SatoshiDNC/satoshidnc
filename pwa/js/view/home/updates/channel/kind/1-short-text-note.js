@@ -4,13 +4,7 @@ let debug = false
 
 export function render_kind1(view, data) {
   const v = view
-  const hexColor = data.tags.filter(t => t[0] == 'bgcolor')?.[0]?.[1] || data.id[61] + data.id[61] + data.id[62] + data.id[62] + data.id[63] + data.id[63]
-  const rgbColor = parseInt(hexColor,16)
-  const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
   const encryption = data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
-  v.bgColor = bgColor
-  gl.clearColor(...bgColor)
-  gl.clear(gl.COLOR_BUFFER_BIT)
   let plaintext = data.content
   if (encryption == 'cc20s10') {
     let key = data._key && Uint8Array.from(data._key.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))
