@@ -10,6 +10,8 @@ const SPACE_RIGHT = 43
 const BUBBLE_RADIUS = 32
 const TEXT_SPACE_ABOVE = 26
 const TEXT_SPACE_BELOW = 31
+const TEXT_SPACE_LEFT = 30
+const TEXT_SPACE_RIGHT = 30
 const TEXT_HEIGHT = 33
 const TEXT_LINE_SPACING = 54
 
@@ -62,7 +64,7 @@ v.renderFunc = function() {
     let line = lines[0]
     let ts = TEXT_HEIGHT/14
     mat4.identity(m)
-    mat4.translate(m, m, [SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW, 0])
+    mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
 
