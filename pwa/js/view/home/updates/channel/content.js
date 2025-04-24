@@ -49,7 +49,7 @@ v.renderFunc = function() {
     let total_height = 100
     drawRoundedRect(v, [.2,.2,.2,1], 10, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
-    y = y - total_height
+    y -= SPACE_BELOW+total_height+SPACE_ABOVE
   }
 
   const data = v.updates[0]?.data || { kind: -1, id: '0000000000000000000000000000000000000000000000000000000000000000' }
