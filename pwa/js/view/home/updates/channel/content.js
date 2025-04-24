@@ -77,7 +77,6 @@ v.renderFunc = function() {
     if (!p.lines) {
       let lines = []
 
-      debug = true
       const plaintext = p.preloaded.data.content
       const whitespace = false
       const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
@@ -123,11 +122,11 @@ v.renderFunc = function() {
     let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (p.lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
     drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
-    let offset = p.lines.length
+    let line_offset = p.lines.length
     for (const line of p.lines) {
-      offset -= TEXT_LINE_SPACING
+      line_offset -= 1
       mat4.identity(m)
-      mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW+offset, 0])
+      mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW+line_offset*TEXT_LINE_SPACING, 0])
       mat4.scale(m, m, [ts, ts, 1])
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
     }
