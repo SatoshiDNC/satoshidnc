@@ -41,6 +41,8 @@ v.insertPost = function(preloaded) {
 }
 v.layoutFunc = function() {
   const v = this
+  v.minX = 0, v.maxX = v.sw
+  v.minY = 0, v.maxY = v.sh*2
   let g
   g = v.screenGad
   g.x = 0, g.y = 0
@@ -53,7 +55,7 @@ v.layoutFunc = function() {
     reset_posts.push({ preloaded: p.preloaded })
   }
   v.posts = reset_posts
-  v.swipeGad?.layout.call(v.swipeGad)
+  v.swipeGad?.layout()
 }
 v.renderFunc = function() {
   const v = this
