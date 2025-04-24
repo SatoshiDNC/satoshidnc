@@ -53,7 +53,7 @@ v.layoutFunc = function() {
     reset_posts.push({ preloaded: p.preloaded })
   }
   v.posts = reset_posts
-  v.swipeGad?.layout()
+  //v.swipeGad?.layout()
 }
 v.renderFunc = function() {
   const v = this
