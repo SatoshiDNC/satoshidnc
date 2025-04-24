@@ -71,14 +71,13 @@ v.renderFunc = function() {
       }
     }
     if (p.type == 'default') {
-      v.render_default(p)
+      v.render_default(p, y)
     }
     y -= geom.SPACE_BELOW+p.total_height+geom.SPACE_ABOVE
   }
 }
-v.render_default = function(post) {
+v.render_default = function(post, y) {
   const v = this, p = post
-  console.log(geom.SPACE_ABOVE)
 
   drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-geom.SPACE_BELOW-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,total_height)
 
