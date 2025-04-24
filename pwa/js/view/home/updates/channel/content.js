@@ -90,15 +90,24 @@ v.renderFunc = function() {
           lines.push(words.shift())
           if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
           while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= max_width) {
-            let buf = ''
-            if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
-            while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= max_width) {
-              let l = lines.pop()
-              buf = l.substring(l.length-1) + buf
-              l = l.substring(0, l.length-1)
-              lines.push(l)
+            let l = lines.pop()
+            let i = 1, fit = 1
+            while (defaultFont.calcWidth(l.substring(0,i)) * ts <= max_width) {
+              fit = i
             }
-            lines.push(buf)
+            lines.push(l.substring(0, fit))
+            lines.push(l.substring(fit))
+
+
+            // let buf = ''
+            // if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
+            // while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= max_width) {
+            //   let l = lines.pop()
+            //   buf = l.substring(l.length-1) + buf
+            //   l = l.substring(0, l.length-1)
+            //   lines.push(l)
+            // }
+            // lines.push(buf)
           }
           if (debug) console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
           while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= max_width) {
