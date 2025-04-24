@@ -39,7 +39,7 @@ v.setContext = function(updates, hpub) {
     v.insertPost(u)
   }
 }
-v.insertPost(preloaded) {
+v.insertPost = function(preloaded) {
   v.posts.push({ preloaded })
 }
 v.layoutFunc = function() {
