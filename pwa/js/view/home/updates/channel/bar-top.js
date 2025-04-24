@@ -1,4 +1,5 @@
 import { drawAvatar } from '../../../../draw.js'
+import { contacts } from '../../../../contacts.js'
 
 let v, g
 export const barTop = v = new fg.View()
