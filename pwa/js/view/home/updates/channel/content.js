@@ -1,5 +1,5 @@
 import { markUpdateAsViewed } from '../../../../content.js'
-import { blend } from '../../../../draw.js'
+import { drawRoundedRect, blend } from '../../../../draw.js'
 import { render_kind1 } from './kind/1-short-text-note.js'
 import { render_kind30023 } from './kind/30023-long-form-note.js'
 
@@ -18,7 +18,6 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
 v.setContext = function(updates, hpub) {
   const v = this
   v.hpub = hpub
-  v.pendingUpdates = updates.filter(u => u.hpub != hpub)
   v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
 }
@@ -39,6 +38,14 @@ v.renderFunc = function() {
   v.bgColor = blend(bgColor, [0,0,0,1], 0.25)
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
+
+  let y = 0
+  for (u of updates) {
+    let total_height = 100
+    drawRoundedRect(v, [.2,.2,.2,1], 10, 20,y, v.sw - 20,total_height)
+
+    y = y - total_height
+  }
 
   const data = v.updates[0]?.data || { kind: -1, id: '0000000000000000000000000000000000000000000000000000000000000000' }
   if (data.kind == 1) {
