@@ -37,6 +37,7 @@ export function prep_kind1_plaintext(view, post, plaintext) {
   let t,tw,th,ts
   ts = geom.TEXT_SCALE
   const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
+  const max_width = v.sw - geom.SPACE_LEFT - geom.SPACE_RIGHT - geom.TEXT_SPACE_LEFT - geom.TEXT_SPACE_RIGHT
   //const paragraphs = ['A😊B']
   if (debug) paragraphs.pop()
   if (debug) paragraphs.push('This is a test of the emergency broadcasting system. This is only a test.')
@@ -48,19 +49,28 @@ export function prep_kind1_plaintext(view, post, plaintext) {
     while (words.length > 0) {
       lines.push(words.shift())
       if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
-      while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
-        let buf = ''
-        if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
-        while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
-          let l = lines.pop()
-          buf = l.substring(l.length-1) + buf
-          l = l.substring(0, l.length-1)
-          lines.push(l)
+      while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= max_width) {
+        let l = lines.pop()
+        let i = 1, fit = 1
+        while (defaultFont.calcWidth(l.substring(0,i)) * ts <= max_width) {
+          fit = i
+          i += 1
         }
-        lines.push(buf)
+        lines.push(l.substring(0, fit))
+        lines.push(l.substring(fit))
+
+        // let buf = ''
+        // if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
+        // while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= max_width) {
+        //   let l = lines.pop()
+        //   buf = l.substring(l.length-1) + buf
+        //   l = l.substring(0, l.length-1)
+        //   lines.push(l)
+        // }
+        // lines.push(buf)
       }
       if (debug) console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
-      while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
+      while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= max_width) {
         lines.push(lines.pop() + ' ' + words.shift())
       }
     }
