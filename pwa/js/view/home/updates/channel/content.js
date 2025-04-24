@@ -97,7 +97,7 @@ v.render_notice = function(post, y) {
     mat4.identity(m)
     mat4.translate(m, m, [geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING, 0])
     mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
-    defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+    defaultFont.draw(0,0, line, v.subtitleColor, v.mat, m)
   }
 }
 v.render_default = function(post, y) {
