@@ -74,9 +74,6 @@ v.renderFunc = function() {
         p.lines = [ `Posted ${kindInfo.filter(r => p.preloaded.data.kind >= r.kind && p.preloaded.data.kind <= (r.kindMax || r.kind))?.[0].desc || 'something'}` ]
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'default'
-        
-        console.log(`no rendering implemented:`, p)
-        p.type = 'error'
       }
     }
     if (p.type == 'default') {
