@@ -54,6 +54,9 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
     const g = this, v = this.viewport
     g.root.easeOut(g.target)
   }
+v.setContext = function(hpub) {
+  v.contact = contacts.filter(c => c.hpub = hpub)?.[0]
+}
 v.layoutFunc = function() {
   const v = this
   let g

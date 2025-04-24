@@ -12,6 +12,7 @@ v.a = barTop; barTop.parent = v
 v.b = contentView; contentView.parent = v
 v.c = barBot; barBot.parent = v
 v.setContext = function(updates, hpub, returnView) {
+  barTop.setContext(hpub)
   contentView.setContext(updates, hpub, returnView)
 }
 setEasingParameters(v)
