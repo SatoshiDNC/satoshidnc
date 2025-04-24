@@ -34,6 +34,13 @@ v.setContext = function(updates, hpub) {
   v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
   console.log(v.updates)
+  v.posts = []
+  for (const u of v.updates) {
+    v.insertPost(u)
+  }
+}
+v.insertPost(preloaded) {
+  v.posts.push({ preloaded })
 }
 v.layoutFunc = function() {
   const v = this
@@ -56,12 +63,15 @@ v.renderFunc = function() {
   const m = mat4.create()
 
   let y = 0
-  for (const u of v.updates) {
-    const lines = [ u.data.content ]
-    let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
+  for (const p of v.posts) {
+    if (!p.lines) {
+      p.lines = []
+      p.lines.push(p.preloaded.data.content)
+    }
+    let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (p.lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
     drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
-    let line = lines[0]
+    let line = p.lines[0]
     let ts = TEXT_HEIGHT/14
     mat4.identity(m)
     mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW, 0])
