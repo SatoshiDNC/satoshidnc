@@ -126,7 +126,7 @@ v.renderFunc = function() {
     for (const line of p.lines) {
       line_offset -= 1
       mat4.identity(m)
-      mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW+line_offset*TEXT_LINE_SPACING, 0])
+      mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW-line_offset*TEXT_LINE_SPACING, 0])
       mat4.scale(m, m, [ts, ts, 1])
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
     }
