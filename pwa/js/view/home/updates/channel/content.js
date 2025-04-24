@@ -41,7 +41,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
 
   let y = 0
-  for (u of updates) {
+  for (u of v.updates) {
     let total_height = 100
     drawRoundedRect(v, [.2,.2,.2,1], 10, 20,v.sh-y-total_height, v.sw - 20,total_height)
 
