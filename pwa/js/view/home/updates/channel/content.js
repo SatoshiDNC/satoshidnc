@@ -8,6 +8,10 @@ const SPACE_BELOW = 84
 const SPACE_LEFT = 44
 const SPACE_RIGHT = 43
 const BUBBLE_RADIUS = 32
+const TEXT_SPACE_ABOVE = 26
+const TEXT_SPACE_BELOW = 31
+const TEXT_HEIGHT = 33
+const TEXT_LINE_SPACING = 54
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -27,6 +31,7 @@ v.setContext = function(updates, hpub) {
   v.hpub = hpub
   v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
+  console.log(v.updates)
 }
 v.layoutFunc = function() {
   const v = this
@@ -49,8 +54,17 @@ v.renderFunc = function() {
 
   let y = 0
   for (const u of v.updates) {
-    let total_height = 100
+    const lines = [ 'test' ]
+    let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
     drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
+
+    let line = lines[0]
+    let ts = 14/TEXT_HEIGHT
+    mat4.identity(m)
+    mat4.translate(m, m, [SPACE_LEFT, v.sh-y-SPACE_BELOW, 0])
+    mat4.scale(m, m, [ts, ts, 1])
+    defaultFont.draw(0,-TEXT_SPACE_BELOW, line, v.textColor, v.mat, m)
+
 
     y -= SPACE_BELOW+total_height+SPACE_ABOVE
   }
