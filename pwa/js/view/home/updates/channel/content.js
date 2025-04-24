@@ -27,7 +27,9 @@ v.setContext = function(updates, hpub) {
     v.insertPost(u)
   }
   getFeed(hpub).then(posts => {
-    console.log(posts)
+    for (const p of posts) {
+      v.insertPost(p)
+    }
   })
 }
 v.insertPost = function(preloaded) {
