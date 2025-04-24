@@ -1,4 +1,4 @@
-import { markUpdateAsViewed } from '../../../../content.js'
+import { getFeed, markUpdateAsViewed } from '../../../../content.js'
 import { drawRoundedRect, blend } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023 } from './kind/30023-long-form-note.js'
@@ -22,11 +22,13 @@ v.setContext = function(updates, hpub) {
   v.hpub = hpub
   v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
-  console.log(v.updates)
   v.posts = []
   for (const u of v.updates) {
     v.insertPost(u)
   }
+  getFeed(hpub).then(posts => {
+    console.log(posts)
+  })
 }
 v.insertPost = function(preloaded) {
   v.posts.push({ preloaded })
