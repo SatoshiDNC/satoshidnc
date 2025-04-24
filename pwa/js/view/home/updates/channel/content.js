@@ -42,8 +42,8 @@ v.renderFunc = function() {
   const hexColor = v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63]
   const rgbColor = parseInt(hexColor,16)
   const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
-  v.bgColor = blend(bgColor, [0,0,0,1], 0.25)
-  v.bubbleColor = bgColor
+  v.bgColor = blend(bgColor, [0,0,0,1], 0.75)
+  v.bubbleColor = blend(bgColor, [0,0,0,1], 0.5)
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
 
