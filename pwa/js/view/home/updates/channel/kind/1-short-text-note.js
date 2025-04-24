@@ -2,7 +2,7 @@ import { crypt } from '../../../../../cryption.js'
 
 let debug = false
 
-export function render_kind1(view, data) {
+export function prep_kind1(view, data) {
   const v = view
   const encryption = data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
   let plaintext = data.content

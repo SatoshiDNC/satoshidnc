@@ -1,7 +1,7 @@
 import { markUpdateAsViewed } from '../../../../content.js'
 import { drawRoundedRect, blend } from '../../../../draw.js'
-import { render_kind1 } from './kind/1-short-text-note.js'
-import { render_kind30023 } from './kind/30023-long-form-note.js'
+import { prep_kind1 } from './kind/1-short-text-note.js'
+import { prep_kind30023 } from './kind/30023-long-form-note.js'
 
 const SPACE_ABOVE = 11
 const SPACE_BELOW = 84
@@ -71,34 +71,34 @@ v.renderFunc = function() {
 
   let y = 0
   for (const p of v.posts) {
-    if (p.preloaded.data.kind == 1) {
-      v.render_kind1(p)
-    } else if (p.preloaded.data.kind == 30023) {
-      v.render_kind30023(p)
-    } else {
-      v.renderDefault(data)
+    if (!p.type) {
+      if (p.preloaded.data.kind == 1) {
+        prep_kind1(v, p)
+      } else if (p.preloaded.data.kind == 30023) {
+        prep_kind30023(v, p)
+      } else {
+        console.log(`no rendering implemented:`, p)
+        p.type = 'error'
+      }
+    }
+    if (p.type == 'default') {
+      v.render_default(p)
     }
     y -= SPACE_BELOW+total_height+SPACE_ABOVE
   }
 }
-let debug = false
-v.render_kind1 = function(data) { return render_kind1(this, data) }
-v.render_kind30023 = function(data) { return render_kind30023(this, data) }
+v.render_default = function(post) {
+  const v = this, p = post
 
-v.renderDefault = function(data) {
-  const v = this
-  const encryption = data.tags?.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
-  const m = mat4.create()
-  let i = 0
-  let n = data.tags?.length || 0
-  data.tags?.map(t => {
-    const line = t.join(': ')
-    const th = 50
-    const ts = th/2/14
+  let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (p.lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
+  drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
+
+  let line_offset = p.lines.length
+  for (const line of p.lines) {
+    line_offset -= 1
     mat4.identity(m)
-    mat4.translate(m, m, [50, (v.sh - th*n)/2 + th*i, 0])
+    mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW-line_offset*TEXT_LINE_SPACING, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
-    i++
-  })
+  }
 }

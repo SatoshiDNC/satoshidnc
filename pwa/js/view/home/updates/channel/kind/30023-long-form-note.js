@@ -2,7 +2,7 @@ import { crypt } from '../../../../../cryption.js'
 
 let debug = false
 
-export function render_kind30023(view, post) {
+export function prep_kind30023(view, post) {
   const v = view, p = post
   const encryption = p.preloaded.data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
   let plaintext = p.preloaded.data.tags.filter(t => t[0] == 'summary')[0][1]
@@ -60,16 +60,5 @@ export function render_kind30023(view, post) {
     p.lines = lines
   }
 
-  let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (p.lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
-  drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
-
-  let line_offset = p.lines.length
-  for (const line of p.lines) {
-    line_offset -= 1
-    mat4.identity(m)
-    mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW-line_offset*TEXT_LINE_SPACING, 0])
-    mat4.scale(m, m, [ts, ts, 1])
-    defaultFont.draw(0,0, line, v.textColor, v.mat, m)
-  }
 }
 
