@@ -75,9 +75,36 @@ v.renderFunc = function() {
     // re-calculate geometry on first re-draw
     if (!p.lines) {
       p.lines = []
-      p.lines.push(p.preloaded.data.content)
+
+      const plaintext = p.preloaded.data.content
+      const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
+
+      for (const para of paragraphs) {
+        if (debug) console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
+        const words = para.split(' ')
+        if (debug) console.log(`while (words.length ${words.length} > 0) {`)
+        while (words.length > 0) {
+          lines.push(words.shift())
+          if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
+          while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
+            let buf = ''
+            if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
+            while (lines[lines.length-1] && defaultFont.calcWidth(lines[lines.length-1]) * ts >= v.sw) {
+              let l = lines.pop()
+              buf = l.substring(l.length-1) + buf
+              l = l.substring(0, l.length-1)
+              lines.push(l)
+            }
+            lines.push(buf)
+          }
+          if (debug) console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
+          while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= v.sw) {
+            lines.push(lines.pop() + ' ' + words.shift())
+          }
+        }
+      }
     }
-    
+
     let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (p.lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
     drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
