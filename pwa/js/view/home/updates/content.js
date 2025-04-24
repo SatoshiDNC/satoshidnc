@@ -112,6 +112,7 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     alert(m)
     return new Promise(()=>{}) // terminate the chain
   }).then(json => {
+    console.log('processing', json)
     json.map(r => {
       if (r[1] == 'ok') {
         r[2].tags.filter(t => t[0] == 'e').map(t => t[1]).map(id => {
