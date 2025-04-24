@@ -14,6 +14,7 @@ export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
 v.bgColorDefault = [0,0,0, 1]
 v.bgColor = v.bgColorDefault
+v.bubbleColor = colors.bubble
 v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
@@ -42,13 +43,14 @@ v.renderFunc = function() {
   const rgbColor = parseInt(hexColor,16)
   const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
   v.bgColor = blend(bgColor, [0,0,0,1], 0.25)
+  v.bubbleColor = bgColor
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
 
   let y = 0
   for (const u of v.updates) {
     let total_height = 100
-    drawRoundedRect(v, [.2,.2,.2,1], BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
+    drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
     y -= SPACE_BELOW+total_height+SPACE_ABOVE
   }
