@@ -77,6 +77,7 @@ v.renderFunc = function() {
         p.type = 'default'
       }
     }
+    console.log(p)
     if (p.type == 'default') {
       v.render_default(p, y)
     }
