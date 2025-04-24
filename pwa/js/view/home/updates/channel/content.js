@@ -79,7 +79,7 @@ v.renderFunc = function() {
 v.render_default = function(post, y) {
   const v = this, p = post
 
-  drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-geom.SPACE_BELOW-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,total_height)
+  drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-geom.SPACE_BELOW-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
 
   let line_offset = p.lines.length
   for (const line of p.lines) {
