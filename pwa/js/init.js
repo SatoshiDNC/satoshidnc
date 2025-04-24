@@ -81,7 +81,7 @@ home_updates_content.selfsGad.root = home_updates_root, home_updates_content.sel
 home_updates_content.recentsGad.root = home_updates_root, home_updates_content.recentsGad.target = home_updates_display_root
 home_updates_content.viewedGad.root = home_updates_root, home_updates_content.viewedGad.target = home_updates_display_root
 home_updates_content.channelsGad.root = home_updates_root, home_updates_content.channelsGad.target = home_updates_channel_root
-home_updates_channel_top.backGad.root = home_updates_root
+home_updates_channel_top.backGad.root = home_updates_channel_root, home_updates_channel_top.backGad.target = home_updates_root
 home_updates_overlay.cameraGad.root = home_updates_root, home_updates_overlay.cameraGad.target = home_updates_verbal_root
 home_updates_overlay.pencilGad.root = home_updates_root, home_updates_overlay.pencilGad.target = home_updates_verbal_root
 home_updates_verbal_overlay.closeGad.root = home_updates_verbal_root, home_updates_verbal_overlay.closeGad.target = home_updates_root
