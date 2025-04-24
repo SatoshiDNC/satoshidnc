@@ -35,7 +35,7 @@ export function prep_kind1_plaintext(view, post, plaintext) {
   const m = mat4.create()
   const whitespace = false
   let t,tw,th,ts
-  ts = 50/14
+  ts = geom.TEXT_SCALE
   const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
   //const paragraphs = ['A😊B']
   if (debug) paragraphs.pop()
