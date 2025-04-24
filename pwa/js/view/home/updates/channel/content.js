@@ -56,7 +56,6 @@ v.renderFunc = function() {
   v.bubbleColor = blend([0,0,0,1], bgColor, 0.25)
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
-  const m = mat4.create()
 
   let y = 0
   for (const p of v.posts) {
@@ -78,6 +77,7 @@ v.renderFunc = function() {
 }
 v.render_default = function(post, y) {
   const v = this, p = post
+  const m = mat4.create()
 
   drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-geom.SPACE_BELOW-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
 
