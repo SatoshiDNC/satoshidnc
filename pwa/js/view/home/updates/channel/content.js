@@ -49,6 +49,13 @@ v.layoutFunc = function() {
   g.x = 0, g.y = 0
   g.w = v.sw, g.h = v.sh
   g.autoHull()
+
+  // remove cached fields to force re-calculation on re-draw
+  const reset_posts = []
+  for (const p of v.posts) {
+    reset_posts.push({ preloaded: p.preloaded })
+  }
+  v.posts = reset_posts
 }
 v.renderFunc = function() {
   const v = this
@@ -64,10 +71,13 @@ v.renderFunc = function() {
 
   let y = 0
   for (const p of v.posts) {
+
+    // re-calculate geometry on first re-draw
     if (!p.lines) {
       p.lines = []
       p.lines.push(p.preloaded.data.content)
     }
+    
     let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (p.lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
     drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
