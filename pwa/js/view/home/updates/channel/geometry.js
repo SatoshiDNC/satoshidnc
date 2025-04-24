@@ -1,0 +1,11 @@
+export const SPACE_ABOVE = 11
+export const SPACE_BELOW = 84
+export const SPACE_LEFT = 44
+export const SPACE_RIGHT = 43
+export const BUBBLE_RADIUS = 32
+export const TEXT_SPACE_ABOVE = 26
+export const TEXT_SPACE_BELOW = 31
+export const TEXT_SPACE_LEFT = 30
+export const TEXT_SPACE_RIGHT = 30
+export const TEXT_HEIGHT = 33
+export const TEXT_LINE_SPACING = 54

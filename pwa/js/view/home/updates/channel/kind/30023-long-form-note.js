@@ -1,4 +1,5 @@
 import { crypt } from '../../../../../cryption.js'
+import * as geom from '../geometry.js'
 
 let debug = false
 
@@ -12,7 +13,7 @@ export function prep_kind30023(view, post) {
   // }
 
   const m = mat4.create()
-  const ts = TEXT_HEIGHT/14
+  const ts = geom.TEXT_HEIGHT/14
 
   // re-calculate geometry on first re-draw
   if (!p.lines) {
@@ -21,7 +22,7 @@ export function prep_kind30023(view, post) {
     const plaintext = p.preloaded.data.content
     const whitespace = false
     const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
-    const max_width = v.sw - SPACE_LEFT - SPACE_RIGHT - TEXT_SPACE_LEFT - TEXT_SPACE_RIGHT
+    const max_width = v.sw - geom.SPACE_LEFT - geom.SPACE_RIGHT - geom.TEXT_SPACE_LEFT - geom.TEXT_SPACE_RIGHT
 
     for (const para of paragraphs) {
       if (debug) console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)

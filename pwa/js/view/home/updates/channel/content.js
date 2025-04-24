@@ -2,18 +2,7 @@ import { markUpdateAsViewed } from '../../../../content.js'
 import { drawRoundedRect, blend } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023 } from './kind/30023-long-form-note.js'
-
-const SPACE_ABOVE = 11
-const SPACE_BELOW = 84
-const SPACE_LEFT = 44
-const SPACE_RIGHT = 43
-const BUBBLE_RADIUS = 32
-const TEXT_SPACE_ABOVE = 26
-const TEXT_SPACE_BELOW = 31
-const TEXT_SPACE_LEFT = 30
-const TEXT_SPACE_RIGHT = 30
-const TEXT_HEIGHT = 33
-const TEXT_LINE_SPACING = 54
+import * as geom from './geometry.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -84,20 +73,20 @@ v.renderFunc = function() {
     if (p.type == 'default') {
       v.render_default(p)
     }
-    y -= SPACE_BELOW+total_height+SPACE_ABOVE
+    y -= geom.SPACE_BELOW+total_height+geom.SPACE_ABOVE
   }
 }
 v.render_default = function(post) {
   const v = this, p = post
 
-  let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (p.lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
-  drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
+  let total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
+  drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-geom.SPACE_BELOW-total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,total_height)
 
   let line_offset = p.lines.length
   for (const line of p.lines) {
     line_offset -= 1
     mat4.identity(m)
-    mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW-line_offset*TEXT_LINE_SPACING, 0])
+    mat4.translate(m, m, [geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT, v.sh-y-geom.SPACE_BELOW-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING, 0])
     mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
