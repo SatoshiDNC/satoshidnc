@@ -84,7 +84,6 @@ v.renderFunc = function() {
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'notice'
       }
-      p.total_height *= 10
     }
     y += geom.SPACE_BELOW
     if (p.type == 'notice') {
