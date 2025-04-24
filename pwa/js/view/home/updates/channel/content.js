@@ -7,6 +7,7 @@ const SPACE_ABOVE = 11
 const SPACE_BELOW = 84
 const SPACE_LEFT = 44
 const SPACE_RIGHT = 43
+const BUBBLE_RADIUS = 32
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -47,7 +48,7 @@ v.renderFunc = function() {
   let y = 0
   for (const u of v.updates) {
     let total_height = 100
-    drawRoundedRect(v, [.2,.2,.2,1], 10, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
+    drawRoundedRect(v, [.2,.2,.2,1], BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
     y -= SPACE_BELOW+total_height+SPACE_ABOVE
   }
