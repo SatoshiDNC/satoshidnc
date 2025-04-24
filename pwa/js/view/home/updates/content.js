@@ -15,9 +15,9 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
-v.displayAction = function(updates, hpub, returnView, root, target) {
+v.displayAction = function(updates, hpub, returnView, root, target, mode) {
   const v = this
-  //console.log(`DISPLAY ACTION:`, updates, hpub, returnView, root, target)
+  console.log(`DISPLAY ACTION:`, updates, hpub, returnView, root, target, mode)
 
   // TODO: sign pledge to zap author in exchange for decryption key
   console.log('send')
@@ -161,8 +161,8 @@ v.gadgets.push(g = v.channelsGad = new fg.Gadget(v))
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.channels.length) return
     console.log(index)
-    // const updates = v.query.results.filter(u => u.hpub == v.viewed[index])
-    // v.displayAction(updates, updates[0].hpub, v.parent.parent, g.root, g.target)
+    const updates = v.query.results.filter(u => u.hpub == v.channels[index])
+    v.displayAction(updates, updates[0].hpub, v.parent.parent, g.root, g.target, 1)
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
