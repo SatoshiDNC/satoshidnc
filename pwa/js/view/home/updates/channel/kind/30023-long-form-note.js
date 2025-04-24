@@ -57,7 +57,7 @@ export function prep_kind30023(view, post) {
       }
     }
   }
-  p.lines = [ title, lines[0], lines[1], lines[2], lines[3], lines[4] ]
+  p.lines = lines //[ title, lines[0], lines[1], lines[2], lines[3], lines[4] ]
   p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
   p.type = 'default'
 }
