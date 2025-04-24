@@ -42,7 +42,7 @@ v.insertPost = function(preloaded) {
 v.layoutFunc = function() {
   const v = this
   v.minX = 0, v.maxX = v.sw
-  v.minY = 0, v.maxY = v.sh*2
+  v.minY = -v.sh, v.maxY = v.sh
   let g
   g = v.screenGad
   g.x = 0, g.y = 0
