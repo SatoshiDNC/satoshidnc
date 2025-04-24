@@ -55,16 +55,16 @@ v.renderFunc = function() {
 
   let y = 0
   for (const u of v.updates) {
-    const lines = [ 'test' ]
+    const lines = [ 'Test' ]
     let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
     drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
     let line = lines[0]
     let ts = TEXT_HEIGHT/14
     mat4.identity(m)
-    mat4.translate(m, m, [SPACE_LEFT, v.sh-y-SPACE_BELOW, 0])
+    mat4.translate(m, m, [SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW, 0])
     mat4.scale(m, m, [ts, ts, 1])
-    defaultFont.draw(0,-TEXT_SPACE_BELOW, line, v.textColor, v.mat, m)
+    defaultFont.draw(0,0, line, v.textColor, v.mat, m)
 
 
     y -= SPACE_BELOW+total_height+SPACE_ABOVE
