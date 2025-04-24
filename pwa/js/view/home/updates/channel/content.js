@@ -51,6 +51,7 @@ v.renderFunc = function() {
   v.bubbleColor = blend([0,0,0,1], bgColor, 0.25)
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
+  const m = mat4.create()
 
   let y = 0
   for (const u of v.updates) {
