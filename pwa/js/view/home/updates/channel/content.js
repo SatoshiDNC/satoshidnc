@@ -92,8 +92,8 @@ v.render_notice = function(post, y) {
   let bubble_width = 0
   for (const line of p.lines) {
     const line_width = defaultFont.calcWidth(line)
-    if (line_width / geom.TEXT_SCALE > bubble_width) {
-      bubble_width = line_width / geom.TEXT_SCALE
+    if (line_width * geom.TEXT_SCALE > bubble_width) {
+      bubble_width = line_width * geom.TEXT_SCALE
     }
   }
   let x = geom.SPACE_LEFT+(v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT-bubble_width)/2
