@@ -60,7 +60,7 @@ v.renderFunc = function() {
     drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
     let line = lines[0]
-    let ts = 14/TEXT_HEIGHT
+    let ts = TEXT_HEIGHT/14
     mat4.identity(m)
     mat4.translate(m, m, [SPACE_LEFT, v.sh-y-SPACE_BELOW, 0])
     mat4.scale(m, m, [ts, ts, 1])
