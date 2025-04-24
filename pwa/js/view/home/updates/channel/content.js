@@ -91,8 +91,21 @@ v.renderFunc = function() {
     } else if (p.type == 'default') {
       v.render_default(p, y)
     }
-    y += p.total_height+geom.SPACE_ABOVE
+    y += p.total_height
+    if (true) {
+      v.render_debug_info(p, y)
+      y += geom.TEXT_HEIGHT
+    }
+    y += geom.SPACE_ABOVE
   }
+}
+v.render_debug_info = function(post, y) {
+  const v = this, p = post
+  const m = mat4.create()
+  mat4.identity(m)
+  mat4.translate(m, m, [geom.TEXT_SPACE_LEFT, v.sh-y, 0])
+  mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
+  defaultFont.draw(0,0, `kind ${p.preloaded.data.kind}`, v.subtitleColor, v.mat, m)
 }
 v.render_notice = function(post, y) {
   const v = this, p = post
