@@ -52,6 +52,7 @@ export function prep_kind30023(view, post) {
         // lines.push(buf)
       }
       if (debug) console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
+        console.log('calcWidth:',defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]))
       while (words.length > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) * ts <= max_width) {
         lines.push(lines.pop() + ' ' + words.shift())
       }
