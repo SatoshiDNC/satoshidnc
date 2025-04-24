@@ -3,6 +3,11 @@ import { drawRoundedRect, blend } from '../../../../draw.js'
 import { render_kind1 } from './kind/1-short-text-note.js'
 import { render_kind30023 } from './kind/30023-long-form-note.js'
 
+const SPACE_ABOVE = 11
+const SPACE_BELOW = 84
+const SPACE_LEFT = 44
+const SPACE_RIGHT = 43
+
 let v, g
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
@@ -42,7 +47,7 @@ v.renderFunc = function() {
   let y = 0
   for (const u of v.updates) {
     let total_height = 100
-    drawRoundedRect(v, [.2,.2,.2,1], 10, 20,v.sh-y-total_height, v.sw - 20,total_height)
+    drawRoundedRect(v, [.2,.2,.2,1], 10, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
     y = y - total_height
   }
