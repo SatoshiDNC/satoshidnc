@@ -17,6 +17,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
 v.setContext = function(updates, hpub) {
   const v = this
+  console.log(updates, hpub)
   v.hpub = hpub
   v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
