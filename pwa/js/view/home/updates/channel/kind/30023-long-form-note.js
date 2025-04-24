@@ -21,7 +21,7 @@ export function prep_kind30023(view, post) {
   const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
   const max_width = v.sw - geom.SPACE_LEFT - geom.SPACE_RIGHT - geom.TEXT_SPACE_LEFT - geom.TEXT_SPACE_RIGHT
 
-  for (const para of paragraphs) {
+  for (const para of paragraphs) if (para.trim() != '') {
     if (debug) console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
     const words = para.split(' ')
     if (debug) console.log(`while (words.length ${words.length} > 0) {`)
