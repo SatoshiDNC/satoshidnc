@@ -23,14 +23,14 @@ export function prep_kind1(view, post) {
   }
 
   if (json) {
-    prep_kind1_json(v, data, json)
+    prep_kind1_json(v, p, json)
   } else {
-    prep_kind1_plaintext(v, plaintext)
+    prep_kind1_plaintext(v, p, plaintext)
   }
 }
 
-export function prep_kind1_plaintext(view, plaintext) {
-  const v = view
+export function prep_kind1_plaintext(view, post, plaintext) {
+  const v = view, p = post
   const m = mat4.create()
   const whitespace = false
   let t,tw,th,ts
@@ -69,8 +69,8 @@ export function prep_kind1_plaintext(view, plaintext) {
   p.type = 'default'
 }
 
-export function prep_kind1_json(view, data, json) {
-  const v = view
+export function prep_kind1_json(view, post, json) {
+  const v = view, p = post
   const m = mat4.create()
 
   let keys = []
