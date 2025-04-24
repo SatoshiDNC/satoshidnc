@@ -104,8 +104,8 @@ v.render_debug_info = function(post, y) {
   const m = mat4.create()
   mat4.identity(m)
   mat4.translate(m, m, [geom.TEXT_SPACE_LEFT, v.sh-y, 0])
-  mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
-  defaultFont.draw(0,0, `kind ${p.preloaded.data.kind}`, v.subtitleColor, v.mat, m)
+  mat4.scale(m, m, [geom.TEXT_SCALE/2, geom.TEXT_SCALE/2, 1])
+  defaultFont.draw(0,0, `kind ${p.preloaded.data.kind}, id ${p.preloaded.data.id}`, v.subtitleColor, v.mat, m)
 }
 v.render_notice = function(post, y) {
   const v = this, p = post
