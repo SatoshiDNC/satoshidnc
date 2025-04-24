@@ -30,6 +30,7 @@ v.setContext = function(updates, hpub) {
     for (const p of posts) {
       v.insertPost(p)
     }
+    v.setRenderFlag(true)
   })
 }
 v.insertPost = function(preloaded) {
