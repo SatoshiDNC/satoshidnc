@@ -74,7 +74,7 @@ v.renderFunc = function() {
 
     // re-calculate geometry on first re-draw
     if (!p.lines) {
-      p.lines = []
+      let lines = []
 
       const plaintext = p.preloaded.data.content
       const whitespace = false
@@ -104,6 +104,7 @@ v.renderFunc = function() {
           }
         }
       }
+      p.lines = lines
     }
 
     let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (p.lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
