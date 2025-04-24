@@ -123,12 +123,14 @@ v.renderFunc = function() {
     let total_height = TEXT_SPACE_BELOW + TEXT_HEIGHT + (p.lines.length - 1) * TEXT_LINE_SPACING + TEXT_SPACE_ABOVE
     drawRoundedRect(v, v.bubbleColor, BUBBLE_RADIUS, SPACE_LEFT,v.sh-y-SPACE_BELOW-total_height, v.sw-SPACE_LEFT-SPACE_RIGHT,total_height)
 
-    let line = p.lines[0]
-    mat4.identity(m)
-    mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW, 0])
-    mat4.scale(m, m, [ts, ts, 1])
-    defaultFont.draw(0,0, line, v.textColor, v.mat, m)
-
+    let offset = p.lines.length
+    for (const line of p.lines) {
+      offset -= TEXT_LINE_SPACING
+      mat4.identity(m)
+      mat4.translate(m, m, [SPACE_LEFT+TEXT_SPACE_LEFT, v.sh-y-SPACE_BELOW-TEXT_SPACE_BELOW+offset, 0])
+      mat4.scale(m, m, [ts, ts, 1])
+      defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+    }
 
     y -= SPACE_BELOW+total_height+SPACE_ABOVE
   }
