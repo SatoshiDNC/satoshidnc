@@ -6,7 +6,8 @@ let debug = false
 export function prep_kind30023(view, post) {
   const v = view, p = post, data = p.preloaded.data
   const encryption = data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
-  const summary = data.tags.filter(t => t[0] == 'summary')[0][1]
+  const title = data.tags.filter(t => t[0] == 'title')?.[0]?.[1] || ''
+  const summary = data.tags.filter(t => t[0] == 'summary')?.[0]?.[1] || ''
   let plaintext = data.content
   if (encryption == 'cc20s10') {
     let key = data._key && Uint8Array.from(data._key.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))
@@ -56,7 +57,7 @@ export function prep_kind30023(view, post) {
       }
     }
   }
-  p.lines = [ summary, lines[0], lines[1], lines[2], lines[3], lines[4] ]
+  p.lines = [ title, lines[0], lines[1], lines[2], lines[3], lines[4] ]
   p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
   p.type = 'default'
 }
