@@ -16,7 +16,7 @@ export function prep_kind30023(view, post) {
       let i = plaintext.length
       while (i--) {
         let c = plaintext.charAt(i)
-        if ((defaultFont.calcWidth(c)||-1234) == -1234) {
+        if ((defaultFont.calcWidth(c)||-1234) == -1234 && c!='\n') {
           plaintext = plaintext.replaceAll(c, '')
           i = plaintext.length
         }
