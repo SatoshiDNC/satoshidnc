@@ -170,12 +170,14 @@ v.render_default = function(post, y) {
 
   const max_w = v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT
   const max_h = (p.lines.length - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING
-  let w = max_w/3
-  drawRect(v, v.textColor, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
-  const baseline_bottom = -(v.userY+y+geom.TEXT_SPACE_BELOW)
-  console.log(baseline_bottom)
-  if (baseline_bottom > 0) {
-    const w = max_w / max_h * baseline_bottom
+  const top_edge = -(v.userY+y+geom.TEXT_SPACE_BELOW+max_h)
+  if (top_edge < 0) {
+    let w = max_w/3
+    drawRect(v, v.textColor, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
+  }
+  const bottom_edge = -(v.userY+y+geom.TEXT_SPACE_BELOW)
+  if (bottom_edge > 0) {
+    const w = max_w / max_h * bottom_edge
     if (w < max_w) {
       drawRect(v, alpha(v.textColor, 0.75), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
     }
