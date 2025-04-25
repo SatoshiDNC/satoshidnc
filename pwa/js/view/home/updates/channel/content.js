@@ -87,7 +87,7 @@ v.renderFunc = function() {
       if (p.preloaded.data.kind == 1) {
         prep_kind1(v, p)
       } else if (p.preloaded.data.kind == 30023) {
-        prep_kind30023(v, p)
+        prep_kind30023_preview(v, p)
       } else {
         p.lines = [ `Posted ${kindInfo.filter(r => p.preloaded.data.kind >= r.kind && p.preloaded.data.kind <= (r.kindMax || r.kind))?.[0].desc || 'something'}` ]
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
