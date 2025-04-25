@@ -102,7 +102,7 @@ v.renderFunc = function() {
         v.render_default(p, y)
       }
       y += p.total_height
-      if (true) {
+      if (debug) {
         v.render_debug_info(p, y)
         y += geom.TEXT_HEIGHT
       }
@@ -110,6 +110,9 @@ v.renderFunc = function() {
     } else {
       y += geom.SPACE_BELOW
       y += p.total_height
+      if (debug) {
+        y += geom.TEXT_HEIGHT
+      }
       y += geom.SPACE_ABOVE
     }
   }
