@@ -94,18 +94,24 @@ v.renderFunc = function() {
         p.type = 'notice'
       }
     }
-    y += geom.SPACE_BELOW
-    if (p.type == 'notice') {
-      v.render_notice(p, y)
-    } else if (p.type == 'default') {
-      v.render_default(p, y)
+    if (v.sh-v.userY-y + p.total_height > 0 && v.sh-v.userY-y < v.sh) {
+      y += geom.SPACE_BELOW
+      if (p.type == 'notice') {
+        v.render_notice(p, y)
+      } else if (p.type == 'default') {
+        v.render_default(p, y)
+      }
+      y += p.total_height
+      if (true) {
+        v.render_debug_info(p, y)
+        y += geom.TEXT_HEIGHT
+      }
+      y += geom.SPACE_ABOVE
+    } else {
+      y += geom.SPACE_BELOW
+      y += p.total_height
+      y += geom.SPACE_ABOVE
     }
-    y += p.total_height
-    if (true) {
-      v.render_debug_info(p, y)
-      y += geom.TEXT_HEIGHT
-    }
-    y += geom.SPACE_ABOVE
   }
 }
 v.render_debug_info = function(post, y) {
