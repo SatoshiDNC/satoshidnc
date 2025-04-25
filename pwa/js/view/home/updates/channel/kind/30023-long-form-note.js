@@ -9,21 +9,21 @@ export function prep_kind30023(view, post) {
   const encryption = data.tags.filter(t => t[0] == 'encryption')?.[0]?.[1] || ''
   const title = data.tags.filter(t => t[0] == 'title')?.[0]?.[1] || ''
   const summary = data.tags.filter(t => t[0] == 'summary')?.[0]?.[1] || ''
-  let plaintext = data.content
+  let payload = data.content
   if (encryption == 'cc20s10') {
     let key = data._key && Uint8Array.from(data._key.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)))
-    plaintext = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => key? v: v>32 && v<127? v: 63))
+    payload = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => key? v: v>32 && v<127? v: 63))
+  }
 
-    if (key) {
-      // kludge to remove characters that cause NaN measurements
-      let i = plaintext.length
-      while (i--) {
-        let c = plaintext.charAt(i)
-        if ((defaultFont.calcWidth(c)||-1234) == -1234 && c!='\n') {
-          plaintext = plaintext.replaceAll(c, '')
-          i = plaintext.length
-        }
-      }
+  plaintext = `${title}\n${summary}\n${payload}`
+
+  // kludge to remove characters that cause NaN measurements
+  let i = plaintext.length
+  while (i--) {
+    let c = plaintext.charAt(i)
+    if ((defaultFont.calcWidth(c)||-1234) == -1234 && c!='\n') {
+      plaintext = plaintext.replaceAll(c, '')
+      i = plaintext.length
     }
   }
 
