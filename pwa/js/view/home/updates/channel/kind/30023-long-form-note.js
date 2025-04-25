@@ -2,7 +2,7 @@ import { crypt } from '../../../../../cryption.js'
 import * as geom from '../geometry.js'
 
 //let debug = false
-let flag = true
+let flag = false
 
 export function prep_kind30023(view, post) {
   const v = view, p = post, data = p.preloaded.data
