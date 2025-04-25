@@ -177,7 +177,7 @@ v.render_default = function(post, y) {
     const w = max_w / max_h * top_overflow
     if (w < max_w) {
       drawRect(v, fc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
-      drawRect(v, bc, w,v.userY, max_w-w,2*geom.TEXT_SCALE)
+      drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
     }
   }
   const bottom_overflow = -(v.userY+y+geom.TEXT_SPACE_BELOW)
