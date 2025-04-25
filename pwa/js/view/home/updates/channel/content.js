@@ -147,11 +147,15 @@ v.render_default = function(post, y) {
 
   drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
 
-  let line_offset = p.lines.length
+  let line_offset = p.lines.length * 2
   for (const line of p.lines) {
-    line_offset -= 1
-    if (v.sh-v.userY-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING+geom.TEXT_HEIGHT < 0) { continue }
-    if (v.sh-v.userY-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING-geom.TEXT_HEIGHT > v.sh) { continue }
+    if (line == '') {
+      line_offset -= 1
+      continue
+    }
+    line_offset -= 2
+    if (v.sh-v.userY-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2+geom.TEXT_HEIGHT < 0) { continue }
+    if (v.sh-v.userY-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-geom.TEXT_HEIGHT > v.sh) { continue }
     mat4.identity(m)
     mat4.translate(m, m, [geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING, 0])
     mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
