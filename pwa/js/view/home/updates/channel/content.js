@@ -167,7 +167,8 @@ v.render_default = function(post, y) {
   let w = max_w/3
   let baseline_bottom = v.sh-v.userY-y-geom.TEXT_SPACE_BELOW
   drawRect(v, v.textColor, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,0, w,2*geom.TEXT_SCALE)
-  if (baseline_bottom > 0) {
+  if (baseline_bottom < 0) {
+    let w = max_w / max_h * (-baseline_bottom)
     drawRect(v, v.textColor, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
   }
 }
