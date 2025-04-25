@@ -162,5 +162,8 @@ v.render_default = function(post, y) {
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
 
-  drawRect(v, v.textColor, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,0, v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT,2*geom.TEXT_SCALE)
+  const max_w = v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT
+  let w = max_w
+  drawRect(v, v.textColor, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,0, w,2*geom.TEXT_SCALE)
+  drawRect(v, v.textColor, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
 }
