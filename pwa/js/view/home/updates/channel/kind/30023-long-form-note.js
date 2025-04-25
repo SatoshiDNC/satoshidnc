@@ -15,7 +15,7 @@ export function prep_kind30023_preview(view, post) {
     payload = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => key? v: v>32 && v<127? v: 63))
   }
 
-  let plaintext = `${title.trim()}\n\n${summary.trim()}\n\nRead more...`
+  let plaintext = `${title.trim()}\n\n${summary.trim()}`
 
   // kludge to remove characters that cause NaN measurements
   let i = plaintext.length
@@ -63,6 +63,7 @@ export function prep_kind30023_preview(view, post) {
       }
     }
   }
+  lines.push('', '\0') // read more...
   p.lines = lines
   p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
   p.type = 'default'
