@@ -94,7 +94,7 @@ v.renderFunc = function() {
         p.type = 'notice'
       }
     }
-    if (v.sh-v.userY-y - geom.SPACE_BELOW-p.total_height-geom.SPACE_ABOVE > 0 && v.sh-v.userY-y < v.sh) {
+    if (v.sh-(v.userY+y + geom.SPACE_BELOW+p.total_height+geom.SPACE_ABOVE) < v.sh && v.sh-(v.userY+y) > 0) {
       y += geom.SPACE_BELOW
       if (p.type == 'notice') {
         v.render_notice(p, y)
