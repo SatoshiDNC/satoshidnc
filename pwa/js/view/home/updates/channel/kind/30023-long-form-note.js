@@ -15,7 +15,7 @@ export function prep_kind30023(view, post) {
     payload = new TextDecoder().decode(crypt(0, Uint8Array.from(data.content.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))), key).map(v => key? v: v>32 && v<127? v: 63))
   }
 
-  plaintext = `${title}\n\n${summary}\n\n${payload}`
+  let plaintext = `${title}\n\n${summary}\n\n${payload}`
 
   // kludge to remove characters that cause NaN measurements
   let i = plaintext.length
