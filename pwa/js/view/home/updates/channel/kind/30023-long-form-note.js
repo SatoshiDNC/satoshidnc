@@ -44,29 +44,34 @@ export function prep_kind30023(view, post) {
   let lines = []
 
   const whitespace = false
-  const paragraphs = plaintext.replaceAll('\x0a', `${whitespace?'¶':''}\x0a`).split('\x0a')
+  const paragraphs = plaintext.trim().replaceAll('\x0a\x0a+', '\x0a\x0a').replaceAll('\x0a\s*\x0a', `${whitespace?'¶':''}\x0a\x0a`).split('\x0a\x0a')
   const max_width = v.sw - geom.SPACE_LEFT - geom.SPACE_RIGHT - geom.TEXT_SPACE_LEFT - geom.TEXT_SPACE_RIGHT
 
-  for (const para of paragraphs) if (para.trim() != '') {
+  for (const para of paragraphs) {
     if (debug) console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
-    const words = para.split(' ')
-    if (debug) console.log(`while (words.length ${words.length} > 0) {`)
-    while (words.length > 0) {
-      lines.push(words.shift())
-      if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
-      while (lines[lines.length-1] && (defaultFont.calcWidth(lines[lines.length-1])||max_width/ts+1) * ts >= max_width) {
-        let l = lines.pop()
-        let i = 1, fit = 1
-        while ((defaultFont.calcWidth(l.substring(0,i))||max_width/ts+1) * ts <= max_width) {
-          fit = i
-          i += 1
+    if (lines.length == 0) lines.push('')
+    const subpars = plaintext.replaceAll('\x0a', `${whitespace?'↵':''}\x0a`).split('\x0a')
+    for (const subpar of subpars) {
+      if (debug) console.log(`for (const para ${subpar} of paragraphs ${subpars}) {`)
+      const words = subpar.split(' ')
+      if (debug) console.log(`while (words.length ${words.length} > 0) {`)
+      while (words.length > 0) {
+        lines.push(words.shift())
+        if (debug) console.log(`while (lines[lines.length-1] ${lines[lines.length-1]} && defaultFont.calcWidth(lines[lines.length-1]) ${defaultFont.calcWidth(lines[lines.length-1])} * ts ${ts} >= v.sw ${v.sw}) {`)
+        while (lines[lines.length-1] && (defaultFont.calcWidth(lines[lines.length-1])||max_width/ts+1) * ts >= max_width) {
+          let l = lines.pop()
+          let i = 1, fit = 1
+          while ((defaultFont.calcWidth(l.substring(0,i))||max_width/ts+1) * ts <= max_width) {
+            fit = i
+            i += 1
+          }
+          lines.push(l.substring(0, fit))
+          lines.push(l.substring(fit))
         }
-        lines.push(l.substring(0, fit))
-        lines.push(l.substring(fit))
-      }
-      if (debug) console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
-      while (words.length > 0 && (defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])||max_width/ts+1) * ts <= max_width) {
-        lines.push(lines.pop() + ' ' + words.shift())
+        if (debug) console.log(`while (words.length ${words.length} > 0 && defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0]) ${defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])} * ts ${ts} <= v.sw ${v.sw}) {`)
+        while (words.length > 0 && (defaultFont.calcWidth(lines[lines.length-1] + ' ' + words[0])||max_width/ts+1) * ts <= max_width) {
+          lines.push(lines.pop() + ' ' + words.shift())
+        }
       }
     }
   }
