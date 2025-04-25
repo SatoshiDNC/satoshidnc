@@ -42,7 +42,7 @@ v.insertPost = function(preloaded) {
     if (v.posts[i].preloaded.data.id == preloaded.data.id) {
       return
     }
-    if (v.posts[i].preloaded.data.created_at > preloaded.data.created_at) {
+    if (v.posts[i].preloaded.data.created_at < preloaded.data.created_at) {
       v.posts.splice(i, 0, { preloaded })
       return
     }
