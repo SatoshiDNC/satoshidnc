@@ -1,7 +1,7 @@
 import { getFeed, markUpdateAsViewed } from '../../../../content.js'
 import { drawRoundedRect, drawRect, blend, alpha } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
-import { prep_kind30023 } from './kind/30023-long-form-note.js'
+import { prep_kind30023, prep_kind30023_preview } from './kind/30023-long-form-note.js'
 import * as geom from './geometry.js'
 import { kindInfo } from '../../../../nostor-util.js'
 
