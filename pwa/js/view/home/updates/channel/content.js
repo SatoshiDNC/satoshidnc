@@ -176,6 +176,8 @@ v.render_default = function(post, y) {
   console.log(baseline_bottom)
   if (baseline_bottom > 0) {
     const w = max_w / max_h * baseline_bottom
-    drawRect(v, alpha(v.textColor, 0.5), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
+    if (w < max_w) {
+      drawRect(v, alpha(v.textColor, 0.75), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
+    }
   }
 }
