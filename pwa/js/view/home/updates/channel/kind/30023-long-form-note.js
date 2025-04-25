@@ -49,7 +49,7 @@ export function prep_kind30023(view, post) {
 
   for (const para of paragraphs) {
     if (debug) console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
-    if (lines.length != 0) lines.push('-')
+    if (lines.length != 0) lines.push('')
     const subpars = para.replaceAll('\x0a', `${whitespace?'↵':''}\x0a`).split('\x0a')
     for (const subpar of subpars) {
       if (debug) console.log(`for (const subpar ${subpar} of subpars ${subpars}) {`)
