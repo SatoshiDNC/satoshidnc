@@ -44,7 +44,7 @@ export function prep_kind30023(view, post) {
   let lines = []
 
   const whitespace = true
-  const paragraphs = plaintext.trim().replaceAll('\x0a\x0a+', '\x0a\x0a').replaceAll('\x0a\s*\x0a', `${whitespace?'¶':''}\x0a\x0a`).split('\x0a\x0a')
+  const paragraphs = plaintext.trim().replaceAll('\x0a\s*\x0a+', '\x0a\x0a').replaceAll('\x0a\x0a', `${whitespace?'¶':''}\x0a\x0a`).split('\x0a\x0a')
   const max_width = v.sw - geom.SPACE_LEFT - geom.SPACE_RIGHT - geom.TEXT_SPACE_LEFT - geom.TEXT_SPACE_RIGHT
 
   for (const para of paragraphs) {
