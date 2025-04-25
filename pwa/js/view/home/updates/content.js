@@ -111,7 +111,8 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     console.error(m)
     alert(m)
     return new Promise(()=>{}) // terminate the chain
-  }).then(json => {
+  }).then(json_raw => {
+    json = [['1b12d9eb9a9f365ff541977fa39d1503136a7c1bc965ccceaf7c2de396a3768f','ok',{"content":"686c8d0012b60bc54e0d455683bd80e0fb1fd7780c2c4374cbfaf9cf09118f5adb870d65dea49b5fe73a4b60","created_at":1745602072,"id":"c4662c3cb5743c4e2aeb20d1ae390ce2c6fa7e495b82f274e1dd6786e23f8500","kind":24,"pubkey":"d98a11b4be2839cd9d4495e163852aa037e3cdafdd1e6ce730307d0d05f468c3","sig":"75996f04820b2af8005608315dc777e7fa9bc8381a0177955cc06654d5aaef9f5b45122ab2b7bc7b14c671132560375fb3df5bf30f6702221cbed959cc6f0644","tags":[["e","1b12d9eb9a9f365ff541977fa39d1503136a7c1bc965ccceaf7c2de396a3768f"]]}], ...json_raw]
     console.log('processing', json)
     json.map(r => {
       if (r[1] == 'ok') {
