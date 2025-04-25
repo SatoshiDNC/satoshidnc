@@ -168,21 +168,24 @@ v.render_default = function(post, y) {
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
 
-  const c = alpha(v.textColor, 0.75)
+  const fc = alpha(v.textColor, 0.75)
+  const bc = alpha(v.bubbleColor, 0.75)
   const max_w = v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT
   const max_h = (p.lines.length - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING
   const top_overflow = -v.sh+(v.userY+y+geom.TEXT_SPACE_BELOW+max_h)
   if (top_overflow > 0) {
     const w = max_w / max_h * top_overflow
     if (w < max_w) {
-      drawRect(v, c, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
+      drawRect(v, fc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
+      drawRect(v, bc, w,v.userY, max_w-w,2*geom.TEXT_SCALE)
     }
   }
   const bottom_overflow = -(v.userY+y+geom.TEXT_SPACE_BELOW)
   if (bottom_overflow > 0) {
     const w = max_w / max_h * bottom_overflow
     if (w < max_w) {
-      drawRect(v, c, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
+      drawRect(v, fc, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
+      drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
     }
   }
 }
