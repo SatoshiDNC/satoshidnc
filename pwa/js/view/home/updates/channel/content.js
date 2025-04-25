@@ -161,4 +161,6 @@ v.render_default = function(post, y) {
     mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
     defaultFont.draw(0,0, line, v.textColor, v.mat, m)
   }
+
+  drawRect(v, v.textColor, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,0, v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT,2*geom.TEXT_SCALE)
 }
