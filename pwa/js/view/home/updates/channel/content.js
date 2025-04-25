@@ -147,7 +147,7 @@ v.render_default = function(post, y) {
 
   drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
 
-  let line_offset = p.lines.length * 2
+  let line_offset = p.lines.length * 2 - p.lines.filter(l => l=='').length * 1
   for (const line of p.lines) {
     if (line == '') {
       line_offset -= 1
