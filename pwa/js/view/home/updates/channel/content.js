@@ -1,5 +1,5 @@
 import { getFeed, markUpdateAsViewed } from '../../../../content.js'
-import { drawRoundedRect, drawRect, blend } from '../../../../draw.js'
+import { drawRoundedRect, drawRect, blend, alpha } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023 } from './kind/30023-long-form-note.js'
 import * as geom from './geometry.js'
@@ -176,6 +176,6 @@ v.render_default = function(post, y) {
   console.log(baseline_bottom)
   if (baseline_bottom > 0) {
     const w = max_w / max_h * baseline_bottom
-    drawRect(v, v.textColor, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
+    drawRect(v, alpha(v.textColor, 0.5), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
   }
 }
