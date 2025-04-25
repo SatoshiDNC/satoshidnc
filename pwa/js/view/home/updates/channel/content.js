@@ -165,10 +165,11 @@ v.render_default = function(post, y) {
   const max_w = v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT
   const max_h = (p.lines.length - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING
   let w = max_w/3
-  let baseline_bottom = v.sh-v.userY-y-geom.TEXT_SPACE_BELOW
   drawRect(v, v.textColor, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,0, w,2*geom.TEXT_SCALE)
+  const baseline_bottom = v.sh-v.userY-y-geom.TEXT_SPACE_BELOW
+  console.log(baseline_bottom)
   if (baseline_bottom < 0) {
-    let w = max_w / max_h * (-baseline_bottom)
+    const w = max_w / max_h * (-baseline_bottom)
     drawRect(v, v.textColor, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
   }
 }
