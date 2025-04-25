@@ -38,6 +38,12 @@ v.setContext = function(updates, hpub) {
   })
 }
 v.insertPost = function(preloaded) {
+  for (let i = 0; i < v.posts.length; i++) {
+    if (v.posts[i].preloaded.data.created_at > preloaded.data.created_at) {
+      v.posts.splice(i, 0, { preloaded })
+      return
+    }
+  }
   v.posts.push({ preloaded })
 }
 v.layoutFunc = function() {
