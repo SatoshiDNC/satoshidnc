@@ -1,5 +1,4 @@
 import { drawAvatar, blend } from '../../../../draw.js'
-import { contacts } from '../../../../contacts.js'
 import { getPersonalData } from '../../../../personal.js'
 
 let v, g
@@ -27,7 +26,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     console.log(`id ${JSON.stringify(item)}`)
   }
   g.items = [
-    { id: 1, label: 'Copy id', handler: () => { navigator.clipboard.writeText(v.contact.hpub).catch(e => console.error(e)) } },
+    { id: 1, label: 'Copy id', handler: () => { navigator.clipboard.writeText(v.hpub).catch(e => console.error(e)) } },
     { id: 2, handler: g.handler, label: 'View contact' },
     { id: 3, handler: g.handler, label: 'Media, links, and docs' },
     { id: 4, handler: g.handler, label: 'Search' },
@@ -59,8 +58,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
 v.setContext = function(hpub) {
   const v = this
   v.hpub = hpub
-  v.contact = contacts.filter(c => c.hpub = hpub)?.[0]
-  console.log('contact',v.contact)
+  v.profile = { name: getPersonalData(v.hpub, 'name') }
   v.bgColor = v.bgColorDefault
   const hexColor = v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63]
   const rgbColor = parseInt(hexColor,16)
@@ -78,7 +76,7 @@ v.layoutFunc = function() {
   g.autoHull()
 }
 v.renderFunc = function() {
-  const v = this, contact = v.contact
+  const v = this
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()  
@@ -93,7 +91,7 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  drawAvatar(v, contact.hpub, 75, 27, 92, 92)
+  drawAvatar(v, v.hpub, 75, 27, 92, 92)
 
   const subtitle = ''
   v.lastSubtitle ||= subtitle
@@ -113,7 +111,7 @@ v.renderFunc = function() {
   mat4.translate(mat, mat, [190, v.VPOS0 * f0 + v.VPOS1 * f1, 0])
   mat4.scale(mat, mat, [35/14, 35/14, 1])
   let x = 0, y = 0
-  defaultFont.draw(x,y, getPersonalData(v.hpub, 'name'), v.textColor, v.mat, mat)
+  defaultFont.draw(x,y, v.profile.name, v.textColor, v.mat, mat)
   
   mat4.identity(mat)
   mat4.translate(mat, mat, [190, 116, 0])
