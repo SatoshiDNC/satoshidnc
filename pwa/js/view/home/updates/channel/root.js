@@ -3,7 +3,7 @@ import { barBot } from './bar-bot.js'
 import { contentView } from './content.js'
 import { setEasingParameters } from '../../../util.js'
 
-export const rootView = v = new fg.DualSliceView(null, 'v', 147, 147)
+export const rootView = v = new fg.DualSliceView(null, 'v', 147, 1)
 v.name = Object.keys({rootView}).pop()
 v.designSize = 1080 * 2183
 v.ghostOpacity = 0 // needed?
