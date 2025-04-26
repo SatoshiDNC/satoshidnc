@@ -56,7 +56,13 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
     g.root.easeOut(g.target)
   }
 v.setContext = function(hpub) {
+  const v = this
   v.contact = contacts.filter(c => c.hpub = hpub)?.[0]
+  v.bgColor = v.bgColorDefault
+  const hexColor = v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63]
+  const rgbColor = parseInt(hexColor,16)
+  const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
+  v.bgColor = blend([0,0,0,1], bgColor, 0.15)
 }
 v.layoutFunc = function() {
   const v = this

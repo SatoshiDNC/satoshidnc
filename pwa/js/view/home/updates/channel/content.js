@@ -64,6 +64,12 @@ v.setContext = function(updates, hpub) {
   v.hpub = hpub
   v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
+  v.bgColor = v.bgColorDefault
+  const hexColor = v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63]
+  const rgbColor = parseInt(hexColor,16)
+  const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
+  v.bgColor = blend([0,0,0,1], bgColor, 0.15)
+  v.bubbleColor = blend([0,0,0,1], bgColor, 0.25)
   v.posts = []
   for (const u of v.updates) {
     v.insertPost(u)
@@ -110,12 +116,6 @@ v.layoutFunc = function() {
 }
 v.renderFunc = function() {
   const v = this
-  v.bgColor = v.bgColorDefault
-  const hexColor = v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63]
-  const rgbColor = parseInt(hexColor,16)
-  const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
-  v.bgColor = blend([0,0,0,1], bgColor, 0.15)
-  v.bubbleColor = blend([0,0,0,1], bgColor, 0.25)
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
 
