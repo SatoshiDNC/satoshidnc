@@ -51,9 +51,8 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
           prep_kind30023(v, p)
           const new_h = p.total_height
           p.expanded = true
-          console.log(v.userY)
           v.userY -= new_h - pre_h
-          console.log(v.userY)
+          v.swipeGad?.layout()
         } else {
         }
         v.setRenderFlag(true)
