@@ -124,7 +124,9 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
         })
         aggregateEvent(r[2])
       } else if (r[1] == 'unavailable') {
-        u.data._key = '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+        updates.filter(u => u.data.id == r[0]).map(u => {
+          u.data._key = '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+        })
       }
     })
     targetView.setContext(updates, hpub, returnView)
