@@ -19,6 +19,13 @@ v.buttonTextColor = colors.accentButtonText
 v.previous_width = 0
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function(p) {
+    const g = this, v = g.viewport
+    console.log('click', p)
+    if (v.readmore_baseline) {
+      console.log(v.readmore_baseline)
+    }
+  }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.setContext = function(updates, hpub) {
@@ -170,6 +177,7 @@ v.render_default = function(post, y) {
     mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
     if (line == '\0') {
       defaultFont.draw(0,0, 'Read more...', colors.accent, v.mat, m)
+      p.readmore_baseline = v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2
     } else {
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
     }
