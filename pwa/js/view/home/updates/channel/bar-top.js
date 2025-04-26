@@ -57,6 +57,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   }
 v.setContext = function(hpub) {
   const v = this
+  v.hpub = hpub
   v.contact = contacts.filter(c => c.hpub = hpub)?.[0]
   v.bgColor = v.bgColorDefault
   const hexColor = v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63]
