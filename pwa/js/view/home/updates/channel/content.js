@@ -22,8 +22,22 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.clickFunc = function(p) {
     const g = this, v = g.viewport
     console.log('click', p)
-    if (v.readmore_baseline) {
-      console.log(v.readmore_baseline)
+    let y = 0
+    for (const p of v.posts) {
+      const y0 = y
+      y += geom.SPACE_BELOW
+      y += p.total_height
+      if (debug) {
+        y += geom.TEXT_HEIGHT
+      }
+      y += geom.SPACE_ABOVE
+      const y1 = y
+      const py = p.py*v.getScale()
+      console.log(py)
+      if (v.sh-py >= y0 && v.sh-py <= y1) {
+        console.log('hit', p)
+        break
+      }
     }
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
