@@ -34,9 +34,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       y += geom.SPACE_ABOVE
       const y1 = y
       const py = (pointer.py-v.y)/v.getScale()
-      console.log(v.sh-v.userY-py, y0, y1)
       if (v.sh-v.userY-py >= y0 && v.sh-v.userY-py <= y1) {
-        console.log(`hit post ${i}`)
         post = p
         post_y = v.sh-v.userY-py - (y0+geom.SPACE_BELOW)
         break
@@ -49,8 +47,11 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
         const p = post
         if (p.preloaded.data.kind == 1) {
         } else if (p.preloaded.data.kind == 30023) {
+          const pre_h = p.total_height
           prep_kind30023(v, p)
+          const new_h = p.total_height
           p.expanded = true
+          v.userY += new_h - pre_h
         } else {
         }
         v.setRenderFlag(true)
