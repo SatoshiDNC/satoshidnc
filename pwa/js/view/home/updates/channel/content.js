@@ -35,7 +35,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       const y1 = y
       const py = (pointer.py-v.y)/v.getScale()
       if (v.sh-v.userY-py >= y0 && v.sh-v.userY-py <= y1) {
-        console.log(`hit post ${i}`)
+        console.log(`hit post ${i}`, v.sh-v.userY-py)
         post = p
         post_y = v.sh-v.userY-py - (y0+geom.SPACE_BELOW)
         break
