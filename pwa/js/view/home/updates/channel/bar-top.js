@@ -93,7 +93,7 @@ v.renderFunc = function() {
 
   drawAvatar(v, v.hpub, 75, 27, 92, 92)
 
-  const subtitle = ''
+  const subtitle = 'Public channel'
   v.lastSubtitle ||= subtitle
   let goal = subtitle? 1: 0
   if (goal != v.subtitleOpacity) {
