@@ -120,7 +120,7 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
 
   g = v.screenGad
-  g.x = 0, g.y = -v.userY
+  g.x = 0, g.y = v.userY
   g.w = v.sw, g.h = v.sh
   g.autoHull()
 
