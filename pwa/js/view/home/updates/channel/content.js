@@ -21,8 +21,8 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(pointer) {
     const g = this, v = g.viewport
-    console.log('click', pointer)
     let y = 0
+    let post, post_y
     for (const p of v.posts) {
       const y0 = y
       y += geom.SPACE_BELOW
@@ -33,10 +33,15 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       y += geom.SPACE_ABOVE
       const y1 = y
       const py = (pointer.py-v.y)/v.getScale()
-      console.log(py)
       if (v.sh-py >= y0 && v.sh-py <= y1) {
-        console.log('hit', p)
+        post = p
+        post_y = v.sh-py - (y0+geom.SPACE_BELOW)
         break
+      }
+    }
+    if (post) {
+      if (post_y >= post.readmore_baseline && post_y <= post.readmore_baseline+geom.TEXT_HEIGHT) {
+        console.log('hit')
       }
     }
   }
@@ -191,7 +196,7 @@ v.render_default = function(post, y) {
     mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
     if (line == '\0') {
       defaultFont.draw(0,0, 'Read more...', colors.accent, v.mat, m)
-      p.readmore_baseline = v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2
+      p.readmore_baseline = geom.TEXT_SPACE_BELOW+line_offset*geom.TEXT_LINE_SPACING/2
     } else {
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
     }
