@@ -32,7 +32,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       }
       y += geom.SPACE_ABOVE
       const y1 = y
-      const py = pointer.py*v.getScale()
+      const py = (pointer.py-v.y)/v.getScale()
       console.log(py)
       if (v.sh-py >= y0 && v.sh-py <= y1) {
         console.log('hit', p)
