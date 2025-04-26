@@ -121,7 +121,7 @@ v.renderFunc = function() {
   // last seen today at 12:50 PM
   // Business Account
   const c = v.textColor
-  defaultFont.draw(x,y, 'online', [c[0], c[1], c[2], f1], v.mat, mat)
+  defaultFont.draw(x,y, subtitle, [c[0], c[1], c[2], f1], v.mat, mat)
 
   for (g of v.gadgets) {
     mat4.identity(mat)
