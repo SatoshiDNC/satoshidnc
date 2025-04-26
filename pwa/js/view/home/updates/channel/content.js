@@ -52,10 +52,9 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
           const new_h = p.total_height
           p.expanded = true
           v.userY -= new_h - pre_h
-          v.swipeGad?.layout()
         } else {
         }
-        v.setRenderFlag(true)
+        v.queueLayout()
       }
     }
   }
