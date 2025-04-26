@@ -96,7 +96,7 @@ v.layoutFunc = function() {
     // remove cached fields to force re-calculation on width change
     const reset_posts = []
     for (const p of v.posts) {
-      reset_posts.push({ preloaded: p.preloaded })
+      reset_posts.push({ preloaded: p.preloaded, expanded: p.expanded })
     }
     v.posts = reset_posts
     v.previous_width = v.sw
