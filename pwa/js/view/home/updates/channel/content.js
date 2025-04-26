@@ -41,7 +41,13 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
     }
     if (post) {
       if (post_y >= post.readmore_baseline && post_y <= post.readmore_baseline+geom.TEXT_HEIGHT) {
-        console.log('hit')
+        const p = post
+        if (p.preloaded.data.kind == 1) {
+        } else if (p.preloaded.data.kind == 30023) {
+          prep_kind30023(v, p)
+        } else {
+        }
+        v.setRenderFlag(true)
       }
     }
   }
