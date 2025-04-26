@@ -42,7 +42,6 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       i++
     }
     if (post) {
-      console.log(`${post_y} ${post.readmore_baseline}`)
       if (post_y >= post.readmore_baseline && post_y <= post.readmore_baseline+geom.TEXT_HEIGHT) {
         const p = post
         if (p.preloaded.data.kind == 1) {

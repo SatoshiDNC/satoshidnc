@@ -206,7 +206,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
       }).catch(error => {
         return Promise.reject(`bad event: ${error}`)
       }).then(content_template => {
-        console.log([
+        const batch = [
           {
             ...content_template
           }, {
@@ -216,18 +216,9 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
             kind: 555,
             tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
           }
-        ])
-        return sign(v.hpub, [
-          {
-            ...content_template
-          }, {
-            kind: 24, content: `${hex(cryption_key)}`,
-            tags: [['e', `${content_template.id}`]],
-          }, {
-            kind: 555,
-            tags: [['IOU','1','sat','POST /publish'], ['p',`${satoshi_hpub}`]],
-          }
-        ])
+        ]
+        console.log(batch)
+        return sign(v.hpub, batch)
       }).then(([note, key, auth]) => {
         console.log(`note: ${JSON.stringify(note)}`)
         console.log(`key: ${JSON.stringify(key)}`)
