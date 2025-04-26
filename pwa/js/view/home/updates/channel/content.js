@@ -23,6 +23,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
     const g = this, v = g.viewport
     let y = 0
     let post, post_y
+    let i = 0
     for (const p of v.posts) {
       const y0 = y
       y += geom.SPACE_BELOW
@@ -34,12 +35,15 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       const y1 = y
       const py = (pointer.py-v.y)/v.getScale()
       if (v.sh-v.userY-py >= y0 && v.sh-v.userY-py <= y1) {
+        console.log(`hit post ${i}`)
         post = p
         post_y = v.sh-v.userY-py - (y0+geom.SPACE_BELOW)
         break
       }
+      i++
     }
     if (post) {
+      console.log(`${post_y} ${post.readmore_baseline}`)
       if (post_y >= post.readmore_baseline && post_y <= post.readmore_baseline+geom.TEXT_HEIGHT) {
         const p = post
         if (p.preloaded.data.kind == 1) {
