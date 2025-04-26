@@ -19,9 +19,9 @@ v.buttonTextColor = colors.accentButtonText
 v.previous_width = 0
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.clickFunc = function(p) {
+  g.clickFunc = function(pointer) {
     const g = this, v = g.viewport
-    console.log('click', p)
+    console.log('click', pointer)
     let y = 0
     for (const p of v.posts) {
       const y0 = y
@@ -32,7 +32,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       }
       y += geom.SPACE_ABOVE
       const y1 = y
-      const py = p.py*v.getScale()
+      const py = pointer.py*v.getScale()
       console.log(py)
       if (v.sh-py >= y0 && v.sh-py <= y1) {
         console.log('hit', p)
