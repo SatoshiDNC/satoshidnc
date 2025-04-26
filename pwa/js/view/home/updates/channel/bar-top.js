@@ -1,4 +1,4 @@
-import { drawAvatar } from '../../../../draw.js'
+import { drawAvatar, blend } from '../../../../draw.js'
 import { contacts } from '../../../../contacts.js'
 
 let v, g
