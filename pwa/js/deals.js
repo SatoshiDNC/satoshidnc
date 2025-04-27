@@ -4,9 +4,20 @@ import { homeRelay } from './nostor-app.js'
 import { contacts, reloadContactUpdates } from './contacts.js'
 import { keys, is_valid_hpub } from './keys.js'
 
-export const dealTrigger = []
+export const dealTrigger = [updateBalances]
 
 const DAY_IN_SECONDS = 24/*hours*/ * 60/*minutes*/ * 60/*seconds*/
+
+let balance_update_timeout
+export function updateBalances() {
+  if (balance_update_timeout) {
+    clearTimeout(balance_update_timeout)
+    balance_update_timeout = undefined
+  }
+  balance_update_timeout = setTimeout(() => {
+    console.log('new balance:')
+  }, 100)
+}
 
 export function rememberDeal(e) {
   return new Promise((resolve, reject) => {
@@ -56,7 +67,7 @@ export function rememberDeal(e) {
                   req.onsuccess = () => {
                     const finisher = () => {
                       resolve()
-                      dealTrigger.map(f => f(e))
+                      setTimeout(()=>{dealTrigger.map(f => f(e))})
                     }
                     const expiry = +(e.tags.filter(t => t[0] == 'expiration')?.[0]?.[1]||'0')
                     if (expiry) {
