@@ -2,7 +2,7 @@ import { db } from './db.js'
 import { kindInfo } from './nostor-util.js'
 import { homeRelay } from './nostor-app.js'
 import { contacts, reloadContactUpdates } from './contacts.js'
-import { keys, is_valid_hpub } from './keys.js'
+import { keys, hpubIsValid } from './keys.js'
 
 export const dealTrigger = [updateBalances]
 
@@ -31,40 +31,25 @@ export function updateBalances() {
         for (const t of v.data.tags) {
           const party = v.data.pubkey
           const counterparty = v.data.tags.filter(t => t[0] == 'p')[0][1]
-          if (t[0] == 'IOU') {
-            const debtor = party
-            const creditor = counterparty
-            let qty = +t[1]
-            let qty_unit = t[2]
-            const worth = +(t[5] || t[1])
-            const worth_unit = t[6] || t[2]
-            if (qty_unit != 'sat' && worth_unit == 'sat') {
-              qty = worth
-              qty_unit = worth_unit
+          if (t[0] == 'IOU' || t[0] == 'UOI') {
+            if (keys.includes(party) || keys.includes(counterparty)) {
+              const debtor = t[0] == 'IOU'? party: counterparty
+              const creditor = t[0] == 'IOU'? counterparty: party
+              let qty = +t[1]
+              let qty_unit = t[2]
+              const worth = +(t[5] || t[1])
+              const worth_unit = t[6] || t[2]
+              if (qty_unit != 'sat' && worth_unit == 'sat') {
+                qty = worth
+                qty_unit = worth_unit
+              }
+              if (!totals[debtor]) { totals[debtor] = {} }
+              if (!totals[creditor]) { totals[creditor] = {} }
+              if (!totals[debtor][qty_unit]) { totals[debtor][qty_unit] = 0 }
+              if (!totals[creditor][qty_unit]) { totals[creditor][qty_unit] = 0 }
+              totals[debtor][qty_unit] += -qty
+              totals[creditor][qty_unit] += qty
             }
-            if (!totals[debtor]) { totals[debtor] = {} }
-            if (!totals[creditor]) { totals[creditor] = {} }
-            if (!totals[debtor][qty_unit]) { totals[debtor][qty_unit] = 0 }
-            if (!totals[creditor][qty_unit]) { totals[creditor][qty_unit] = 0 }
-            totals[debtor][qty_unit] += -qty
-            totals[creditor][qty_unit] += qty
-          } else if (t[0] == 'UOI') {
-            const debtor = counterparty
-            const creditor = party
-            let qty = +t[1]
-            let qty_unit = t[2]
-            const worth = +(t[5] || t[1])
-            const worth_unit = t[6] || t[2]
-            if (qty_unit != 'sat' && worth_unit == 'sat') {
-              qty = worth
-              qty_unit = worth_unit
-            }
-            if (!totals[debtor]) { totals[debtor] = {} }
-            if (!totals[creditor]) { totals[creditor] = {} }
-            if (!totals[debtor][qty_unit]) { totals[debtor][qty_unit] = 0 }
-            if (!totals[creditor][qty_unit]) { totals[creditor][qty_unit] = 0 }
-            totals[debtor][qty_unit] += -qty
-            totals[creditor][qty_unit] += qty
           }
         }
         cursor.continue()
@@ -111,7 +96,7 @@ export function rememberDeal(e) {
                 reject()
               } else {
                 const counter_party = e.tags.filter(t => t[0] == 'p')[0][1]
-                if (!is_valid_hpub(counter_party)) {
+                if (!hpubIsValid(counter_party)) {
                   console.warn(`[${TAG}] skipping deal with invalid counterparty hex public key '${counter_party}' (${kindInfo.filter(i => i.kind == e.kind)?.[0].desc})`/*, JSON.stringify(e)*/)
                   reject()
                 } else {

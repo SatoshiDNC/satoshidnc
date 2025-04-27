@@ -13,7 +13,7 @@ export const keyDependencies = []
 export const keys = []
 export let defaultKey = window.localStorage.getItem('hpub')
 
-export function is_valid_hpub(hpub) {
+export function hpubIsValid(hpub) {
   if (!hpub) return false
   const re = /[0-9a-f]/
   return re.test(hpub.toLowerCase())
