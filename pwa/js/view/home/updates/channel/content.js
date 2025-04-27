@@ -27,14 +27,14 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
     let post, post_y
     let i = 0
     for (const p of v.posts) {
-      const y0 = y
-      y += geom.SPACE_BELOW
-      y += p.total_height
-      if (debug) {
-        y += geom.TEXT_HEIGHT
-      }
-      y += geom.SPACE_ABOVE
-      const y1 = y
+      const y0 = p.y0
+      // y += geom.SPACE_BELOW
+      // y += p.total_height
+      // if (debug) {
+      //   y += geom.TEXT_HEIGHT
+      // }
+      // y += geom.SPACE_ABOVE
+      const y1 = p.y1
       const py = (pointer.py-v.y)/v.getScale()
       if (v.sh-v.userY-py >= y0 && v.sh-v.userY-py <= y1) {
         post = p
@@ -155,7 +155,9 @@ v.renderFunc = function() {
       if (p.reactions) {
         v.render_reactions(p, y + geom.REACTIONS_OVERLAP)
       }
+      p.y0 = y
       y += p.total_height
+      p.y1 = y
       if (debug) {
         v.render_debug_info(p, y)
         y += geom.TEXT_HEIGHT
