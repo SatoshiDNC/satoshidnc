@@ -1,11 +1,11 @@
-import { drawAvatar, blend } from '../../../../draw.js'
+import { drawAvatar, blend, hue, color_from_rgb_integer } from '../../../../draw.js'
 import { getPersonalData } from '../../../../personal.js'
 
 let v, g
 export const barTop = v = new fg.View()
 v.name = Object.keys({barTop}).pop()
 v.designHeight = 147
-v.bgColor = [0.043,0.078,0.106,1]
+v.bgColor = v.bgColorDefault = [0.043,0.078,0.106,1]
 v.textColor = [1,1,1,1]
 v.white = [1,1,1,1]
 v.yellow = [1,0.8,0,1]
@@ -59,12 +59,9 @@ v.setContext = function(hpub) {
   const v = this
   v.hpub = hpub
   v.profile = { name: getPersonalData(v.hpub, 'name') }
-  v.bgColor = v.bgColorDefault
-  const hexColor = v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63]
-  const rgbColor = parseInt(hexColor,16)
-  const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
-  v.bgColor = blend([0,0,0,1], bgColor, 0.15)
-  v.dividerColor = blend([0,0,0,1], bgColor, 0.25)
+  v.hue = hue(color_from_rgb_integer(parseInt(v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63],16)))
+  v.bgColor = blend([0,0,0,1], v.hue, 0.15)
+  v.dividerColor = blend([0,0,0,1], v.hue, 0.25)
 }
 v.layoutFunc = function() {
   const v = this

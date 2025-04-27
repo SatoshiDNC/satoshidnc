@@ -8,6 +8,17 @@ export function blend(color1, color2, factor) {
   return [color1[0]*f1+color2[0]*f2, color1[1]*f1+color2[1]*f2, color1[2]*f1+color2[2]*f2, color1[3]*f1+color2[3]*f2]
 }
 
+export function hue(color) {
+  const min = Math.min(color[0], color[1], color[2])
+  const max = Math.max(color[0], color[1], color[2])
+  const delta = max - min
+  return delta? [(color[0]-min)/delta, (color[1]-min)/delta, (color[2]-min)/delta, color[3]]: [1,1,1,color[3]]
+}
+
+export function color_from_rgb_integer(rgb) {
+  return [((~~(rgb/0x10000))&0xff)/0xff, ((~~(rgb/0x100))&0xff)/0xff, ((~~(rgb/0x1))&0xff)/0xff, 1]
+}
+
 export function rrggbb(color) {
   return ('000000'+(Number(
     ((color[0] * 0xff0000) & 0xff0000) +
