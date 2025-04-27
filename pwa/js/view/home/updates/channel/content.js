@@ -88,6 +88,7 @@ v.insertPost = function(preloaded) {
     }
     if (v.posts[i].preloaded.data.created_at < preloaded.data.created_at) {
       v.posts.splice(i, 0, { preloaded }, ...Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)==Math.trunc(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)?[]:[{
+        preloaded: { created_at: Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS},
         lines: [`date ${preloaded.data.created_at}`],
         total_height: geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + geom.TEXT_SPACE_ABOVE,
         type: 'notice',
@@ -97,6 +98,7 @@ v.insertPost = function(preloaded) {
     prev_date = v.posts[i].preloaded.data.created_at
   }
   v.posts.push({ preloaded }, {
+    preloaded: { created_at: Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS},
     lines: [`date ${preloaded.data.created_at}`],
     total_height: geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + geom.TEXT_SPACE_ABOVE,
     type: 'notice',
