@@ -1,5 +1,6 @@
 import { getPublicKey, finalizeEvent } from 'nostr-tools'
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
+import { rememberDeal } from './deals.js'
 import { Buffer } from 'buffer'
 import { db } from './db.js'
 
@@ -11,6 +12,12 @@ export const keyDependencies = []
 
 export const keys = []
 export let defaultKey = window.localStorage.getItem('hpub')
+
+export function is_valid_hpub(hpub) {
+  if (!hpub) return false
+  const re = /[0-9a-f]/
+  return re.test(hpub.toLowerCase())
+}
 
 export function getKeyInfo(hpub) {
   return keys.filter(k => k.hpub == hpub)?.[0]
@@ -229,7 +236,9 @@ function signBatchWithSecretKey(hsec, templates) {
       try {
         let hpub = getPublicKey(hexToBytes(hsec))
         const signed = templates.map(e => {
-          return finalizeEvent(prepForSigning(hpub, e), hexToBytes(hsec))
+          const signed_event = finalizeEvent(prepForSigning(hpub, e), hexToBytes(hsec))
+          rememberDeal(signed_event)
+          return signed_event
         })
         resolve(signed)
       } catch(error) {

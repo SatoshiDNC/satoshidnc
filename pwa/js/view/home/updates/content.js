@@ -59,7 +59,7 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
   }
   to_sign.unshift({
     kind: 555,
-    tags: [['IOU',`${total_cost}`,'sat',`updates`], ...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['IOU',`${new_count}`,'x',`reaction`], ['p',`${hpub}`]],
+    tags: [['IOU',`${total_cost}`,'sat',`updates`], ...keys_owed.map(id => ['UOI','1','x',`e ${id} key`]), ['IOU',`${new_count}`,'x',`reaction`,``,`${new_count}`,'sat'], ['p',`${hpub}`]],
   })
   to_sign.unshift({
     kind: 555,
