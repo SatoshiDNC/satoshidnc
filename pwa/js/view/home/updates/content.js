@@ -371,7 +371,7 @@ v.renderFunc = function() {
     // drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
     drawEllipse(v, colors.inactiveDark, 43, g.y + 17 + index * 200, 125, 125)
 
-    let balance = balances[hpub]['sat'] // Math.round(Math.random() * 3000 - 1500)
+    let balance = balances[hpub]?.['sat'] || 0 // Math.round(Math.random() * 3000 - 1500)
     let rank = balance? `${Math.abs(balance)}`.length: 0
     let rankIcon = balance > 0? '❤': '💔'
     let rankColor = [1,0,0, 1]
