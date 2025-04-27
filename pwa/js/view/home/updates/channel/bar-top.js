@@ -64,6 +64,7 @@ v.setContext = function(hpub) {
   const rgbColor = parseInt(hexColor,16)
   const bgColor = [((~~(rgbColor/0x10000))&0xff)/0xff, ((~~(rgbColor/0x100))&0xff)/0xff, ((~~(rgbColor/0x1))&0xff)/0xff, 1]
   v.bgColor = blend([0,0,0,1], bgColor, 0.15)
+  v.dividerColor = blend([0,0,0,1], bgColor, 0.25)
 }
 v.layoutFunc = function() {
   const v = this
@@ -83,7 +84,7 @@ v.renderFunc = function() {
 
   // subtle divider line
   mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.dividerColor))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)
   mat4.translate(m,m, [0, v.sh-2, 0])
