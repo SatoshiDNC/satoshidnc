@@ -267,6 +267,10 @@ v.render_default = function(post, y) {
 
 export function try_send_reaction(post) {
   const p = post
+  if (p.reacted) return
   if (!p.top_seen || !p.bottom_seen) return
-  console.log("REACTION")
+  if (!p.pending_auto_reaction) return
+  p.reacted = true
+  console.log(pending_reactions)
+  console.log(pending_reactions.filter(e => e.tags.filter(t => t[0] == 'e' && t[1] == p.preloaded.data.id).length > 0)?.[0])
 }

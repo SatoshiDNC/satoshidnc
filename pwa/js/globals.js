@@ -3,6 +3,7 @@ const df = Rune, dfp = RuneForPrinter
 let gl, glp // OpenGL contexts
 let prog2
 let mainShapes
+const pending_reactions = []
 
 let debug = false
 

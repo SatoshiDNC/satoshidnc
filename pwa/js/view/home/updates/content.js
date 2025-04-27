@@ -31,18 +31,19 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
 
   // TODO: sign pledge to zap author in exchange for decryption key
   console.log('send')
-  let checkmark_events = []
   let new_count = 0
   let to_sign = []
   let keys_owed = []
   let total_cost = 0
   for (const u of updates) if (u.hpub == hpub && u.data.tags.filter(t=>t[0]=='encryption').length>0 && !u.viewed && !u.data._key) {
     new_count += 1
-    to_sign.push({
+    const pending_reaction = {
       kind: 7,
       content: '✓',
       tags: [['e',`${u.data.id}`], ['p',`${u.hpub}`], ['k',`${u.data.kind}`]],
-    })
+    }
+    pending_reactions.push(pending_reaction)
+    to_sign.push(pending_reaction)
     keys_owed.push(u.data.id)
     total_cost += Math.max(1 /* enforce non-zero cost (at all costs) */, +(u.data.tags.filter(t => t[0] == 'c')?.[0]?.[1] || '0'))
   }
