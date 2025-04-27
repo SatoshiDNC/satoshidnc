@@ -29,7 +29,11 @@ export function updateBalances() {
       if (cursor) {
         let v = cursor.value
         for (const t of v.data.tags) {
+          const party = v.data.pubkey
+          const counterparty = v.data.tags.filter(t => t[0] == 'p')[0][1]
           if (t[0] == 'IOU') {
+            const debtor = party
+            const creditor = counterparty
             let qty = +t[1]
             let qty_unit = t[2]
             const worth = +(t[5] || t[1])
@@ -38,12 +42,15 @@ export function updateBalances() {
               qty = worth
               qty_unit = worth_unit
             }
-            if (!totals[qty_unit]) {
-              totals[qty_unit] = -qty
-            } else {
-              totals[qty_unit] += -qty
-            }
+            if (!totals[debtor]) { totals[debtor] = {} }
+            if (!totals[creditor]) { totals[creditor] = {} }
+            if (!totals[debtor][qty_unit]) { totals[debtor][qty_unit] = 0 }
+            if (!totals[creditor][qty_unit]) { totals[creditor][qty_unit] = 0 }
+            totals[debtor][qty_unit] += -qty
+            totals[creditor][qty_unit] += qty
           } else if (t[0] == 'UOI') {
+            const debtor = counterparty
+            const creditor = party
             let qty = +t[1]
             let qty_unit = t[2]
             const worth = +(t[5] || t[1])
@@ -52,11 +59,12 @@ export function updateBalances() {
               qty = worth
               qty_unit = worth_unit
             }
-            if (!totals[qty_unit]) {
-              totals[qty_unit] = qty
-            } else {
-              totals[qty_unit] += qty
-            }
+            if (!totals[debtor]) { totals[debtor] = {} }
+            if (!totals[creditor]) { totals[creditor] = {} }
+            if (!totals[debtor][qty_unit]) { totals[debtor][qty_unit] = 0 }
+            if (!totals[creditor][qty_unit]) { totals[creditor][qty_unit] = 0 }
+            totals[debtor][qty_unit] += -qty
+            totals[creditor][qty_unit] += qty
           }
         }
         cursor.continue()
