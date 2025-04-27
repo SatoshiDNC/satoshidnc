@@ -16,7 +16,8 @@ export function updateBalances() {
   }
   balance_update_timeout = setTimeout(() => {
     const TAG = 'updateBalances'
-    let totals = {}
+    const totals = {}
+    const selfs = keys.map(k => k.hpub)
     const tr = db.transaction(['deals-pending', 'profiles', 'deletions', 'expirations'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('deals-pending')
     const req = os.openCursor()
@@ -32,7 +33,7 @@ export function updateBalances() {
           const party = v.data.pubkey
           const counterparty = v.data.tags.filter(t => t[0] == 'p')[0][1]
           if (t[0] == 'IOU' || t[0] == 'UOI') {
-            if (keys.includes(party) || keys.includes(counterparty)) {
+            if (selfs.includes(party) || selfs.includes(counterparty)) {
               const debtor = t[0] == 'IOU'? party: counterparty
               const creditor = t[0] == 'IOU'? counterparty: party
               let qty = +t[1]
