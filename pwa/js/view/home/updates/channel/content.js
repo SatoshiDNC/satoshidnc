@@ -145,7 +145,7 @@ v.renderFunc = function() {
     if (v.sh-(v.userY+y + geom.SPACE_BELOW+p.total_height+geom.SPACE_ABOVE) < v.sh && v.sh-(v.userY+y) > 0) {
       y += geom.SPACE_BELOW
       if (p.reactions) {
-        y += geom.REACTION_SPACE_BELOW
+        y += geom.REACTIONS_HEIGHT-geom.REACTIONS_OVERLAP
       }
       if (p.type == 'notice') {
         v.render_notice(p, y)
@@ -153,7 +153,7 @@ v.renderFunc = function() {
         v.render_default(p, y)
       }
       if (p.reactions) {
-        v.render_reactions(p, y + geom.REACTION_BUBBLE_OVERLAP)
+        v.render_reactions(p, y + geom.REACTIONS_OVERLAP)
       }
       y += p.total_height
       if (debug) {
@@ -163,7 +163,7 @@ v.renderFunc = function() {
       y += geom.SPACE_ABOVE
     } else {
       y += geom.SPACE_BELOW
-      if (p.reactions) { y += geom.REACTION_SPACE_BELOW }
+      if (p.reactions) { y += geom.REACTIONS_HEIGHT-geom.REACTIONS_OVERLAP }
       y += p.total_height
       if (debug) { y += geom.TEXT_HEIGHT }
       y += geom.SPACE_ABOVE
@@ -173,7 +173,8 @@ v.renderFunc = function() {
 }
 v.render_reactions = function(post, y) {
   const v = this, p = post
-  drawPill(v, colors.accent, geom.SPACE_LEFT,v.sh-y,200,geom.REACTION_BUBBLE_HEIGHT)  
+  drawPill(v, v.bgColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT,v.sh-y,200,geom.REACTIONS_HEIGHT)  
+  drawPill(v, colors.accent, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT,v.sh-y,200,geom.REACTIONS_HEIGHT)  
 }
 v.render_debug_info = function(post, y) {
   const v = this, p = post
