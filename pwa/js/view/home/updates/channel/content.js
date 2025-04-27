@@ -79,16 +79,26 @@ v.setContext = function(updates, hpub) {
   })
 }
 v.insertPost = function(preloaded) {
+  let prev_date = 0
   for (let i = 0; i < v.posts.length; i++) {
     if (v.posts[i].preloaded.data.id == preloaded.data.id) {
       return
     }
     if (v.posts[i].preloaded.data.created_at < preloaded.data.created_at) {
-      v.posts.splice(i, 0, { preloaded })
+      v.posts.splice(i, 0, { preloaded }, ...Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)==Math.trunc(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)?[]:[{
+        lines: [`date ${preloaded.data.created_at}`],
+        total_height: geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + geom.TEXT_SPACE_ABOVE,
+        type: 'notice',
+      }])
       return
     }
+    prev_date = v.posts[i].preloaded.data.created_at
   }
-  v.posts.push({ preloaded })
+  v.posts.push({ preloaded }, {
+    lines: [`date ${preloaded.data.created_at}`],
+    total_height: geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + geom.TEXT_SPACE_ABOVE,
+    type: 'notice',
+  })
 }
 v.layoutFunc = function() {
   const v = this
