@@ -211,6 +211,23 @@ export function savePendingReactions(reactions) {
   })
 }
 
+export function sendPendingReaction(id) {
+  const tr = db.transaction(['reactions-pending'], 'readwrite', { durability: 'strict' })
+  const os = tr.objectStore('reactions-pending')
+  const req = os.get(id)
+  req.onerror = e => {
+    console.error(`database error`)
+  }
+  req.onsuccess = e => {
+    const reaction = e.target.result
+    if (reaction) {
+      console.log(reaction)
+    } else {
+      console.warn(`pending reaction not found`)
+    }
+  }
+}
+
 export function deleteExpiredEvents() {
   return new Promise((resolve, reject) => {
     const TAG = 'deleteExpiredEvents'
@@ -422,6 +439,7 @@ export function markUpdateAsViewed(id, hpub, eventCreatedAtTime) {
       console.error(e)
     }
     req.onsuccess = function(e) {
+      sendPendingReaction(id)
       getUpdates().then(updates => {
         const tr = db.transaction(['updates-new'], 'readwrite', { durability: 'strict' })
         const os = tr.objectStore('updates-new')
