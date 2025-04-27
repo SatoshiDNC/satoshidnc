@@ -153,7 +153,9 @@ v.renderFunc = function() {
         v.render_default(p, y)
       }
       if (p.reactions) {
+        y -= geom.REACTION_SPACE_BELOW
         v.render_reactions(p, y)
+        y += geom.REACTION_SPACE_BELOW
       }
       y += p.total_height
       if (debug) {
