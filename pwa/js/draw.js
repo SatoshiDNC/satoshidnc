@@ -66,19 +66,18 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
       return { x: x+w2 + w2*Math.cos(a), y: y+h2 + h2*Math.sin(a) }
     }
 
-    console.log(rank)
     if (rank) {
       let iconScale = 20/14
-      let d = 4*iconScale
       for (let r = 0; r < rank; r++) {
         let {hx, hy} = randomPosition()
+        console.log(hx,hy)
         mat4.identity(m)
         mat4.translate(m, m, [x+hx, y+hy, 0])
         mat4.scale(m, m, [iconScale, iconScale, 1])
         
         // defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
         // defaultFont.draw(-28, 0, '❤', v.bgColor, v.mat, m)
-        defaultFont.draw(-28, 0, rankIcon, rankColor, v.mat, m)
+        defaultFont.draw(0, 0, rankIcon, rankColor, v.mat, m)
       }
     }
     
