@@ -30,10 +30,13 @@ export function updateBalances() {
         let v = cursor.value
         for (const t of v.data.tags) {
           if (t[0] == 'IOU') {
-            const qty = +t[1]
+            let qty = +t[1]
             let qty_unit = t[2]
-            if (qty_unit == 'x') {
-              qty_unit = t[3]
+            const worth = +(t[5] || t[1])
+            const worth_unit = t[6] || t[2]
+            if (qty_unit != 'sat' && worth_unit == 'sat') {
+              qty = worth
+              qty_unit = worth_unit
             }
             if (!totals[qty_unit]) {
               totals[qty_unit] = -qty
@@ -41,10 +44,13 @@ export function updateBalances() {
               totals[qty_unit] += -qty
             }
           } else if (t[0] == 'UOI') {
-            const qty = +t[1]
+            let qty = +t[1]
             let qty_unit = t[2]
-            if (qty_unit == 'x') {
-              qty_unit = t[3]
+            const worth = +(t[5] || t[1])
+            const worth_unit = t[6] || t[2]
+            if (qty_unit != 'sat' && worth_unit == 'sat') {
+              qty = worth
+              qty_unit = worth_unit
             }
             if (!totals[qty_unit]) {
               totals[qty_unit] = qty
