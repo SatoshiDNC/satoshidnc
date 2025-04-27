@@ -76,7 +76,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
         mat4.scale(m, m, [iconScale, iconScale, 1])
         
         // defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
-        // defaultFont.draw(-28, 0, '❤', v.bgColor, v.mat, m)
+        defaultFont.draw(-14, 7, '❤', v.bgColor, v.mat, m)
         defaultFont.draw(-14, 7, rankIcon, rankColor, v.mat, m)
       }
     }
