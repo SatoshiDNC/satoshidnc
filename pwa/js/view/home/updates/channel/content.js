@@ -129,11 +129,7 @@ v.renderFunc = function() {
   let y = 0, last_date = 0
   for (const p of v.posts) {
     if (!p.type) {
-      if (p.preloaded.data.kind == -1) { // date placeholder
-        p.lines = [`${new Date(p.preloaded.data.created_at*1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'})}`]
-        p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + geom.TEXT_SPACE_ABOVE
-        p.type = 'notice'
-      } else if (p.preloaded.data.kind == 1) {
+      if (p.preloaded.data.kind == 1) {
         prep_kind1(v, p)
       } else if (p.preloaded.data.kind == 30023) {
         if (p.expanded) {
@@ -142,7 +138,6 @@ v.renderFunc = function() {
           prep_kind30023_preview(v, p)
         }
       } else {
-        console.log(JSON.stringify(p))
         p.lines = [ `Posted ${kindInfo.filter(r => p.preloaded.data.kind >= r.kind && p.preloaded.data.kind <= (r.kindMax || r.kind))?.[0]?.desc || 'something'}` ]
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'notice'
