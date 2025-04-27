@@ -42,6 +42,10 @@ const objectColors = {
 
   // chat text box
   chatTextBox: themeColors.subtle,
+
+  // hearts
+  wholeHeart: [1,0,0, 1],
+  brokenHeart: [.25,.5,1, 1],
 }
 const colors = { ...fixedColors, ...themeColors, ...objectColors }
 
