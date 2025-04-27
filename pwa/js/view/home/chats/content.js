@@ -6,7 +6,7 @@ import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn } from '../../util.js'
 import { popupRoot, popupView } from './profile/popup.js'
 import { eventTrigger, getUpdates } from '../../../content.js'
-import { balances } from '../../../deals.js'
+import { balances, balanceTrigger } from '../../../deals.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -63,9 +63,8 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.activeFilter = v.filterGads[0].label
-eventTrigger.push(() => {
-  v.relayout()
-})
+eventTrigger.push(() => { v.relayout() })
+balanceTrigger.push(() => { v.setRenderFlag(true) })
 v.layoutFunc = function() {
   console.log('layout')
   const v = this
@@ -95,7 +94,6 @@ v.layoutFunc = function() {
 keyDependencies.push(() => { const v = contentView; console.log('key trig'); v.queueLayout() })
 contactDependencies.push(() => { const v = contentView; console.log('contact trig'); v.queueLayout() })
 contactUpdatesDependencies.push(() => { console.log('contact trig 2'); v.setRenderFlag(true) })
-balanceTrigger.push(() => { v.setRenderFlag(true) })
 v.renderFunc = function() {
   console.log('render')
   const v = this
