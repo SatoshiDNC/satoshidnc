@@ -69,7 +69,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     if (rank) {
       let iconScale = 20/14
       for (let r = 0; r < rank; r++) {
-        let {hx, hy} = randomPosition()
+        let {x: hx, y: hy} = randomPosition()
         console.log(hx,hy)
         mat4.identity(m)
         mat4.translate(m, m, [x+hx, y+hy, 0])
