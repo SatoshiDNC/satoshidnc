@@ -16,7 +16,7 @@ export function updateBalances() {
   }
   balance_update_timeout = setTimeout(() => {
     const TAG = 'updateBalances'
-    let total = 0
+    let totals = {}
     const tr = db.transaction(['deals-pending', 'profiles', 'deletions', 'expirations'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('deals-pending')
     const req = os.openCursor()
@@ -28,10 +28,28 @@ export function updateBalances() {
       let cursor = e.target.result
       if (cursor) {
         let v = cursor.value
-        total += 1
+        for (t of v.data.tags) {
+          if (t[0] == 'IOU') {
+            const qty = +t[1]
+            const qty_unit = t[2]
+            if (!totals[qty_unit]) {
+              totals[qty_unit] = -qty
+            } else {
+              totals[qty_unit] += -qty
+            }
+          } else if (t[0] == 'UOI') {
+            const qty = +t[1]
+            const qty_unit = t[2]
+            if (!totals[qty_unit]) {
+              totals[qty_unit] = qty
+            } else {
+              totals[qty_unit] += qty
+            }
+          }
+        }
         cursor.continue()
       } else {
-        console.log(`[${TAG}] new balance: ${total}`)
+        console.log(`[${TAG}] new balance:`, totals)
       }
     }
   }, 100)
