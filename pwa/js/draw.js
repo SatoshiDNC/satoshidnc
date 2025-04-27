@@ -53,7 +53,6 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     nybbleFont.draw(dx,dy + i*4*px, str, color, v.mat, m)
   })
 
-  console.log(hearts)
   if (hearts) {
     let balance = Math.round(hearts)
     let rank = balance? `${Math.abs(balance)}`.length: 0
@@ -67,6 +66,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
       return { x: x+w2 + w2*Math.cos(a), y: y+h2 + h2*Math.sin(a) }
     }
 
+    console.log(rank)
     if (rank) {
       let iconScale = 20/14
       let d = 4*iconScale
