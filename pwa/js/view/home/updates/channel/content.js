@@ -175,7 +175,7 @@ v.renderFunc = function() {
 }
 v.render_reactions = function(post, y) {
   const v = this, p = post
-  drawPill(v, colors.accent, geom.SPACE_LEFT,y,200,geom.REACTION_BUBBLE_HEIGHT)  
+  drawPill(v, colors.accent, geom.SPACE_LEFT,v.sh-y,200,geom.REACTION_BUBBLE_HEIGHT)  
 }
 v.render_debug_info = function(post, y) {
   const v = this, p = post
