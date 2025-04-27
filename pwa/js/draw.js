@@ -64,7 +64,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
       const f0 = Math.random(), f1 = 1-f0
       const w2 = w/2, h2 = h/2
       console.log(w2,h2)
-      return { x: x+w2 + w2*Math.cos(a), y: y+h2 + h2*Math.sin(a) }
+      return { x: w2 + w2*Math.cos(a), y: h2 + h2*Math.sin(a) }
     }
 
     if (rank) {
@@ -72,7 +72,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
       for (let r = 0; r < rank; r++) {
         let {x: hx, y: hy} = randomPosition()
         mat4.identity(m)
-        mat4.translate(m, m, [x, y, 0])
+        mat4.translate(m, m, [x+hx, y+hy, 0])
         mat4.scale(m, m, [iconScale, iconScale, 1])
         
         // defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
