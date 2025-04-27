@@ -105,22 +105,11 @@ export function aggregateEvent(e) {
                   }
                 } else {
                   console.log(`[${TAG}] noted deletions:`, ids)
-                  deletionTrigger.map(f => f(ids))
+                  setTimeout(() => { deletionTrigger.map(f => f(ids)) })
                   resolve()
                 }
               }
               deletionProcessing()
-            } else if (e.kind == 0) {
-              const os = tr.objectStore('profiles')
-              const req = os.put({ hpub: e.pubkey, asOf: now, data: e })
-              req.onerror = () => {
-                reject()
-              }
-              req.onsuccess = () => {
-                console.log(`[${TAG}] updated profile for`, e.pubkey)
-                resolve()
-                profileTrigger.map(f => f(e.pubkey))
-              }
             } else if (e.kind == 24) {
               const ids = []
               const todo = e.tags.filter(t => t[0] == 'e').map(t => t[1])
@@ -152,7 +141,7 @@ export function aggregateEvent(e) {
                     }
                   }
                 } else {
-                  unlockTrigger.map(f => f(ids))
+                  setTimeout(() => { unlockTrigger.map(f => f(ids)) })
                   resolve()
                 }
               }
@@ -165,8 +154,24 @@ export function aggregateEvent(e) {
               }
               req.onsuccess = () => {
                 const finisher = () => {
-                  resolve()
-                  eventTrigger.map(f => f(e))
+                  if (e.kind == 0) {
+                    const os = tr.objectStore('profiles')
+                    const req = os.put({ hpub: e.pubkey, asOf: now, data: e })
+                    req.onerror = () => {
+                      reject()
+                    }
+                    req.onsuccess = () => {
+                      console.log(`[${TAG}] updated profile for`, e.pubkey)
+                      resolve()
+                      setTimeout(() => {
+                        eventTrigger.map(f => f(e))
+                        profileTrigger.map(f => f(e.pubkey))
+                      })
+                    }
+                  } else {
+                    resolve()
+                    setTimeout(() => { eventTrigger.map(f => f(e)) })
+                  }
                 }
                 const expiry = +(e.tags.filter(t => t[0] == 'expiration')?.[0]?.[1]||'0')
                 if (expiry) {
