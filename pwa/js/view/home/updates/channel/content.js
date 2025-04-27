@@ -87,16 +87,16 @@ v.insertPost = function(preloaded) {
       return
     }
     if (v.posts[i].preloaded.data.created_at < preloaded.data.created_at) {
-      v.posts.splice(i, 0, { preloaded }, ...Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)==Math.trunc(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)?[]:[{
-        preloaded: { data: { kind: -1, created_at: Math.trunc(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
+      v.posts.splice(i, 0, { preloaded }, ...Math.floor(preloaded.data.created_at/DAY_IN_SECONDS)==Math.floor(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)?[]:[{
+        preloaded: { data: { kind: -1, created_at: Math.floor(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
       }])
       return
     }
     prev_date = v.posts[i].preloaded.data.created_at
   }
-  v.posts.push({ preloaded }, {
-    preloaded: { data: { kind: -1, created_at: Math.trunc(prev_date/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
-  })
+  v.posts.push({ preloaded }, ...prev_date==0?[]:[{
+    preloaded: { data: { kind: -1, created_at: Math.floor(prev_date/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
+  }])
 }
 v.layoutFunc = function() {
   const v = this
