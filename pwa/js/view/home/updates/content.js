@@ -339,8 +339,6 @@ v.renderFunc = function() {
   }
 
   let i = 0
-  console.log([...v.selfs, ...v.recents, ...v.viewed, ...v.channels])
-  console.log(v.selfs, v.recents, v.viewed, v.channels)
   for (let hpub of [...v.selfs, ...v.recents, ...v.viewed, ...v.channels]) {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
