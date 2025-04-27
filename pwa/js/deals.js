@@ -58,21 +58,46 @@ export function updateBalances() {
         }
         cursor.continue()
       } else {
-        console.log(`[${TAG}] new balance:`, totals)
-        balances = totals
-        // for (let [key, value] of Object.entries(balances)) {
-        //   if (Object.keys(totals).includes(key)) {
-        //     balances[key] = totals[key]
-        //   } else {
-        //     delete balances[key]
-        //   }
-        // }
-        // for (let [key, value] of Object.entries(totals)) {
-        //   if (!Object.keys(balances).includes(key)) {
-        //     balances[key] = totals[key]
-        //   }
-        // }
-        setTimeout(() => { balanceTrigger.map(t => t()) })
+        // iterate over the balance data to detect changes
+        let flag = false
+        for (let [key, value] of Object.entries(balances)) {
+          if (Object.keys(totals).includes(key)) {
+            if (balances[key].length != totals[key].length) {
+              balances[key] = totals[key]
+              flag = true
+            }
+            for (let [key1, value1] of Object.entries(balances[key])) {
+              if (Object.keys(totals[key]).includes(key1)) {
+                if (balances[key][key1] != totals[key][key1]) {
+                  balances[key] = totals[key]
+                  flag = true
+                }
+              } else {
+                balances[key] = totals[key]
+                flag = true
+              }
+            }    
+            for (let [key1, value1] of Object.entries(totals[key])) {
+              if (!Object.keys(balances[key]).includes(key1)) {
+                balances[key] = totals[key]
+                flag = true
+              }
+            }
+          } else {
+            delete balances[key]
+            flag = true
+          }
+        }
+        for (let [key, value] of Object.entries(totals)) {
+          if (!Object.keys(balances).includes(key)) {
+            balances[key] = totals[key]
+            flag = true
+          }
+        }
+        if (flag) {
+          console.log(`[${TAG}] new balance:`, totals)
+          setTimeout(() => { balanceTrigger.map(t => t()) })
+        }
       }
     }
   }, 100)
