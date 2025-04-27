@@ -60,7 +60,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     let rankColor = balance > 0? [0,1,0, 1]: [1,0,0, 1]
 
     const randomPosition = () => {
-      const a = Math.random() * Math.PI
+      const a = Math.random() * 2*Math.PI
       const f0 = Math.random(), f1 = 1-f0
       const w2 = w/2, h2 = h/2
       console.log(w2,h2)
