@@ -6,6 +6,7 @@ import { rootView as displayView } from './display/root.js'
 import { rootView as channelView } from './channel/root.js'
 import { barBot } from '../bar-bot.js'
 import { signBatch as sign, defaultKey, keys } from '../../../keys.js'
+import { balances } from '../../../deals.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -370,7 +371,7 @@ v.renderFunc = function() {
     // drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
     drawEllipse(v, colors.inactiveDark, 43, g.y + 17 + index * 200, 125, 125)
 
-    let balance = Math.round(Math.random() * 3000 - 1500)
+    let balance = balances[hpub]['sat'] // Math.round(Math.random() * 3000 - 1500)
     let rank = balance? `${Math.abs(balance)}`.length: 0
     let rankIcon = balance > 0? '❤': '💔'
     let rankColor = [1,0,0, 1]

@@ -6,6 +6,8 @@ import { keys, hpubIsValid } from './keys.js'
 
 export const dealTrigger = [updateBalances]
 
+export let balances = {}
+
 const DAY_IN_SECONDS = 24/*hours*/ * 60/*minutes*/ * 60/*seconds*/
 
 let balance_update_timeout
@@ -56,6 +58,7 @@ export function updateBalances() {
         cursor.continue()
       } else {
         console.log(`[${TAG}] new balance:`, totals)
+        balances = totals
       }
     }
   }, 100)
