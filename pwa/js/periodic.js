@@ -3,6 +3,7 @@ import { reqFeed, deleteExpiredEvents } from './content.js'
 import { ONE_MINUTE_IN_MILLISECONDS } from './time.js'
 import { defaultKey, sign } from './keys.js'
 import { contactDependencies } from './contacts.js'
+import { updateBalances } from './deals.js'
 
 let timer
 contactDependencies.push(() => {
@@ -22,6 +23,8 @@ export function minutelyUI() {
   const now = Date.now()
   if (now - lastFulfillment < ONE_MINUTE_IN_MILLISECONDS) return
   lastFulfillment = now
+
+  updateBalances()
 
   homeRelay().then(relay => {
 
