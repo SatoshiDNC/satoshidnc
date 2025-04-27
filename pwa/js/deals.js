@@ -13,8 +13,8 @@ export function rememberDeal(e) {
     if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid deal')
     const TAG = 'rememberDeal'
     const now = Date.now()
-    const tr = db.transaction(['deals', 'profiles', 'deletions', 'expirations'], 'readwrite', { durability: 'strict' })
-    const os = tr.objectStore('deals')
+    const tr = db.transaction(['deals-pending', 'profiles', 'deletions', 'expirations'], 'readwrite', { durability: 'strict' })
+    const os = tr.objectStore('deals-pending')
     const req = os.index('id').get(e.id)
     req.onerror = () => {
       reject()
