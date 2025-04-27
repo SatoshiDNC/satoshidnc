@@ -5,6 +5,8 @@ import { prep_kind30023, prep_kind30023_preview } from './kind/30023-long-form-n
 import * as geom from './geometry.js'
 import { kindInfo } from '../../../../nostor-util.js'
 
+const DAY_IN_SECONDS = 86400
+
 let v, g
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
