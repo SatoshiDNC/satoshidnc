@@ -201,7 +201,7 @@ export function savePendingReactions(reactions) {
   const tr = db.transaction(['reactions-pending'], 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('reactions-pending')
   reactions.map(reaction => {
-    const req = os.put(reaction)
+    const req = os.put({ data: reaction })
     req.onerror = e => {
       console.error(`database error`)
     }
