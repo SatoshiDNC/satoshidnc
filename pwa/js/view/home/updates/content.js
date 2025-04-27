@@ -235,7 +235,8 @@ v.layoutFunc = function() {
           channels.push(update.hpub)
         }
       }
-    } else if (![].includes(update.data.kind)) { // status
+    }
+    if (![].includes(update.data.kind)) { // status
       if (keys.filter(k => k.hpub == update.hpub).length == 0) {
         if (!update.viewed) {
           if (!recents.includes(update.hpub)) {
