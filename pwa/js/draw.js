@@ -57,7 +57,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     let balance = Math.round(hearts)
     let rank = balance? `${Math.abs(balance)}`.length: 0
     let rankIcon = balance > 0? '💔': '❤'
-    let rankColor = balance > 0? [.25,.25,1, 1]: [1,0,0, 1]
+    let rankColor = balance > 0? [0,1,0, 1]: [1,0,0, 1]
 
     let iter = 0
     const randomPosition = () => {
