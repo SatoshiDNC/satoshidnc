@@ -39,7 +39,7 @@ export function drawRect(v, color, x,y,w,h) {
   mainShapes.drawArrays2('rect')
 }
 
-export function drawAvatar(v, hpub, x,y,w,h) {
+export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   const color = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
   const mat = mat4.create()
   const m = mat4.create()
@@ -52,6 +52,37 @@ export function drawAvatar(v, hpub, x,y,w,h) {
     mat4.copy(m, mat)
     nybbleFont.draw(dx,dy + i*4*px, str, color, v.mat, m)
   })
+
+  if (hearts) {
+    let balance = Math.round(hearts)
+    let rank = balance? `${Math.abs(balance)}`.length: 0
+    let rankIcon = balance > 0? '💔': '❤'
+    let rankColor = balance > 0? [0,1,0, 1]: [1,0,0, 1]
+
+    const randomPosition = () => {
+      const a = Math.random() * Math.PI
+      const f0 = Math.random(), f1 = 1-f0
+      const w2 = w/2, h2 = h/2
+      return { x: x+w2 + w2*Math.cos(a), y: y+h2 + h2*Math.sin(a) }
+    }
+
+    if (rank) {
+      let iconScale = 20/14
+      let d = 4*iconScale
+      for (let r = 0; r < rank; r++) {
+        let {hx, hy} = randomPosition()
+        mat4.identity(m)
+        mat4.translate(m, m, [x+hx, y+hy, 0])
+        mat4.scale(m, m, [iconScale, iconScale, 1])
+        
+        // defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
+        // defaultFont.draw(-28, 0, '❤', v.bgColor, v.mat, m)
+        defaultFont.draw(-28, 0, rankIcon, rankColor, v.mat, m)
+      }
+    }
+    
+  }
+
 }
 
 export function drawPill(v, color, x,y,w,h) {
