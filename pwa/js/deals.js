@@ -60,11 +60,15 @@ export function updateBalances() {
       } else {
         console.log(`[${TAG}] new balance:`, totals)
         for (let [key, value] of Object.entries(balances)) {
-          console.log(key)
           if (Object.keys(totals).includes(key)) {
             balances[key] = totals[key]
           } else {
             delete balances[key]
+          }
+        }
+        for (let [key, value] of Object.entries(totals)) {
+          if (!Object.keys(balances).includes(key)) {
+            balances[key] = totals[key]
           }
         }
       }
