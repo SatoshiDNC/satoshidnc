@@ -2,6 +2,7 @@ import { drawPill, drawEllipse, alpha } from '../../draw.js'
 import { contentView } from './updates/content.js'
 import { eventTrigger } from '../../content.js'
 import { sfx } from '../../sound.js'
+import { updateBalances } from '../../deals.js'
 
 let v, g
 export const barBot = v = new fg.View()
@@ -27,6 +28,7 @@ for (const pane of v.panes) {
   g.new = pane.new || false // boolean or integer
   g.clickFunc = function() {
     const g = this, v = g.viewport
+    updateBalances()
     v.activeLabel = g.label
     const pane = v.panes.filter(p => p.label == v.activeLabel)[0]
     pane.view.c = barBot; barBot.parent = pane.view
