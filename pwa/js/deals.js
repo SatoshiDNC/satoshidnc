@@ -28,7 +28,7 @@ export function updateBalances() {
       let cursor = e.target.result
       if (cursor) {
         let v = cursor.value
-        for (t of v.data.tags) {
+        for (const t of v.data.tags) {
           if (t[0] == 'IOU') {
             const qty = +t[1]
             const qty_unit = t[2]
