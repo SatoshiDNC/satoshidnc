@@ -236,7 +236,7 @@ v.layoutFunc = function() {
         }
       }
     }
-    if (![].includes(update.data.kind)) { // status
+    if (update.data.tags.filter(t => t[0] == 'expiration').length > 0 && ![30023].includes(update.data.kind)) { // status
       if (keys.filter(k => k.hpub == update.hpub).length == 0) {
         if (!update.viewed) {
           if (!recents.includes(update.hpub)) {
