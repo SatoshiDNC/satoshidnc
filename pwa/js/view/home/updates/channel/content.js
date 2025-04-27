@@ -95,7 +95,7 @@ v.insertPost = function(preloaded) {
     prev_date = v.posts[i].preloaded.data.created_at
   }
   v.posts.push({ preloaded }, {
-    preloaded: { data: { kind: -1, created_at: Math.trunc(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
+    preloaded: { data: { kind: -1, created_at: Math.trunc(v.posts[v.posts.length].preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
   })
 }
 v.layoutFunc = function() {
