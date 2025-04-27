@@ -1,5 +1,6 @@
 import { drawAvatar, blend, hue, color_from_rgb_integer } from '../../../../draw.js'
 import { getPersonalData } from '../../../../personal.js'
+import { balances } from '../../../../deals.js'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -89,7 +90,7 @@ v.renderFunc = function() {
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uModelViewMatrix'), false, m)
   mainShapes.drawArrays2('rect')
 
-  drawAvatar(v, v.hpub, 75, 27, 92, 92)
+  drawAvatar(v, v.hpub, 75, 27, 92, 92, v.selfs.includes(v.hpub)?0:balances[v.hpub]?.['sat']||0)
 
   const subtitle = 'Public channel'
   v.lastSubtitle ||= subtitle
