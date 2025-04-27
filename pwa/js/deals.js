@@ -71,6 +71,7 @@ export function updateBalances() {
             balances[key] = totals[key]
           }
         }
+        setTimeout(() => { balanceTrigger.map(t => t()) })
       }
     }
   }, 100)
