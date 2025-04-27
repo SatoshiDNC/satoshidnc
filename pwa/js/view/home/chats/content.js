@@ -149,6 +149,8 @@ v.renderFunc = function() {
       drawEllipse(v, v.bgColor, 31+0.5, 204+0.5 + 200 * i, 126, 126)
       drawAvatar(v, c.hpub, 31+20, 204+20 + 200 * i, 87, 87)
     } else {
+      console.log(v.selfs, c.hpub, balances)
+
       drawAvatar(v, c.hpub, 31, 204 + 200 * i, 127, 127, v.selfs.includes(c.hpub)?0:balances[c.hpub]?.['sat']||0)
     }
 
