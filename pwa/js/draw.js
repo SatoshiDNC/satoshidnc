@@ -53,8 +53,8 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     nybbleFont.draw(dx,dy + i*4*px, str, color, v.mat, m)
   })
 
+  console.log(hearts)
   if (hearts) {
-    console.log(hearts)
     let balance = Math.round(hearts)
     let rank = balance? `${Math.abs(balance)}`.length: 0
     let rankIcon = balance > 0? '💔': '❤'
