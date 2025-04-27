@@ -77,6 +77,7 @@ v.layoutFunc = function() {
   }
 
   v.hpubs = [ ...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)]) ]
+  v.selfs = keys.map(k => k.hpub)
 
   let g
   g = v.listGad
@@ -147,7 +148,7 @@ v.renderFunc = function() {
       drawEllipse(v, v.bgColor, 31+0.5, 204+0.5 + 200 * i, 126, 126)
       drawAvatar(v, c.hpub, 31+20, 204+20 + 200 * i, 87, 87)
     } else {
-      drawAvatar(v, c.hpub, 31, 204 + 200 * i, 127, 127, selfs.includes(hpub)?0:balances[hpub]?.['sat']||0)
+      drawAvatar(v, c.hpub, 31, 204 + 200 * i, 127, 127, v.selfs.includes(hpub)?0:balances[hpub]?.['sat']||0)
     }
 
     mat4.identity(m)
