@@ -59,11 +59,12 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     let rankIcon = balance > 0? '💔': '❤'
     let rankColor = balance > 0? [0,1,0, 1]: [1,0,0, 1]
 
+    let iter = 0
     const randomPosition = () => {
-      const a = Math.random() * 2*Math.PI
-      const f0 = Math.random(), f1 = 1-f0
+      const a = parseInt(hpub.substr(16+iter,1), 16)/16 * 2*Math.PI
+      const f0 = parseInt(hpub.substr(26+iter,1), 16)/15, f1 = 1-f0
       const w2 = w/2, h2 = h/2
-      console.log(w2,h2)
+      iter += 1
       return { x: w2 + w2*Math.cos(a), y: h2 + h2*Math.sin(a) }
     }
 
