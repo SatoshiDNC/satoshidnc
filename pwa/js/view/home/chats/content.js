@@ -95,6 +95,7 @@ v.layoutFunc = function() {
 keyDependencies.push(() => { const v = contentView; console.log('key trig'); v.queueLayout() })
 contactDependencies.push(() => { const v = contentView; console.log('contact trig'); v.queueLayout() })
 contactUpdatesDependencies.push(() => { console.log('contact trig 2'); v.setRenderFlag(true) })
+balanceTrigger.push(() => { v.setRenderFlag(true) })
 v.renderFunc = function() {
   console.log('render')
   const v = this
