@@ -59,18 +59,19 @@ export function updateBalances() {
         cursor.continue()
       } else {
         console.log(`[${TAG}] new balance:`, totals)
-        for (let [key, value] of Object.entries(balances)) {
-          if (Object.keys(totals).includes(key)) {
-            balances[key] = totals[key]
-          } else {
-            delete balances[key]
-          }
-        }
-        for (let [key, value] of Object.entries(totals)) {
-          if (!Object.keys(balances).includes(key)) {
-            balances[key] = totals[key]
-          }
-        }
+        balances = totals
+        // for (let [key, value] of Object.entries(balances)) {
+        //   if (Object.keys(totals).includes(key)) {
+        //     balances[key] = totals[key]
+        //   } else {
+        //     delete balances[key]
+        //   }
+        // }
+        // for (let [key, value] of Object.entries(totals)) {
+        //   if (!Object.keys(balances).includes(key)) {
+        //     balances[key] = totals[key]
+        //   }
+        // }
         setTimeout(() => { balanceTrigger.map(t => t()) })
       }
     }
