@@ -51,8 +51,8 @@ export function init() {
         os.createIndex(`id`, 'data.id')
       }
       if (e.oldVersion < 7) {
-        os = db.createObjectStore(`reactions-pending`, { keyPath: 'data.id' })
-        os.createIndex(`id`, 'data.id')
+        os = db.createObjectStore(`reactions-pending`, { keyPath: 'id' })
+        os.createIndex(`id`, 'id')
       }
     }
   })
