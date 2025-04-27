@@ -6,6 +6,7 @@ import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn } from '../../util.js'
 import { popupRoot, popupView } from './profile/popup.js'
 import { eventTrigger, getUpdates } from '../../../content.js'
+import { balances } from '../../../deals.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
