@@ -88,7 +88,7 @@ v.insertPost = function(preloaded) {
     }
     if (v.posts[i].preloaded.data.created_at < preloaded.data.created_at) {
       v.posts.splice(i, 0, { preloaded }, ...Math.floor(preloaded.data.created_at/DAY_IN_SECONDS)==Math.floor(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)?[]:[{
-        preloaded: { data: { kind: -1, created_at: Math.floor(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
+        preloaded: { data: { kind: -1, created_at: Math.floor(preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
       }])
       return
     }
