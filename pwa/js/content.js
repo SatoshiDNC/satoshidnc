@@ -197,7 +197,7 @@ export function aggregateEvent(e) {
   })
 }
 
-export function savePendingReactions() {
+export function savePendingReactions(reactions) {
   const tr = db.transaction(['reactions-pending'], 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('reactions-pending')
   reactions.map(reaction => {
