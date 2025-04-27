@@ -72,7 +72,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
         let {x: hx, y: hy} = randomPosition()
         console.log(hx,hy)
         mat4.identity(m)
-        mat4.translate(m, m, [x+hx, y+hy, 0])
+        mat4.translate(m, m, [x, y, 0])
         mat4.scale(m, m, [iconScale, iconScale, 1])
         
         // defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
