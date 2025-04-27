@@ -19,6 +19,7 @@ export function setDummyKey(id) {
     const os = tr.objectStore('events')
     const req = os.index('id').get(id)
     req.onerror = () => {
+      console.error(`[${TAG}] database error`)
       reject()
     }
     req.onsuccess = () => {
@@ -26,6 +27,7 @@ export function setDummyKey(id) {
         req.result.data._key = '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
         const req2 = os.put(req.result)
         req2.onerror = () => {
+          console.error(`[${TAG}] database error`)
           reject()
         }
         req2.onsuccess = () => {
