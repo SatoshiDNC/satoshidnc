@@ -13,3 +13,4 @@ export const TEXT_LINE_SPACING = 54
 export const REACTION_SPACE_BELOW = 62
 export const REACTION_BORDER = 3
 export const REACTION_BUBBLE_HEIGHT = 67
+export const REACTION_BUBBLE_OVERLAP = 10

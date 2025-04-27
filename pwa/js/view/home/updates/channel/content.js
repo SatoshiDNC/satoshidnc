@@ -153,9 +153,7 @@ v.renderFunc = function() {
         v.render_default(p, y)
       }
       if (p.reactions) {
-        //y -= geom.REACTION_SPACE_BELOW
-        v.render_reactions(p, y)
-        //y += geom.REACTION_SPACE_BELOW
+        v.render_reactions(p, y + geom.REACTION_BUBBLE_OVERLAP)
       }
       y += p.total_height
       if (debug) {
