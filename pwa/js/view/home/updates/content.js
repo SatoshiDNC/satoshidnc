@@ -1,7 +1,7 @@
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
-import { aggregateEvent, getUpdates, eventTrigger } from '../../../content.js'
+import { aggregateEvent, setDummyKey, getUpdates, eventTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
 import { rootView as channelView } from './channel/root.js'
 import { barBot } from '../bar-bot.js'
@@ -128,6 +128,7 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
       } else if (r[1] == 'unavailable') {
         updates.filter(u => u.data.id == r[0]).map(u => {
           u.data._key = '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+          setDummyKey(r[0])
         })
       }
     })

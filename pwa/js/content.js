@@ -11,6 +11,32 @@ export const profileTrigger = []
 
 const DAY_IN_SECONDS = 24/*hours*/ * 60/*minutes*/ * 60/*seconds*/
 
+export function setDummyKey(id) {
+  return new Promise((resolve, reject) => {
+    const TAG = 'setDummyKey'
+    const now = Date.now()
+    const tr = db.transaction(['events', 'profiles', 'deletions', 'expirations'], 'readwrite', { durability: 'strict' })
+    const os = tr.objectStore('events')
+    const req = os.index('id').get(id)
+    req.onerror = () => {
+      reject()
+    }
+    req.onsuccess = () => {
+      if (req.result) { // the event to update is in our database
+        req.result.data._key = '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+        const req2 = os.put(req.result)
+        req2.onerror = () => {
+          reject()
+        }
+        req2.onsuccess = () => {
+          console.log(`[${TAG}] auto-decryption aborted for event ${id}`)
+          resolve()
+        }
+      }
+    }
+  })
+}
+
 export function aggregateEvent(e) {
   return new Promise((resolve, reject) => {
     if (!e || !e.id || !e.sig || !e.pubkey) reject('invalid event')
@@ -116,7 +142,7 @@ export function aggregateEvent(e) {
                           unlockProcessing()
                         }
                       } else {
-                        console.log(`warning: unlock attempt by different pubkey: ${e.pubkey} tried to delete post by ${req.result.data.pubkey}`)
+                        console.log(`warning: unlock attempt by different pubkey: ${e.pubkey} tried to unlock post by ${req.result.data.pubkey}`)
                         unlockProcessing()
                       }
                     } else {
