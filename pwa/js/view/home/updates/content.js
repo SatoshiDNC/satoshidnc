@@ -29,8 +29,7 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     targetView = displayView
   }
 
-  // TODO: sign pledge to zap author in exchange for decryption key
-  console.log('send')
+  // prepare everything to sign in exchange for decryption key
   let new_count = 0
   let to_sign = []
   let keys_owed = []
@@ -45,7 +44,7 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     pending_reactions.push(pending_reaction)
     to_sign.push(pending_reaction)
     keys_owed.push(u.data.id)
-    total_cost += Math.max(1 /* enforce non-zero cost (at all costs) */, +(u.data.tags.filter(t => t[0] == 'c')?.[0]?.[1] || '0'))
+    total_cost += Math.max(1 /* enforce non-zero cost (at all costs, lol) */, +(u.data.tags.filter(t => t[0] == 'c')?.[0]?.[1] || '0'))
   }
   if (new_count == 0 && total_cost == 0) {
     targetView.setContext(updates, hpub, returnView)
@@ -68,6 +67,8 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     kind: 555,
     tags: [['IOU','1','sat',`POST /unlock?id=${keys_owed.join(',')}`], ['p',`${satoshi_hpub}`]],
   })
+
+  // sign everything at once
   sign(defaultKey, to_sign).then(([auth, deal, ...checkmarks]) => {
     console.log(`auth: ${JSON.stringify(auth)}`)
     console.log(`deal: ${JSON.stringify(deal)}`)
@@ -80,8 +81,23 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     } else {
       return Promise.reject(`error while signing: ${error}`)
     }
-  }).then(([auth, deal, ...checkmarks]) => {
-    checkmark_events = checkmarks
+  }).then(([auth, deal, ...reactions]) => {
+
+    // save the reactions for later
+    pending_reactions.push(...reactions)
+    const tr = db.transaction(['reactions-pending'], 'readwrite', { durability: 'strict' })
+    const os = tr.objectStore('reactions-pending')
+    reactions.map(reaction => {
+      const req = os.put(reaction)
+      req.onerror = e => {
+        console.error(`database error`)
+      }
+      req.onsuccess = e => {
+        console.log(`saved pending reaction`)
+      }
+    })
+
+    // fetch the decryption key(s)
     let req = auth.tags.filter(t => t[0] == 'IOU')[0][3]
     let method = req.split(' ')[0]
     let route = req.substring(method.length).trim()
@@ -114,9 +130,9 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     console.error(m)
     alert(m)
     return new Promise(()=>{}) // terminate the chain
-  }).then(json_raw => {
-    //const json = [['1b12d9eb9a9f365ff541977fa39d1503136a7c1bc965ccceaf7c2de396a3768f','ok',{"content":"686c8d0012b60bc54e0d455683bd80e0fb1fd7780c2c4374cbfaf9cf09118f5adb870d65dea49b5fe73a4b60","created_at":1745602072,"id":"c4662c3cb5743c4e2aeb20d1ae390ce2c6fa7e495b82f274e1dd6786e23f8500","kind":24,"pubkey":"d98a11b4be2839cd9d4495e163852aa037e3cdafdd1e6ce730307d0d05f468c3","sig":"75996f04820b2af8005608315dc777e7fa9bc8381a0177955cc06654d5aaef9f5b45122ab2b7bc7b14c671132560375fb3df5bf30f6702221cbed959cc6f0644","tags":[["e","1b12d9eb9a9f365ff541977fa39d1503136a7c1bc965ccceaf7c2de396a3768f"]]}], ...json_raw]
-    const json = json_raw
+  }).then(json => {
+
+    // process the decryption key(s)
     console.log('processing', json)
     json.map(r => {
       if (r[1] == 'ok') {

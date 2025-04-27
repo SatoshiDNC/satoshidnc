@@ -267,7 +267,6 @@ v.render_default = function(post, y) {
 
 export function try_send_reaction(post) {
   const p = post
-  console.log('try', p.reacted, !p.top_seen || !p.bottom_seen, !p.pending_auto_reaction)
   if (p.reacted) return
   if (!p.top_seen || !p.bottom_seen) return
   p.reacted = true

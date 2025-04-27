@@ -4,7 +4,7 @@ export let db
 
 export function init() {
   return new Promise((resolve, reject) => {
-    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 6)
+    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 7)
     req.onsuccess = e => {
       db = req.result
       resolve()
@@ -48,6 +48,10 @@ export function init() {
       }
       if (e.oldVersion < 6) {
         os = db.createObjectStore(`deals-pending`, { keyPath: 'data.id' })
+        os.createIndex(`id`, 'data.id')
+      }
+      if (e.oldVersion < 7) {
+        os = db.createObjectStore(`reactions-pending`, { keyPath: 'data.id' })
         os.createIndex(`id`, 'data.id')
       }
     }
