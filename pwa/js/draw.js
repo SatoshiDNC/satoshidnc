@@ -63,6 +63,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
       const a = Math.random() * Math.PI
       const f0 = Math.random(), f1 = 1-f0
       const w2 = w/2, h2 = h/2
+      console.log(w2,h2)
       return { x: x+w2 + w2*Math.cos(a), y: y+h2 + h2*Math.sin(a) }
     }
 
@@ -70,7 +71,6 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
       let iconScale = 20/14
       for (let r = 0; r < rank; r++) {
         let {x: hx, y: hy} = randomPosition()
-        console.log(hx,hy)
         mat4.identity(m)
         mat4.translate(m, m, [x, y, 0])
         mat4.scale(m, m, [iconScale, iconScale, 1])
