@@ -1,7 +1,7 @@
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
-import { aggregateEvent, setDummyKey, getUpdates, eventTrigger } from '../../../content.js'
+import { aggregateEvent, savePendingReactions, setDummyKey, getUpdates, eventTrigger } from '../../../content.js'
 import { rootView as displayView } from './display/root.js'
 import { rootView as channelView } from './channel/root.js'
 import { barBot } from '../bar-bot.js'
@@ -85,17 +85,7 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
 
     // save the reactions for later
     pending_reactions.push(...reactions)
-    const tr = db.transaction(['reactions-pending'], 'readwrite', { durability: 'strict' })
-    const os = tr.objectStore('reactions-pending')
-    reactions.map(reaction => {
-      const req = os.put(reaction)
-      req.onerror = e => {
-        console.error(`database error`)
-      }
-      req.onsuccess = e => {
-        console.log(`saved pending reaction`)
-      }
-    })
+    savePendingReactions(reactions)
 
     // fetch the decryption key(s)
     let req = auth.tags.filter(t => t[0] == 'IOU')[0][3]

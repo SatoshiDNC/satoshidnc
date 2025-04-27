@@ -197,6 +197,20 @@ export function aggregateEvent(e) {
   })
 }
 
+export function savePendingReactions() {
+  const tr = db.transaction(['reactions-pending'], 'readwrite', { durability: 'strict' })
+  const os = tr.objectStore('reactions-pending')
+  reactions.map(reaction => {
+    const req = os.put(reaction)
+    req.onerror = e => {
+      console.error(`database error`)
+    }
+    req.onsuccess = e => {
+      console.log(`saved pending reaction`)
+    }
+  })
+}
+
 export function deleteExpiredEvents() {
   return new Promise((resolve, reject) => {
     const TAG = 'deleteExpiredEvents'
