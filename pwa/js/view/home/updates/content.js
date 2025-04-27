@@ -375,7 +375,7 @@ v.renderFunc = function() {
     let balance = balances[hpub]?.['sat'] || 0 // Math.round(Math.random() * 3000 - 1500)
     let rank = balance? `${Math.abs(balance)}`.length: 0
     let rankIcon = balance > 0? '💔': '❤'
-    let rankColor = balance > 0? [0,1,0, 1]: [1,0,0, 1]
+    let rankColor = balance > 0? [1,0,0, 1]: [1,0,0, 1]
 
     let textScale = 35/14
 
