@@ -6,7 +6,7 @@ import { rootView as displayView } from './display/root.js'
 import { rootView as channelView } from './channel/root.js'
 import { barBot } from '../bar-bot.js'
 import { signBatch as sign, defaultKey, keys } from '../../../keys.js'
-import { balances } from '../../../deals.js'
+import { balances, balanceTrigger } from '../../../deals.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -17,6 +17,7 @@ v.bgColor = [0x0b/0xff, 0x14/0xff, 0x1b/0xff, 1]
 v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
+balanceTrigger.push(() => { v.setRenderFlag(true) })
 v.displayAction = function(updates, hpub, returnView, root, target, mode) {
   const v = this
   console.log(`DISPLAY ACTION:`, updates, hpub, returnView, root, target, mode)

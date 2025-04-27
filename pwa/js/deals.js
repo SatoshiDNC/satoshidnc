@@ -7,6 +7,7 @@ import { keys, hpubIsValid } from './keys.js'
 export const dealTrigger = [updateBalances]
 
 export let balances = {}
+export const balanceTrigger = []
 
 const DAY_IN_SECONDS = 24/*hours*/ * 60/*minutes*/ * 60/*seconds*/
 
