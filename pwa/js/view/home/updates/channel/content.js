@@ -1,5 +1,5 @@
 import { getFeed, markUpdateAsViewed } from '../../../../content.js'
-import { drawRoundedRect, drawRect, blend, alpha, hue, color_from_rgb_integer } from '../../../../draw.js'
+import { drawRoundedRect, drawRect, drawPill, blend, alpha, hue, color_from_rgb_integer } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023, prep_kind30023_preview } from './kind/30023-long-form-note.js'
 import * as geom from './geometry.js'
@@ -144,10 +144,16 @@ v.renderFunc = function() {
     }
     if (v.sh-(v.userY+y + geom.SPACE_BELOW+p.total_height+geom.SPACE_ABOVE) < v.sh && v.sh-(v.userY+y) > 0) {
       y += geom.SPACE_BELOW
+      if (p.reactions) {
+        y += geom.REACTION_SPACE_BELOW
+      }
       if (p.type == 'notice') {
         v.render_notice(p, y)
       } else if (p.type == 'default') {
         v.render_default(p, y)
+      }
+      if (p.reactions) {
+        v.render_reactions(p, y)
       }
       y += p.total_height
       if (debug) {
@@ -157,14 +163,17 @@ v.renderFunc = function() {
       y += geom.SPACE_ABOVE
     } else {
       y += geom.SPACE_BELOW
+      if (p.reactions) { y += geom.REACTION_SPACE_BELOW }
       y += p.total_height
-      if (debug) {
-        y += geom.TEXT_HEIGHT
-      }
+      if (debug) { y += geom.TEXT_HEIGHT }
       y += geom.SPACE_ABOVE
     }
     last_date = Math.floor(p.preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS
   }
+}
+v.render_reactions(post, y) {
+  const v = this, p = post
+  drawPill(v, colors.accent, x,y,200,50)  
 }
 v.render_debug_info = function(post, y) {
   const v = this, p = post

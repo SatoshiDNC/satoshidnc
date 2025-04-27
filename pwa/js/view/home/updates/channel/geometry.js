@@ -10,3 +10,4 @@ export const TEXT_SPACE_RIGHT = 30
 export const TEXT_HEIGHT = 33
 export const TEXT_SCALE = TEXT_HEIGHT/14
 export const TEXT_LINE_SPACING = 54
+export const REACTION_SPACE_BELOW = 16
