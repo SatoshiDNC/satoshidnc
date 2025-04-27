@@ -171,7 +171,7 @@ v.renderFunc = function() {
     last_date = Math.floor(p.preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS
   }
 }
-v.render_reactions(post, y) {
+v.render_reactions = function(post, y) {
   const v = this, p = post
   drawPill(v, colors.accent, x,y,200,50)  
 }
