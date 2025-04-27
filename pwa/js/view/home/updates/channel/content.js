@@ -1,5 +1,5 @@
 import { getFeed, markUpdateAsViewed } from '../../../../content.js'
-import { drawRoundedRect, drawRect, blend, alpha } from '../../../../draw.js'
+import { drawRoundedRect, drawRect, blend, alpha, hue, color_from_rgb_integer } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023, prep_kind30023_preview } from './kind/30023-long-form-note.js'
 import * as geom from './geometry.js'
