@@ -133,7 +133,7 @@ v.renderFunc = function() {
   for (const p of v.posts) {
     if (!p.type) {
       if (p.preloaded.data.kind == -1) { // date placeholder
-        p.lines = [`date ${p.preloaded.data.created_at}`]
+        p.lines = [`${new Date(p.preloaded.data.created_at*1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'})}`]
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + geom.TEXT_SPACE_ABOVE
         p.type = 'notice'
       } else if (p.preloaded.data.kind == 1) {
