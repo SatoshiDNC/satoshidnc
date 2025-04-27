@@ -15,7 +15,25 @@ export function updateBalances() {
     balance_update_timeout = undefined
   }
   balance_update_timeout = setTimeout(() => {
-    console.log('new balance:')
+    const TAG = 'updateBalances'
+    let total = 0
+    const tr = db.transaction(['deals-pending', 'profiles', 'deletions', 'expirations'], 'readwrite', { durability: 'strict' })
+    const os = tr.objectStore('deals-pending')
+    const req = os.openCursor()
+    req.onerror = e => {
+      console.log(`[${TAG}] database error`)
+      reject()
+    }
+    req.onsuccess = e => {
+      let cursor = e.target.result
+      if (cursor) {
+        let v = cursor.value
+        total += 1
+        cursor.continue()
+      } else {
+        console.log(`[${TAG}] new balance: ${total}`)
+      }
+    }
   }, 100)
 }
 
