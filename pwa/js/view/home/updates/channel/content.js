@@ -240,6 +240,11 @@ v.render_default = function(post, y) {
       drawRect(v, fc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
       drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
     }
+  } else {
+    if (p.expanded) {
+      p.top_seen = true
+      try_send_reaction(p)
+    }
   }
   const bottom_overflow = -(v.userY+y+geom.TEXT_SPACE_BELOW)
   if (bottom_overflow > 0) {
@@ -248,5 +253,20 @@ v.render_default = function(post, y) {
       drawRect(v, fc, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
       drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
     }
+  } else {
+    if (p.expanded) {
+      p.bottom_seen = true
+      try_send_reaction(p)
+    }
   }
+  if (!p.expanded) {
+    p.top_seen = false
+    p.bottom_seen = false
+  }
+}
+
+export function try_send_reaction(post) {
+  const p = post
+  if (!p.top_seen || !p.bottom_seen) return
+  console.log("REACTION")
 }
