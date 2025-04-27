@@ -31,7 +31,7 @@ export function updateBalances() {
         for (const t of v.data.tags) {
           if (t[0] == 'IOU') {
             const qty = +t[1]
-            const qty_unit = t[2]
+            let qty_unit = t[2]
             if (qty_unit == 'x') {
               qty_unit = t[3]
             }
@@ -42,7 +42,7 @@ export function updateBalances() {
             }
           } else if (t[0] == 'UOI') {
             const qty = +t[1]
-            const qty_unit = t[2]
+            let qty_unit = t[2]
             if (qty_unit == 'x') {
               qty_unit = t[3]
             }
