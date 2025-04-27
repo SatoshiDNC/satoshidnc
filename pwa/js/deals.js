@@ -32,6 +32,9 @@ export function updateBalances() {
           if (t[0] == 'IOU') {
             const qty = +t[1]
             const qty_unit = t[2]
+            if (qty_unit == 'x') {
+              qty_unit = t[3]
+            }
             if (!totals[qty_unit]) {
               totals[qty_unit] = -qty
             } else {
@@ -40,6 +43,9 @@ export function updateBalances() {
           } else if (t[0] == 'UOI') {
             const qty = +t[1]
             const qty_unit = t[2]
+            if (qty_unit == 'x') {
+              qty_unit = t[3]
+            }
             if (!totals[qty_unit]) {
               totals[qty_unit] = qty
             } else {
