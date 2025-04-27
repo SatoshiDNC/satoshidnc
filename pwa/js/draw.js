@@ -54,6 +54,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   })
 
   if (hearts) {
+    console.log(hearts)
     let balance = Math.round(hearts)
     let rank = balance? `${Math.abs(balance)}`.length: 0
     let rankIcon = balance > 0? '💔': '❤'
