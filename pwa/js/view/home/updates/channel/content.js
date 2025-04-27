@@ -173,7 +173,7 @@ v.renderFunc = function() {
 }
 v.render_reactions = function(post, y) {
   const v = this, p = post
-  drawPill(v, colors.accent, x,y,200,50)  
+  drawPill(v, colors.accent, geom.SPACE_LEFT,y,200,50)  
 }
 v.render_debug_info = function(post, y) {
   const v = this, p = post
