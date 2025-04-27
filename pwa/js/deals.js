@@ -102,7 +102,6 @@ export function updateBalances() {
     }
   }, 100)
 }
-updateBalances()
 
 export function rememberDeal(e) {
   return new Promise((resolve, reject) => {
