@@ -63,7 +63,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     const randomPosition = () => {
       const uniqueRandom = () => {
         const used = []
-        for (i = 0; i <= iter; i++) {
+        for (let i = 0; i <= iter; i++) {
           let v = parseInt(hpub.substr(16+iter,1), 16)
           while (used.includes(v)) {
             v = (v + 1) % 16
