@@ -270,7 +270,6 @@ export function try_send_reaction(post) {
   console.log('try', p.reacted, !p.top_seen || !p.bottom_seen, !p.pending_auto_reaction)
   if (p.reacted) return
   if (!p.top_seen || !p.bottom_seen) return
-  if (!p.pending_auto_reaction) return
   p.reacted = true
   console.log(pending_reactions)
   console.log(pending_reactions.filter(e => e.tags.filter(t => t[0] == 'e' && t[1] == p.preloaded.data.id).length > 0)?.[0])
