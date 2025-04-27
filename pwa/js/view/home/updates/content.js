@@ -235,7 +235,7 @@ v.layoutFunc = function() {
           channels.push(update.hpub)
         }
       }
-    } else if (![30023].includes(update.data.kind)) { // status
+    } else if (![].includes(update.data.kind)) { // status
       if (keys.filter(k => k.hpub == update.hpub).length == 0) {
         if (!update.viewed) {
           if (!recents.includes(update.hpub)) {
@@ -338,6 +338,7 @@ v.renderFunc = function() {
   }
 
   let i = 0
+  console.log([...v.selfs, ...v.recents, ...v.viewed, ...v.channels])
   for (let hpub of [...v.selfs, ...v.recents, ...v.viewed, ...v.channels]) {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
