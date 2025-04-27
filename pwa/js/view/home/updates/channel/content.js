@@ -27,18 +27,10 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
     let post, post_y
     let i = 0
     for (const p of v.posts) {
-      const y0 = p.y0
-      // y += geom.SPACE_BELOW
-      // y += p.total_height
-      // if (debug) {
-      //   y += geom.TEXT_HEIGHT
-      // }
-      // y += geom.SPACE_ABOVE
-      const y1 = p.y1
       const py = (pointer.py-v.y)/v.getScale()
-      if (v.sh-v.userY-py >= y0 && v.sh-v.userY-py <= y1) {
+      if (v.sh-v.userY-py >= p.y0 && v.sh-v.userY-py <= p.y1) {
         post = p
-        post_y = v.sh-v.userY-py - (y0+geom.SPACE_BELOW)
+        post_y = v.sh-v.userY-py - p.y0
         break
       }
       i++
