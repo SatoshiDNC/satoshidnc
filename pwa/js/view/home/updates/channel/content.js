@@ -83,6 +83,7 @@ v.setContext = function(updates, hpub) {
 v.insertPost = function(preloaded) {
   let prev_date = 0
   for (let i = 0; i < v.posts.length; i++) {
+    console.log(i, v.posts[i].preloaded.data.created_at)
     if (v.posts[i].preloaded.data.id == preloaded.data.id) {
       return
     }
