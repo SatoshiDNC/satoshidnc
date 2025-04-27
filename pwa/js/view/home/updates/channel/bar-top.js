@@ -1,6 +1,7 @@
 import { drawAvatar, blend, hue, color_from_rgb_integer } from '../../../../draw.js'
 import { getPersonalData } from '../../../../personal.js'
 import { balances } from '../../../../deals.js'
+import { keys } from '../../../../keys.js'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -59,6 +60,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
 v.setContext = function(hpub) {
   const v = this
   v.hpub = hpub
+  v.selfs = keys.map(k => k.hpub)
   v.profile = { name: getPersonalData(v.hpub, 'name') }
   v.hue = hue(color_from_rgb_integer(parseInt(v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63],16)))
   v.bgColor = blend([0,0,0,1], v.hue, 0.15)
