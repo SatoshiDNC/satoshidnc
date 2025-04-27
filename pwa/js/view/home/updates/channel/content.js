@@ -88,20 +88,14 @@ v.insertPost = function(preloaded) {
     }
     if (v.posts[i].preloaded.data.created_at < preloaded.data.created_at) {
       v.posts.splice(i, 0, { preloaded }, ...Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)==Math.trunc(v.posts[i].preloaded.data.created_at/DAY_IN_SECONDS)?[]:[{
-        preloaded: { data: { created_at: Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS}},
-        lines: [`date ${preloaded.data.created_at}`],
-        total_height: geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + geom.TEXT_SPACE_ABOVE,
-        type: 'notice',
+        preloaded: { data: { kind: -1, created_at: Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
       }])
       return
     }
     prev_date = v.posts[i].preloaded.data.created_at
   }
   v.posts.push({ preloaded }, {
-    preloaded: { data: { created_at: Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS}},
-    lines: [`date ${preloaded.data.created_at}`],
-    total_height: geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + geom.TEXT_SPACE_ABOVE,
-    type: 'notice',
+    preloaded: { data: { kind: -1, created_at: Math.trunc(preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS } },
   })
 }
 v.layoutFunc = function() {
@@ -135,10 +129,14 @@ v.renderFunc = function() {
   g.w = v.sw, g.h = v.sh
   g.autoHull()
 
-  let y = 0
+  let y = 0, last_date = 0
   for (const p of v.posts) {
     if (!p.type) {
-      if (p.preloaded.data.kind == 1) {
+      if (p.preloaded.data.kind == -1) { // date placeholder
+        p.lines = [`date ${p.preloaded.data.created_at}`]
+        p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + geom.TEXT_SPACE_ABOVE
+        p.type = 'notice'
+      } else if (p.preloaded.data.kind == 1) {
         prep_kind1(v, p)
       } else if (p.preloaded.data.kind == 30023) {
         if (p.expanded) {
@@ -174,6 +172,7 @@ v.renderFunc = function() {
       }
       y += geom.SPACE_ABOVE
     }
+    last_date = Math.floor(p.preloaded.data.created_at/DAY_IN_SECONDS)*DAY_IN_SECONDS
   }
 }
 v.render_debug_info = function(post, y) {
