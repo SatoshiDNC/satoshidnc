@@ -212,6 +212,7 @@ export function savePendingReactions(reactions) {
 }
 
 export function sendPendingReaction(id) {
+  const TAG = 'sendPendingReaction'
   const tr = db.transaction(['reactions-pending'], 'readwrite', { durability: 'strict' })
   const os = tr.objectStore('reactions-pending')
   const req = os.get(id)
@@ -219,9 +220,10 @@ export function sendPendingReaction(id) {
     console.error(`database error`)
   }
   req.onsuccess = e => {
+    console.log(`[${TAG}] got reaction`)
     const reaction = e.target.result
     if (reaction) {
-      console.log(reaction)
+      console.log(`[${TAG}]`, reaction)
     } else {
       console.warn(`pending reaction not found`)
     }
