@@ -270,6 +270,8 @@ export function try_send_reaction(post) {
   if (p.reacted) return
   if (!p.top_seen || !p.bottom_seen) return
   p.reacted = true
-  console.log(pending_reactions)
-  console.log(pending_reactions.filter(e => e.tags.filter(t => t[0] == 'e' && t[1] == p.preloaded.data.id).length > 0)?.[0])
+  markUpdateAsViewed(p.preloaded.data.id, p.preloaded.data.pubkey, p.preloaded.data.created_at * 1000)
+
+  // console.log(pending_reactions)
+  // console.log(pending_reactions.filter(e => e.tags.filter(t => t[0] == 'e' && t[1] == p.preloaded.data.id).length > 0)?.[0])
 }
