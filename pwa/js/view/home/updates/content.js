@@ -286,7 +286,7 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = keys.length * 200
   g.autoHull()
   g = v.recentsGad
-  g.x = x, g.y = v.selfsGad.y + ((v.selfs.length > 0) ? v.selfsGad.h + 96 : 0) // 466
+  g.x = x, g.y = v.selfsGad.y + ((v.selfs.length > 0) ? v.selfsGad.h + 96 : 0)
   g.w = v.sw, g.h = recents.length * 200
   g.autoHull()
   g = v.viewedGad
