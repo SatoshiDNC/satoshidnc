@@ -2,7 +2,7 @@ import { drawPill, drawAvatar, drawEllipse, drawRect, blend, hue } from '../../.
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
 import { aggregateEvent, savePendingReactions, setDummyKey, getUpdates, eventTrigger } from '../../../content.js'
-import { followChannel, unfollowChannel, amFollowingChannel, followsTrigger } from '../../../channels.js'
+import { followChannel, unfollowChannel, amFollowingChannel, followsTrigger, follows as channelFollows } from '../../../channels.js'
 import { rootView as displayView } from './display/root.js'
 import { rootView as channelView } from './channel/root.js'
 import { barBot } from '../bar-bot.js'
@@ -270,15 +270,14 @@ v.layoutFunc = function() {
 
   const recents = []
   const viewed = []
-  const channels = []
   const discover = []
   for (const update of v.query.results) {
     if (update.data.tags.filter(t => t[0] == 'expiration').length == 0 || update.data.kind == 30023) { // channel
-      if (keys.filter(k => k.hpub == update.hpub).length == 0) {
-        if (!channels.includes(update.hpub)) {
-          channels.push(update.hpub)
-        }
-      }
+      // if (keys.filter(k => k.hpub == update.hpub).length == 0) {
+      //   if (!channels.includes(update.hpub)) {
+      //     channels.push(update.hpub)
+      //   }
+      // }
     }
     if (update.data.tags.filter(t => t[0] == 'expiration').length > 0 && ![30023].includes(update.data.kind)) { // status
       if (keys.filter(k => k.hpub == update.hpub).length == 0) {
@@ -300,16 +299,11 @@ v.layoutFunc = function() {
   }
   discover.push('51c63606c483dc9b44373e8ea240494b8101e4b23da579f17fec195029207e99') // Satoshi, D.N.C.
   discover.push('d98a11b4be2839cd9d4495e163852aa037e3cdafdd1e6ce730307d0d05f468c3') // Daily Bible
-  for (let i = discover.length-1; i >= 0; i--) {
-    if (channels.includes(discover[i])) {
-      discover.splice(i, 1)
-    }
-  }
 
   v.selfs = keys.map(k => k.hpub)
   v.recents = recents
   v.viewed = viewed
-  v.channels = channels
+  v.channels = [...channelFollows]
   v.discover = discover
 
   let x = 0
