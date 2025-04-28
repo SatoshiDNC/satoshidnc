@@ -170,8 +170,12 @@ v.renderFunc = function() {
           if (key === 'created_at' && `${new_metadata[key]}` === `${+new_metadata[key]}`) {
             t3 = new Date(new_metadata[key] * 1000).toLocaleString()
           }
+          let max_width = undefined
+          if (k[0].includes('about')) {
+            max_width = v.sw/2 - geom.SPACE_LEFT
+          }
           p.lines.push(...format_lines(t1).map(line => `## ${line}`))
-          p.lines.push(...format_lines(t2 + (t3? ' | ' + t3: '')))
+          p.lines.push(...format_lines(t2 + (t3? ' | ' + t3: ''), max_width))
         }
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'metadata'
@@ -417,12 +421,12 @@ export function try_send_reaction(post) {
   // console.log(pending_reactions.filter(e => e.tags.filter(t => t[0] == 'e' && t[1] == p.preloaded.data.id).length > 0)?.[0])
 }
 
-export function format_lines(plaintext) {
+export function format_lines(plaintext, width = undefined) {
   const lines = []
   const ts = geom.TEXT_SCALE
   const whitespace = false
   const paragraphs = plaintext.trim().replaceAll('\x0a\s*\x0a+', '\x0a\x0a').replaceAll('\x0a\x0a', `${whitespace?'¶':''}\x0a\x0a`).split('\x0a\x0a')
-  const max_width = v.sw - geom.SPACE_LEFT - geom.SPACE_RIGHT - geom.TEXT_SPACE_LEFT - geom.TEXT_SPACE_RIGHT
+  const max_width = width || (v.sw - geom.SPACE_LEFT - geom.SPACE_RIGHT - geom.TEXT_SPACE_LEFT - geom.TEXT_SPACE_RIGHT)
   for (const para of paragraphs) {
     if (debug) console.log(`for (const para ${para} of paragraphs ${paragraphs}) {`)
     if (lines.length != 0) lines.push('')
