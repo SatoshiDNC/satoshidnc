@@ -241,6 +241,7 @@ v.render_debug_info = function(post, y) {
 v.render_notice = function(post, y) {
   const v = this, p = post
   const m = mat4.create()
+  const textColor2 = blend(v.bubbleColor, v.textColor, 0.5)
 
   let bubble_width = 0
   for (const line of p.lines) {
@@ -260,7 +261,7 @@ v.render_notice = function(post, y) {
     mat4.identity(m)
     mat4.translate(m, m, [x+geom.TEXT_SPACE_LEFT, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING, 0])
     mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
-    defaultFont.draw(0,0, line, v.subtitleColor, v.mat, m)
+    defaultFont.draw(0,0, line, textColor2, v.mat, m)
   }
 }
 v.render_default = function(post, y) {
@@ -328,6 +329,7 @@ v.render_default = function(post, y) {
 v.render_metadata = function(post, y) {
   const v = this, p = post
   const m = mat4.create()
+  const textColor2 = blend(v.bubbleColor, v.textColor, 0.5)
 
   drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
 
@@ -347,7 +349,7 @@ v.render_metadata = function(post, y) {
       defaultFont.draw(0,0, 'Read more...', v.hue, v.mat, m)
       p.readmore_baseline = geom.TEXT_SPACE_BELOW+line_offset*geom.TEXT_LINE_SPACING/2
     } else if (line.startsWith('# ')) {
-      defaultFont.draw(0,0, line, blend(v.bubbleColor, v.textColor, 0.5), v.mat, m)
+      defaultFont.draw(0,0, line.substring(2), textColor2, v.mat, m)
     } else {
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
     }
