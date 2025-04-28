@@ -128,7 +128,13 @@ v.renderFunc = function() {
         const new_metadata = JSON.parse(p.preloaded.data.content)
         p.lines = [...format_lines('Profile Update').map(line => `# ${line}`)]
         for (const key of Object.keys(new_metadata)) {
-          if (!fields_updated.includes(key)) { fields_updated.push(key) }
+          if (Object.keys(old_metadata).includes(key)) {
+            if (old_metadata[key] != new_metadata[key]) {
+              if (!fields_updated.includes(key)) { fields_updated.push(key) }
+            }
+          } else {
+            if (!fields_updated.includes(key)) { fields_updated.push(key) }
+          }
           // if (Object.keys(old_metadata).includes(key)) {
           //   p.lines.push(`Updated ${key.replace('_',' ')}`)
           // } else {
