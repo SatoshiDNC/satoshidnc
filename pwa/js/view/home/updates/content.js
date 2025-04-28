@@ -273,6 +273,12 @@ v.layoutFunc = function() {
   }
   discover.push('51c63606c483dc9b44373e8ea240494b8101e4b23da579f17fec195029207e99') // Satoshi, D.N.C.
   discover.push('d98a11b4be2839cd9d4495e163852aa037e3cdafdd1e6ce730307d0d05f468c3') // Daily Bible
+  for (i = discover.length-1; i >= 0; i--) {
+    if (channels.includes(discover[i])) {
+      discover.splice(i, 1)
+    }
+  }
+
   v.selfs = keys.map(k => k.hpub)
   v.recents = recents
   v.viewed = viewed
