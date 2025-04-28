@@ -440,8 +440,8 @@ v.renderFunc = function() {
     let rankIcon = balance > 0? '💔': '❤'
     let rankColor = balance > 0? colors.brokenHeart: colors.wholeHeart
 
+    // title
     let textScale = 35/14
-
     let str
     if (v.selfs.includes(hpub)) {
       if (v.selfs.length == 1) {
@@ -466,13 +466,12 @@ v.renderFunc = function() {
       str = str.replace(/.$/,'') + '…'
     }
     mat4.identity(m)
-    // mat4.translate(m, m, [211, 553 + y, 0])
     mat4.translate(m, m, [211, g.y+index*200 + 87, 0])
     mat4.scale(m, m, [textScale, textScale, 1])
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
-  
+
+    // subtitle / message / info
     mat4.identity(m)
-    // mat4.translate(m, m, [211, 618 + y, 0])
     mat4.translate(m, m, [211, g.y+index*200 + 152, 0])
     mat4.scale(m, m, [30/14, 30/14, 1])
     const subtitle =
@@ -481,6 +480,19 @@ v.renderFunc = function() {
       updatePostedAsOf(newest)
     defaultFont.draw(0,0, subtitle, v.subtitleColor, v.mat, m)
 
+    // the last update time (for followed channels)
+    if (g === v.channelsGad) {
+      const news = false
+      const ts = 25/14
+      const str = `12:37 BTC`
+      const w = defaultFont.calcWidth(str)*ts
+      mat4.identity(m)
+      mat4.translate(m, m, [v.sw-45-w, g.y+index*200 + 82, 0])
+      mat4.scale(m, m, [ts, ts, 1])
+      defaultFont.draw(0,0, str, news? colors.accent: v.subtitleColor, v.mat, m)
+    }
+
+    // the follow button (for discovery channels)
     if (g === v.discoverGad) {
       if (amFollowingChannel(v.discover[index])) {
         const bw = 263, bh = 83
