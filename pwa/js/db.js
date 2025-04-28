@@ -55,8 +55,8 @@ export function init() {
         os.createIndex(`id`, 'id')
       }
       if (e.oldVersion < 8) {
-        os = db.createObjectStore(`channels-followed`, { keyPath: 'id' })
-        os.createIndex(`id`, 'id')
+        os = db.createObjectStore(`channels-followed`, { keyPath: 'hpub' })
+        os.createIndex(`hpub`, 'hpub')
       }
     }
   })
