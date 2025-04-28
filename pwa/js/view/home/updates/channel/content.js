@@ -126,7 +126,7 @@ v.renderFunc = function() {
       if (p.preloaded.data.content != previous_content) {
         const old_metadata = JSON.parse(previous_content)
         const new_metadata = JSON.parse(p.preloaded.data.content)
-        p.lines = ['# Profile Update']
+        p.lines = [...format_lines('Profile Update').map(line => `# ${line}`)]
         for (const key of Object.keys(new_metadata)) {
           fields_updated.push(key)
           // if (Object.keys(old_metadata).includes(key)) {
@@ -162,8 +162,8 @@ v.renderFunc = function() {
           if (key === 'created_at' && `${new_metadata[key]}` === `${+new_metadata[key]}`) {
             t3 = new Date(new_metadata[key] * 1000).toLocaleString()
           }
-          p.lines.push(`## ${t1}`)
-          p.lines.push(t2 + (t3? ' | ' + t3: ''))
+          p.lines.push(...format_lines(t1).map(line => `## ${line}`))
+          p.lines.push(...format_lines(t2 + (t3? ' | ' + t3: '')))
         }
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'metadata'
