@@ -185,9 +185,18 @@ v.gadgets.push(g = v.channelsGad = new fg.Gadget(v))
     const y = (e.y - v.y) / v.viewScale + v.userY
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.channels.length) return
-    console.log(index)
     const updates = v.query.results.filter(u => u.hpub == v.channels[index])
     v.displayAction(updates, v.channels[index], v.parent.parent, g.root, g.target, 1)
+  }
+v.gadgets.push(g = v.discoverGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.clickFunc = function(e) {
+    const g = this, v = this.viewport
+    const y = (e.y - v.y) / v.viewScale + v.userY
+    const index = Math.floor((y - g.y) / 200)
+    if (index < 0 || index >= v.discover.length) return
+    const updates = v.query.results.filter(u => u.hpub == v.discover[index])
+    v.displayAction(updates, v.discover[index], v.parent.parent, g.root, g.target, 1)
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
@@ -235,6 +244,7 @@ v.layoutFunc = function() {
   const recents = []
   const viewed = []
   const channels = []
+  const discover = []
   for (const update of v.query.results) {
     if (update.data.tags.filter(t => t[0] == 'expiration').length == 0 || update.data.kind == 30023) { // channel
       if (keys.filter(k => k.hpub == update.hpub).length == 0) {
@@ -261,13 +271,13 @@ v.layoutFunc = function() {
       }
     }
   }
-  if (channels.length == 0) {
-    channels.push('51c63606c483dc9b44373e8ea240494b8101e4b23da579f17fec195029207e99')
-  }
+  discover.push('51c63606c483dc9b44373e8ea240494b8101e4b23da579f17fec195029207e99') // Satoshi, D.N.C.
+  discover.push('d98a11b4be2839cd9d4495e163852aa037e3cdafdd1e6ce730307d0d05f468c3') // Daily Bible
   v.selfs = keys.map(k => k.hpub)
   v.recents = recents
   v.viewed = viewed
   v.channels = channels
+  v.discover = discover
 
   let x = 42
   let g
@@ -284,8 +294,12 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
   g = v.channelsGad
-  g.x = 0, g.y = v.viewedGad.y + 393 - 96 + ((viewed.length > 0) ? v.viewedGad.h + 96 : 0)
+  g.x = 0, g.y = v.viewedGad.y + ((viewed.length > 0) ? v.viewedGad.h + 136 : 0)
   g.w = v.sw, g.h = channels.length * 200
+  g.autoHull()
+  g = v.discoverGad
+  g.x = 0, g.y = v.channelsGad.y + ((channels.length > 0) ? v.channelsGad.h + 97 : 246)
+  g.w = v.sw, g.h = discover.length * 200
   g.autoHull()
 
   v.minX = 0, v.maxX = v.sw
@@ -326,24 +340,25 @@ v.renderFunc = function() {
     defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
   }
 
+  mat4.identity(m)
+  mat4.translate(m, m, [45, v.channelsGad.y-43, 0])
+  mat4.scale(m, m, [42/14, 42/14, 1])
+  defaultFont.draw(x,y, 'Channels', v.titleColor, v.mat, m)
   if (v.channels.length > 0) {
+  } else {
     mat4.identity(m)
-    mat4.translate(m, m, [45, v.channelsGad.y-32-267, 0])
-    mat4.scale(m, m, [42/14, 42/14, 1])
-    defaultFont.draw(x,y, 'Channels', v.titleColor, v.mat, m)
-    mat4.identity(m)
-    mat4.translate(m, m, [45, v.channelsGad.y-32-197, 0])
+    mat4.translate(m, m, [45, v.channelsGad.y-43+70, 0])
     mat4.scale(m, m, [28/14, 28/14, 1])
     defaultFont.draw(x,y, 'Stay updated on topics that matter to you.', v.subtitleColor, v.mat, m)
     mat4.identity(m)
-    mat4.translate(m, m, [45, v.channelsGad.y-32-139, 0])
+    mat4.translate(m, m, [45, v.channelsGad.y-43+128, 0])
     mat4.scale(m, m, [28/14, 28/14, 1])
     defaultFont.draw(x,y, 'Find channels to follow below.', v.subtitleColor, v.mat, m)
-    mat4.identity(m)
-    mat4.translate(m, m, [45, v.channelsGad.y-32, 0])
-    mat4.scale(m, m, [28/14, 28/14, 1])
-    defaultFont.draw(x,y, 'Find channels to follow', v.subtitleColor, v.mat, m)
   }
+  mat4.identity(m)
+  mat4.translate(m, m, [45, v.discoveryGad.y-22, 0])
+  mat4.scale(m, m, [28/14, 28/14, 1])
+  defaultFont.draw(x,y, 'Find channels to follow', v.subtitleColor, v.mat, m)
 
   let i = 0
   for (let hpub of [...v.selfs, ...v.recents, ...v.viewed, ...v.channels]) {
