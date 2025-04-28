@@ -30,7 +30,7 @@ export function reloadChannelFollows() {
 }
 
 export function amFollowingChannel(hpub) {
-  return channels.includes(hpub)
+  return follows.includes(hpub)
 }
 
 export function followChannel(hpub) {
