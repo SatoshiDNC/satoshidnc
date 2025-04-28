@@ -171,12 +171,13 @@ v.renderFunc = function() {
             t3 = new Date(new_metadata[key] * 1000).toLocaleString()
           }
           let max_width = undefined
-          if (k[0].includes('name')) {
+          const apply_name = k[0].includes('name') && getPersonalData(v.hpub, 'name') != t2
+          if (apply_name) {
             max_width = v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-200-2*geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT
           }
           p.lines.push(...format_lines(t1).map(line => `## ${line}`))
           const temp_lines = format_lines(t2 + (t3? ' | ' + t3: ''), max_width)
-          if (k[0].includes('name')) {
+          if (apply_name) {
             temp_lines[0] = `${temp_lines[0]}\0apply:name`
           }
           p.lines.push(...temp_lines)
