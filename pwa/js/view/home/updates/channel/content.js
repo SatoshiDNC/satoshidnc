@@ -121,7 +121,7 @@ v.renderFunc = function() {
   let previous_content = '{}'
   for (let i = v.posts.length-1; i>=0; i--) {
     const p = v.posts[i]
-    const fields_updated = []
+    let fields_updated = []
     if (!p.type && p.preloaded.data.kind == 0) {
       if (p.preloaded.data.content != previous_content) {
         const old_metadata = JSON.parse(previous_content)
