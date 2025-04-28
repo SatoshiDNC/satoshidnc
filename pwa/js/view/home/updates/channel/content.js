@@ -179,7 +179,11 @@ v.renderFunc = function() {
           p.lines.push(...format_lines(t1).map(line => `## ${line}`))
           const temp_lines = format_lines(t2 + (t3? ' | ' + t3: ''), max_width)
           if (apply_name) {
-            temp_lines[0] = `${temp_lines[0]}\0apply:name`
+            if (!p.gadgets) { p.gadgets = [] }
+            const g = new Gadget(v)
+            g.key = 'apply:name'
+            p.gadgets.push(g)
+            temp_lines[0] = `${temp_lines[0]}\0${g.key}`
           }
           p.lines.push(...temp_lines)
         }
@@ -383,15 +387,20 @@ v.render_metadata = function(post, y) {
       } else {
         defaultFont.draw(0,0, line, v.textColor, v.mat, m)
         if (cols.length > 1) {
-          const action = cols[1].split(':')
-          if (action[0] == 'apply') {
+          const key = cols[1]
+          const g = p.gadgets.filter(g => g.key == key)?.[0]
+          if (g) {
             const w = 200
             const ts = 29/14
             const str = 'Apply'
             const tw = defaultFont.calcWidth(str)*ts
-            drawPill(v, blend(v.bubbleColor, v.hue, 0.2), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-55, w, 83)
+            g.x = v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w
+            g.y = v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-55
+            g.w = w
+            g.h = 83
+            drawPill(v, blend(v.bubbleColor, v.hue, 0.2), g.x,g.y, g.w,g.h)
             mat4.identity(m)
-            mat4.translate(m, m, [v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-(w+tw)/2, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-55+55, 0])
+            mat4.translate(m, m, [g.x+(w-tw)/2, g.y+55, 0])
             mat4.scale(m, m, [ts, ts, 1])
             defaultFont.draw(0,0, str, blend(v.textColor, v.hue, 0.2), v.mat, m)
           }
