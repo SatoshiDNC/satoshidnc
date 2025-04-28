@@ -5,16 +5,18 @@ export const followsTrigger = []
 
 let reloadChannelFollows_timer
 export function reloadChannelFollows() {
+  const TAG = 'reloadChannelFollows'
   if (reloadChannelFollows_timer) clearTimeout(reloadChannelFollows_timer)
-    reloadChannelFollows_timer = setTimeout(() => {
+  reloadChannelFollows_timer = setTimeout(() => {
+    console.log(`[${TAG}]`, e.target.result)
     const tr = db.transaction(['channels-followed'], 'readonly')
     const os = tr.objectStore('channels-followed')
     const req = os.getAll()
     req.onerror = function(e) {
-       console.error(e)
+      console.error(e)
     }
     req.onsuccess = function(e) {
-      console.log(e.target.result)
+      console.log(`[${TAG}]`, e.target.result)
       for (let f of e.target.result) {
         if (!follows.includes(f.hpub)) {
           follows.push(f.hpub)
