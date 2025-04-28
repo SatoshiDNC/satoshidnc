@@ -195,6 +195,20 @@ v.gadgets.push(g = v.discoverGad = new fg.Gadget(v))
     const y = (e.y - v.y) / v.viewScale + v.userY
     const index = Math.floor((y - g.y) / 200)
     if (index < 0 || index >= v.discover.length) return
+
+    let followGad = new fg.Gadget(v)
+    followGad.x = v.sw-42-208
+    followGad.y = g.y+index*200+53
+    followGad.w = 208
+    followGad.h = 83
+    followGad.autoHull()
+
+    const touchRadius = 85, clickRadius = 5;
+    function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
+    const hitList = { x: e.x, y: e.y }
+    followGad.getHits(hitList, getPointerRadius())
+    console.log(hitList)
+
     const updates = v.query.results.filter(u => u.hpub == v.discover[index])
     v.displayAction(updates, v.discover[index], v.parent.parent, g.root, g.target, 1)
   }
