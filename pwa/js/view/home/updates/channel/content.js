@@ -138,7 +138,7 @@ v.renderFunc = function() {
             p.lines.push(`Removed ${key.replace('_',' ')}`)
           }
         }
-        p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
+        p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'metadata'
         previous_content = p.preloaded.data.content
       } else {
