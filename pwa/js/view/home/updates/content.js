@@ -404,19 +404,20 @@ v.renderFunc = function() {
       i < v.selfs.length + v.recents.length + v.viewed.length? i - v.selfs.length - v.recents.length:
       i < v.selfs.length + v.recents.length + v.viewed.length + v.channels.length? i - v.selfs.length - v.recents.length - v.viewed.length:
       i - v.selfs.length - v.recents.length - v.viewed.length - v.channels.length
-    if (numUpdates) {
+    const mode = i < v.selfs.length + v.recents.length + v.viewed.length? 'status': 'channels'
+
+    // the updates ring around the avatar
+    if (numUpdates && mode == 'status') {
       drawEllipse(v, colors.accent, 32, g.y + 26 + index * 200, 147, 147)
       if (numViewed) {
         drawEllipse(v, colors.inactive, 32, g.y + 26 + index * 200 + 147, 147, -147, numViewed/numUpdates, -numViewed/numUpdates)
       }
       drawEllipse(v, v.bgColor, 38, g.y + 32 + index * 200, 135, 135)
       if (numUpdates > 1) for (let i = 0; i < numUpdates; i++) {
-        // drawRect(v, v.bgColor, 105 - 3, 491, 6, 8)
         mainShapes.useProg2()
         gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.bgColor))
         gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
         mat4.identity(m)
-        // mat4.translate(m,m, [105, 565.5 + y, 0])
         mat4.translate(m,m, [105, g.y + 99.5 + index * 200, 0])
         mat4.rotate(m,m, 2*Math.PI*i/numUpdates, [0, 0, 1])
         mat4.translate(m,m, [-3, -74.5, 0])
@@ -426,9 +427,8 @@ v.renderFunc = function() {
       }
     }
 
-    // drawAvatar(v, hpub, 43,503 + y, 125,125)
-    // drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
-    if (g === v.channelsGad || g === v.discoverGad) {
+    // the avatar
+    if (mode == 'channels') {
       drawAvatar(v, hpub, 42, g.y + 36 + index * 200, 127, 127, v.selfs.includes(hpub)?0:balances[hpub]?.['sat']||0)
     } else {
       drawEllipse(v, colors.inactiveDark, 43, g.y + 37 + index * 200, 125, 125)
