@@ -326,7 +326,7 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = channels.length * 200
   g.autoHull()
   g = v.discoverGad
-  g.x = x, g.y = v.channelsGad.y + v.channelsGad.h + ((channels.length > 0) ? 96 : 246)
+  g.x = x, g.y = v.channelsGad.y + v.channelsGad.h + ((channels.length > 0) ? 93 : 246)
   g.w = v.sw, g.h = discover.length * 200
   g.autoHull()
 
@@ -428,7 +428,11 @@ v.renderFunc = function() {
 
     // drawAvatar(v, hpub, 43,503 + y, 125,125)
     // drawEllipse(v, colors.inactiveDark, 43, 503 + y, 125, 125)
-    drawEllipse(v, colors.inactiveDark, 43, g.y + 37 + index * 200, 125, 125)
+    if (g === v.channelsGad || g === v.discoverGad) {
+      drawAvatar(v, hpub, 42, g.y + 36 + index * 200, 127, 127, v.selfs.includes(hpub)?0:balances[hpub]?.['sat']||0)
+    } else {
+      drawEllipse(v, colors.inactiveDark, 43, g.y + 37 + index * 200, 125, 125)
+    }
 
     let balance = balances[hpub]?.['sat'] || 0 // Math.round(Math.random() * 3000 - 1500)
     let rank = balance? `${Math.abs(balance)}`.length: 0
