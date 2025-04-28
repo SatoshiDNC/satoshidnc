@@ -383,6 +383,7 @@ v.render_metadata = function(post, y) {
           if (action[0] == 'apply') {
             const w = 200
             const ts = 29/14
+            const str = 'Apply'
             drawPill(v, blend(v.bgColor, v.hue, 0.2), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-60, w, 83)
             mat4.identity(m)
             mat4.translate(m, m, [v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-60+55, 0])
