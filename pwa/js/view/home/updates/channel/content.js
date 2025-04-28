@@ -382,7 +382,7 @@ v.render_metadata = function(post, y) {
           const action = cols[1].split(':')
           if (action[0] == 'apply') {
             const w = 200
-            drawPill(v, blend(v.bgColor, v.hue, 0.2), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-50, w, 83)
+            drawPill(v, blend(v.bgColor, v.hue, 0.2), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-55, w, 83)
           }
         }
       }
