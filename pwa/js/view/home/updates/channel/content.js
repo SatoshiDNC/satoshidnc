@@ -135,11 +135,11 @@ v.renderFunc = function() {
         }
         for (const key of Object.keys(old_metadata)) {
           if (!Object.keys(new_metadata).includes(key)) {
-            p.lines.push(`Cleared ${key.replace('_',' ')}`)
+            p.lines.push(`Removed ${key.replace('_',' ')}`)
           }
         }
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
-        p.type = 'notice'
+        p.type = 'metadata'
         previous_content = p.preloaded.data.content
       } else {
         p.lines = [ `Reposted ${kindInfo.filter(r => p.preloaded.data.kind >= r.kind && p.preloaded.data.kind <= (r.kindMax || r.kind))?.[0]?.desc || 'something'} (no changes)` ]
@@ -174,6 +174,8 @@ v.renderFunc = function() {
         v.render_notice(p, y)
       } else if (p.type == 'default') {
         v.render_default(p, y)
+      } else if (p.type == 'metadata') {
+        v.render_metadata(p, y)
       }
       if (p.reactions) {
         v.render_reactions(p, y + geom.REACTIONS_OVERLAP)
@@ -235,6 +237,68 @@ v.render_notice = function(post, y) {
   }
 }
 v.render_default = function(post, y) {
+  const v = this, p = post
+  const m = mat4.create()
+
+  drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
+
+  let line_offset = p.lines.length * 2 - p.lines.filter(l => l=='').length * 1
+  for (const line of p.lines) {
+    if (line == '') {
+      line_offset -= 1
+      continue
+    }
+    line_offset -= 2
+    if (v.sh-v.userY-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2+geom.TEXT_HEIGHT < 0) { continue }
+    if (v.sh-v.userY-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-geom.TEXT_HEIGHT > v.sh) { continue }
+    mat4.identity(m)
+    mat4.translate(m, m, [geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2, 0])
+    mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
+    if (line == '\0') {
+      defaultFont.draw(0,0, 'Read more...', v.hue, v.mat, m)
+      p.readmore_baseline = geom.TEXT_SPACE_BELOW+line_offset*geom.TEXT_LINE_SPACING/2
+    } else {
+      defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+    }
+  }
+
+  const fc = alpha(v.textColor, 0.75)
+  const bc = alpha(v.bubbleColor, 0.75)
+  const max_w = v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT
+  const max_h = (p.lines.length - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + (geom.TEXT_HEIGHT-geom.TEXT_LINE_SPACING)
+  const top_overflow = -v.sh+(v.userY+y+geom.TEXT_SPACE_BELOW+max_h)
+  if (top_overflow > 0) {
+    const w = max_w / max_h * top_overflow
+    if (w < max_w) {
+      drawRect(v, fc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
+      drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
+    }
+  } else {
+    if (p.expanded) {
+      p.top_seen = true
+      try_send_reaction(p)
+    }
+  }
+  const bottom_overflow = -(v.userY+y+geom.TEXT_SPACE_BELOW)
+  if (bottom_overflow > 0) {
+    const w = max_w / max_h * bottom_overflow
+    if (w < max_w) {
+      drawRect(v, fc, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
+      drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
+    }
+  } else {
+    if (p.expanded) {
+      p.bottom_seen = true
+      try_send_reaction(p)
+    }
+  }
+  if (!p.expanded) {
+    p.top_seen = false
+    p.bottom_seen = false
+  }
+}
+
+v.render_metadata = function(post, y) {
   const v = this, p = post
   const m = mat4.create()
 
