@@ -23,7 +23,7 @@ export function reloadChannelFollows() {
         }
       }
       for (let i = follows.length-1; i>=0; i--) {
-        if (!e.target.result.filter(f => f.hpub = follows[i]).length) {
+        if (!e.target.result.filter(f => f.hpub == follows[i]).length) {
           follows.splice(i, 1)
         }
       }
