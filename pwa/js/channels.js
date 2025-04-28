@@ -8,7 +8,7 @@ export function reloadChannelFollows() {
   const TAG = 'reloadChannelFollows'
   if (reloadChannelFollows_timer) clearTimeout(reloadChannelFollows_timer)
   reloadChannelFollows_timer = setTimeout(() => {
-    console.log(`[${TAG}]`, e.target.result)
+    console.log(`[${TAG}] querying channel follows`)
     const tr = db.transaction(['channels-followed'], 'readonly')
     const os = tr.objectStore('channels-followed')
     const req = os.getAll()
