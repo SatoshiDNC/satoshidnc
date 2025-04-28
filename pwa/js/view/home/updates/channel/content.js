@@ -119,6 +119,7 @@ v.renderFunc = function() {
 
   let y = 0, last_date = 0
   let previous_content = '{}'
+  const fields_updated = []
   for (let i = v.posts.length-1; i>=0; i--) {
     const p = v.posts[i]
     if (!p.type && p.preloaded.data.kind == 0) {
@@ -127,6 +128,7 @@ v.renderFunc = function() {
         const new_metadata = JSON.parse(p.preloaded.data.content)
         p.lines = ['Profile Update','']
         for (const key of Object.keys(new_metadata)) {
+          fields_updated.push(key)
           if (Object.keys(old_metadata).includes(key)) {
             p.lines.push(`Updated ${key.replace('_',' ')}`)
           } else {
@@ -134,9 +136,35 @@ v.renderFunc = function() {
           }
         }
         for (const key of Object.keys(old_metadata)) {
+          fields_updated.push(key)
           if (!Object.keys(new_metadata).includes(key)) {
             p.lines.push(`Removed ${key.replace('_',' ')}`)
           }
+        }
+        p.keys = []
+        for (const remaining of p.fields_updated) {
+          let duplicate = false
+          for (const key of p.keys) {
+            if (key[1] === new_metadata[remaining]) {
+              key[0].push(remaining)
+              duplicate = true
+            }
+          }
+          if (!duplicate) {
+            p.keys.push([[remaining], new_metadata[remaining]])
+          }
+        }
+        p.lines.push('')
+        for (const k of p.keys) {
+          const key = k[0][0], keyName = k[0].join(' / ')
+          const t1 = `${keyName||key}:`
+          const t2 = `${g.content[key]}`
+          let t3 = ''
+          if (key === 'created_at' && `${new_metadata[key]}` === `${+new_metadata[key]}`) {
+            t3 = new Date(new_metadata[key] * 1000).toLocaleString()
+          }
+          p.lines.push(t1)
+          p.lines.push(t2 + (t3? ' | ' + t3: ''))
         }
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'metadata'
