@@ -180,7 +180,7 @@ v.renderFunc = function() {
           const temp_lines = format_lines(t2 + (t3? ' | ' + t3: ''), max_width)
           if (apply_name) {
             if (!p.gadgets) { p.gadgets = [] }
-            const g = new Gadget(v)
+            const g = new fg.Gadget(v)
             g.key = 'apply:name'
             p.gadgets.push(g)
             temp_lines[0] = `${temp_lines[0]}\0${g.key}`
