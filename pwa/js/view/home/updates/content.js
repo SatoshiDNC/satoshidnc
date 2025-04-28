@@ -197,10 +197,11 @@ v.gadgets.push(g = v.discoverGad = new fg.Gadget(v))
     if (index < 0 || index >= v.discover.length) return
 
     // spontaneous gadget
+    const following = amFollowing(v.discover[index])
     let followGad = new fg.Gadget(v)
-    followGad.x = v.sw-42-208
+    followGad.w = following?263:208
+    followGad.x = v.sw-42-followGad.w
     followGad.y = g.y+index*200+53
-    followGad.w = 208
     followGad.h = 83
     followGad.autoHull()
 
@@ -210,7 +211,11 @@ v.gadgets.push(g = v.discoverGad = new fg.Gadget(v))
     const hitList = { x: e.x, y: e.y, hits: [] }
     followGad.getHits(hitList, getPointerRadius())
     if (hitList.hits.map(h => h.gad).includes(followGad)) {
-      followChannel(v.discover[index])
+      if (!following) {
+        followChannel(v.discover[index])
+      } else {
+        unfollowChannel(v.discover[index])
+      }
       return
     }
 
@@ -471,14 +476,28 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
     if (g === v.discoverGad) {
-      drawPill(v, blend(v.bgColor,hue(colors.accent),0.2), v.sw-42-208,g.y+index*200+53, 208,83)
-      const label = 'Follow'
-      const ts = 29/14
-      const w = defaultFont.calcWidth(label)*ts
-      mat4.identity(m)
-      mat4.translate(m, m, [v.sw-42-104-w/2, g.y+index*200+53 + 55, 0])
-      mat4.scale(m, m, [ts, ts, 1])
-      defaultFont.draw(0,0, label, blend(v.titleColor,hue(colors.accent),0.2), v.mat, m)
+      if (amFollowing(v.discover[index])) {
+        const bw = 263, bh = 83
+        drawPill(v, colors.inactive, v.sw-42-bw,g.y+index*200+53, bw,bh)
+        drawPill(v, v.bgColor, v.sw-42-bw+3,g.y+index*200+53+3, bw-6,bh-6)
+        const label = 'Following'
+        const ts = 29/14
+        const w = defaultFont.calcWidth(label)*ts
+        mat4.identity(m)
+        mat4.translate(m, m, [v.sw-42-bw/2-w/2, g.y+index*200+53 + 55, 0])
+        mat4.scale(m, m, [ts, ts, 1])
+        defaultFont.draw(0,0, label, colors.accent, v.mat, m)
+      } else {
+        const bw = 208, bh = 83
+        drawPill(v, blend(v.bgColor,hue(colors.accent),0.2), v.sw-42-bw,g.y+index*200+53, bw,bh)
+        const label = 'Follow'
+        const ts = 29/14
+        const w = defaultFont.calcWidth(label)*ts
+        mat4.identity(m)
+        mat4.translate(m, m, [v.sw-42-bw/2-w/2, g.y+index*200+53 + 55, 0])
+        mat4.scale(m, m, [ts, ts, 1])
+        defaultFont.draw(0,0, label, blend(v.titleColor,hue(colors.accent),0.2), v.mat, m)
+      }
     } else if (rank && !v.selfs.includes(hpub)) {
       mat4.identity(m)
       let iconScale = 20/14
