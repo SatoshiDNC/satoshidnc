@@ -411,6 +411,7 @@ export function try_send_reaction(post) {
 
 export function format_lines(plaintext) {
   const lines = []
+  const ts = geom.TEXT_SCALE
   const whitespace = false
   const paragraphs = plaintext.trim().replaceAll('\x0a\s*\x0a+', '\x0a\x0a').replaceAll('\x0a\x0a', `${whitespace?'¶':''}\x0a\x0a`).split('\x0a\x0a')
   const max_width = v.sw - geom.SPACE_LEFT - geom.SPACE_RIGHT - geom.TEXT_SPACE_LEFT - geom.TEXT_SPACE_RIGHT

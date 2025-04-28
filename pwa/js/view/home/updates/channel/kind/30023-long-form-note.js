@@ -105,10 +105,7 @@ export function prep_kind30023(view, post) {
     debug = false
   }
 
-  const ts = geom.TEXT_SCALE
-
   const lines = format_lines(plaintext)
-
 
   p.lines = lines
   p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
