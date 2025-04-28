@@ -205,7 +205,7 @@ v.gadgets.push(g = v.discoverGad = new fg.Gadget(v))
 
     const touchRadius = 85, clickRadius = 5;
     function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
-    const hitList = { x: e.x, y: e.y }
+    const hitList = { x: e.x, y: e.y, hits: [] }
     followGad.getHits(hitList, getPointerRadius())
     console.log(hitList)
 
