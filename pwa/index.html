@@ -254,6 +254,7 @@
     import { reloadRelayStats } from './js/stats.js'
     import { minutelyUI } from './js/periodic.js'
     import { updateBalances } from './js/deals.js'
+    import { reloadChannelFollows } from './js/channels.js'
 
     const TAG = 'init'
     // This module demonstrates use of Fireglass and Rune.
@@ -445,6 +446,7 @@
           reloadPersonalData()
           reloadRelays()
           updateBalances()
+          reloadChannelFollows()
         }).catch(e => {
           pushError(e)
         })
