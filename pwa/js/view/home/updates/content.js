@@ -477,7 +477,7 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
     if (g === v.discoverGad) {
-      if (amFollowing(v.discover[index])) {
+      if (amFollowingChannel(v.discover[index])) {
         const bw = 263, bh = 83
         drawPill(v, colors.inactive, v.sw-42-bw,g.y+index*200+53, bw,bh)
         drawPill(v, v.bgColor, v.sw-42-bw+3,g.y+index*200+53+3, bw-6,bh-6)
