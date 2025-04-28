@@ -126,7 +126,7 @@ v.renderFunc = function() {
         const old_metadata = JSON.parse(previous_content)
         const new_metadata = JSON.parse(p.preloaded.data.content)
         for (const key of Object.keys(new_metadata)) {
-          if (Object.keys(old_metadata).contains(key)) {
+          if (Object.keys(old_metadata).includes(key)) {
             p.lines = [ `Updated ${key.replace('_',' ')}` ]
             p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
             p.type = 'notice'
@@ -137,7 +137,7 @@ v.renderFunc = function() {
           }
         }
         for (const key of Object.keys(old_metadata)) {
-          if (!Object.keys(new_metadata).contains(key)) {
+          if (!Object.keys(new_metadata).includes(key)) {
             p.lines = [ `Cleared ${key.replace('_',' ')}` ]
             p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
             p.type = 'notice'
