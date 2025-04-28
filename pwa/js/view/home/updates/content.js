@@ -2,7 +2,7 @@ import { drawPill, drawAvatar, drawEllipse, drawRect, blend, hue } from '../../.
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
 import { aggregateEvent, savePendingReactions, setDummyKey, getUpdates, eventTrigger } from '../../../content.js'
-import { followChannel, unfollowChannel, amFollowingChannel } from '../../../channels.js'
+import { followChannel, unfollowChannel, amFollowingChannel, followsTrigger } from '../../../channels.js'
 import { rootView as displayView } from './display/root.js'
 import { rootView as channelView } from './channel/root.js'
 import { barBot } from '../bar-bot.js'
@@ -19,6 +19,7 @@ v.textColor = [1,1,1,1]
 v.titleColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 balanceTrigger.push(() => { v.setRenderFlag(true) })
+followsTrigger.push(() => { v.setRenderFlag(true) })
 v.displayAction = function(updates, hpub, returnView, root, target, mode) {
   const v = this
   console.log(`DISPLAY ACTION:`, updates, hpub, returnView, root, target, mode)
