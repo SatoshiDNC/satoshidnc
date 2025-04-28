@@ -162,7 +162,7 @@ v.renderFunc = function() {
           if (key === 'created_at' && `${new_metadata[key]}` === `${+new_metadata[key]}`) {
             t3 = new Date(new_metadata[key] * 1000).toLocaleString()
           }
-          p.lines.push(t1)
+          p.lines.push(`## ${t1}`)
           p.lines.push(t2 + (t3? ' | ' + t3: ''))
         }
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
@@ -353,6 +353,9 @@ v.render_metadata = function(post, y) {
       const w = defaultFont.calcWidth(str)
       mat4.translate(m, m, [(v.sw/2-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT)/geom.TEXT_SCALE, 0, 0])
       defaultFont.draw(-w/2,0, str, textColor2, v.mat, m)
+    } else if (line.startsWith('## ')) {
+      const str = line.substring(3)
+      defaultFont.draw(0,0, str, textColor2, v.mat, m)
     } else {
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
     }
