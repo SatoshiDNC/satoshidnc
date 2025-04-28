@@ -1,5 +1,6 @@
 import { crypt } from '../../../../../cryption.js'
 import * as geom from '../geometry.js'
+import { format_lines } from '../content.js'
 
 //let debug = false
 let flag = false
@@ -106,7 +107,7 @@ export function prep_kind30023(view, post) {
 
   const ts = geom.TEXT_SCALE
 
-  let lines = []
+  const lines = format_lines()
 
   const whitespace = false
   const paragraphs = plaintext.trim().replaceAll('\x0a\s*\x0a+', '\x0a\x0a').replaceAll('\x0a\x0a', `${whitespace?'¶':''}\x0a\x0a`).split('\x0a\x0a')

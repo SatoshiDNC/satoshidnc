@@ -408,3 +408,8 @@ export function try_send_reaction(post) {
   // console.log(pending_reactions)
   // console.log(pending_reactions.filter(e => e.tags.filter(t => t[0] == 'e' && t[1] == p.preloaded.data.id).length > 0)?.[0])
 }
+
+export function format_lines() {
+  const lines = []
+  return lines
+}
