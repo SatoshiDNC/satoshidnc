@@ -1,7 +1,8 @@
 import { drawPill, drawAvatar, drawEllipse, drawRect, blend, hue } from '../../../draw.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
-import { aggregateEvent, savePendingReactions, setDummyKey, getUpdates, eventTrigger, followChannel } from '../../../content.js'
+import { aggregateEvent, savePendingReactions, setDummyKey, getUpdates, eventTrigger } from '../../../content.js'
+import { followChannel, unfollowChannel, amFollowingChannel } from '../../../channels.js'
 import { rootView as displayView } from './display/root.js'
 import { rootView as channelView } from './channel/root.js'
 import { barBot } from '../bar-bot.js'
@@ -197,7 +198,7 @@ v.gadgets.push(g = v.discoverGad = new fg.Gadget(v))
     if (index < 0 || index >= v.discover.length) return
 
     // spontaneous gadget
-    const following = amFollowing(v.discover[index])
+    const following = amFollowingChannel(v.discover[index])
     let followGad = new fg.Gadget(v)
     followGad.w = following?263:208
     followGad.x = v.sw-42-followGad.w
