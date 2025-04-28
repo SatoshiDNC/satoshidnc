@@ -351,7 +351,7 @@ v.render_metadata = function(post, y) {
     } else if (line.startsWith('# ')) {
       const str = line.substring(2)
       const w = defaultFont.calcWidth(str)
-      mat4.translate(m, m, [v.sw/2-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT, 0, 0])
+      mat4.translate(m, m, [(v.sw/2-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT)/geom.TEXT_SCALE, 0, 0])
       defaultFont.draw(-w/2,0, str, textColor2, v.mat, m)
     } else {
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
