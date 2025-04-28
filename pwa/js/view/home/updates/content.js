@@ -454,7 +454,7 @@ v.renderFunc = function() {
       drawPill(v, colors.accent, v.sw-42-208,g.y+index*200+53, 208,83)
       const label = 'Follow'
       const ts = 29/14
-      const w = defaultFont.calcWidth(label)/ts
+      const w = defaultFont.calcWidth(label)*ts
       mat4.identity(m)
       mat4.translate(m, m, [v.sw-42-104-w/2, g.y+index*200+53 + 55, 0])
       mat4.scale(m, m, [ts, ts, 1])
