@@ -482,14 +482,25 @@ v.renderFunc = function() {
 
     // the last update time (for followed channels)
     if (g === v.channelsGad) {
-      const news = false
-      const ts = 25/14
-      const str = `12:37 BTC`
-      const w = defaultFont.calcWidth(str)*ts
+      const news = 16
+      let ts = 25/14
+      let str = `12:37 BTC`
+      let w = defaultFont.calcWidth(str)*ts
       mat4.identity(m)
       mat4.translate(m, m, [v.sw-45-w, g.y+index*200 + 82, 0])
       mat4.scale(m, m, [ts, ts, 1])
       defaultFont.draw(0,0, str, news? colors.accent: v.subtitleColor, v.mat, m)
+
+      // the number of new messages
+      w = Math.max(55)
+      drawPill(v, colors.accent, v.sw-42-w, g.y+index*200 + 109, w,55)
+      ts = 21/14
+      str = ''+news
+      const tw = defaultFont.calcWidth(str)*ts
+      mat4.identity(m)
+      mat4.translate(m, m, [v.sw-42-(w+tw)/2, g.y+index*200 + 82 + 66, 0])
+      mat4.scale(m, m, [ts, ts, 1])
+      defaultFont.draw(0,0, str, v.bgColor, v.mat, m)
     }
 
     // the follow button (for discovery channels)
