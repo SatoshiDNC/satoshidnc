@@ -225,7 +225,7 @@ export function sendPendingReaction(id) {
     if (reaction) {
       console.log(`[${TAG}]`, reaction)
       homeRelay().then(relay => {
-        sendEvent(reaction)
+        relay.sendEvent(reaction)
       })
     } else {
       console.warn(`pending reaction not found`)
