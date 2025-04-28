@@ -1,4 +1,4 @@
-import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
+import { drawPill, drawAvatar, drawEllipse, drawRect, blend, hue } from '../../../draw.js'
 import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
 import { aggregateEvent, savePendingReactions, setDummyKey, getUpdates, eventTrigger } from '../../../content.js'
@@ -451,7 +451,7 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
     if (g === v.discoverGad) {
-      drawPill(v, colors.accent, v.sw-42-208,g.y+index*200+53, 208,83)
+      drawPill(v, blend(v.bgcolor,hue(colors.accent),0.25), v.sw-42-208,g.y+index*200+53, 208,83)
       const label = 'Follow'
       const ts = 29/14
       const w = defaultFont.calcWidth(label)*ts
