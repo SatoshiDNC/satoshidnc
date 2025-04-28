@@ -142,7 +142,9 @@ v.renderFunc = function() {
           // }
         }
         for (const key of Object.keys(old_metadata)) {
-          if (!fields_updated.includes(key)) { fields_updated.push(key) }
+          if (!Object.keys(new_metadata).includes(key)) {
+            if (!fields_updated.includes(key)) { fields_updated.push(key) }
+          }
           // if (!Object.keys(new_metadata).includes(key)) {
           //   p.lines.push(`Removed ${key.replace('_',' ')}`)
           // }
