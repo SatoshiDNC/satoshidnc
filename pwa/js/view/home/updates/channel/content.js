@@ -118,6 +118,25 @@ v.renderFunc = function() {
   g.autoHull()
 
   let y = 0, last_date = 0
+  let previous_content = ''
+  for (let i = v.posts.length-1; i>=0; i++) {
+    const p = v.posts[i]
+    if (!p.type && p.preloaded.data.kind == 0) {
+      if (p.preloaded.data.content != previous_content) {
+        const metadata = JSON.parse(p.preloaded.data.content)
+
+        p.lines = [ `Posted ${kindInfo.filter(r => p.preloaded.data.kind >= r.kind && p.preloaded.data.kind <= (r.kindMax || r.kind))?.[0]?.desc || 'something'}` ]
+        p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
+        p.type = 'notice'
+
+        previous_content = p.preloaded.data.content
+      } else {
+        p.lines = [ `Reposted ${kindInfo.filter(r => p.preloaded.data.kind >= r.kind && p.preloaded.data.kind <= (r.kindMax || r.kind))?.[0]?.desc || 'something'} (no changes)` ]
+        p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
+        p.type = 'notice'
+      }
+    }
+  }
   for (const p of v.posts) {
     if (!p.type) {
       if (p.preloaded.data.kind == 1) {
@@ -128,6 +147,7 @@ v.renderFunc = function() {
         } else {
           prep_kind30023_preview(v, p)
         }
+      } else if (p.preloaded.data.kind == 0) {
       } else {
         p.lines = [ `Posted ${kindInfo.filter(r => p.preloaded.data.kind >= r.kind && p.preloaded.data.kind <= (r.kindMax || r.kind))?.[0]?.desc || 'something'}` ]
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE

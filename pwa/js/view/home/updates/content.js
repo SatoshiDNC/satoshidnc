@@ -482,7 +482,7 @@ v.renderFunc = function() {
 
     // the last update time (for followed channels)
     if (g === v.channelsGad) {
-      const news = 16
+      const news = 0
       const ts = 25/14
       const str = `12:37 BTC`
       const w = defaultFont.calcWidth(str)*ts
