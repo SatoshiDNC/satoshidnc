@@ -126,7 +126,7 @@ v.renderFunc = function() {
       if (p.preloaded.data.content != previous_content) {
         const old_metadata = JSON.parse(previous_content)
         const new_metadata = JSON.parse(p.preloaded.data.content)
-        p.lines = ['# Profile Update','']
+        p.lines = ['# Profile Update']
         for (const key of Object.keys(new_metadata)) {
           fields_updated.push(key)
           // if (Object.keys(old_metadata).includes(key)) {
