@@ -44,7 +44,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
           g.autoHull()
           const touchRadius = 85, clickRadius = 5;
           function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
-          const hitList = { x: e.x, y: e.y, hits: [] }
+          const hitList = { x: pointer.x, y: pointer.y, hits: [] }
           g.getHits(hitList, getPointerRadius())
           if (hitList.hits.map(h => h.gad).includes(g)) {
             console.log('hit')
