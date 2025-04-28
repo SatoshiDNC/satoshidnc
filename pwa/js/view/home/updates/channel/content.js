@@ -171,11 +171,13 @@ v.renderFunc = function() {
             t3 = new Date(new_metadata[key] * 1000).toLocaleString()
           }
           let max_width = undefined
-          if (k[0].includes('about')) {
-            max_width = v.sw/2 - geom.SPACE_LEFT
+          if (k[0].includes('name')) {
+            max_width = v.sw/2 - geom.SPACE_LEFT // TODO: refine to size needed
           }
           p.lines.push(...format_lines(t1).map(line => `## ${line}`))
-          p.lines.push(...format_lines(t2 + (t3? ' | ' + t3: ''), max_width))
+          const temp_lines = format_lines(t2 + (t3? ' | ' + t3: ''), max_width)
+          temp_lines[0] = `${temp_lines[0]}\0apply:name`
+          p.lines.push(...temp_lines)
         }
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'metadata'
@@ -343,10 +345,12 @@ v.render_metadata = function(post, y) {
   const m = mat4.create()
   const textColor2 = blend(v.bubbleColor, v.textColor, 0.5)
 
+  // bubble
   drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
 
+  // content
   let line_offset = p.lines.length * 2 - p.lines.filter(l => l=='').length * 1
-  for (const line of p.lines) {
+  for (let line of p.lines) {
     if (line == '') {
       line_offset -= 1
       continue
@@ -360,17 +364,27 @@ v.render_metadata = function(post, y) {
     if (line == '\0') {
       defaultFont.draw(0,0, 'Read more...', v.hue, v.mat, m)
       p.readmore_baseline = geom.TEXT_SPACE_BELOW+line_offset*geom.TEXT_LINE_SPACING/2
-    } else if (line.startsWith('# ')) {
-      const str = line.substring(2)
-      const w = defaultFont.calcWidth(str)
-      mat4.translate(m, m, [(v.sw/2-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT)/geom.TEXT_SCALE, 0, 0])
-      defaultFont.draw(-w/2,0, str, textColor2, v.mat, m)
-    } else if (line.startsWith('## ')) {
-      const str = line.substring(3)
-      mat4.scale(m, m, [0.75, 0.75, 1])
-      defaultFont.draw(0,0, str, textColor2, v.mat, m)
     } else {
-      defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+      const cols = line.split('\0')
+      line = cols[0]
+      if (line.startsWith('# ')) {
+        const str = line.substring(2)
+        const w = defaultFont.calcWidth(str)
+        mat4.translate(m, m, [(v.sw/2-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT)/geom.TEXT_SCALE, 0, 0])
+        defaultFont.draw(-w/2,0, str, textColor2, v.mat, m)
+      } else if (line.startsWith('## ')) {
+        const str = line.substring(3)
+        mat4.scale(m, m, [0.75, 0.75, 1])
+        defaultFont.draw(0,0, str, textColor2, v.mat, m)
+      } else {
+        defaultFont.draw(0,0, line, v.textColor, v.mat, m)
+        if (cols.length > 1) {
+          action = cols[1].split(':')
+          if (action[0] == 'apply') {
+            drawPill(v, v.hue, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2, 100, 50)
+          }
+        }
+      }
     }
   }
 
