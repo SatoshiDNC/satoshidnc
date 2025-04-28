@@ -39,7 +39,7 @@ export function followChannel(hpub) {
     const now = Date.now()
     const tr = db.transaction(['channels-followed'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('channels-followed')
-    const req = os.add({ hpub, timestamp: now })
+    const req = os.add({ id: hpub, timestamp: now })
     req.onerror = function(e) {
       if (e?.target?.error?.name === 'ConstraintError') {
         console.log(`[${TAG}] channel already followed '${hpub}'`)
