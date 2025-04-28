@@ -270,6 +270,7 @@ v.layoutFunc = function() {
 
   const recents = []
   const viewed = []
+  const channels = [...channelFollows]
   const discover = []
   for (const update of v.query.results) {
     if (update.data.tags.filter(t => t[0] == 'expiration').length == 0 || update.data.kind == 30023) { // channel
@@ -303,7 +304,7 @@ v.layoutFunc = function() {
   v.selfs = keys.map(k => k.hpub)
   v.recents = recents
   v.viewed = viewed
-  v.channels = [...channelFollows]
+  v.channels = channels
   v.discover = discover
 
   let x = 0
