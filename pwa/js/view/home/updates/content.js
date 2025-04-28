@@ -451,7 +451,7 @@ v.renderFunc = function() {
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
     if (g === v.discoverGad) {
-      drawPill(v, blend(v.bgcolor,hue(colors.accent),0.25), v.sw-42-208,g.y+index*200+53, 208,83)
+      drawPill(v, blend(v.bgColor,hue(colors.accent),0.25), v.sw-42-208,g.y+index*200+53, 208,83)
       const label = 'Follow'
       const ts = 29/14
       const w = defaultFont.calcWidth(label)*ts
