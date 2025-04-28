@@ -346,6 +346,8 @@ v.render_metadata = function(post, y) {
     if (line == '\0') {
       defaultFont.draw(0,0, 'Read more...', v.hue, v.mat, m)
       p.readmore_baseline = geom.TEXT_SPACE_BELOW+line_offset*geom.TEXT_LINE_SPACING/2
+    } else if (line.startsWith('# ')) {
+      defaultFont.draw(0,0, line, blend(v.bubbleColor, v.textColor, 0.5), v.mat, m)
     } else {
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
     }
