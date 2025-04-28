@@ -384,11 +384,12 @@ v.render_metadata = function(post, y) {
             const w = 200
             const ts = 29/14
             const str = 'Apply'
+            const tw = defaultFont.calcWidth(str)*ts
             drawPill(v, blend(v.bgColor, v.hue, 0.2), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-60, w, 83)
             mat4.identity(m)
-            mat4.translate(m, m, [v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-60+55, 0])
+            mat4.translate(m, m, [v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-(w+tw)/2, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-60+55, 0])
             mat4.scale(m, m, [ts, ts, 1])
-            defaultFont.draw(-w/2,0, str, blend(v.textColor, v.hue, 0.2), v.mat, m)
+            defaultFont.draw(0,0, str, blend(v.textColor, v.hue, 0.2), v.mat, m)
           }
         }
       }
