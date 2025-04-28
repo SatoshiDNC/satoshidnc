@@ -154,7 +154,6 @@ v.renderFunc = function() {
             p.keys.push([[remaining], new_metadata[remaining]])
           }
         }
-        p.lines.push('')
         for (const k of p.keys) {
           const key = k[0][0], keyName = k[0].join(' / ')
           const t1 = `${keyName||key}:`
