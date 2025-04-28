@@ -450,7 +450,15 @@ v.renderFunc = function() {
     mat4.scale(m, m, [30/14, 30/14, 1])
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
-    if (rank && !v.selfs.includes(hpub)) {
+    if (g === v.discoverGad) {
+      drawPill(v, colors.accent, v.sw-42-208,g.y+index*200+53, 208,83)
+      const label = 'Follow'
+      const w = defaultFont.calcWidth(label)
+      mat4.identity(m)
+      mat4.translate(m, m, [v.sw-42-104-w/2, g.y+index*200+53 + 55, 0])
+      mat4.scale(m, m, [29/14, 29/14, 1])
+      defaultFont.draw(0,0, label, v.titleColor, v.mat, m)
+    } else if (rank && !v.selfs.includes(hpub)) {
       mat4.identity(m)
       let iconScale = 20/14
       let d = 4*iconScale
