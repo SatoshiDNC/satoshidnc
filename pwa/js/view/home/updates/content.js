@@ -210,11 +210,13 @@ v.gadgets.push(g = v.discoverGad = new fg.Gadget(v))
     const hitList = { x: e.x, y: e.y, hits: [] }
     followGad.getHits(hitList, getPointerRadius())
     if (hitList.hits.map(h => h.gad).includes(followGad)) {
-      followChannel(discover[index])
+      followChannel(v.discover[index])
+      return
     }
 
-    // const updates = v.query.results.filter(u => u.hpub == v.discover[index])
-    // v.displayAction(updates, v.discover[index], v.parent.parent, g.root, g.target, 1)
+    // default case: view the channel
+    const updates = v.query.results.filter(u => u.hpub == v.discover[index])
+    v.displayAction(updates, v.discover[index], v.parent.parent, g.root, g.target, 1)
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
