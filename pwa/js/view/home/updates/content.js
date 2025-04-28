@@ -326,7 +326,7 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = channels.length * 200
   g.autoHull()
   g = v.discoverGad
-  g.x = x, g.y = v.channelsGad.y + v.channelsGad.h + ((channels.length > 0) ? 0 : 246)
+  g.x = x, g.y = v.channelsGad.y + v.channelsGad.h + ((channels.length > 0) ? 96 : 246)
   g.w = v.sw, g.h = discover.length * 200
   g.autoHull()
 
