@@ -271,6 +271,7 @@ v.layoutFunc = function() {
   const recents = []
   const viewed = []
   const channels = [...channelFollows]
+  console.log(channels)
   const discover = []
   for (const update of v.query.results) {
     if (update.data.tags.filter(t => t[0] == 'expiration').length == 0 || update.data.kind == 30023) { // channel
