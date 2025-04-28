@@ -1,3 +1,5 @@
+import { db } from './db.js'
+
 export const follows = []
 export const followsTrigger = []
 
