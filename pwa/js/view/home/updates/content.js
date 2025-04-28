@@ -356,12 +356,12 @@ v.renderFunc = function() {
     defaultFont.draw(x,y, 'Find channels to follow below.', v.subtitleColor, v.mat, m)
   }
   mat4.identity(m)
-  mat4.translate(m, m, [45, v.discoveryGad.y-22, 0])
+  mat4.translate(m, m, [45, v.discoverGad.y-22, 0])
   mat4.scale(m, m, [28/14, 28/14, 1])
   defaultFont.draw(x,y, 'Find channels to follow', v.subtitleColor, v.mat, m)
 
   let i = 0
-  for (let hpub of [...v.selfs, ...v.recents, ...v.viewed, ...v.channels, ...v.discovery]) {
+  for (let hpub of [...v.selfs, ...v.recents, ...v.viewed, ...v.channels, ...v.discover]) {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => a+(c.viewed?1:0), 0)
@@ -370,7 +370,7 @@ v.renderFunc = function() {
       i < v.selfs.length? v.selfsGad:
       i < v.selfs.length + v.recents.length? v.recentsGad:
       i < v.selfs.length + v.recents.length + v.viewed.length? v.viewedGad:
-      i < v.selfs.length + v.recents.length + v.viewed.length + v.channels.length? v.channelsGad: v.discoveryGad
+      i < v.selfs.length + v.recents.length + v.viewed.length + v.channels.length? v.channelsGad: v.discoverGad
     const index =
       i < v.selfs.length? i:
       i < v.selfs.length + v.recents.length? i - v.selfs.length:
