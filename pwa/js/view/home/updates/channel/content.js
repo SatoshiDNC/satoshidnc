@@ -355,7 +355,7 @@ v.render_metadata = function(post, y) {
       defaultFont.draw(-w/2,0, str, textColor2, v.mat, m)
     } else if (line.startsWith('## ')) {
       const str = line.substring(3)
-      mat4.scale(m, m, [0.5, 0.5, 1])
+      mat4.scale(m, m, [0.75, 0.75, 1])
       defaultFont.draw(0,0, str, textColor2, v.mat, m)
     } else {
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
