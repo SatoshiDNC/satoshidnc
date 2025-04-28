@@ -379,7 +379,7 @@ v.render_metadata = function(post, y) {
       } else {
         defaultFont.draw(0,0, line, v.textColor, v.mat, m)
         if (cols.length > 1) {
-          action = cols[1].split(':')
+          const action = cols[1].split(':')
           if (action[0] == 'apply') {
             drawPill(v, v.hue, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2, 100, 50)
           }
