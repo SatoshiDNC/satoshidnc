@@ -129,17 +129,17 @@ v.renderFunc = function() {
         p.lines = ['Profile Update','']
         for (const key of Object.keys(new_metadata)) {
           fields_updated.push(key)
-          if (Object.keys(old_metadata).includes(key)) {
-            p.lines.push(`Updated ${key.replace('_',' ')}`)
-          } else {
-            p.lines.push(`Set ${key.replace('_',' ')}`)
-          }
+          // if (Object.keys(old_metadata).includes(key)) {
+          //   p.lines.push(`Updated ${key.replace('_',' ')}`)
+          // } else {
+          //   p.lines.push(`Set ${key.replace('_',' ')}`)
+          // }
         }
         for (const key of Object.keys(old_metadata)) {
           fields_updated.push(key)
-          if (!Object.keys(new_metadata).includes(key)) {
-            p.lines.push(`Removed ${key.replace('_',' ')}`)
-          }
+          // if (!Object.keys(new_metadata).includes(key)) {
+          //   p.lines.push(`Removed ${key.replace('_',' ')}`)
+          // }
         }
         p.keys = []
         for (const remaining of fields_updated) {
