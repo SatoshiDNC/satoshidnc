@@ -292,19 +292,19 @@ v.layoutFunc = function() {
   g.w = v.sw, g.h = keys.length * 200
   g.autoHull()
   g = v.recentsGad
-  g.x = x, g.y = v.selfsGad.y + ((v.selfs.length > 0) ? v.selfsGad.h + 96 : 0)
+  g.x = x, g.y = v.selfsGad.y + v.selfsGad.h + ((recents.length > 0) ? 96 : 0)
   g.w = v.sw, g.h = recents.length * 200
   g.autoHull()
   g = v.viewedGad
-  g.x = x, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
+  g.x = x, g.y = v.recentsGad.y + v.recentsGad.h + ((viewed.length > 0) ? 96 : 0)
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
   g = v.channelsGad
-  g.x = x, g.y = v.viewedGad.y + ((viewed.length > 0) ? v.viewedGad.h + 136 : 0)
+  g.x = x, g.y = v.viewedGad.y + v.viewedGad.h + ((channels.length > 0) ? 136 : 0)
   g.w = v.sw, g.h = channels.length * 200
   g.autoHull()
   g = v.discoverGad
-  g.x = x, g.y = v.channelsGad.y + ((channels.length > 0) ? v.channelsGad.h + 97 : 246)
+  g.x = x, g.y = v.channelsGad.y + v.channelsGad.h + ((discover.length > 0) ? 97 : 246)
   g.w = v.sw, g.h = discover.length * 200
   g.autoHull()
 
