@@ -66,7 +66,7 @@ export function unfollowChannel(hpub) {
     const now = Date.now()
     const tr = db.transaction(['channels-followed'], 'readwrite', { durability: 'strict' })
     const os = tr.objectStore('channels-followed')
-    const req = os.del(hpub)
+    const req = os.delete(hpub)
     req.onerror = function(e) {
       if (e?.target?.error?.name === 'ConstraintError') {
         console.log(`[${TAG}] channel already unfollowed '${hpub}'`)
