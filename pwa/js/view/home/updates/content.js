@@ -423,10 +423,10 @@ v.renderFunc = function() {
         str = `${getAttr(hpub, 'name') || 'Unnamed'} (My status)`
       }
       if (!numUpdates) {
-        drawEllipse(v, v.bgColor,     115, g.y + 85 + index * 200, 63, 63)
-        drawEllipse(v, colors.accent, 118, g.y + 88 + index * 200, 57, 57)
+        drawEllipse(v, v.bgColor,     115, g.y+index*200 + 105, 63, 63)
+        drawEllipse(v, colors.accent, 118, g.y+index*200 + 108, 57, 57)
         mat4.identity(m)
-        mat4.translate(m, m, [135, g.y + 135 + index * 200, 0])
+        mat4.translate(m, m, [135, g.y+index*200 + 155, 0])
         mat4.scale(m, m, [textScale, textScale, 1])
         defaultFont.draw(0,0, '+', v.bgColor, v.mat, m)
       }
@@ -440,13 +440,13 @@ v.renderFunc = function() {
     }
     mat4.identity(m)
     // mat4.translate(m, m, [211, 553 + y, 0])
-    mat4.translate(m, m, [211, g.y + 67 + index * 200, 0])
+    mat4.translate(m, m, [211, g.y+index*200 + 87, 0])
     mat4.scale(m, m, [textScale, textScale, 1])
     defaultFont.draw(0,0, str, v.titleColor, v.mat, m)
   
     mat4.identity(m)
     // mat4.translate(m, m, [211, 618 + y, 0])
-    mat4.translate(m, m, [211, g.y + 132 + index * 200, 0])
+    mat4.translate(m, m, [211, g.y+index*200 + 152, 0])
     mat4.scale(m, m, [30/14, 30/14, 1])
     defaultFont.draw(0,0, updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
 
@@ -454,7 +454,7 @@ v.renderFunc = function() {
       mat4.identity(m)
       let iconScale = 20/14
       let d = 4*iconScale
-      mat4.translate(m, m, [v.sw - 32+28+4+26/iconScale, g.y + 65 + index * 200, 0])
+      mat4.translate(m, m, [v.sw - 32+28+4+26/iconScale, g.y+index*200 + 85, 0])
       mat4.scale(m, m, [iconScale, iconScale, 1])
       for (let r = 0; r < rank; r++) {
         defaultFont.draw(-28-d - ((r%3)==0?26:0), 0, '💗', v.bgColor, v.mat, m)
