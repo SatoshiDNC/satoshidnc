@@ -158,7 +158,7 @@ v.renderFunc = function() {
         for (const k of p.keys) {
           const key = k[0][0], keyName = k[0].join(' / ')
           const t1 = `${keyName||key}:`
-          const t2 = `${g.content[key]}`
+          const t2 = `${new_metadata[key]}`
           let t3 = ''
           if (key === 'created_at' && `${new_metadata[key]}` === `${+new_metadata[key]}`) {
             t3 = new Date(new_metadata[key] * 1000).toLocaleString()
