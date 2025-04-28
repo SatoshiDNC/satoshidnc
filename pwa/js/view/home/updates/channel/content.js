@@ -171,12 +171,14 @@ v.renderFunc = function() {
             t3 = new Date(new_metadata[key] * 1000).toLocaleString()
           }
           let max_width = undefined
-          if (k[0].includes('name')) {
-            max_width = v.sw/2 - geom.SPACE_LEFT // TODO: refine to size needed
+          if (k[0].includes('about')) {
+            max_width = v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-200-2*geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT
           }
           p.lines.push(...format_lines(t1).map(line => `## ${line}`))
           const temp_lines = format_lines(t2 + (t3? ' | ' + t3: ''), max_width)
-          temp_lines[0] = `${temp_lines[0]}\0apply:name`
+          if (k[0].includes('about')) {
+            temp_lines[0] = `${temp_lines[0]}\0apply:name`
+          }
           p.lines.push(...temp_lines)
         }
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
