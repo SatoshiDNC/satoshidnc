@@ -503,7 +503,7 @@ v.renderFunc = function() {
         mat4.scale(m, m, [ts, ts, 1])
         defaultFont.draw(0,0, label, blend(v.titleColor,hue(colors.accent),0.2), v.mat, m)
       }
-    } else if (rank && !v.selfs.includes(hpub)) {
+    } /* else if (rank && !v.selfs.includes(hpub)) {
       mat4.identity(m)
       let iconScale = 20/14
       let d = 4*iconScale
@@ -514,7 +514,7 @@ v.renderFunc = function() {
         defaultFont.draw(-28, 0, '❤', v.bgColor, v.mat, m)
         defaultFont.draw(-28, 0, rankIcon, rankColor, v.mat, m)
       }
-    }
+    } */
 
     i++
   }
