@@ -279,26 +279,26 @@ v.layoutFunc = function() {
   v.channels = channels
   v.discover = discover
 
-  let x = 42
+  let x = 0
   let g
   g = v.selfsGad
-  g.x = 0, g.y = 170
+  g.x = x, g.y = 170
   g.w = v.sw, g.h = keys.length * 200
   g.autoHull()
   g = v.recentsGad
-  g.x = 0, g.y = v.selfsGad.y + ((v.selfs.length > 0) ? v.selfsGad.h + 66 : 0) // 466
+  g.x = x, g.y = v.selfsGad.y + ((v.selfs.length > 0) ? v.selfsGad.h + 66 : 0) // 466
   g.w = v.sw, g.h = recents.length * 200
   g.autoHull()
   g = v.viewedGad
-  g.x = 0, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
+  g.x = x, g.y = v.recentsGad.y + ((recents.length > 0) ? v.recentsGad.h + 96 : 0)
   g.w = v.sw, g.h = viewed.length * 200
   g.autoHull()
   g = v.channelsGad
-  g.x = 0, g.y = v.viewedGad.y + ((viewed.length > 0) ? v.viewedGad.h + 136 : 0)
+  g.x = x, g.y = v.viewedGad.y + ((viewed.length > 0) ? v.viewedGad.h + 136 : 0)
   g.w = v.sw, g.h = channels.length * 200
   g.autoHull()
   g = v.discoverGad
-  g.x = 0, g.y = v.channelsGad.y + ((channels.length > 0) ? v.channelsGad.h + 97 : 246)
+  g.x = x, g.y = v.channelsGad.y + ((channels.length > 0) ? v.channelsGad.h + 97 : 246)
   g.w = v.sw, g.h = discover.length * 200
   g.autoHull()
 
@@ -376,7 +376,7 @@ v.renderFunc = function() {
       i < v.selfs.length + v.recents.length? i - v.selfs.length:
       i < v.selfs.length + v.recents.length + v.viewed.length? i - v.selfs.length - v.recents.length:
       i < v.selfs.length + v.recents.length + v.viewed.length + v.channels.length? i - v.selfs.length - v.recents.length - v.viewed.length:
-      i - v.selfs.length - v.recents.length - v.viewed.length + v.channels.length
+      i - v.selfs.length - v.recents.length - v.viewed.length - v.channels.length
     if (numUpdates) {
       drawEllipse(v, colors.accent, 32, g.y + 6 + index * 200, 147, 147)
       if (numViewed) {
