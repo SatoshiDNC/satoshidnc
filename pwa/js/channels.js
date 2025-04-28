@@ -14,6 +14,7 @@ export function reloadChannelFollows() {
        console.error(e)
     }
     req.onsuccess = function(e) {
+      console.log(e.target.result)
       for (let f of e.target.result) {
         if (!follows.includes(f.hpub)) {
           follows.push(f.hpub)
