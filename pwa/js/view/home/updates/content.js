@@ -474,7 +474,11 @@ v.renderFunc = function() {
     // mat4.translate(m, m, [211, 618 + y, 0])
     mat4.translate(m, m, [211, g.y+index*200 + 152, 0])
     mat4.scale(m, m, [30/14, 30/14, 1])
-    defaultFont.draw(0,0, (g === v.discoverGad)?'Public channel':updatePostedAsOf(newest), v.subtitleColor, v.mat, m)
+    const subtitle =
+      (g === v.discoverGad)?'Public channel':
+      (g === v.channelsGad)?'Public channel':
+      updatePostedAsOf(newest)
+    defaultFont.draw(0,0, subtitle, v.subtitleColor, v.mat, m)
 
     if (g === v.discoverGad) {
       if (amFollowingChannel(v.discover[index])) {
