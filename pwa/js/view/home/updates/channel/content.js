@@ -121,14 +121,14 @@ v.renderFunc = function() {
   let previous_content = '{}'
   for (let i = v.posts.length-1; i>=0; i--) {
     const p = v.posts[i]
-    let fields_updated = []
+    const fields_updated = []
     if (!p.type && p.preloaded.data.kind == 0) {
       if (p.preloaded.data.content != previous_content) {
         const old_metadata = JSON.parse(previous_content)
         const new_metadata = JSON.parse(p.preloaded.data.content)
         p.lines = [...format_lines('Profile Update').map(line => `# ${line}`)]
         for (const key of Object.keys(new_metadata)) {
-          fields_updated.push(key)
+          if (!fields_updated.includes(key)) { fields_updated.push(key) }
           // if (Object.keys(old_metadata).includes(key)) {
           //   p.lines.push(`Updated ${key.replace('_',' ')}`)
           // } else {
@@ -136,7 +136,7 @@ v.renderFunc = function() {
           // }
         }
         for (const key of Object.keys(old_metadata)) {
-          fields_updated.push(key)
+          if (!fields_updated.includes(key)) { fields_updated.push(key) }
           // if (!Object.keys(new_metadata).includes(key)) {
           //   p.lines.push(`Removed ${key.replace('_',' ')}`)
           // }
