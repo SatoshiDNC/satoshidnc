@@ -142,7 +142,7 @@ v.renderFunc = function() {
           }
         }
         p.keys = []
-        for (const remaining of p.fields_updated) {
+        for (const remaining of fields_updated) {
           let duplicate = false
           for (const key of p.keys) {
             if (key[1] === new_metadata[remaining]) {
