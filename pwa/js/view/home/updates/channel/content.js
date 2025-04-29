@@ -285,7 +285,7 @@ v.render_reactions = function(post, y) {
     const ts = geom.REACTION_SIZE/diameter
     mat4.identity(m)
     mat4.translate(m, m, [x+geom.REACTION_SIZE/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
-    mat4.scale(m, m, [geom.TEXT_SCALE/2, geom.TEXT_SCALE/2, 1])
+    mat4.scale(m, m, [ts, ts, 1])
     defaultFont.draw(0, 0, 'A', v.textColor, v.mat, m)
   }
 }
