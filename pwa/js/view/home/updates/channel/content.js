@@ -281,13 +281,13 @@ v.render_reactions = function(post, y) {
   drawPill(v, v.bubbleColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER,v.sh-y+geom.REACTIONS_BORDER,200-2*geom.REACTIONS_BORDER,geom.REACTIONS_HEIGHT-2*geom.REACTIONS_BORDER)
   let x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER+geom.REACTION_SPACE_LEFT
   for (const reaction of Object.keys(p)) {
-    const i = defaultFont.glyphCodes.indexOf(65)
+    const i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0))
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
     const ts = geom.REACTION_SIZE/diameter
     mat4.identity(m)
     mat4.translate(m, m, [x+geom.REACTION_SIZE/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
     mat4.scale(m, m, [ts, ts, 1])
-    defaultFont.draw(-diameter/2, diameter/2, 'A', v.textColor, v.mat, m)
+    defaultFont.draw(-diameter/2, diameter/2, String.fromCodePoint(defaultFont.glyphCodes[i]), v.textColor, v.mat, m)
   }
 }
 v.render_debug_info = function(post, y) {
