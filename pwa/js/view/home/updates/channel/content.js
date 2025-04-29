@@ -326,6 +326,8 @@ v.render_reactions = function(post, y) {
     mat4.identity(m)
     mat4.translate(m, m, [x+geom.REACTION_SIZE*magnitude/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
     mat4.scale(m, m, [ts, ts, 1])
+    console.log(i)
+    console.log(defaultFont.glyphCodes[i])
     const c = String.fromCodePoint(defaultFont.glyphCodes[i])
     defaultFont.draw(-defaultFont.calcWidth(c)/2, diameter/2-defaultFont.glyphY1[i], c, v.textColor, v.mat, m)
     x += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
