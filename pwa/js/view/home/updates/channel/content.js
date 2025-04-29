@@ -39,19 +39,21 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
     for (const p of v.posts) {
 
       // check for reactions click
-      const tg = v.tempGad
-      tg.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
-      tg.y = v.sh+v.userY-p.y1
-      tg.w = p.reactions_width
-      tg.h = geom.REACTIONS_HEIGHT
-      tg.autoHull()
-      const touchRadius = 85, clickRadius = 5;
-      function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
-      const hitList = { x: pointer.x, y: pointer.y, hits: [] }
-      tg.getHits(hitList, getPointerRadius())
-      if (hitList.hits.map(h => h.gad).includes(tg)) {
-        console.log('hit', p)
-      } else {
+      if (p.reactions_width) {
+        const tg = v.tempGad
+        tg.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
+        tg.y = v.sh+v.userY-p.y1
+        tg.w = p.reactions_width
+        tg.h = geom.REACTIONS_HEIGHT
+        tg.autoHull()
+        const touchRadius = 85, clickRadius = 5;
+        function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
+        const hitList = { x: pointer.x, y: pointer.y, hits: [] }
+        tg.getHits(hitList, getPointerRadius())
+        if (hitList.hits.map(h => h.gad).includes(tg)) {
+          console.log('hit', p)
+        } else {
+        }
       }
 
 
