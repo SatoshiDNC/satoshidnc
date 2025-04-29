@@ -51,8 +51,9 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
           const reaction = {
             kind: 7,
             content: '✓',
-            tags: [['e',`${u.data.id}`], ['p',`${u.hpub}`], ['k',`${u.data.kind}`]],
+            tags: [['e',`${p.preloaded.data.id}`], ['p',`${p.preloaded.data.pubkey}`], ['k',`${p.preloaded.data.kind}`]],
           }
+          console.log(reaction)
           return
         }
       }
