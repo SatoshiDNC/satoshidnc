@@ -55,7 +55,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
           }
         }
       } else {
-        chatRoomView.setContext(hpub)
+        g.target.setContext(hpub)
         g.root.easeOut(g.target)
       }
     //}
