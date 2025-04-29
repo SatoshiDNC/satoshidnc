@@ -59,6 +59,8 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       g.getHits(hitList, getPointerRadius())
       if (hitList.hits.map(h => h.gad).includes(g)) {
         console.log('hit', post)
+      } else {
+        console.log(hitList, g)
       }
 
       // check for gadget click
