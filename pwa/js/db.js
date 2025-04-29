@@ -8,7 +8,7 @@ export const log_and_reject = () => {
 
 export function init() {
   return new Promise((resolve, reject) => {
-    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 8)
+    const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 9)
     req.onsuccess = e => {
       db = req.result
       resolve()

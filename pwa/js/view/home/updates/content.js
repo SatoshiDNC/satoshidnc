@@ -9,6 +9,9 @@ import { barBot } from '../bar-bot.js'
 import { signBatch as sign, defaultKey, keys } from '../../../keys.js'
 import { balances, balanceTrigger } from '../../../deals.js'
 
+const touchRadius = 85, clickRadius = 5;
+const getPointerRadius = function() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
+
 let v, g
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
@@ -207,8 +210,6 @@ v.gadgets.push(g = v.discoverGad = new fg.Gadget(v))
     followGad.autoHull()
 
     // check for gadget click (a bit kludgey, but it handles the touch radius nicely)
-    const touchRadius = 85, clickRadius = 5;
-    function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
     const hitList = { x: e.x, y: e.y, hits: [] }
     followGad.getHits(hitList, getPointerRadius())
     if (hitList.hits.map(h => h.gad).includes(followGad)) {
