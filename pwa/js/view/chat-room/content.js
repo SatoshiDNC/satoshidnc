@@ -1,5 +1,5 @@
 import { barTop } from './bar-top.js'
-import { drawRoundedRect, blend } from '../../draw.js'
+import { drawRoundedRect, blend, hue, saturation, value } from '../../draw.js'
 import { getName, getHue } from '../../personal.js'
 
 export const contentView = v = new fg.View(null)
