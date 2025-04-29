@@ -284,12 +284,13 @@ v.render_reactions = function(post, y) {
     let i = defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
     if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
-    const ts = geom.REACTION_SIZE/diameter
+    const magnitude = 1 + 16/16
+    const ts = geom.REACTION_SIZE/diameter * magnitude
     mat4.identity(m)
-    mat4.translate(m, m, [x+geom.REACTION_SIZE/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
+    mat4.translate(m, m, [x+geom.REACTION_SIZE*magnitude/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
     mat4.scale(m, m, [ts*2, ts*2, 1])
     defaultFont.draw(-diameter/2, diameter/2-defaultFont.glyphY1[i], String.fromCodePoint(defaultFont.glyphCodes[i]), v.textColor, v.mat, m)
-    x += geom.REACTION_SIZE + geom.REACTION_SPACE_BETWEEN
+    x += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
   }
 }
 v.render_debug_info = function(post, y) {
