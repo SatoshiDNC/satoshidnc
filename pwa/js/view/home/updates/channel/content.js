@@ -404,6 +404,7 @@ v.render_notice = function(post, y) {
 v.render_default = function(post, y) {
   const v = this, p = post
   const m = mat4.create()
+  const textColor2 = blend(v.bubbleColor, v.textColor, TINGE.DIM_TEXT)
 
   drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
 
