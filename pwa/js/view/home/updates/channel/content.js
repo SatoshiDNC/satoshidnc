@@ -65,23 +65,6 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
     }
     if (post) {
 
-      // check for reactions click
-      const tg = v.tempGad
-      tg.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
-      tg.y = post_y
-      tg.w = post.reactions_width
-      tg.h = geom.REACTIONS_HEIGHT
-      tg.autoHull()
-      const touchRadius = 85, clickRadius = 5;
-      function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
-      const hitList = { x: pointer.x, y: pointer.y, hits: [] }
-      tg.getHits(hitList, getPointerRadius())
-      if (hitList.hits.map(h => h.gad).includes(tg)) {
-        console.log('hit', post)
-      } else {
-        console.log(hitList, tg)
-      }
-
       // check for gadget click
       if (post.gadgets) {
         post.gadgets.map(g => {
