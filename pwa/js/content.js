@@ -395,7 +395,11 @@ export function reqFeed() {
       {
         'authors': [...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)])],
         'since': Math.floor(Date.now()/1000) - 2 * DAY_IN_SECONDS, // double long enough to retrieve current updates from contacts to display
-      },
+      }
+    ])
+    relay.send([
+      'REQ',
+      'aux',
       {
         '#p': [...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)])],
         'since': Math.floor(Date.now()/1000) - 2 * DAY_IN_SECONDS, // double long enough to retrieve current updates from contacts to display
