@@ -30,7 +30,7 @@ export function hue(color) {
 }
 
 export function saturation(color) {
-  return (Math.max(color[0],color[1],color[2]) - Math.min(color[0],color[1],color[2]))
+  return Math.max(color[0],color[1],color[2]) - Math.min(color[0],color[1],color[2])
 }
 
 export function setValue(color, value) {
