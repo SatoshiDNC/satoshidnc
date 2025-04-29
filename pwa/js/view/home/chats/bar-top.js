@@ -160,6 +160,7 @@ v.renderFunc = function() {
   }
 
   mainShapes.useProg2()
+  console.log(colors.inactiveDark, hue(colors.inactiveDark), saturation(colors.inactiveDark), value(colors.inactiveDark))
   gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)

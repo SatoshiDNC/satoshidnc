@@ -33,6 +33,13 @@ export function saturation(color) {
   return Math.max(color[0],color[1],color[2]) - Math.min(color[0],color[1],color[2])
 }
 
+export function value(color) {
+  const min = Math.min(color[0], color[1], color[2])
+  const max = Math.max(color[0], color[1], color[2])
+  const delta = max - min
+  return min / (1 - delta)
+}
+
 export function setValue(color, value) {
   const h = hue(color)
   const s = saturation(color)
