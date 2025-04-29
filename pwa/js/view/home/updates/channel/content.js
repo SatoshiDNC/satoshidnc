@@ -308,7 +308,7 @@ v.render_reactions = function(post, y) {
   for (const reaction of ranking) {
     let i = +reaction // defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
     if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
-    if (i == -2) { i = defaultFont.glyphCodes.indexOf('+'.codePointAt(0))}
+    if (i == -2) { i = defaultFont.glyphCodes.indexOf('🙂'.codePointAt(0))}
     n += groups[reaction]
     const magnitude = 1 + ((`${groups[reaction]}`).length-1)/15
     w += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
