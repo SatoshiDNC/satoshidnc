@@ -284,6 +284,9 @@ v.render_reactions = function(post, y) {
     if (!groups[''+i]) { groups[''+i] = 0 }
     groups[''+i] += p.reactions[reaction]
   }
+  if (Object.keys(groups).length == 0) {
+    groups['+'] = 0
+  }
 
   const ranking = []
   for (const group of Object.keys(groups)) {
