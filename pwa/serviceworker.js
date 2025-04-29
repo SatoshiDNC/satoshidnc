@@ -48,6 +48,7 @@ self.addEventListener('periodicsync', event => {
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'DB_READY') {
     waiting_for_startup = false
+    console.log(`[${TAG}] received DB-ready all-clear signal`)
   }
 })
 
