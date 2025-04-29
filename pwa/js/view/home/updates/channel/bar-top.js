@@ -65,7 +65,7 @@ v.setContext = function(hpub) {
   const v = this
   v.hpub = hpub
   v.selfs = keys.map(k => k.hpub)
-  v.hue = hue(color_from_rgb_integer(parseInt(v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63],16)))
+  v.hue = getHue(v.hpub)
   v.bgColor = blend([0,0,0,1], v.hue, 0.15)
   v.dividerColor = blend([0,0,0,1], v.hue, 0.25)
 }

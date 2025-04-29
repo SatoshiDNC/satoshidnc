@@ -1,4 +1,5 @@
 import { db } from './db.js'
+import { hue, color_from_rgb_integer } from './draw.js'
 
 const TAG = `personal-data`
 
@@ -7,6 +8,13 @@ export const personalDataTrigger = []
 
 export function getName(hpub) {
   return getPersonalData(hpub, 'name') || 'Unnamed'
+}
+
+export function getHue(hpub) {
+  return hue(getColor(hpub))
+}
+export function getColor(hpub) {
+  return getPersonalData(hpub, 'color') || color_from_rgb_integer(parseInt(hpub[61]+hpub[61]+hpub[62]+hpub[62]+hpub[63]+hpub[63],16))
 }
 
 export function getPersonalData(hpub, key) {

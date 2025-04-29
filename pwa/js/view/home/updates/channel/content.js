@@ -1,6 +1,6 @@
 import { getFeed, markUpdateAsViewed } from '../../../../content.js'
-import { getPersonalData, setPersonalData, personalDataTrigger } from '../../../../personal.js'
-import { drawRoundedRect, drawRect, drawPill, blend, alpha, hue, color_from_rgb_integer } from '../../../../draw.js'
+import { getHue, getPersonalData, setPersonalData, personalDataTrigger } from '../../../../personal.js'
+import { drawRoundedRect, drawRect, drawPill, blend, alpha } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023, prep_kind30023_preview } from './kind/30023-long-form-note.js'
 import * as geom from './geometry.js'
@@ -83,7 +83,7 @@ v.setContext = function(updates, hpub) {
   v.hpub = hpub
   v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
-  v.hue = hue(color_from_rgb_integer(parseInt(v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63],16)))
+  v.hue = getHue(v.hpub)
   v.bgColor = blend([0,0,0,1], v.hue, 0.15)
   v.bubbleColor = blend([0,0,0,1], v.hue, 0.25)
   v.posts = []
