@@ -114,7 +114,7 @@ export function render_kind1_json(view, data, json) {
   const displayStandardLine = (key, keyName, value) => {
     const t1 = `${keyName||key}:`
     const t2 = `${value}`
-    const name_color = blend(colors.title, v.bgColor, 0.5)
+    const name_color = blend(v.bgColor, colors.title, TINGE.DIM_TEXT)
     let t3 = ''
     if (key === 'created_at' && `${value}` === `${+value}`) {
       t3 = new Date(value * 1000).toLocaleString()

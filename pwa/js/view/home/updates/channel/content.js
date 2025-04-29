@@ -84,8 +84,8 @@ v.setContext = function(updates, hpub) {
   v.updates = updates.filter(u => u.hpub == hpub)
   v.startTime = 0
   v.hue = getHue(v.hpub)
-  v.bgColor = blend([0,0,0,1], v.hue, 0.15)
-  v.bubbleColor = blend([0,0,0,1], v.hue, 0.25)
+  v.bgColor = blend(colors.black, v.hue, TINGE.BACKGROUND)
+  v.bubbleColor = blend(colors.black, v.hue, TINGE.BUBBLE)
   v.posts = []
   for (const u of v.updates) {
     v.insertPost(u)
@@ -288,7 +288,7 @@ v.render_debug_info = function(post, y) {
 v.render_notice = function(post, y) {
   const v = this, p = post
   const m = mat4.create()
-  const textColor2 = blend(v.bubbleColor, v.textColor, 0.5)
+  const textColor2 = blend(v.bubbleColor, v.textColor, TINGE.DIM_TEXT)
 
   let bubble_width = 0
   for (const line of p.lines) {
@@ -376,7 +376,7 @@ v.render_default = function(post, y) {
 v.render_metadata = function(post, y) {
   const v = this, p = post
   const m = mat4.create()
-  const textColor2 = blend(v.bubbleColor, v.textColor, 0.5)
+  const textColor2 = blend(v.bubbleColor, v.textColor, TINGE.DIM_TEXT)
 
   // bubble
   drawRoundedRect(v, v.bubbleColor, geom.BUBBLE_RADIUS, geom.SPACE_LEFT,v.sh-y-p.total_height, v.sw-geom.SPACE_LEFT-geom.SPACE_RIGHT,p.total_height)
@@ -423,11 +423,11 @@ v.render_metadata = function(post, y) {
             g.y = v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-55
             g.w = w
             g.h = 83
-            drawPill(v, blend(v.bubbleColor, v.hue, 0.2), g.x,g.y, g.w,g.h)
+            drawPill(v, blend(v.bubbleColor, v.hue, TINGE.ACTION_BUTTON), g.x,g.y, g.w,g.h)
             mat4.identity(m)
             mat4.translate(m, m, [g.x+(w-tw)/2, g.y+55, 0])
             mat4.scale(m, m, [ts, ts, 1])
-            defaultFont.draw(0,0, str, blend(v.textColor, v.hue, 0.2), v.mat, m)
+            defaultFont.draw(0,0, str, blend(v.textColor, v.hue, TINGE.ACTION_BUTTON), v.mat, m)
           }
         }
       }

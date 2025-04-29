@@ -90,7 +90,7 @@ v.renderFunc = function() {
   const w = (v.sw-9-3-6*numUpdates)/numUpdates
   let pageTurn = false
   const fullBright = v.titleColor
-  const halfBright = blend(fullBright, contentView.bgColor, 0.5)
+  const halfBright = blend(contentView.bgColor, fullBright, TINGE.DIM_TEXT)
   for (let i = 0; i < numUpdates; i++) {
     if (i < v.currentUpdate) {
       drawPill(v, fullBright, 9+(w+6)*i,9, w,6)

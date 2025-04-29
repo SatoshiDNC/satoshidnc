@@ -521,14 +521,14 @@ v.renderFunc = function() {
         defaultFont.draw(0,0, label, colors.accent, v.mat, m)
       } else {
         const bw = 208, bh = 83
-        drawPill(v, blend(v.bgColor,hue(colors.accent),0.2), v.sw-42-bw,g.y+index*200+53, bw,bh)
+        drawPill(v, blend(v.bgColor,hue(colors.accent),ACTION_BUTTON_TINGE_FACTOR), v.sw-42-bw,g.y+index*200+53, bw,bh)
         const label = 'Follow'
         const ts = 29/14
         const w = defaultFont.calcWidth(label)*ts
         mat4.identity(m)
         mat4.translate(m, m, [v.sw-42-bw/2-w/2, g.y+index*200+53 + 55, 0])
         mat4.scale(m, m, [ts, ts, 1])
-        defaultFont.draw(0,0, label, blend(v.titleColor,hue(colors.accent),0.2), v.mat, m)
+        defaultFont.draw(0,0, label, blend(v.titleColor,hue(colors.accent),TINGE.ACTION_BUTTON), v.mat, m)
       }
     } /* else if (rank && !v.selfs.includes(hpub)) {
       mat4.identity(m)
