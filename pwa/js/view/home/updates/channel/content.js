@@ -61,6 +61,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       // check for other gadget click
       if (p.gadgets) {
         p.gadgets.map(g => {
+          console.log(g)
           g.autoHull()
           const hitList = { x: pointer.x, y: pointer.y, hits: [] }
           g.getHits(hitList, getPointerRadius())
