@@ -131,7 +131,7 @@ function handle_incoming_deletion(e, os, del_os, tag, database_error_handler, re
   const deletionProcessing = () => {
     if (todo.length > 0) {
       const toDelete = todo.pop()
-      const req = del_os.put({ id: toDelete, asOf: now, hpub: e.pubkey })
+      const req = del_os.put({ id: toDelete, asOf: Date.now(), hpub: e.pubkey })
       req.onerror = database_error_handler
       req.onsuccess = () => {
         const req = os.index('id').get(toDelete)
