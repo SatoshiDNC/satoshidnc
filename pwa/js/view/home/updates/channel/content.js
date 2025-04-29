@@ -300,7 +300,7 @@ v.render_reactions = function(post, y) {
     }
   }
 
-  let w = geom.REACTION_SPACE_LEFT-geom.REACTION_SPACE_BETWEEN+geom.REACTION_SPACE_RIGHT
+  let w = geom.REACTION_SPACE_LEFT+geom.REACTION_SPACE_RIGHT
   let n = 0
   for (const reaction of ranking) {
     let i = +reaction // defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
