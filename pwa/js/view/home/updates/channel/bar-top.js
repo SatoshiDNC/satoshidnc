@@ -1,5 +1,5 @@
 import { drawAvatar, blend, hue, color_from_rgb_integer } from '../../../../draw.js'
-import { getPersonalData } from '../../../../personal.js'
+import { getPersonalData, personalDataTrigger } from '../../../../personal.js'
 import { balances } from '../../../../deals.js'
 import { keys } from '../../../../keys.js'
 
