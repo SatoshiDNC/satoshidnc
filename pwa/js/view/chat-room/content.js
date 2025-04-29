@@ -38,8 +38,6 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)
   const m = mat4.create()
 
-  console.log(colors.chatInfoBubble, hue(colors.chatInfoBubble), saturation(colors.chatInfoBubble), value(colors.chatInfoBubble))
-
   let s, text, w
   let y = 0
   for (const msg of v.messages) {
