@@ -1,14 +1,21 @@
 import { barTop } from './bar-top.js'
-import { drawRoundedRect } from '../../draw.js'
-import { personalData } from '../../personal.js'
+import { drawRoundedRect, blend } from '../../draw.js'
+import { getName, getHue, personalData } from '../../personal.js'
 
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
-v.bgColor = [0x09/0xff, 0x14/0xff, 0x1a/0xff, 1]
+v.bgColorDefault = [0x09/0xff, 0x14/0xff, 0x1a/0xff, 1]
+v.bgColor = v.bgColorDefault
 v.setContact = function(hpub) {
   const v = this
-  v.contact = { hpub, name: personalData.filter(pd => pd.hpub == hpub && pd.key == 'name')?.[0]?.value || 'Unnamed' }
+
+  // establish counterparty profile
+  v.cp_hpub = hpub
+  v.cp_hue = getHue(v.cp_hpub)
+  v.bgColor = blend(v.bgColorDefault, v.cp_hue, .2)
+  v.contact = { hpub, name: getName(hpub) }
   console.log(`contact: ${JSON.stringify(v.contact)}`)
+
   barTop.contact = v.contact
   v.messages = []
   v.messages.push({
