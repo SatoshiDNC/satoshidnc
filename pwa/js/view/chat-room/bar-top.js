@@ -57,10 +57,10 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   }
 v.setContext = function(hpub) {
   const v = this
-  console.log('barTop.setContext', hpub)
   v.cp_hpub = hpub
   v.cp_hue = getHue(v.cp_hpub)
   v.bgColor = blend(colors.black, v.cp_hue, TINGE.BACKGROUND)
+  v.dividerColor = blend(colors.black, v.cp_hue, TINGE.DIVIDER)
 }
 v.layoutFunc = function() {
   const v = this
@@ -80,7 +80,7 @@ v.renderFunc = function() {
 
   // subtle divider line
   mainShapes.useProg2()
-  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(colors.inactiveDark))
+  gl.uniform4fv(gl.getUniformLocation(prog2, 'overallColor'), new Float32Array(v.dividerColor))
   gl.uniformMatrix4fv(gl.getUniformLocation(prog2, 'uProjectionMatrix'), false, v.mat)
   mat4.identity(m)
   mat4.translate(m,m, [0, v.sh-2, 0])
