@@ -25,6 +25,7 @@ personalDataTrigger.push(() => {
   const v = contentView
   console.log(`[${TAG}] detected personal data change`, v)
   v.setRenderFlag(true)
+  v.renderFunc()
   console.log('a')
   //v.layoutFunc()
   // v.parent.setRenderFlag(true)
