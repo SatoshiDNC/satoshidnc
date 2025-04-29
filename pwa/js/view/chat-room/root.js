@@ -11,6 +11,7 @@ v.a = barTop; barTop.parent = v
 v.b = contentView; contentView.parent = v
 v.c = barBot; barBot.parent = v
 v.setContext = function(hpub) {
+  console.log('chatRoomRoot.setContext')
   v.a?.setContext?.(hpub)
   v.b?.setContext?.(hpub)
   v.c?.setContext?.(hpub)
