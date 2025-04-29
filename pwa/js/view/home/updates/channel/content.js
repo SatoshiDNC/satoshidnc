@@ -1,5 +1,5 @@
 import { getFeed, markUpdateAsViewed } from '../../../../content.js'
-import { getPersonalData } from '../../../../personal.js'
+import { getPersonalData, setPersonalData, personalDataTrigger } from '../../../../personal.js'
 import { drawRoundedRect, drawRect, drawPill, blend, alpha, hue, color_from_rgb_integer } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023, prep_kind30023_preview } from './kind/30023-long-form-note.js'
@@ -20,6 +20,7 @@ v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.previous_width = 0
+personalDataTrigger.push(() => v.queueLayout())
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(pointer) {
@@ -47,8 +48,9 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
           const hitList = { x: pointer.x, y: pointer.y, hits: [] }
           g.getHits(hitList, getPointerRadius())
           if (hitList.hits.map(h => h.gad).includes(g)) {
-            console.log('hit')
-            return
+            if (g.key == 'apply:name') {
+              setPersonalData(v.hpub, 'name', g.value)
+            }
           }
         })
 
@@ -198,6 +200,7 @@ v.renderFunc = function() {
             if (!p.gadgets) { p.gadgets = [] }
             const g = new fg.Gadget(v)
             g.key = 'apply:name'
+            g.value = t2
             p.gadgets.push(g)
             temp_lines[0] = `${temp_lines[0]}\0${g.key}`
           }
