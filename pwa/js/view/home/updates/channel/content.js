@@ -33,12 +33,8 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.clickFunc = function(pointer) {
     const g = this, v = g.viewport
 
-    let y = 0
-    let post, post_y
-    let i = 0
+    // check for reactions click
     for (const p of v.posts) {
-
-      // check for reactions click
       if (p.reactions_width) {
         const tg = v.tempGad
         tg.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
@@ -52,22 +48,11 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
         tg.getHits(hitList, getPointerRadius())
         if (hitList.hits.map(h => h.gad).includes(tg)) {
           console.log('hit', p)
-        } else {
+          return
         }
       }
 
-
-      const py = (pointer.py-v.y)/v.getScale()
-      if (v.sh-v.userY-py >= p.y0 && v.sh-v.userY-py <= p.y1) {
-        post = p
-        post_y = v.sh-v.userY-py - p.y0
-        break
-      }
-      i++
-    }
-    if (post) {
-
-      // check for gadget click
+      // check for other gadget click
       if (post.gadgets) {
         post.gadgets.map(g => {
           g.autoHull()
@@ -77,11 +62,26 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
             if (g.key == 'apply:name') {
               setPersonalData(v.hpub, 'name', g.value)
             }
+            return
           }
         })
+      }
+    }
 
-        // handle the read-more (a bit kludgey)
-      } else if (post_y >= post.readmore_baseline && post_y <= post.readmore_baseline+geom.TEXT_HEIGHT) {
+    // handle the read-more (a bit kludgey)
+    let post, post_y
+    let i = 0
+    for (const p of v.posts) {
+      const py = (pointer.py-v.y)/v.getScale()
+      if (v.sh-v.userY-py >= p.y0 && v.sh-v.userY-py <= p.y1) {
+        post = p
+        post_y = v.sh-v.userY-py - p.y0
+        break
+      }
+      i++
+    }
+    if (post) {
+      if (post_y >= post.readmore_baseline && post_y <= post.readmore_baseline+geom.TEXT_HEIGHT) {
         const p = post
         if (p.preloaded.data.kind == 1) {
         } else if (p.preloaded.data.kind == 30023) {
