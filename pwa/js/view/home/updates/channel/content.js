@@ -281,8 +281,8 @@ v.render_reactions = function(post, y) {
   drawPill(v, v.bubbleColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER,v.sh-y+geom.REACTIONS_BORDER,200-2*geom.REACTIONS_BORDER,geom.REACTIONS_HEIGHT-2*geom.REACTIONS_BORDER)
   let x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER+geom.REACTION_SPACE_LEFT
   for (const reaction of Object.keys(p.reactions)) {
-    const i = defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
-    console.log('reaction code', i)
+    let i = defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
+    if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
     const ts = geom.REACTION_SIZE/diameter
     mat4.identity(m)
