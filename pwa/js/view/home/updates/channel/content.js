@@ -281,11 +281,11 @@ v.render_reactions = function(post, y) {
   const groups = {}
   for (const reaction of Object.keys(p.reactions)) {
     let i = defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
-    if (!groups[''+i]) { groups[''+i] = 0 }
-    groups[''+i] += p.reactions[reaction]
+    if (!groups[`${i}`]) { groups[`${i}`] = 0 }
+    groups[`${i}`] += p.reactions[reaction]
   }
   if (Object.keys(groups).length == 0) {
-    groups['+'] = 0
+    groups[`${-2}`] = 0
   }
 
   const ranking = []
@@ -308,6 +308,7 @@ v.render_reactions = function(post, y) {
   for (const reaction of ranking) {
     let i = +reaction // defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
     if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
+    if (i == -2) { i = defaultFont.glyphCodes.indexOf('+'.codePointAt(0))}
     n += groups[reaction]
     const magnitude = 1 + ((`${groups[reaction]}`).length-1)/15
     w += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
@@ -320,6 +321,7 @@ v.render_reactions = function(post, y) {
   for (const reaction of ranking) {
     let i = +reaction // defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
     if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
+    if (i == -2) { i = defaultFont.glyphCodes.indexOf('+'.codePointAt(0))}
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
     const magnitude = 1 + ((''+groups[reaction]).length-1)/15
     const ts = geom.REACTION_SIZE/diameter * magnitude
