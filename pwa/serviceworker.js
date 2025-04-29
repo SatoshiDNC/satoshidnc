@@ -19,13 +19,16 @@ self.addEventListener('activate', event => {
 
 const MINUTE = 60 * 1000
 let minutely
+let waiting_for_startup = true
 self.addEventListener('sync', event => {
   let now = Date.now()
   switch (event.tag) {
     case 'startup-trigger':
+      if (waiting_for_startup) break
       startupTasks()
       break
     case 'minutely':
+      if (waiting_for_startup) break
       if (minutely && now - minutely < MINUTE) break
       minutely = now
       minutelyTasks()
@@ -40,6 +43,12 @@ self.addEventListener('periodicsync', event => {
   // if (event.tag === 'sync-messages') {
   //   event.waitUntil(sendMessages())
   // }
+})
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'DB_READY') {
+    waiting_for_startup = false
+  }
 })
 
 let numCached = 0

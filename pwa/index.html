@@ -433,6 +433,7 @@
         // initialize database
         dbInit().then(() => {
           clearStatus('initializing_db')
+          navigator.serviceWorker.controller.postMessage({ type: 'DB_READY', payload: {} });
           reloadContacts()
           reloadRelayStats()
           reloadKeys().then(() => {
