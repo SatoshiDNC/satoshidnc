@@ -1,6 +1,7 @@
 import { menuView as trezorTools } from './tools-trezor.js'
 import { menuView as nostorTools } from './tools-nostor.js'
 import { Buffer } from 'buffer'
+import { hue, saturation, value } from '../../../draw.js'
 
 let v, g
 export const barTop = v = new fg.View()
