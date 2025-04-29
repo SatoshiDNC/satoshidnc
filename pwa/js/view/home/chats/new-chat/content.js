@@ -55,7 +55,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
     const index = Math.floor((y - 649) / 179)
     const hpub = g.itemList?.[index]
     if (hpub) {
-      chatRoomView.setContact(hpub)
+      chatRoomView.setContext(hpub)
       g.root.easeOut(g.target)
     }
   }

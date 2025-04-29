@@ -44,7 +44,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
   g.handleEdit = function(item, parentRoot) {
     const handleAction = () => {
-      v.menuGad.targetEdit.setContact(v.hpub)
+      v.menuGad.targetEdit.setContext(v.hpub)
       v.menuGad.root.easeOut(v.menuGad.targetEdit)
     }
     if (fg.getRoot() === parentRoot) {
@@ -104,7 +104,7 @@ profileTrigger.push(hpub => {
 eventTrigger.push(() => {
   console.log('profile info: trigger for event (no-op)')
 })
-v.setContact = function(hpub) {
+v.setContext = function(hpub) {
   const v = this
   v.hpub = hpub
   v.userY = 0

@@ -22,7 +22,6 @@ balanceTrigger.push(() => { v.setRenderFlag(true) })
 followsTrigger.push(() => { v.queueLayout() })
 v.displayAction = function(updates, hpub, returnView, root, target, mode) {
   const v = this
-  console.log(`DISPLAY ACTION:`, updates, hpub, returnView, root, target, mode)
 
   let targetView
   if (mode == 1) {

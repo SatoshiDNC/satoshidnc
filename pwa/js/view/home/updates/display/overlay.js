@@ -36,7 +36,7 @@ v.gadgets.push(g = v.profileGad = new fg.Gadget(v))
   g.autoHull()
   g.clickFunc = function() {
     const g = this, v = this.viewport
-    g.target.setContact(v.updates[v.currentUpdate].hpub)
+    g.target.setContext(v.updates[v.currentUpdate].hpub)
     g.target.backGad.target = v.returnView || v.returnViewDefault
     g.target.easingState = 1
     g.target.easingValue = 0

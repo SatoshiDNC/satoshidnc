@@ -26,7 +26,7 @@ v.gadgets.push(g = v.infoGad = new fg.Gadget(v))
   g.icon = 'i'
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    g.target.setContact(v.hpub)
+    g.target.setContext(v.hpub)
     g.root.takeOver()
     g.root.easingValue = 1
     g.root.easeOut(g.target)
@@ -44,7 +44,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.clickFunc = function() {
     popupRoot.easeOut()
   }
-v.setContact = function(hpub, y) {
+v.setContext = function(hpub, y) {
   const v = this
   v.hpub = hpub
   v.preY = y

@@ -47,7 +47,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
             g.root.easeOut(g.target2)
           })
         } else {
-          popupView.setContact(hpub, 204 + 147 + 200 * index - v.userY)
+          popupView.setContext(hpub, 204 + 147 + 200 * index - v.userY)
           if (fg.getRoot() !== popupRoot || popupRoot.easingState() == -1) {
             popupRoot.easeIn()
           } else {
@@ -55,7 +55,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
           }
         }
       } else {
-        chatRoomView.setContact(hpub)
+        chatRoomView.setContext(hpub)
         g.root.easeOut(g.target)
       }
     //}

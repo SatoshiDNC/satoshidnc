@@ -59,7 +59,7 @@ v.clear = function() {
   v.relayGad.text = ''
   v.setRenderFlag(true)
 }
-v.setContact = function(hpub) {
+v.setContext = function(hpub) {
   const v = this
   v.hpub = hpub
   v.nameGad.text = getName(hpub)

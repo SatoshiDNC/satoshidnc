@@ -6,7 +6,7 @@ export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
 v.bgColorDefault = [0x09/0xff, 0x14/0xff, 0x1a/0xff, 1]
 v.bgColor = v.bgColorDefault
-v.setContact = function(hpub) {
+v.setContext = function(hpub) {
   const v = this
 
   // establish counterparty profile
@@ -14,7 +14,6 @@ v.setContact = function(hpub) {
   v.cp_hue = getHue(v.cp_hpub)
   v.bgColor = blend(colors.black, v.cp_hue, TINGE.BACKGROUND)
   v.contact = { hpub, name: getName(hpub) }
-  console.log(`contact: ${JSON.stringify(v.contact)}`)
 
   barTop.contact = v.contact
   v.messages = []
