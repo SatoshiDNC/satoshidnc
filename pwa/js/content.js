@@ -8,6 +8,7 @@ export const eventTrigger = []
 export const deletionTrigger = []
 export const unlockTrigger = []
 export const profileTrigger = []
+export const reactionTrigger = []
 
 const DAY_IN_SECONDS = 24/*hours*/ * 60/*minutes*/ * 60/*seconds*/
 
