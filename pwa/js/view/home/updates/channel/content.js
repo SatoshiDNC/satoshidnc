@@ -220,7 +220,7 @@ v.renderFunc = function() {
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'notice'
       }
-      p.reactions = {'❤':2, '💔':1}
+      p.reactions = {'❤':2, '💔':1, '📜':1}
     }
   }
   for (const p of v.posts) {
