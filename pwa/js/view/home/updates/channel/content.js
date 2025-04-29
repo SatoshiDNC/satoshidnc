@@ -324,11 +324,11 @@ v.render_reactions = function(post, y) {
     if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
     if (i == -2) { i = defaultFont.glyphCodes.indexOf('+'.codePointAt(0))}
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
-    const magnitude = (1 + ((''+groups[reaction]).length-1)/15) * (reaction == '-2'? 0.5: 1)
+    const magnitude = 1 + ((''+groups[reaction]).length-1)/15
     const ts = geom.REACTION_SIZE/diameter * magnitude
     mat4.identity(m)
     mat4.translate(m, m, [x+geom.REACTION_SIZE*magnitude/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
-    mat4.scale(m, m, [ts, ts, 1])
+    mat4.scale(m, m, [ts * (reaction == '-2'? 0.5: 1), ts * (reaction == '-2'? 0.5: 1), 1])
     const c = String.fromCodePoint(defaultFont.glyphCodes[i])
     defaultFont.draw(-defaultFont.calcWidth(c)/2, diameter/2-defaultFont.glyphY1[i], c, reaction == '-2'?textColor2:v.textColor, v.mat, m)
     x += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
