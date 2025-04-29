@@ -292,7 +292,7 @@ v.render_reactions = function(post, y) {
   for (const group of Object.keys(groups)) {
     let flag = false
     for (let i = ranking.length-1; i >= 0; i--) {
-      if (groups[group] < groups[ranking[i]]) {
+      if (groups[group] <= groups[ranking[i]]) {
         ranking.splice(i+1, 0, group)
         flag = true
         break
