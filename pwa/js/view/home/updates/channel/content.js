@@ -304,7 +304,7 @@ v.render_reactions = function(post, y) {
   }
   
   for (const reaction of ranking) {
-    let i = defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
+    let i = +reaction // defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
     if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
     const magnitude = 1 + (4-1)/15
