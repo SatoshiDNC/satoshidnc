@@ -11,9 +11,9 @@ let satoshi_hpub = '51c63606c483dc9b44373e8ea240494b8101e4b23da579f17fec19502920
 let bapi_baseurl = 'https://bapi.satoshidnc.com'
 
 const TINGE = {
-  BACKGROUND: 0.15,
+  BACKGROUND: 0.05,
+  BACKGROUND_DIVIDER: 0.15,
   BACKGROUND_ATTENUATION: 0.25,
-  DIVIDER: 0.25,
   BUBBLE: 0.25,
   ACTION_BUTTON: 0.2,
   DIM_TEXT: 0.5,

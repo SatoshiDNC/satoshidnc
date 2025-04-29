@@ -67,7 +67,7 @@ v.setContext = function(hpub) {
   v.selfs = keys.map(k => k.hpub)
   v.hue = getHue(v.hpub)
   v.bgColor = blend(colors.black, v.hue, TINGE.BACKGROUND)
-  v.dividerColor = blend(colors.black, v.hue, TINGE.DIVIDER)
+  v.dividerColor = blend(colors.black, v.hue, TINGE.BACKGROUND_DIVIDER)
 }
 v.layoutFunc = function() {
   const v = this
