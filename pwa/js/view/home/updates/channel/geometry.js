@@ -18,3 +18,4 @@ export const REACTION_SPACE_LEFT = 20
 export const REACTION_SPACE_RIGHT = 20
 export const REACTION_SPACE_BETWEEN = 10
 export const REACTION_SIZE = 52
+export const REACTION_COUNT_HEIGHT = 27

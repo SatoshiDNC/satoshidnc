@@ -301,12 +301,15 @@ v.render_reactions = function(post, y) {
   }
 
   let w = geom.REACTION_SPACE_LEFT-geom.REACTION_SPACE_BETWEEN+geom.REACTION_SPACE_RIGHT
+  let n = 0
   for (const reaction of ranking) {
     let i = +reaction // defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
     if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
-    const magnitude = 1 + ((''+groups[reaction]).length-1)/15
+    n += groups[reaction]
+    const magnitude = 1 + ((`${groups[reaction]}`).length-1)/15
     w += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
   }
+  w += defaultFont.calcWidth(`${n}`)*geom.REACTION_COUNT_HEIGHT/14
 
   drawPill(v, v.bgColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT,v.sh-y,w,geom.REACTIONS_HEIGHT)
   drawPill(v, v.bubbleColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER,v.sh-y+geom.REACTIONS_BORDER,w-2*geom.REACTIONS_BORDER,geom.REACTIONS_HEIGHT-2*geom.REACTIONS_BORDER)
@@ -324,6 +327,11 @@ v.render_reactions = function(post, y) {
     defaultFont.draw(-defaultFont.calcWidth(c)/2, diameter/2-defaultFont.glyphY1[i], c, v.textColor, v.mat, m)
     x += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
   }
+  const textColor2 = blend(v.bubbleColor, v.textColor, TINGE.DIM_TEXT)
+  mat4.identity(m)
+  mat4.translate(m, m, [x+geom.REACTION_SIZE*magnitude/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
+  mat4.scale(m, m, [ts, ts, 1])
+  defaultFont.draw(-geom.REACTION_SIZE/2, 7, `${n}`, textColor2, v.mat, m)
 }
 v.render_debug_info = function(post, y) {
   const v = this, p = post
