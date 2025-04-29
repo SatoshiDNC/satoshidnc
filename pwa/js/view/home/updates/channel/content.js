@@ -280,7 +280,30 @@ v.render_reactions = function(post, y) {
   drawPill(v, v.bgColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT,v.sh-y,200,geom.REACTIONS_HEIGHT)
   drawPill(v, v.bubbleColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER,v.sh-y+geom.REACTIONS_BORDER,200-2*geom.REACTIONS_BORDER,geom.REACTIONS_HEIGHT-2*geom.REACTIONS_BORDER)
   let x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER+geom.REACTION_SPACE_LEFT
+
+  const groups = {}
   for (const reaction of Object.keys(p.reactions)) {
+    let i = defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
+    if (!groups[''+i]) { groups[''+i] = 0 }
+    groups[''+i] += p.reactions[reaction]
+  }
+
+  const ranking = []
+  for (const group of Object.keys(groups)) {
+    let flag = false
+    for (let i = ranking.length-1; i >= 0; i--) {
+      if (groups[group] < groups[ranking[i]]) {
+        ranking.splice(i+1, 0, group)
+        flag = true
+        break
+      }
+    }
+    if (flag == false) {
+      ranking.splice(0, 0, group)
+    }
+  }
+  
+  for (const reaction of ranking) {
     let i = defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
     if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
