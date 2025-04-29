@@ -56,6 +56,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
     g.root.easeOut(g.target)
   }
 v.setContext = function(hpub) {
+  const v = this
   v.cp_hpub = hpub
   v.cp_hue = getHue(v.cp_hpub)
   v.bgColor = blend(colors.black, v.cp_hue, TINGE.BACKGROUND)
