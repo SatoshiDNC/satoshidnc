@@ -48,7 +48,11 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
         const hitList = { x: pointer.x, y: pointer.y, hits: [] }
         tg.getHits(hitList, getPointerRadius())
         if (hitList.hits.map(h => h.gad).includes(tg)) {
-          console.log('hit', p)
+          const reaction = {
+            kind: 7,
+            content: '✓',
+            tags: [['e',`${u.data.id}`], ['p',`${u.hpub}`], ['k',`${u.data.kind}`]],
+          }
           return
         }
       }
@@ -418,6 +422,15 @@ v.render_default = function(post, y) {
     if (line == '\0') {
       defaultFont.draw(0,0, 'Read more...', v.hue, v.mat, m)
       p.readmore_baseline = geom.TEXT_SPACE_BELOW+line_offset*geom.TEXT_LINE_SPACING/2
+    } else if (line.startsWith('# ')) {
+      const str = line.substring(2)
+      const w = defaultFont.calcWidth(str)
+      mat4.translate(m, m, [(v.sw/2-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT)/geom.TEXT_SCALE, 0, 0])
+      defaultFont.draw(-w/2,0, str, textColor2, v.mat, m)
+    } else if (line.startsWith('## ')) {
+      const str = line.substring(3)
+      mat4.scale(m, m, [0.75, 0.75, 1])
+      defaultFont.draw(0,0, str, textColor2, v.mat, m)
     } else {
       defaultFont.draw(0,0, line, v.textColor, v.mat, m)
     }
@@ -562,9 +575,6 @@ export function try_send_reaction(post) {
   if (!p.top_seen || !p.bottom_seen) return
   p.reacted = true
   markUpdateAsViewed(p.preloaded.data.id, p.preloaded.data.pubkey, p.preloaded.data.created_at * 1000)
-
-  // console.log(pending_reactions)
-  // console.log(pending_reactions.filter(e => e.tags.filter(t => t[0] == 'e' && t[1] == p.preloaded.data.id).length > 0)?.[0])
 }
 
 export function format_lines(plaintext, width = undefined) {
