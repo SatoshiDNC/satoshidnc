@@ -1,4 +1,4 @@
-import { drawAvatar, blend } from '../../draw.js'
+import { drawAvatar, blend, setValue } from '../../draw.js'
 import { getName, getHue } from '../../personal.js'
 
 let v, g
@@ -60,7 +60,7 @@ v.setContext = function(hpub) {
   v.cp_hpub = hpub
   v.cp_hue = getHue(v.cp_hpub)
   v.bgColor = blend(colors.black, v.cp_hue, TINGE.BACKGROUND)
-  v.dividerColor = blend(colors.black, v.cp_hue, TINGE.DIVIDER)
+  v.dividerColor = setValue(v.bgColor, TINGE.DIVIDER)
 }
 v.layoutFunc = function() {
   const v = this

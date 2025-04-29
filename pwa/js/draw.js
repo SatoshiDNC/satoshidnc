@@ -1,3 +1,7 @@
+export function clamp(min, value, max) {
+  return Math.max(min, Math.min(max, value))
+}
+
 export function alpha(color, alpha) {
   return [color[0], color[1], color[2], alpha]
 }
@@ -5,14 +9,40 @@ export function alpha(color, alpha) {
 export function blend(color1, color2, factor) {
   const f1 = Math.max(0, Math.min(1, 1 - factor))
   const f2 = Math.max(0, Math.min(1, factor))
-  return [color1[0]*f1+color2[0]*f2, color1[1]*f1+color2[1]*f2, color1[2]*f1+color2[2]*f2, color1[3]*f1+color2[3]*f2]
+  return [
+    color1[0]*f1+color2[0]*f2,
+    color1[1]*f1+color2[1]*f2,
+    color1[2]*f1+color2[2]*f2,
+    color1[3]*f1+color2[3]*f2,
+  ]
 }
 
 export function hue(color) {
   const min = Math.min(color[0], color[1], color[2])
   const max = Math.max(color[0], color[1], color[2])
   const delta = max - min
-  return delta? [(color[0]-min)/delta, (color[1]-min)/delta, (color[2]-min)/delta, color[3]]: [1,1,1,color[3]]
+  return delta? [
+    (color[0]-min)/delta,
+    (color[1]-min)/delta,
+    (color[2]-min)/delta,
+    color[3]
+  ]: [1,1,1,color[3]]
+}
+
+export function saturation(color) {
+  return (Math.max(color[0],color[1],color[2]) - Math.min(color[0],color[1],color[2])) / 255
+}
+
+export function setValue(color, value) {
+  const h = hue(color)
+  const s = saturation(color)
+  const v_new = clamp(0, value, 1)
+  return [
+    h[0]*s + (1-s)*v_new,
+    h[1]*s + (1-s)*v_new,
+    h[2]*s + (1-s)*v_new,
+    color[3]
+  ]
 }
 
 export function color_from_rgb_integer(rgb) {
