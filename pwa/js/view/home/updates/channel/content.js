@@ -26,11 +26,8 @@ personalDataTrigger.push(() => {
   if (!v.posts) return
   console.log(`[${TAG}] detected personal data change`, v)
   console.log(`[${TAG}] name: ${getPersonalData(v.hpub, 'name')}`)
-  //v.setRenderFlag(true)
-  //v.layoutFunc()
-  // v.parent.setRenderFlag(true)
+  v.previous_width = 0 // to force re-calculation
   v.queueLayout()
-  console.log('a')
 })
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
