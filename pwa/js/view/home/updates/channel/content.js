@@ -6,6 +6,7 @@ import { prep_kind30023, prep_kind30023_preview } from './kind/30023-long-form-n
 import * as geom from './geometry.js'
 import { kindInfo } from '../../../../nostor-util.js'
 
+const TAG = 'channel'
 const DAY_IN_SECONDS = 86400
 
 let v, g
@@ -20,7 +21,10 @@ v.subtitleColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.previous_width = 0
-personalDataTrigger.push(() => v.queueLayout())
+personalDataTrigger.push(() => {
+  console.log(`[${TAG}] detected personal data change`)
+  v.queueLayout()
+})
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(pointer) {
