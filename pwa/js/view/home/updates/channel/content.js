@@ -276,8 +276,18 @@ v.renderFunc = function() {
 }
 v.render_reactions = function(post, y) {
   const v = this, p = post
+  const m = mat4.create()
   drawPill(v, v.bgColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT,v.sh-y,200,geom.REACTIONS_HEIGHT)
   drawPill(v, v.bubbleColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER,v.sh-y+geom.REACTIONS_BORDER,200-2*geom.REACTIONS_BORDER,geom.REACTIONS_HEIGHT-2*geom.REACTIONS_BORDER)
+  let x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER+geom.REACTION_SPACE_LEFT
+  for (reaction of Object.keys(p)) {
+    const diameter = 14 // Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
+    const ts = geom.REACTION_SIZE/diameter
+    mat4.identity(m)
+    mat4.translate(m, m, [x+geom.REACTION_SIZE/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
+    mat4.scale(m, m, [geom.TEXT_SCALE/2, geom.TEXT_SCALE/2, 1])
+    defaultFont.draw(0, 0, 'A', v.textColor, v.mat, m)
+  }
 }
 v.render_debug_info = function(post, y) {
   const v = this, p = post
