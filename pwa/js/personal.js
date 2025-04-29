@@ -38,7 +38,7 @@ export function reloadPersonalData() {
       personalData.length = 0
       personalData.push(...newList)
       console.log(`[${TAG}] triggering dependencies`)
-      personalDataTrigger.map(f => f())
+      setTimeout(() => { personalDataTrigger.map(f => f()) })
     }
   }
 }
