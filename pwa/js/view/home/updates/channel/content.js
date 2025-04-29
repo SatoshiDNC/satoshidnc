@@ -27,15 +27,35 @@ personalDataTrigger.push(() => {
   v.previous_width = 0 // to force re-formatting
   v.queueLayout()
 })
-v.reactionsGad = new fg.Gadget(v)
+v.tempGad = new fg.Gadget(v)
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(pointer) {
     const g = this, v = g.viewport
+
     let y = 0
     let post, post_y
     let i = 0
     for (const p of v.posts) {
+
+      // check for reactions click
+      const tg = v.tempGad
+      tg.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
+      tg.y = p.y0
+      tg.w = p.reactions_width
+      tg.h = geom.REACTIONS_HEIGHT
+      tg.autoHull()
+      const touchRadius = 85, clickRadius = 5;
+      function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
+      const hitList = { x: pointer.x, y: pointer.y, hits: [] }
+      tg.getHits(hitList, getPointerRadius())
+      if (hitList.hits.map(h => h.gad).includes(tg)) {
+        console.log('hit', p)
+      } else {
+        console.log(hitList, tg)
+      }
+
+
       const py = (pointer.py-v.y)/v.getScale()
       if (v.sh-v.userY-py >= p.y0 && v.sh-v.userY-py <= p.y1) {
         post = p
@@ -47,20 +67,20 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
     if (post) {
 
       // check for reactions click
-      const g = v.reactionsGad
-      g.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
-      g.y = post_y
-      g.w = post.reactions_width
-      g.h = geom.REACTIONS_HEIGHT
-      g.autoHull()
+      const tg = v.tempGad
+      tg.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
+      tg.y = post_y
+      tg.w = post.reactions_width
+      tg.h = geom.REACTIONS_HEIGHT
+      tg.autoHull()
       const touchRadius = 85, clickRadius = 5;
       function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
       const hitList = { x: pointer.x, y: pointer.y, hits: [] }
-      g.getHits(hitList, getPointerRadius())
-      if (hitList.hits.map(h => h.gad).includes(g)) {
+      tg.getHits(hitList, getPointerRadius())
+      if (hitList.hits.map(h => h.gad).includes(tg)) {
         console.log('hit', post)
       } else {
-        console.log(hitList, g)
+        console.log(hitList, tg)
       }
 
       // check for gadget click
