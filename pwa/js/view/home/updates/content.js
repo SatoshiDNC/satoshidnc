@@ -42,7 +42,7 @@ v.displayAction = function(updates, hpub, returnView, root, target, mode) {
     new_count += 1
     const pending_reaction = {
       kind: 7,
-      content: '✓',
+      content: '👀',
       tags: [['e',`${u.data.id}`], ['p',`${u.hpub}`], ['k',`${u.data.kind}`]],
     }
     pending_reactions.push(pending_reaction)
