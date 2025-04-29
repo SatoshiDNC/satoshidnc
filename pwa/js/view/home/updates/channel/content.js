@@ -44,6 +44,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
         tg.y = v.sh-p.y0-geom.REACTIONS_OVERLAP
         tg.w = p.reactions_width
         tg.h = geom.REACTIONS_HEIGHT
+        console.log(tg.x,tg.y,tg.w,tg.h)
         tg.autoHull()
         const hitList = { x: pointer.x, y: pointer.y, hits: [] }
         tg.getHits(hitList, getPointerRadius())
