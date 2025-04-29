@@ -23,7 +23,7 @@ v.buttonTextColor = colors.accentButtonText
 v.previous_width = 0
 personalDataTrigger.push(() => {
   console.log(`[${TAG}] detected personal data change`, v)
-  v.relayout()
+  v.layoutFunc()
   // v.parent.setRenderFlag(true)
   // v.parent.queueLayout()
 })
