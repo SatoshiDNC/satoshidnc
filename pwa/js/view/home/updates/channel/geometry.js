@@ -15,5 +15,6 @@ export const REACTIONS_OVERLAP = 10
 export const REACTIONS_HEIGHT = 73
 export const REACTIONS_BORDER = 3
 export const REACTION_SPACE_LEFT = 20
+export const REACTION_SPACE_RIGHT = 20
 export const REACTION_SPACE_BETWEEN = 10
 export const REACTION_SIZE = 52
