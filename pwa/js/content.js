@@ -207,7 +207,10 @@ function handle_incoming_reaction(e, tr, tag, database_error_handler, resolve, r
   const event_reacted_to = e.tags.filter(t => t[0] == 'e').map(t => t[1]).pop()
   if (event_reacted_to) {
     const req1 = reaction_os.add({ data: e, target: event_reacted_to })
-    req1.onerror = database_error_handler
+    req1.onerror = e => {
+      if (e?.target?.error?.name === 'ConstraintError') return
+      database_error_handler(e)
+    }
     req1.onsuccess = () => {
       console.log(`[${tag}] stored reaction to post: ${event_reacted_to}`)
 
