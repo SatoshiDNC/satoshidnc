@@ -1,6 +1,6 @@
 import { getFeed, markUpdateAsViewed } from '../../../../content.js'
 import { getHue, getPersonalData, setPersonalData, personalDataTrigger } from '../../../../personal.js'
-import { drawRoundedRect, drawRect, drawPill, blend, alpha } from '../../../../draw.js'
+import { drawRoundedRect, drawRect, drawPill, blend, alpha, setValue } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023, prep_kind30023_preview } from './kind/30023-long-form-note.js'
 import * as geom from './geometry.js'
@@ -85,7 +85,7 @@ v.setContext = function(updates, hpub) {
   v.startTime = 0
   v.hue = getHue(v.hpub)
   v.bgColor = blend(colors.black, v.hue, TINGE.BACKGROUND)
-  v.bubbleColor = blend(colors.black, v.hue, TINGE.BUBBLE)
+  v.bubbleColor = setValue(v.bgColor, TINGE.BACKGROUND_BUBBLE)
   v.posts = []
   for (const u of v.updates) {
     v.insertPost(u)

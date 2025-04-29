@@ -13,8 +13,8 @@ let bapi_baseurl = 'https://bapi.satoshidnc.com'
 const TINGE = {
   BACKGROUND: 0.05,
   BACKGROUND_DIVIDER: 0.15,
+  BACKGROUND_BUBBLE: 0.117,
   BACKGROUND_ATTENUATION: 0.25,
-  BUBBLE: 0.25,
   ACTION_BUTTON: 0.2,
   DIM_TEXT: 0.5,
 }
