@@ -307,7 +307,7 @@ v.render_reactions = function(post, y) {
     let i = +reaction // defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
     if (i == -1) { i = defaultFont.glyphCodes.indexOf('?'.codePointAt(0)) }
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
-    const magnitude = 1 + (groups[reaction]-1)/15
+    const magnitude = 1 + ((''+groups[reaction]).length-1)/15
     const ts = geom.REACTION_SIZE/diameter * magnitude
     mat4.identity(m)
     mat4.translate(m, m, [x+geom.REACTION_SIZE*magnitude/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
