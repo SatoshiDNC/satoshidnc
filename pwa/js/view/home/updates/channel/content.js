@@ -23,8 +23,9 @@ v.buttonTextColor = colors.accentButtonText
 v.previous_width = 0
 personalDataTrigger.push(() => {
   console.log(`[${TAG}] detected personal data change`, v)
-  v.parent.setRenderFlag(true)
-  v.parent.queueLayout()
+  v.relayout()
+  // v.parent.setRenderFlag(true)
+  // v.parent.queueLayout()
 })
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
