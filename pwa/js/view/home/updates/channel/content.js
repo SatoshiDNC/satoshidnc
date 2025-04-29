@@ -22,10 +22,8 @@ v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.previous_width = 0
 personalDataTrigger.push(() => {
-  const v = contentView
   if (!v.posts) return
   console.log(`[${TAG}] detected personal data change`, v)
-  console.log(`[${TAG}] name: ${getPersonalData(v.hpub, 'name')}`)
   v.previous_width = 0 // to force re-formatting
   v.queueLayout()
 })
@@ -115,7 +113,6 @@ v.insertPost = function(preloaded) {
 }
 v.layoutFunc = function() {
   const v = this
-  console.log(`[${TAG}] layoutFunc`)
   v.minX = 0, v.maxX = v.sw
   v.minY = Math.min(0, v.sh-v.posts.reduce((p,c)=>p+geom.SPACE_BELOW+(c.total_height?c.total_height:0)+geom.SPACE_ABOVE,0)), v.maxY = v.sh
   let g
@@ -137,7 +134,6 @@ v.layoutFunc = function() {
 }
 v.renderFunc = function() {
   const v = this
-  console.log(`[${TAG}] renderFunc`)
   gl.clearColor(...v.bgColor)
   gl.clear(gl.COLOR_BUFFER_BIT)
 
