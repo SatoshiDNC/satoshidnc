@@ -2,9 +2,16 @@ import { db } from './db.js'
 
 const TAG = `personal-data`
 
+export const personalData = []
 export const personalDataTrigger = []
 
-export const personalData = []
+export function getName(hpub) {
+  return getPersonalData(hpub, 'name') || 'Unnamed'
+}
+
+export function getPersonalData(hpub, key) {
+  return personalData.filter(pd => pd.hpub == hpub && pd.key == key)?.[0]?.value
+}
 
 export function setPersonalData(hpub, key, value) {
   const tr = db.transaction('personal', 'readwrite', { durability: 'strict' })
@@ -14,10 +21,6 @@ export function setPersonalData(hpub, key, value) {
     console.log(`[${TAG}] updated`)
     reloadPersonalData()
   }
-}
-
-export function getPersonalData(hpub, key) {
-  return personalData.filter(pd => pd.hpub == hpub && pd.key == key)?.[0]?.value
 }
 
 export function reloadPersonalData() {

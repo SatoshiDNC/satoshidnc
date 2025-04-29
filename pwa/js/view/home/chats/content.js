@@ -2,7 +2,7 @@ import { contacts, contactDependencies, contactUpdatesDependencies } from '../..
 import { keys, keyDependencies } from '../../../keys.js'
 import { drawPill, drawAvatar, drawEllipse, drawRect } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
-import { getPersonalData as getAttr } from '../../../personal.js'
+import { getName, getPersonalData } from '../../../personal.js'
 import { addedOn } from '../../util.js'
 import { popupRoot, popupView } from './profile/popup.js'
 import { eventTrigger, getUpdates } from '../../../content.js'
@@ -134,8 +134,8 @@ v.renderFunc = function() {
     const c = contacts.filter(c=>c.hpub == hpub)?.[0]
     return {
       hpub,
-      name: (getAttr(hpub, 'name') || 'Unnamed') + (keys.map(k=>k.hpub).includes(hpub)?' (You)':''),
-      xmitText: getAttr(hpub, 'about') || addedOn(c?.added || Date.now()),
+      name: getName(hpub) + (keys.map(k=>k.hpub).includes(hpub)?' (You)':''),
+      xmitText: getPersonalData(hpub, 'about') || addedOn(c?.added || Date.now()),
       xmitDate: new Date(),
       hasUpdates: c?.hasUpdates,
       hasNewUpdates: c?.hasNewUpdates,

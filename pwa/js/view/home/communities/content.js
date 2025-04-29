@@ -2,7 +2,6 @@
 import { contacts, contactDependencies } from '../../../contacts.js'
 import { drawPill, drawAvatar } from '../../../draw.js'
 import { contentView as chatRoomView } from '../../chat-room/content.js'
-import { getPersonalData as getAttr } from '../../../personal.js'
 import { addedOn } from '../../util.js'
 
 let v, g

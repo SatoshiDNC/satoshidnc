@@ -1,5 +1,5 @@
 import { drawPill, drawEllipse, alpha, blend } from '../../../../draw.js'
-import { getPersonalData as getAttr } from '../../../../personal.js'
+import { getName } from '../../../../personal.js'
 import { updatePostedAsOf } from '../../../util.js'
 import { kindInfo } from '../../../../nostor-util.js'
 import { contentView } from './content.js'
@@ -119,7 +119,7 @@ v.renderFunc = function() {
   mat4.identity(m)
   mat4.translate(m, m, [263, 82, 0])
   mat4.scale(m, m, [33/14, 33/14, 1])
-  defaultFont.draw(0,0, getAttr(v.updates[v.currentUpdate].hpub, 'name') || 'Unnamed', v.titleColor, v.mat, m)
+  defaultFont.draw(0,0, getName(v.updates[v.currentUpdate].hpub), v.titleColor, v.mat, m)
 
   const data = v.updates[v.currentUpdate].data
 

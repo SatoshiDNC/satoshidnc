@@ -1,6 +1,6 @@
 import { contacts, contactDependencies } from '../../../../../contacts.js'
 import { keys, keyDependencies } from '../../../../../keys.js'
-import { getPersonalData as getAttr, personalData, personalDataTrigger } from '../../../../../personal.js'
+import { getName, getPersonalData, personalData, personalDataTrigger } from '../../../../../personal.js'
 import { contentView as chatRoomView } from '../../../../chat-room/content.js'
 
 let v, g
@@ -176,12 +176,12 @@ v.renderFunc = function() {
   const index = []
   for (const c of [ ...keys.map(k => { return {
     hpub: k.hpub,
-    name: (getAttr(k.hpub, 'name') || 'Unnamed') + ' (You)',
+    name: getName(k.hpub) + ' (You)',
     about: 'Message yourself',
   }}), ...contacts.map(c => { return {
     hpub: c.hpub,
-    name: getAttr(c.hpub, 'name'),
-    about: getAttr(c.hpub, 'about') || '',
+    name: getName(c.hpub),
+    about: getPersonalData(c.hpub, 'about') || '',
   }}) ]) {
     index.push(c.hpub)
     npubRender(c, 42, 686 + 179 * i) // 482

@@ -1,5 +1,5 @@
 import { drawPill, drawAvatar, drawEllipse, drawRect, blend, hue } from '../../../draw.js'
-import { getPersonalData as getAttr } from '../../../personal.js'
+import { getName } from '../../../personal.js'
 import { addedOn, updatePostedAsOf } from '../../util.js'
 import { aggregateEvent, savePendingReactions, setDummyKey, getUpdates, eventTrigger } from '../../../content.js'
 import { followChannel, unfollowChannel, amFollowingChannel, followsTrigger, follows as channelFollows } from '../../../channels.js'
@@ -448,7 +448,7 @@ v.renderFunc = function() {
       if (v.selfs.length == 1) {
         str = 'My status'
       } else {
-        str = `${getAttr(hpub, 'name') || 'Unnamed'} (My status)`
+        str = `${getName(hpub)} (My status)`
       }
       if (!numUpdates) {
         drawEllipse(v, v.bgColor,     115, g.y+index*200 + 105, 63, 63)
@@ -459,7 +459,7 @@ v.renderFunc = function() {
         defaultFont.draw(0,0, '+', v.bgColor, v.mat, m)
       }
     } else {
-      str = getAttr(hpub, 'name') || 'Unnamed'
+      str = getName(hpub)
     }
     const max_len = -32 + v.sw-211-32 + ((rank && !v.selfs.includes(hpub))? -2*(20/14) - Math.ceil(rank/3)*26*(20/14) - rank*4: 0)
     while (str.length > 1 && defaultFont.calcWidth(str)*textScale > max_len) {

@@ -1,5 +1,5 @@
 import { getKeyboardInput } from '../../../../../util.js'
-import { getPersonalData } from '../../../../../../personal.js'
+import { getName, getPersonalData } from '../../../../../../personal.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -62,7 +62,7 @@ v.clear = function() {
 v.setContact = function(hpub) {
   const v = this
   v.hpub = hpub
-  v.nameGad.text = getPersonalData(hpub, 'name')
+  v.nameGad.text = getName(hpub)
   // v.pubkeyGad.text = hpub
   v.relayGad.text = getPersonalData(hpub, 'relay')
   v.setRenderFlag(true)

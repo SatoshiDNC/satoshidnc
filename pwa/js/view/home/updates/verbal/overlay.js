@@ -3,7 +3,7 @@ import { contentView } from './content.js'
 import { signBatch as sign, prepEvent as prep, serializeEvent as ser, keys, getKeyInfo, putDeviceKey, putVolatileKey, useVolatileKey } from '../../../../keys.js'
 import { aggregateEvent } from '../../../../content.js'
 import { homeRelay } from '../../../../nostor-app.js'
-import { getPersonalData as getAttr } from '../../../../personal.js'
+import { getPersonalData } from '../../../../personal.js'
 import { getPubkey } from '../../../../nostor-util.js'
 import { getKeyboardInput } from '../../../util.js'
 import * as nip19 from 'nostr-tools/nip19'
@@ -170,7 +170,7 @@ v.gadgets.push(g = v.micSendGad = new fg.Gadget(v))
 
           // housekeeping
           setTimeout(() => {
-            const name = getAttr(hpub, 'name')
+            const name = getName(hpub)
             const keyInfo = getKeyInfo(hpub)
             console.log('public key data:', hpub, name, keyInfo)
             if (!keyInfo) {
@@ -488,7 +488,7 @@ v.renderFunc = function() {
       if (items[i].hpub && !items[i].option) {
         drawAvatar(v, items[i].hpub, x + h*0.2, y - f1*itemHeight*(i+1) + h*0.1, h*0.8, f1*h*0.8)
       }
-      let t = items[i].optionLabel || getAttr(items[i].hpub, 'name') || ''
+      let t = items[i].optionLabel || getPersonalData(items[i].hpub, 'name') || ''
       const max = (w - (items[i].option?0:h) - h*0.4) / s
       if (defaultFont.calcWidth(t) > max) {
         while (defaultFont.calcWidth(t+'...') > max && t.length > 0) {

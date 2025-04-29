@@ -2,7 +2,7 @@ import { device, contacts, contactDependencies } from '../../contacts.js'
 import { drawPill } from '../../draw.js'
 import { contentView as chatRoomView } from '../chat-room/content.js'
 import { defaultKey } from '../../keys.js'
-import { getPersonalData as getAttr } from '../../personal.js'
+import { getName, getPersonalData } from '../../personal.js'
 import { rootView as storageView } from './storage/root.js'
 
 let v, g
@@ -158,8 +158,8 @@ v.renderFunc = function() {
   const mat = mat4.create()
   let c = {
     hpub: defaultKey,
-    name: getAttr(defaultKey, 'name') || 'Unnamed',
-    about: getAttr(defaultKey, 'about') || 'I’m using Nostor!',
+    name: getName(defaultKey),
+    about: getPersonalData(defaultKey, 'about') || 'I’m using Nostor!',
   }
   let str
 

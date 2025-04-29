@@ -1,5 +1,5 @@
 import { drawAvatar, blend, hue, color_from_rgb_integer } from '../../../../draw.js'
-import { getPersonalData, personalDataTrigger } from '../../../../personal.js'
+import { getName, personalDataTrigger } from '../../../../personal.js'
 import { unfollowChannel } from '../../../../channels.js'
 import { balances } from '../../../../deals.js'
 import { keys } from '../../../../keys.js'
@@ -34,7 +34,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
     }},
     { id: 2, label: 'Channel info', handler: g.handler },
     { id: 3, label: 'Unfollow', handler: () => {
-      if (confirm(`Are you sure you want to unfollow "${getPersonalData(v.hpub, 'name')}"?`)) {
+      if (confirm(`Are you sure you want to unfollow "${getName(v.hpub)}"?`)) {
         unfollowChannel(v.hpub)
       }
     }},
@@ -115,7 +115,7 @@ v.renderFunc = function() {
   mat4.translate(mat, mat, [190, v.VPOS0 * f0 + v.VPOS1 * f1, 0])
   mat4.scale(mat, mat, [35/14, 35/14, 1])
   let x = 0, y = 0
-  defaultFont.draw(x,y, getPersonalData(v.hpub, 'name') || 'Unnamed', v.textColor, v.mat, mat)
+  defaultFont.draw(x,y, getName(v.hpub), v.textColor, v.mat, mat)
   
   mat4.identity(mat)
   mat4.translate(mat, mat, [190, 116, 0])

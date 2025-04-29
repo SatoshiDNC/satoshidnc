@@ -1,6 +1,6 @@
 import { setEasingParameters } from '../../../../util.js'
 import { drawAvatar, alpha } from '../../../../../draw.js'
-import { getPersonalData as get } from '../../../../../personal.js'
+import { getName } from '../../../../../personal.js'
 import { reqProfile, reqNotes, getProfile, getFeed, profileTrigger, eventTrigger } from '../../../../../content.js'
 import { kindInfo } from '../../../../../nostor-util.js'
 import { kind0 } from './block/kind-0-metadata.js'
@@ -279,7 +279,7 @@ v.renderFunc = function() {
   const hpub = v.hpub
   drawAvatar(v, hpub, (v.sw-316)/2 * f0 + 129 * f1, 30 * f0 + 17 * f1 + v.userY, 316 * f0 + 114 * f1, 316 * f0 + 114 * f1)
 
-  t = get(hpub, 'name') || 'Unnamed'
+  t = getName(hpub, 'name')
   tw = defaultFont.calcWidth(t)
   ts = 49/14 * f0 + 45/14 * f1
   mat4.identity(mat)

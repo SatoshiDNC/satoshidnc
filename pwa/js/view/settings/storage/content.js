@@ -1,5 +1,4 @@
 import { defaultKey } from '../../../keys.js'
-import { getPersonalData as getAttr } from '../../../personal.js'
 
 let v, g
 const m = mat4.create()
