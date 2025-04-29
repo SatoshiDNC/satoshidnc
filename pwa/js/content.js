@@ -155,8 +155,10 @@ function handle_incoming_deletion(e, os, del_os, tag, database_error_handler, re
         }
       }
     } else {
-      console.log(`[${tag}] noted deletions:`, ids)
-      setTimeout(() => { deletionTrigger.map(f => f(ids)) })
+      if (ids.length) {
+        console.log(`[${tag}] noted deletions:`, ids)
+        setTimeout(() => { deletionTrigger.map(f => f(ids)) })
+      }
       resolve()
     }
   }
