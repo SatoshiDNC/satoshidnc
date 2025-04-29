@@ -26,7 +26,7 @@ personalDataTrigger.push(() => {
   if (!v.posts) return
   console.log(`[${TAG}] detected personal data change`, v)
   console.log(`[${TAG}] name: ${getPersonalData(v.hpub, 'name')}`)
-  v.previous_width = 0 // to force re-calculation
+  v.previous_width = 0 // to force re-formatting
   v.queueLayout()
 })
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))

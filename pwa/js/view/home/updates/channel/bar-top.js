@@ -61,7 +61,6 @@ v.setContext = function(hpub) {
   const v = this
   v.hpub = hpub
   v.selfs = keys.map(k => k.hpub)
-  v.profile = { name: getPersonalData(v.hpub, 'name') || 'Unnamed' }
   v.hue = hue(color_from_rgb_integer(parseInt(v.hpub[61] + v.hpub[61] + v.hpub[62] + v.hpub[62] + v.hpub[63] + v.hpub[63],16)))
   v.bgColor = blend([0,0,0,1], v.hue, 0.15)
   v.dividerColor = blend([0,0,0,1], v.hue, 0.25)
@@ -112,7 +111,7 @@ v.renderFunc = function() {
   mat4.translate(mat, mat, [190, v.VPOS0 * f0 + v.VPOS1 * f1, 0])
   mat4.scale(mat, mat, [35/14, 35/14, 1])
   let x = 0, y = 0
-  defaultFont.draw(x,y, v.profile.name, v.textColor, v.mat, mat)
+  defaultFont.draw(x,y, getPersonalData(v.hpub, 'name') || 'Unnamed', v.textColor, v.mat, mat)
   
   mat4.identity(mat)
   mat4.translate(mat, mat, [190, 116, 0])
