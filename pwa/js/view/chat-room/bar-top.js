@@ -61,7 +61,6 @@ v.setContext = function(hpub) {
   v.cp_hue = getHue(v.cp_hpub)
   v.bgColor = blend(colors.black, v.cp_hue, TINGE.BACKGROUND)
   v.dividerColor = setValue(v.bgColor, TINGE.BACKGROUND_DIVIDER)
-  console.log(v.bgColor, v.dividerColor)
 }
 v.layoutFunc = function() {
   const v = this
