@@ -521,7 +521,7 @@ v.renderFunc = function() {
         defaultFont.draw(0,0, label, colors.accent, v.mat, m)
       } else {
         const bw = 208, bh = 83
-        drawPill(v, blend(v.bgColor,hue(colors.accent),ACTION_BUTTON_TINGE_FACTOR), v.sw-42-bw,g.y+index*200+53, bw,bh)
+        drawPill(v, blend(v.bgColor,hue(colors.accent),TINGE.ACTION_BUTTON), v.sw-42-bw,g.y+index*200+53, bw,bh)
         const label = 'Follow'
         const ts = 29/14
         const w = defaultFont.calcWidth(label)*ts
