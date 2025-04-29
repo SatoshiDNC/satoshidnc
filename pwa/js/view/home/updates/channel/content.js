@@ -25,12 +25,11 @@ personalDataTrigger.push(() => {
   const v = contentView
   if (!v.posts) return
   console.log(`[${TAG}] detected personal data change`, v)
-  v.setRenderFlag(true)
-  v.renderFunc()
-  console.log('a')
+  //v.setRenderFlag(true)
   //v.layoutFunc()
   // v.parent.setRenderFlag(true)
-  //v.parent.queueLayout()
+  v.parent.queueLayout()
+  console.log('a')
 })
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
