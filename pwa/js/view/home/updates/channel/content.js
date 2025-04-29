@@ -28,7 +28,7 @@ personalDataTrigger.push(() => {
   //v.setRenderFlag(true)
   //v.layoutFunc()
   // v.parent.setRenderFlag(true)
-  v.parent.queueLayout()
+  v.queueLayout()
   console.log('a')
 })
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
