@@ -57,6 +57,7 @@ v.gadgets.push(g = v.backGad = new fg.Gadget(v))
   }
 v.setContext = function(hpub) {
   const v = this
+  console.log('barTop.setContext', hpub)
   v.cp_hpub = hpub
   v.cp_hue = getHue(v.cp_hpub)
   v.bgColor = blend(colors.black, v.cp_hue, TINGE.BACKGROUND)
