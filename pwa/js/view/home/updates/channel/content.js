@@ -317,6 +317,7 @@ v.render_reactions = function(post, y) {
 
   drawPill(v, v.bgColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT,v.sh-y,w,geom.REACTIONS_HEIGHT)
   drawPill(v, v.bubbleColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER,v.sh-y+geom.REACTIONS_BORDER,w-2*geom.REACTIONS_BORDER,geom.REACTIONS_HEIGHT-2*geom.REACTIONS_BORDER)
+  const textColor2 = blend(v.bubbleColor, v.textColor, TINGE.DIM_TEXT)
   let x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTION_SPACE_LEFT
   for (const reaction of ranking) {
     let i = +reaction // defaultFont.glyphCodes.indexOf(reaction.codePointAt(0))
@@ -332,7 +333,6 @@ v.render_reactions = function(post, y) {
     defaultFont.draw(-defaultFont.calcWidth(c)/2, diameter/2-defaultFont.glyphY1[i], c, reaction == '-2'?textColor2:v.textColor, v.mat, m)
     x += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
   }
-  const textColor2 = blend(v.bubbleColor, v.textColor, TINGE.DIM_TEXT)
   const ts = geom.REACTION_COUNT_HEIGHT/14
   mat4.identity(m)
   mat4.translate(m, m, [x, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
