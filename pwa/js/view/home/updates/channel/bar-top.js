@@ -1,5 +1,6 @@
 import { drawAvatar, blend, hue, color_from_rgb_integer } from '../../../../draw.js'
 import { getPersonalData, personalDataTrigger } from '../../../../personal.js'
+import { unfollowChannel } from '../../../../channels.js'
 import { balances } from '../../../../deals.js'
 import { keys } from '../../../../keys.js'
 
