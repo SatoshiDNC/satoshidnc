@@ -1,6 +1,6 @@
 import { db } from './db.js'
 
-export const personalDataDependencies = []
+export const personalDataTrigger = []
 
 export const personalData = []
 
@@ -34,7 +34,7 @@ export function reloadPersonalData() {
     } else {
       personalData.length = 0
       personalData.push(...newList)
-      personalDataDependencies.map(f => f())
+      personalDataTrigger.map(f => f())
     }
   }
 }

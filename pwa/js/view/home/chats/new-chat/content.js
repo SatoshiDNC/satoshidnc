@@ -1,6 +1,6 @@
 import { contacts, contactDependencies } from '../../../../contacts.js'
 import { keys, keyDependencies } from '../../../../keys.js'
-import { getPersonalData as getAttr, personalData, personalDataDependencies } from '../../../../personal.js'
+import { getPersonalData as getAttr, personalData, personalDataTrigger } from '../../../../personal.js'
 import { contentView as chatRoomView } from '../../../chat-room/content.js'
 import { drawAvatar } from '../../../../draw.js'
 
@@ -84,7 +84,7 @@ v.layoutFunc = function() {
 }
 contactDependencies.push(() => v.setRenderFlag(true))
 keyDependencies.push(() => v.setRenderFlag(true))
-personalDataDependencies.push(() => v.setRenderFlag(true))
+personalDataTrigger.push(() => v.setRenderFlag(true))
 v.renderFunc = function() {
   const v = this
   gl.clearColor(...v.bgColor)
