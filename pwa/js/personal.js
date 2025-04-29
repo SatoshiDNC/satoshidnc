@@ -11,6 +11,7 @@ export function setPersonalData(hpub, key, value) {
   const os = tr.objectStore('personal')
   const req = os.put({ hpub, key, value })
   req.onsuccess = (e) => {
+    console.log(`[${TAG}] updated`)
     reloadPersonalData()
   }
 }
@@ -36,7 +37,7 @@ export function reloadPersonalData() {
     } else {
       personalData.length = 0
       personalData.push(...newList)
-      console.log(`[${TAG}] triggering update`)
+      console.log(`[${TAG}] triggering dependencies`)
       personalDataTrigger.map(f => f())
     }
   }
