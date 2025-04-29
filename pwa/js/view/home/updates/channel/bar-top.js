@@ -26,7 +26,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.font = iconFont
   g.fontSize = 11
   g.handler = function(item) {
-    cas
     console.log(`id ${JSON.stringify(item)}`)
   }
   g.items = [
