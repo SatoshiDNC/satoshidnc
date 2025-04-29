@@ -55,6 +55,7 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
           }
         }
       } else {
+        console.log(g.target)
         g.target.setContext(hpub)
         g.root.easeOut(g.target)
       }
