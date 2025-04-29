@@ -1,5 +1,7 @@
 import { db } from './db.js'
 
+const TAG = `personal-data`
+
 export const personalDataTrigger = []
 
 export const personalData = []
@@ -34,6 +36,7 @@ export function reloadPersonalData() {
     } else {
       personalData.length = 0
       personalData.push(...newList)
+      console.log(`[${TAG}] triggering update`)
       personalDataTrigger.map(f => f())
     }
   }
