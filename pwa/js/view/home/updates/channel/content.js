@@ -25,6 +25,7 @@ personalDataTrigger.push(() => {
   const v = contentView
   if (!v.posts) return
   console.log(`[${TAG}] detected personal data change`, v)
+  console.log(`[${TAG}] name: ${getPersonalData(v.hpub, 'name')}`)
   //v.setRenderFlag(true)
   //v.layoutFunc()
   // v.parent.setRenderFlag(true)
