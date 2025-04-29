@@ -27,6 +27,7 @@ personalDataTrigger.push(() => {
   v.previous_width = 0 // to force re-formatting
   v.queueLayout()
 })
+v.reactionsGad = new fg.Gadget(v)
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(pointer) {
@@ -45,12 +46,25 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
     }
     if (post) {
 
+      // check for reactions click
+      const g = v.reactionsGad
+      g.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
+      g.y = post_y
+      g.w = post.reactions_width
+      g.h = geom.REACTIONS_HEIGHT
+      g.autoHull()
+      const touchRadius = 85, clickRadius = 5;
+      function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
+      const hitList = { x: pointer.x, y: pointer.y, hits: [] }
+      g.getHits(hitList, getPointerRadius())
+      if (hitList.hits.map(h => h.gad).includes(g)) {
+        console.log('hit', post)
+      }
+
       // check for gadget click
       if (post.gadgets) {
         post.gadgets.map(g => {
           g.autoHull()
-          const touchRadius = 85, clickRadius = 5;
-          function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
           const hitList = { x: pointer.x, y: pointer.y, hits: [] }
           g.getHits(hitList, getPointerRadius())
           if (hitList.hits.map(h => h.gad).includes(g)) {
@@ -315,6 +329,7 @@ v.render_reactions = function(post, y) {
     w += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
   }
   w += defaultFont.calcWidth(`${n}`)*geom.REACTION_COUNT_HEIGHT/14
+  p.reactions_width = w
 
   drawPill(v, v.bgColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT,v.sh-y,w,geom.REACTIONS_HEIGHT)
   drawPill(v, v.bubbleColor, geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT+geom.REACTIONS_BORDER,v.sh-y+geom.REACTIONS_BORDER,w-2*geom.REACTIONS_BORDER,geom.REACTIONS_HEIGHT-2*geom.REACTIONS_BORDER)
