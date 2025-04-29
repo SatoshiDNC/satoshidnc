@@ -55,7 +55,6 @@ v.gadgets.push(g = v.listGad = new fg.Gadget(v))
           }
         }
       } else {
-        console.log(g.target)
         g.target.setContext(hpub)
         g.root.easeOut(g.target)
       }
@@ -67,7 +66,6 @@ v.activeFilter = v.filterGads[0].label
 eventTrigger.push(() => { v.relayout() })
 balanceTrigger.push(() => { v.setRenderFlag(true) })
 v.layoutFunc = function() {
-  console.log('layout')
   const v = this
   let x = 42
   for (const g of v.filterGads) {
