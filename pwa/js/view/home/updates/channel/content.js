@@ -287,7 +287,7 @@ v.render_reactions = function(post, y) {
     mat4.identity(m)
     mat4.translate(m, m, [x+geom.REACTION_SIZE/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
     mat4.scale(m, m, [ts, ts, 1])
-    defaultFont.draw(0, 0, 'A', v.textColor, v.mat, m)
+    defaultFont.draw(-diameter/2, diameter/2, 'A', v.textColor, v.mat, m)
   }
 }
 v.render_debug_info = function(post, y) {
