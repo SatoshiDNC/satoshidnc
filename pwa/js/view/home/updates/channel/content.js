@@ -22,6 +22,7 @@ v.buttonFaceColor = colors.accentButtonFace
 v.buttonTextColor = colors.accentButtonText
 v.previous_width = 0
 personalDataTrigger.push(() => {
+  const v = contentView
   console.log(`[${TAG}] detected personal data change`, v)
   v.setRenderFlag(true)
   console.log('a')
