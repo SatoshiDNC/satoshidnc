@@ -30,13 +30,14 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   }
   g.items = [
     { id: 1, label: 'Copy id', handler: () => { navigator.clipboard.writeText(v.hpub).catch(e => console.error(e)) } },
-    { id: 2, handler: g.handler, label: 'View contact' },
-    { id: 3, handler: g.handler, label: 'Media, links, and docs' },
-    { id: 4, handler: g.handler, label: 'Search' },
-    { id: 5, handler: g.handler, label: 'Mute notifications' },
-    { id: 6, handler: g.handler, label: 'Disappearing messages' },
-    { id: 7, handler: g.handler, label: 'Wallpaper' },
-    { id: 8, handler: g.handler, label: 'More' },
+    { id: 2, handler: g.handler, label: 'Channel info' },
+    { id: 3, label: 'Unfollow', handler: () => {
+      if (confirm(`Are you sure you want to unfollow "${getPersonalData(v.hpub, 'name')}"?`)) {
+        unfollowChannel(v.hpub)
+      }
+    } },
+    { id: 4, handler: g.handler, label: 'Share' },
+    { id: 5, handler: g.handler, label: 'Report' },
   ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
