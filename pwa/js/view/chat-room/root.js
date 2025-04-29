@@ -10,4 +10,9 @@ v.bgColor = [0,0,0,1]
 v.a = barTop; barTop.parent = v
 v.b = contentView; contentView.parent = v
 v.c = barBot; barBot.parent = v
+v.setContext = function(hpub) {
+  v.a?.setContext?.(hpub)
+  v.b?.setContext?.(hpub)
+  v.c?.setContext?.(hpub)
+}
 setEasingParameters(v)

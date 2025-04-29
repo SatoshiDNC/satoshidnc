@@ -1,6 +1,6 @@
 import { barTop } from './bar-top.js'
 import { drawRoundedRect, blend } from '../../draw.js'
-import { getName, getHue, personalData } from '../../personal.js'
+import { getName, getHue } from '../../personal.js'
 
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
@@ -13,9 +13,6 @@ v.setContext = function(hpub) {
   v.cp_hpub = hpub
   v.cp_hue = getHue(v.cp_hpub)
   v.bgColor = blend(colors.black, v.cp_hue, TINGE.BACKGROUND)
-  v.contact = { hpub, name: getName(hpub) }
-
-  barTop.contact = v.contact
   v.messages = []
   v.messages.push({
     type: 'date marker',
