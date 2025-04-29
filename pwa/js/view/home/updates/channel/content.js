@@ -9,6 +9,9 @@ import { kindInfo } from '../../../../nostor-util.js'
 const TAG = 'channel'
 const DAY_IN_SECONDS = 86400
 
+const touchRadius = 85, clickRadius = 5;
+function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
+
 let v, g
 export const contentView = v = new fg.View(null)
 v.name = Object.keys({contentView}).pop()
@@ -42,8 +45,6 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
         tg.w = p.reactions_width
         tg.h = geom.REACTIONS_HEIGHT
         tg.autoHull()
-        const touchRadius = 85, clickRadius = 5;
-        function getPointerRadius() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
         const hitList = { x: pointer.x, y: pointer.y, hits: [] }
         tg.getHits(hitList, getPointerRadius())
         if (hitList.hits.map(h => h.gad).includes(tg)) {
