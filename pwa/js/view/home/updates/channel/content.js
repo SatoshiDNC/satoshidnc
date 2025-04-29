@@ -328,6 +328,7 @@ v.render_reactions = function(post, y) {
     x += geom.REACTION_SIZE*magnitude + geom.REACTION_SPACE_BETWEEN
   }
   const textColor2 = blend(v.bubbleColor, v.textColor, TINGE.DIM_TEXT)
+  const ts = geom.REACTION_COUNT_HEIGHT/14
   mat4.identity(m)
   mat4.translate(m, m, [x, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
   mat4.scale(m, m, [ts, ts, 1])
