@@ -241,7 +241,7 @@ v.renderFunc = function() {
       }
       p.reactions = p.preloaded.data._reactions || {} // {'❤':2, '💔':1, '📜':1}
     }
-    if (v.sh-(v.userY+y + geom.SPACE_BELOW+p.total_height+geom.SPACE_ABOVE) < v.sh && v.sh-(v.userY+y) > 0) {
+    if (v.sh-(v.userY+y + geom.SPACE_BELOW+geom.REACTIONS_HEIGHT-geom.REACTIONS_OVERLAP+p.total_height+geom.SPACE_ABOVE) < v.sh && v.sh-(v.userY+y) > 0) {
       y += geom.SPACE_BELOW
       if (p.reactions) {
         y += geom.REACTIONS_HEIGHT-geom.REACTIONS_OVERLAP
