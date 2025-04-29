@@ -18,6 +18,7 @@ v.VPOS1 = 68
 v.lastSubtitle = ''
 v.subtitleOpacity = 0
 v.shirtColor = [v.white, v.yellow, v.red, v.blue]
+personalDataTrigger.push(() => { v.setRenderFlag(true) })
 v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.label = ':'
