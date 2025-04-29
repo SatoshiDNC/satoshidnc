@@ -329,9 +329,9 @@ v.render_reactions = function(post, y) {
   }
   const textColor2 = blend(v.bubbleColor, v.textColor, TINGE.DIM_TEXT)
   mat4.identity(m)
-  mat4.translate(m, m, [x+geom.REACTION_SIZE*magnitude/2, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
+  mat4.translate(m, m, [x, v.sh-y+geom.REACTIONS_HEIGHT/2, 0])
   mat4.scale(m, m, [ts, ts, 1])
-  defaultFont.draw(-geom.REACTION_SIZE/2, 7, `${n}`, textColor2, v.mat, m)
+  defaultFont.draw(0, 7, `${n}`, textColor2, v.mat, m)
 }
 v.render_debug_info = function(post, y) {
   const v = this, p = post
