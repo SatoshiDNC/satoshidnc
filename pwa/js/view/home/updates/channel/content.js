@@ -41,7 +41,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       // check for reactions click
       const tg = v.tempGad
       tg.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
-      tg.y = v.sh-v.userY-p.y0
+      tg.y = v.sh+v.userY-p.y0
       tg.w = p.reactions_width
       tg.h = geom.REACTIONS_HEIGHT
       tg.autoHull()
@@ -52,7 +52,6 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       if (hitList.hits.map(h => h.gad).includes(tg)) {
         console.log('hit', p)
       } else {
-        console.log(hitList, tg)
       }
 
 
