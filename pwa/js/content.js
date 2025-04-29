@@ -206,28 +206,35 @@ function handle_incoming_reaction(e, tr, tag, database_error_handler, resolve, r
   const reaction_os = tr.objectStore('incoming-reactions-pending')
   const event_reacted_to = e.tags.filter(t => t[0] == 'e').map(t => t[1]).pop()
   if (event_reacted_to) {
-    const req = os.index('id').get(event_reacted_to)
-    req.onerror = database_error_handler
-    req.onsuccess = () => {
-      if (req.result) { // the event reacted to is in our database
-        if (!req.result.data._reactions) { req.result.data._reactions = []}
-        if (!req.result.data._reactions[e.content]) { req.result.data._reactions[e.content] = 0 }
-        req.result.data._reactions[e.content] += 1
-        const req2 = os.put({ hpub: req.result.hpub, firstSeen: req.result.firstSeen, data: req.result.data })
-        req2.onerror = database_error_handler
-        req2.onsuccess = () => {
-          console.log(`[${tag}] reaction on ${event_reacted_to}`)
-          setTimeout(() => { reactionTrigger.map(f => f(event_reacted_to)) })
-          resolve()
-        }
-      } else {
-        const req2 = reaction_os.put({ data: e, target: event_reacted_to })
-        req2.onerror = database_error_handler
-        req2.onsuccess = () => {
-          console.log(`[${tag}] queued reaction to unknown post: ${event_reacted_to}`)
-          resolve()
+    const req1 = reaction_os.put({ data: e, target: event_reacted_to })
+    req1.onerror = database_error_handler
+    req1.onsuccess = () => {
+      console.log(`[${tag}] stored reaction to post: ${event_reacted_to}`)
+
+      const req = os.index('id').get(event_reacted_to)
+      req.onerror = database_error_handler
+      req.onsuccess = () => {
+        if (req.result) { // the event reacted to is in our database
+          if (!req.result.data._reactions) { req.result.data._reactions = []}
+          if (!req.result.data._reactions[e.content]) { req.result.data._reactions[e.content] = 0 }
+          req.result.data._reactions[e.content] += 1
+          const req2 = os.put({ hpub: req.result.hpub, firstSeen: req.result.firstSeen, data: req.result.data })
+          req2.onerror = database_error_handler
+          req2.onsuccess = () => {
+            console.log(`[${tag}] reaction on ${event_reacted_to}`)
+            setTimeout(() => { reactionTrigger.map(f => f(event_reacted_to)) })
+            resolve()
+          }
+        } else {
+          const req2 = reaction_os.put({ data: e, target: event_reacted_to })
+          req2.onerror = database_error_handler
+          req2.onsuccess = () => {
+            console.log(`[${tag}] queued reaction to unknown post: ${event_reacted_to}`)
+            resolve()
+          }
         }
       }
+  
     }
   } else {
     console.warn(`[${tag}] invalid reaction:`, e)
