@@ -40,7 +40,7 @@ reactionTrigger.push((post_id, reaction_content) => {
   recalculate()
 })
 let recalculation_timer
-recalculate = () => {
+const recalculate = () => {
   if (recalculation_timer) {
     clearTimeout(recalculation_timer)
     recalculation_timer = undefined
