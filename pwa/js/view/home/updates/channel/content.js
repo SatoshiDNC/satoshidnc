@@ -27,15 +27,31 @@ v.previous_width = 0
 personalDataTrigger.push(() => {
   if (!v.posts) return
   console.log(`[${TAG}] detected personal data change`, v)
-  v.previous_width = 0 // to force re-formatting
-  v.queueLayout()
+  recalculate()
 })
-reactionTrigger.push(() => {
+reactionTrigger.push((post_id, reaction_content) => {
   if (!v.posts) return
+  for (const p of posts) if (p.preloaded.data.id == post_id) {
+    if (!p.preloaded._reactions) { p.preloaded._reactions = {} }
+    if (!p.preloaded._reactions[reaction_content]) { p.preloaded._reactions[reaction_content] = 0 }
+    p.preloaded._reactions[reaction_content] += 1
+  }
   console.log(`[${TAG}] detected reaction`, v)
-  v.previous_width = 0 // to force re-formatting
-  v.queueLayout()
+  recalculate()
 })
+let recalculation_timer
+recalculate = () => {
+  if (recalculation_timer) {
+    clearTimeout(recalculation_timer)
+    recalculation_timer = undefined
+  }
+  recalculation_timer = setTimeout(() => {
+    console.log(`[${TAG}] recalculating`, v)
+    v.previous_width = 0 // to force re-formatting
+    v.queueLayout()
+    recalculation_timer = undefined
+  }, 100)
+}
 v.tempGad = new fg.Gadget(v)
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE

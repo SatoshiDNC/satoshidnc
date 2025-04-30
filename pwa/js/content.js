@@ -225,7 +225,7 @@ function handle_incoming_reaction(e, tr, tag, database_error_handler, resolve, r
           req2.onerror = database_error_handler
           req2.onsuccess = () => {
             console.log(`[${tag}] reaction on ${event_reacted_to}`)
-            setTimeout(() => { reactionTrigger.map(f => f(event_reacted_to)) })
+            setTimeout(() => { reactionTrigger.map(f => f(event_reacted_to, e.content)) })
             resolve()
           }
         } else {
