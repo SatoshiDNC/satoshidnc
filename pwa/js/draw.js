@@ -99,7 +99,6 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   if (mode == 'character') {
     let i = defaultFont.glyphCodes.indexOf(char.codePointAt(0))
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
-    const ts = geom.REACTION_SIZE/diameter * magnitude
     mat4.identity(m)
     mat4.translate(m, m, [x, y, 0])
     mat4.scale(m, m, [w/diameter, h/diameter, 1])
