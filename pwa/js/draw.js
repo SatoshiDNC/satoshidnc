@@ -100,9 +100,9 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     let i = defaultFont.glyphCodes.indexOf(char.codePointAt(0))
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
     mat4.identity(m)
-    mat4.translate(m, m, [x, y, 0])
+    mat4.translate(m, m, [x + w/2, y + h/2, 0])
     mat4.scale(m, m, [w/diameter, h/diameter, 1])
-    defaultFont.draw(-defaultFont.glyphX1[i], defaultFont.glyphY1[i], String.fromCodePoint(i), color, v.mat, m)
+    defaultFont.draw(-defaultFont.glyphX1[i]/2, defaultFont.glyphY1[i]/2, String.fromCodePoint(i), color, v.mat, m)
   }
 
   if (mode == 'hpub') {
