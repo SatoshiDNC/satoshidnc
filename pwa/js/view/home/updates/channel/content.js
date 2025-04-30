@@ -431,7 +431,7 @@ v.render_default = function(post, y) {
       const g = new fg.Gadget(v)
       g.x = geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT
       g.y = v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2
-      g.w = w*ts
+      g.w = w*geom.TEXT_SCALE
       g.h = geom.TEXT_HEIGHT
       g.autoHull()
       p.gadgets.push(g)
