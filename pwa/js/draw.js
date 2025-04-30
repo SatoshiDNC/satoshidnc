@@ -98,7 +98,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   }
 
   if (mode == 'character') {
-    const bubbleColor = setValue(blend(colors.black, v.hue, TINGE.BACKGROUND), TINGE.BACKGROUND_BUBBLE)
+    const bubbleColor = setValue(blend(colors.black, hue, TINGE.BACKGROUND), TINGE.BACKGROUND_BUBBLE)
     drawEllipse(v, bubbleColor, x,y,w,h)
     let i = defaultFont.glyphCodes.indexOf(char.codePointAt(0))
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
