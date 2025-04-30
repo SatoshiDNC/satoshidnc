@@ -246,7 +246,9 @@ v.renderFunc = function() {
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'notice'
       }
-      p.reactions = p.preloaded.data._reactions || {} // {'❤':2, '💔':1, '📜':1}
+      if (p.type != 'notice') {
+        p.reactions = p.preloaded.data._reactions || {} // {'❤':2, '💔':1, '📜':1}
+      }
     }
   }
   for (const p of v.posts) {
@@ -265,7 +267,9 @@ v.renderFunc = function() {
         p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
         p.type = 'notice'
       }
-      p.reactions = p.preloaded.data._reactions || {} // {'❤':2, '💔':1, '📜':1}
+      if (p.type != 'notice') {
+        p.reactions = p.preloaded.data._reactions || {} // {'❤':2, '💔':1, '📜':1}
+      }
     }
     if (v.sh-(v.userY+y + geom.SPACE_BELOW+geom.REACTIONS_HEIGHT-geom.REACTIONS_OVERLAP+p.total_height+geom.SPACE_ABOVE) < v.sh && v.sh-(v.userY+y) > 0) {
       y += geom.SPACE_BELOW
