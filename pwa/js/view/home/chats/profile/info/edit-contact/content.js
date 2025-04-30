@@ -1,5 +1,5 @@
 import { getKeyboardInput } from '../../../../../util.js'
-import { getName, getPersonalData } from '../../../../../../personal.js'
+import { getName, getCharacter, getPersonalData } from '../../../../../../personal.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
