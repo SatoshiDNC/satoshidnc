@@ -91,7 +91,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   if (character && defaultFont.calcWidth(character.codePointAt(0))) {
     mode = 'character'
     character = character.codePointAt(0)
-  } else if (name && defaultFont.calcWidth(name.codePointAt(0))) {
+  } else if (name && defaultFont.calcWidth(String.fromCodePoint(name.codePointAt(0)))) {
     mode = 'character'
     character = name.codePointAt(0)
   }
@@ -103,7 +103,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     mat4.identity(m)
     mat4.translate(m, m, [x, y, 0])
     mat4.scale(m, m, [w/diameter, h/diameter, 1])
-    defaultFont.draw(-defaultFont.glyphX1[i], -defaultFont.glyphY1[i], character.codePointAt(0), color, v.mat, m)
+    defaultFont.draw(-defaultFont.glyphX1[i], -defaultFont.glyphY1[i], String.fromCodePoint(character.codePointAt(0)), color, v.mat, m)
   }
 
   if (mode == 'hpub') {
