@@ -27,8 +27,11 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
     g.timerId = setInterval(() => {
       if (g.focusValue != 1) return
       getKeyboardInput(g.label, g.text || g.defaultValue, value => {
-        if (value !== undefined) g.text = value
-        g.validatorFunc?.()
+        if (value !== undefined) {
+          g.text = value
+          console.log('ready to call', g.validatorFunc)
+          g.validatorFunc?.()
+        }
         g.focused = false
         v.setRenderFlag(true)
       })
