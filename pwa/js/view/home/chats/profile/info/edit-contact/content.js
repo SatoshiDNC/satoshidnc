@@ -28,6 +28,7 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
       if (g.focusValue != 1) return
       getKeyboardInput(g.label, g.text || g.defaultValue, value => {
         if (value !== undefined) g.text = value
+        g.validatorFunc?.()
         g.focused = false
         v.setRenderFlag(true)
       })
@@ -64,6 +65,9 @@ v.gadgets.push(g = v.relayGad = new fg.Gadget(v))
   g.focusValue = 0
   g.focused = false
   g.clickFunc = v.nameGad.clickFunc
+  g.validatorFunc = function() {
+    this.value = String.fromCodePoint(this.value.codePointAt(0))
+  }
 v.clear = function() {
   const v = this
   v.hpub = undefined
