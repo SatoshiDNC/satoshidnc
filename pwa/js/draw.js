@@ -83,6 +83,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   const mat = mat4.create()
   const m = mat4.create()
 
+  const hue = getHue(hpub)
   const name = getName(hpub)
   const picture = getPicture(hpub)
   const character = getCharacter(hpub)
@@ -97,6 +98,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   }
 
   if (mode == 'character') {
+    drawEllipse(v, hue, x,y,w,h)
     let i = defaultFont.glyphCodes.indexOf(char.codePointAt(0))
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
     console.log('parametrics',defaultFont.glyphWidths[i],defaultFont.glyphHeights[i])
