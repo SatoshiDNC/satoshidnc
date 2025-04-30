@@ -90,7 +90,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
 
   let mode = 'hpub', font, char, c
   console.log('parametrics', character)
-  if (character && (c = defaultFont.glyphCodes.indexOf(name.codePointAt(0))) >= 0) {
+  if (character && (c = defaultFont.glyphCodes.indexOf(character.codePointAt(0))) >= 0) {
     mode = 'character'
     font = defaultFont
     char = c
