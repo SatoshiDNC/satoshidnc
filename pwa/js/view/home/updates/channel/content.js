@@ -61,47 +61,59 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       // check for other gadget click
       if (p.gadgets) {
         p.gadgets.map(g => {
-          if (g.w <= 0 || g.h <= 0) return
+          if (g.w <= 0 || g.h <= 0 || hit) return
           g.autoHull()
           const hitList = { x: pointer.x, y: pointer.y, hits: [] }
           g.getHits(hitList, getPointerRadius())
           if (hitList.hits.map(h => h.gad).includes(g)) {
+            hit = true
+            if (g.key == 'readmore') {
+              if (p.preloaded.data.kind == 1) {
+              } else if (p.preloaded.data.kind == 30023) {
+                const pre_h = p.total_height
+                prep_kind30023(v, p)
+                const new_h = p.total_height
+                p.expanded = true
+                v.userY -= new_h - pre_h
+              } else {
+              }
+              v.queueLayout()
+            }
             if (g.key == 'apply:name') {
               setPersonalData(v.hpub, 'name', g.value)
             }
-            return
           }
         })
       }
     }
 
-    // handle the read-more (a bit kludgey)
-    let post, post_y
-    let i = 0
-    for (const p of v.posts) {
-      const py = (pointer.py-v.y)/v.getScale()
-      if (v.sh-v.userY-py >= p.y0 && v.sh-v.userY-py <= p.y1) {
-        post = p
-        post_y = v.sh-v.userY-py - p.y0
-        break
-      }
-      i++
-    }
-    if (post) {
-      if (post_y >= post.readmore_baseline && post_y <= post.readmore_baseline+geom.TEXT_HEIGHT) {
-        const p = post
-        if (p.preloaded.data.kind == 1) {
-        } else if (p.preloaded.data.kind == 30023) {
-          const pre_h = p.total_height
-          prep_kind30023(v, p)
-          const new_h = p.total_height
-          p.expanded = true
-          v.userY -= new_h - pre_h
-        } else {
-        }
-        v.queueLayout()
-      }
-    }
+    // // handle the read-more (a bit kludgey)
+    // let post, post_y
+    // let i = 0
+    // for (const p of v.posts) {
+    //   const py = (pointer.py-v.y)/v.getScale()
+    //   if (v.sh-v.userY-py >= p.y0 && v.sh-v.userY-py <= p.y1) {
+    //     post = p
+    //     post_y = v.sh-v.userY-py - p.y0
+    //     break
+    //   }
+    //   i++
+    // }
+    // if (post) {
+    //   if (post_y >= post.readmore_baseline && post_y <= post.readmore_baseline+geom.TEXT_HEIGHT) {
+    //     const p = post
+    //     if (p.preloaded.data.kind == 1) {
+    //     } else if (p.preloaded.data.kind == 30023) {
+    //       const pre_h = p.total_height
+    //       prep_kind30023(v, p)
+    //       const new_h = p.total_height
+    //       p.expanded = true
+    //       v.userY -= new_h - pre_h
+    //     } else {
+    //     }
+    //     v.queueLayout()
+    //   }
+    // }
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
@@ -434,7 +446,7 @@ v.render_default = function(post, y) {
       g.y = v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2
       g.w = w*geom.TEXT_SCALE
       g.h = geom.TEXT_HEIGHT
-      g.autoHull()
+      g.key = 'readmore'
       if (!p.gadgets) { p.gadgets = [] }
       p.gadgets.push(g)
       defaultFont.draw(0,0, str, v.hue, v.mat, m)
