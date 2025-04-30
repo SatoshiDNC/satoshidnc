@@ -29,7 +29,6 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
       getKeyboardInput(g.label, g.text || g.defaultValue, value => {
         if (value !== undefined) {
           g.text = value
-          console.log('ready to call', g, g.validatorFunc)
           g.validatorFunc?.()
         }
         g.focused = false
