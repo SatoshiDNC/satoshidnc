@@ -1,4 +1,4 @@
-import { getHue, getName, getPicture, getCharacter } from './personal.js'
+import { getHue, getPersonalData, getPicture, getCharacter } from './personal.js'
 
 export function clamp(min, value, max) {
   return Math.max(min, Math.min(max, value))
@@ -84,7 +84,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   const m = mat4.create()
 
   const hue = getHue(hpub)
-  const name = getName(hpub)
+  const name = getPersonalData(hpub, 'name')
   const picture = getPicture(hpub)
   const character = getCharacter(hpub)
 
