@@ -69,7 +69,8 @@ v.gadgets.push(g = v.relayGad = new fg.Gadget(v))
   g.focused = false
   g.clickFunc = v.nameGad.clickFunc
   g.validatorFunc = function() {
-    this.value = String.fromCodePoint(this.value.codePointAt(0))
+    const g = this
+    g.text = String.fromCodePoint(g.text.codePointAt(0))
   }
 v.clear = function() {
   const v = this
