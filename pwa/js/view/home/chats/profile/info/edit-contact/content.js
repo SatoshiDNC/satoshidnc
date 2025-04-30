@@ -15,6 +15,7 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = 100, g.h = 70
   g.label = 'Name on this device'
+  g.icon = '\x00'
   g.text = '', g.defaultValue =''//'Satoshi, D.N.C.'
   g.animValue = 0
   g.focusValue = 0
@@ -35,17 +36,29 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   }
 // v.gadgets.push(g = v.pubkeyGad = new fg.Gadget(v))
 //   g.actionFlags = fg.GAF_CLICKABLE
-//   g.x = 183, g.y = 100 + 212, g.h = 70
+//   g.x = 183, g.y = v.gadgets[v.gadgets.length-2].y + 212, g.h = 70
 //   g.label = 'Nostor public key'
+//   g.icon = '\x06'
 //   g.text = '', g.defaultValue = ''//'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf'
 //   g.animValue = 0
 //   g.focusValue = 0
 //   g.focused = false
 //   g.clickFunc = v.nameGad.clickFunc
+v.gadgets.push(g = v.charGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 183, g.y = v.gadgets[v.gadgets.length-2].y + 212, g.h = 70
+  g.label = 'Character'
+  g.icon = '\x06'
+  g.text = '', g.defaultValue = '\u{1f600}'
+  g.animValue = 0
+  g.focusValue = 0
+  g.focused = false
+  g.clickFunc = v.nameGad.clickFunc
 v.gadgets.push(g = v.relayGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 183, g.y = 100 + 212, g.h = 70
+  g.x = 183, g.y = v.gadgets[v.gadgets.length-2].y + 212, g.h = 70
   g.label = 'Relay'
+  g.icon = '\x06'
   g.text = '', g.defaultValue = 'relay.satoshidnc.com'
   g.animValue = 0
   g.focusValue = 0
@@ -64,21 +77,16 @@ v.setContext = function(hpub) {
   v.hpub = hpub
   v.nameGad.text = getName(hpub)
   // v.pubkeyGad.text = hpub
+  v.charGad.text = getCharacter(hpub) || v.charGad.defaultValue
   v.relayGad.text = getPersonalData(hpub, 'relay')
   v.setRenderFlag(true)
 }
 v.layoutFunc = function() {
   const v = this
-  let g
-  g = v.nameGad
-  g.w = v.sw - 183 - 73
-  g.autoHull()
-  // g = v.pubkeyGad
-  // g.w = v.sw - 183 - 73
-  // g.autoHull()
-  g = v.relayGad
-  g.w = v.sw - 183 - 73
-  g.autoHull()
+  for (const g of [v.nameGad, /* v.pubkeyGad, */ v.charGad, v.relayGad]) {
+    g.w = v.sw - 183 - 73
+    g.autoHull()
+  }
 }
 v.renderFunc = function() {
   const v = this
@@ -152,31 +160,19 @@ v.renderFunc = function() {
     mainShapes.drawArrays2('rect')
   }
 
-  mat4.identity(m)
-  mat4.translate(m,m, [73, 158, 0])
-  s = 43/iconFont.calcWidth('\x00')
-  mat4.scale(m,m, [s, s, 1])
-  iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
-
-  drawTextInput(v.nameGad)
+  let y = 0
+  for (const g of [v.nameGad, /* v.pubkeyGad, */ v.charGad, v.relayGad]) {
+    mat4.identity(m)
+    mat4.translate(m,m, [73, 158 + y, 0])
+    s = 43/iconFont.calcWidth(g.icon)
+    mat4.scale(m,m, [s, s, 1])
+    iconFont.draw(0,0, g.icon, v.iconColor, v.mat, m)
   
-  // mat4.identity(m)
-  // mat4.translate(m,m, [73, 158 + 212, 0])
-  // s = 43/iconFont.calcWidth('\x06')
-  // mat4.scale(m,m, [s, s, 1])
-  // iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
-
-  // drawTextInput(v.pubkeyGad)
-
-  mat4.identity(m)
-  mat4.translate(m,m, [73, 158 + 212, 0])
-  s = 43/iconFont.calcWidth('\x06')
-  mat4.scale(m,m, [s, s, 1])
-  iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
-
-  drawTextInput(v.relayGad)
+    drawTextInput(g)
+    y += 212
+  }
   
-  for (g of v.gadgets) {
+  for (const g of v.gadgets) {
     if (g.animValue != 0 && g.animValue != 1) {
       v.setRenderFlag(true)
       break
