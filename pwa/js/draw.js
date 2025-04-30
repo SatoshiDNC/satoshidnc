@@ -87,23 +87,23 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   const picture = getPicture(hpub)
   const character = getCharacter(hpub)
 
-  let mode = 'hpub'
+  let mode = 'hpub', char
   if (character && defaultFont.calcWidth(character.codePointAt(0))) {
     mode = 'character'
-    character = character.codePointAt(0)
+    char = character.codePointAt(0)
   } else if (name && defaultFont.calcWidth(String.fromCodePoint(name.codePointAt(0)))) {
     mode = 'character'
-    character = String.fromCodePoint(name.codePointAt(0))
+    char = String.fromCodePoint(name.codePointAt(0))
   }
 
   if (mode == 'character') {
-    let i = defaultFont.glyphCodes.indexOf(character.codePointAt(0))
+    let i = defaultFont.glyphCodes.indexOf(char.codePointAt(0))
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
     const ts = geom.REACTION_SIZE/diameter * magnitude
     mat4.identity(m)
     mat4.translate(m, m, [x, y, 0])
     mat4.scale(m, m, [w/diameter, h/diameter, 1])
-    defaultFont.draw(-defaultFont.glyphX1[i], -defaultFont.glyphY1[i], String.fromCodePoint(character.codePointAt(0)), color, v.mat, m)
+    defaultFont.draw(-defaultFont.glyphX1[i], -defaultFont.glyphY1[i], String.fromCodePoint(i), color, v.mat, m)
   }
 
   if (mode == 'hpub') {
