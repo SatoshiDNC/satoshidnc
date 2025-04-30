@@ -89,14 +89,12 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   const character = getCharacter(hpub)
 
   let mode = 'hpub', font, char
-  if (character && defaultFont.calcWidth(character.codePointAt(0))) {
+  if (character && (char = defaultFont.calcWidth(character.codePointAt(0))) >= 0) {
     mode = 'character'
     font = defaultFont
-    char = font.glyphCodes.indexOf(character.codePointAt(0))
-  } else if (name && defaultFont.glyphCodes.indexOf(name.codePointAt(0)) >= 0) {
+  } else if (name && (char = defaultFont.glyphCodes.indexOf(name.codePointAt(0))) >= 0) {
     mode = 'character'
     font = defaultFont
-    char = font.glyphCodes.indexOf(character.codePointAt(0))
   }
 
   if (mode == 'character') {
