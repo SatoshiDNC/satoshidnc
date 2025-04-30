@@ -69,6 +69,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
             if (g.key == 'apply:name') {
               setPersonalData(v.hpub, 'name', g.value)
             }
+            return
           }
         })
       }
