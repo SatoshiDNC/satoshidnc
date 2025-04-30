@@ -19,10 +19,14 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
     const g = this, v = g.viewport
     const hpub = g.formView.hpub
     const name = g.formView.nameGad.text
+    const char = g.formView.charGad.text
     const relay = g.formView.relayGad.text
-    if (name || relay) {
+    if (name || char || relay) {
       if (name) {
         setPersonalData(hpub, 'name', name)
+      }
+      if (char) {
+        setPersonalData(hpub, 'character', String.fromCodePoint(char.codePointAt(0)))
       }
       if (relay) {
         setPersonalData(hpub, 'relay', relay)
