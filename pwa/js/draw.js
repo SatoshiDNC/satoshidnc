@@ -80,15 +80,41 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   const color = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
   const mat = mat4.create()
   const m = mat4.create()
-  const px = nybbleFont.calcWidth('0')
-  mat4.identity(mat)
-  mat4.translate(mat, mat, [x, y, 0])
-  mat4.scale(mat, mat, [w/16/px, h/16/px, 1])
-  let dx = 0.5, dy = 4*px - 0.5
-  hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
-    mat4.copy(m, mat)
-    nybbleFont.draw(dx,dy + i*4*px, str, color, v.mat, m)
-  })
+
+  const name = getName(hpub)
+  const picture = getPicture(hpub)
+  const character = getCharacter(hpub)
+
+  let mode = 'hpub'
+  if (character && defaultFont.calcWidth(character.codePointAt(0))) {
+    mode = 'character'
+    character = character.codePointAt(0)
+  } else if (name && defaultFont.calcWidth(name.codePointAt(0))) {
+    mode = 'character'
+    character = name.codePointAt(0)
+  }
+
+  if (mode == 'character') {
+    let i = defaultFont.glyphCodes.indexOf(character.codePointAt(0))
+    const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
+    const ts = geom.REACTION_SIZE/diameter * magnitude
+    mat4.identity(m)
+    mat4.translate(m, m, [x, y, 0])
+    mat4.scale(m, m, [w/diameter, h/diameter, 1])
+    defaultFont.draw(-defaultFont.glyphX1[i], -defaultFont.glyphY1[i], character.codePointAt(0), color, v.mat, m)
+  }
+
+  if (mode == 'hpub') {
+    const px = nybbleFont.calcWidth('0')
+    mat4.identity(mat)
+    mat4.translate(mat, mat, [x, y, 0])
+    mat4.scale(mat, mat, [w/16/px, h/16/px, 1])
+    let dx = 0.5, dy = 4*px - 0.5
+    hpub.toUpperCase().match(/.{1,16}/g).map((str, i) => {
+      mat4.copy(m, mat)
+      nybbleFont.draw(dx,dy + i*4*px, str, color, v.mat, m)
+    })
+  }
 
   if (hearts) {
     let balance = Math.round(hearts)
