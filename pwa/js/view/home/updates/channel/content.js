@@ -428,7 +428,7 @@ v.render_default = function(post, y) {
     if (line == '\0') {
       const str = 'Read more...^>'
       const w = defaultFont.calcWidth(str)
-      mat4.translate(m, m, [(v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT)/2/ts, 0, 0])
+      mat4.translate(m, m, [(v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT)/2/geom.TEXT_SCALE, 0, 0])
       defaultFont.draw(-w/2,0, str, v.hue, v.mat, m)
       p.readmore_baseline = geom.TEXT_SPACE_BELOW+line_offset*geom.TEXT_LINE_SPACING/2
     } else if (line.startsWith('# ')) {
