@@ -103,11 +103,11 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     const bubbleColor = setValue(blend(colors.black, hue, TINGE.BACKGROUND), TINGE.BACKGROUND_BUBBLE)
     drawEllipse(v, bubbleColor, x,y,w,h)
     let i = char
-    const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
+    const diameter = Math.max(font.glyphWidths[i], font.glyphHeights[i])
     mat4.identity(m)
     mat4.translate(m, m, [x + w/2, y + h/2, 0])
     mat4.scale(m, m, [w/diameter/Math.SQRT2*0.9, h/diameter/Math.SQRT2*0.9, 1])
-    defaultFont.draw(-(defaultFont.glyphX2[i]-defaultFont.glyphX1[i])/2, defaultFont.glyphHeights[i]-defaultFont.glyphY1[i]-defaultFont.glyphHeights[i]/2, String.fromCodePoint(char), color, v.mat, m)
+    font.draw(-(font.glyphX2[i]-font.glyphX1[i])/2, font.glyphHeights[i]-font.glyphY1[i]-font.glyphHeights[i]/2, String.fromCodePoint(font.glyphCodes[char]), color, v.mat, m)
   }
 
   if (mode == 'hpub') {
