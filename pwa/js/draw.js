@@ -93,7 +93,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     character = character.codePointAt(0)
   } else if (name && defaultFont.calcWidth(String.fromCodePoint(name.codePointAt(0)))) {
     mode = 'character'
-    character = name.codePointAt(0)
+    character = String.fromCodePoint(name.codePointAt(0))
   }
 
   if (mode == 'character') {
