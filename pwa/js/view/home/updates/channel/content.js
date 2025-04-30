@@ -434,6 +434,7 @@ v.render_default = function(post, y) {
       g.w = w*geom.TEXT_SCALE
       g.h = geom.TEXT_HEIGHT
       g.autoHull()
+      if (!p.gadgets) { p.gadgets = [] }
       p.gadgets.push(g)
       defaultFont.draw(0,0, str, v.hue, v.mat, m)
       p.readmore_baseline = geom.TEXT_SPACE_BELOW+line_offset*geom.TEXT_LINE_SPACING/2
