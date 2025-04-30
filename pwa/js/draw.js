@@ -103,7 +103,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     mat4.identity(m)
     mat4.translate(m, m, [x + w/2, y + h/2, 0])
     mat4.scale(m, m, [w/diameter, h/diameter, 1])
-    defaultFont.draw(0, defaultFont.glyphHeights[i]-defaultFont.glyphY1[i]-defaultFont.glyphHeights[i]/2, String.fromCodePoint(i), color, v.mat, m)
+    defaultFont.draw(-defaultFont.glyphX1[i], defaultFont.glyphHeights[i]-defaultFont.glyphY1[i]-defaultFont.glyphHeights[i]/2, String.fromCodePoint(i), color, v.mat, m)
   }
 
   if (mode == 'hpub') {
