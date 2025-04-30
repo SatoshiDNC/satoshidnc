@@ -49,7 +49,7 @@ v.gadgets.push(g = v.charGad = new fg.Gadget(v))
   g.x = 183, g.y = v.gadgets[v.gadgets.length-2].y + 212, g.h = 70
   g.label = 'Character'
   g.icon = '\x06'
-  g.text = '', g.defaultValue = ''
+  g.text = '', g.defaultValue = '\u{1f600}'
   g.animValue = 0
   g.focusValue = 0
   g.focused = false
@@ -77,7 +77,7 @@ v.setContext = function(hpub) {
   v.hpub = hpub
   v.nameGad.text = getName(hpub)
   // v.pubkeyGad.text = hpub
-  v.charGad.text = getCharacter(hpub) || v.charGad.defaultValue
+  v.charGad.text = getCharacter(hpub)
   v.relayGad.text = getPersonalData(hpub, 'relay')
   v.setRenderFlag(true)
 }
