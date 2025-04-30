@@ -60,6 +60,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
 
       // check for other gadget click
       if (p.gadgets) {
+        let hit = false
         p.gadgets.map(g => {
           if (g.w <= 0 || g.h <= 0 || hit) return
           g.autoHull()
