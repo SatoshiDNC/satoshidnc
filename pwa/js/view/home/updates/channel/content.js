@@ -426,7 +426,7 @@ v.render_default = function(post, y) {
     mat4.translate(m, m, [geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT, v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2, 0])
     mat4.scale(m, m, [geom.TEXT_SCALE, geom.TEXT_SCALE, 1])
     if (line == '\0') {
-      const str = 'Read more...'
+      const str = 'Read more...^>'
       const w = defaultFont.calcWidth(str)
       mat4.translate(m, m, [(v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT)/2, 0, 0])
       defaultFont.draw(-w,0, str, v.hue, v.mat, m)
