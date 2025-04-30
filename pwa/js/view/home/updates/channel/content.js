@@ -415,7 +415,7 @@ v.render_default = function(post, y) {
 
   let line_offset = p.lines.length * 2 - p.lines.filter(l => l=='').length * 1
   for (const line of p.lines) {
-    if (line == '') {
+    if (line == '' || line == '\0') {
       line_offset -= 1
       continue
     }
