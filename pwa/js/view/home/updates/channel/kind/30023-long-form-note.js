@@ -66,7 +66,7 @@ export function prep_kind30023_preview(view, post) {
   }
   lines.push('', '\0') // read more...
   p.lines = lines
-  p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l==''||l=='\0').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
+  p.total_height = geom.TEXT_SPACE_BELOW + geom.TEXT_HEIGHT + (p.lines.length - 1 - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + geom.TEXT_SPACE_ABOVE
   p.type = 'default'
   //p.reactions = ['something']
 }
