@@ -58,6 +58,10 @@ v.gadgets.push(g = v.charGad = new fg.Gadget(v))
   g.focusValue = 0
   g.focused = false
   g.clickFunc = v.nameGad.clickFunc
+  g.validatorFunc = function() {
+    const g = this
+    g.text = String.fromCodePoint(g.text.codePointAt(0))
+  }
 v.gadgets.push(g = v.relayGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 183, g.y = v.gadgets[v.gadgets.length-2].y + 212, g.h = 70
@@ -68,10 +72,6 @@ v.gadgets.push(g = v.relayGad = new fg.Gadget(v))
   g.focusValue = 0
   g.focused = false
   g.clickFunc = v.nameGad.clickFunc
-  g.validatorFunc = function() {
-    const g = this
-    g.text = String.fromCodePoint(g.text.codePointAt(0))
-  }
 v.clear = function() {
   const v = this
   v.hpub = undefined
