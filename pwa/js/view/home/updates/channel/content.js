@@ -35,9 +35,9 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.clickFunc = function(pointer) {
     const g = this, v = g.viewport
-
-    // check for reactions click
     for (const p of v.posts) {
+
+      // check for reactions click
       if (p.reactions_width) {
         const tg = v.tempGad
         tg.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
@@ -86,35 +86,8 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
           }
         })
       }
+      
     }
-
-    // // handle the read-more (a bit kludgey)
-    // let post, post_y
-    // let i = 0
-    // for (const p of v.posts) {
-    //   const py = (pointer.py-v.y)/v.getScale()
-    //   if (v.sh-v.userY-py >= p.y0 && v.sh-v.userY-py <= p.y1) {
-    //     post = p
-    //     post_y = v.sh-v.userY-py - p.y0
-    //     break
-    //   }
-    //   i++
-    // }
-    // if (post) {
-    //   if (post_y >= post.readmore_baseline && post_y <= post.readmore_baseline+geom.TEXT_HEIGHT) {
-    //     const p = post
-    //     if (p.preloaded.data.kind == 1) {
-    //     } else if (p.preloaded.data.kind == 30023) {
-    //       const pre_h = p.total_height
-    //       prep_kind30023(v, p)
-    //       const new_h = p.total_height
-    //       p.expanded = true
-    //       v.userY -= new_h - pre_h
-    //     } else {
-    //     }
-    //     v.queueLayout()
-    //   }
-    // }
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
