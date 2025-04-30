@@ -1,4 +1,4 @@
-import { getFeed, markUpdateAsViewed } from '../../../../content.js'
+import { getFeed, markUpdateAsViewed, reactionTrigger } from '../../../../content.js'
 import { getHue, getPersonalData, setPersonalData, personalDataTrigger } from '../../../../personal.js'
 import { drawRoundedRect, drawRect, drawPill, blend, alpha, setValue } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
@@ -27,6 +27,12 @@ v.previous_width = 0
 personalDataTrigger.push(() => {
   if (!v.posts) return
   console.log(`[${TAG}] detected personal data change`, v)
+  v.previous_width = 0 // to force re-formatting
+  v.queueLayout()
+})
+reactionTrigger.push(() => {
+  if (!v.posts) return
+  console.log(`[${TAG}] detected reaction`, v)
   v.previous_width = 0 // to force re-formatting
   v.queueLayout()
 })
@@ -86,7 +92,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
           }
         })
       }
-      
+
     }
   }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
