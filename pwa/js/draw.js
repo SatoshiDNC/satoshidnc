@@ -89,6 +89,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   const character = getCharacter(hpub)
 
   let mode = 'hpub', font, char, c
+  console.log('parametrics', character)
   if (character && (c = defaultFont.calcWidth(character.codePointAt(0))) >= 0) {
     mode = 'character'
     font = defaultFont
