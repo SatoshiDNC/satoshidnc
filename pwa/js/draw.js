@@ -104,7 +104,7 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
     mat4.identity(m)
     mat4.translate(m, m, [x + w/2, y + h/2, 0])
-    mat4.scale(m, m, [w/diameter/Math.SQRT2, h/diameter/Math.SQRT2, 1])
+    mat4.scale(m, m, [w/diameter/Math.SQRT2_2, h/diameter/Math.SQRT2_2, 1])
     defaultFont.draw(-(defaultFont.glyphX2[i]-defaultFont.glyphX1[i])/2, defaultFont.glyphHeights[i]-defaultFont.glyphY1[i]-defaultFont.glyphHeights[i]/2, String.fromCodePoint(i), color, v.mat, m)
   }
 
