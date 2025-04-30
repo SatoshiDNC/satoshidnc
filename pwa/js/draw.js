@@ -88,24 +88,26 @@ export function drawAvatar(v, hpub, x,y,w,h, hearts) {
   const picture = getPicture(hpub)
   const character = getCharacter(hpub)
 
-  let mode = 'hpub', char
+  let mode = 'hpub', font, char
   if (character && defaultFont.calcWidth(character.codePointAt(0))) {
     mode = 'character'
-    char = character.codePointAt(0)
+    font = defaultFont
+    char = font.glyphCodes.indexOf(character.codePointAt(0))
   } else if (name && defaultFont.glyphCodes.indexOf(name.codePointAt(0)) >= 0) {
     mode = 'character'
-    char = String.fromCodePoint(name.codePointAt(0))
+    font = defaultFont
+    char = font.glyphCodes.indexOf(character.codePointAt(0))
   }
 
   if (mode == 'character') {
     const bubbleColor = setValue(blend(colors.black, hue, TINGE.BACKGROUND), TINGE.BACKGROUND_BUBBLE)
     drawEllipse(v, bubbleColor, x,y,w,h)
-    let i = defaultFont.glyphCodes.indexOf(char.codePointAt(0))
+    let i = char
     const diameter = Math.max(defaultFont.glyphWidths[i], defaultFont.glyphHeights[i])
     mat4.identity(m)
     mat4.translate(m, m, [x + w/2, y + h/2, 0])
     mat4.scale(m, m, [w/diameter/Math.SQRT2*0.9, h/diameter/Math.SQRT2*0.9, 1])
-    defaultFont.draw(-(defaultFont.glyphX2[i]-defaultFont.glyphX1[i])/2, defaultFont.glyphHeights[i]-defaultFont.glyphY1[i]-defaultFont.glyphHeights[i]/2, String.fromCodePoint(i), color, v.mat, m)
+    defaultFont.draw(-(defaultFont.glyphX2[i]-defaultFont.glyphX1[i])/2, defaultFont.glyphHeights[i]-defaultFont.glyphY1[i]-defaultFont.glyphHeights[i]/2, String.fromCodePoint(char), color, v.mat, m)
   }
 
   if (mode == 'hpub') {
