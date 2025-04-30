@@ -10,6 +10,14 @@ export function getName(hpub) {
   return getPersonalData(hpub, 'name') || 'Unnamed'
 }
 
+export function getPicture(hpub) {
+  return getPersonalData(hpub, 'picture') || undefined
+}
+
+export function getCharacter(hpub) {
+  return getPersonalData(hpub, 'character') || undefined
+}
+
 export function getHue(hpub) {
   return hue(getColor(hpub))
 }
