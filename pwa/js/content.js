@@ -393,7 +393,7 @@ export function reqFeed() {
     let interests = [...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)]
     if (channels.length) interests.push(...channels.map(c=>c.hpub))
     console.log(interests)
-  console.log(channels)
+  console.log(keys, contacts, channels)
     relay.send([
       'REQ',
       'feed',
