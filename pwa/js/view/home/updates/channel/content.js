@@ -461,7 +461,7 @@ v.render_default = function(post, y) {
     }
   }
 
-  check_overflow(v, p)
+  check_overflow(v, p, y)
 }
 
 v.render_metadata = function(post, y) {
@@ -525,7 +525,7 @@ v.render_metadata = function(post, y) {
     }
   }
 
-  check_overflow(v, p)
+  check_overflow(v, p, y)
 }
 
 export function try_send_reaction(post) {
@@ -536,7 +536,7 @@ export function try_send_reaction(post) {
   markUpdateAsViewed(p.preloaded.data.id, p.preloaded.data.pubkey, p.preloaded.data.created_at * 1000)
 }
 
-function check_overflow(view, post) {
+function check_overflow(view, post, y) {
   const v = view, p = post
   const fc = alpha(v.textColor, 0.75)
   const bc = alpha(v.bubbleColor, 0.75)
