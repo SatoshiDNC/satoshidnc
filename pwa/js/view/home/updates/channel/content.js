@@ -467,12 +467,14 @@ v.render_default = function(post, y) {
   const max_h = (p.lines.length - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + (geom.TEXT_HEIGHT-geom.TEXT_LINE_SPACING)
   const top_overflow = -v.sh+(v.userY+y+geom.TEXT_SPACE_BELOW+max_h)
   if (top_overflow > 0) {
-    const w = max_w / max_h * top_overflow
-    if (w < max_w) {
-      const f = clamp(0, 0.75 * (1 - (top_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
-      if (f > 0) {
-        drawRect(v, alpha(fc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
-        drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
+    if (p.total_height > max_h) {
+      const w = max_w / max_h * top_overflow
+      if (w < max_w) {
+        const f = clamp(0, 0.75 * (1 - (top_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
+        if (f > 0) {
+          drawRect(v, alpha(fc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
+          drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
+        }
       }
     }
   } else {
@@ -483,12 +485,14 @@ v.render_default = function(post, y) {
   }
   const bottom_overflow = -(v.userY+y+geom.TEXT_SPACE_BELOW)
   if (bottom_overflow > 0) {
-    const w = max_w / max_h * bottom_overflow
-    if (w < max_w) {
-      const f = clamp(0, 0.75 * (1 - (bottom_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
-      if (f > 0) {
-        drawRect(v, alpha(fc, f), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
-        drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
+    if (p.total_height > max_h) {
+      const w = max_w / max_h * bottom_overflow
+      if (w < max_w) {
+        const f = clamp(0, 0.75 * (1 - (bottom_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
+        if (f > 0) {
+          drawRect(v, alpha(fc, f), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
+          drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
+        }
       }
     }
   } else {
