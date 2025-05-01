@@ -82,7 +82,6 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
 
       // act on best hit
       let hit = false
-      console.log('hits', hitList.hits)
       hitList.hits.map(h => {
         if (hit) return
         const g = h.gad
