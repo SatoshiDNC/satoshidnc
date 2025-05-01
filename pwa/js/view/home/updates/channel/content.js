@@ -10,7 +10,7 @@ const TAG = 'channel'
 const DAY_IN_SECONDS = 86400
 
 const touchRadius = 85, clickRadius = 5;
-const getPointerRadius = function() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
+const getPointerRadius = () => touchRadius // function() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -82,6 +82,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
 
       // act on best hit
       let hit = false
+      console.log(hits)
       hitList.hits.map(h => {
         if (hit) return
         const g = h.gad
