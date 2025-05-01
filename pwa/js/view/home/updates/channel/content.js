@@ -81,39 +81,32 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       }
 
       // act on best hit
-      let hit = false
-      if (hitList.hits.length) console.log(hitList.hits.map(h => h.dist))
       const best = hitList.hits.reduce((pre, cur) => cur.dist < pre.dist? cur: pre, hitList.hits?.[0])
-    console.log(best)
-      // hitList.hits.map(h => {
-      //   if (hit) return
-      //   const g = h.gad
-      //   if (g === tg) {
-      //     hit = true
-      //     const reaction = {
-      //       kind: 7,
-      //       content: '✓',
-      //       tags: [['e',`${p.preloaded.data.id}`], ['p',`${p.preloaded.data.pubkey}`], ['k',`${p.preloaded.data.kind}`]],
-      //     }
-      //     console.log(reaction)
-      //     hit = true
-      //   } else if (g.key == 'readmore') {
-      //     hit = true
-      //     if (p.preloaded.data.kind == 1) {
-      //     } else if (p.preloaded.data.kind == 30023) {
-      //       const pre_h = p.total_height
-      //       prep_kind30023(v, p)
-      //       const new_h = p.total_height
-      //       p.expanded = true
-      //       v.userY -= new_h - pre_h
-      //     } else {
-      //     }
-      //     v.queueLayout()
-      //   } else if (g.key == 'apply:name') {
-      //     hit = true
-      //     setPersonalData(v.hpub, 'name', g.value)
-      //   }
-      // })
+      const g = best.gad
+      if (g === tg) {
+        const reaction = {
+          kind: 7,
+          content: '✓',
+          tags: [['e',`${p.preloaded.data.id}`], ['p',`${p.preloaded.data.pubkey}`], ['k',`${p.preloaded.data.kind}`]],
+        }
+        console.log(reaction)
+        break
+      } else if (g.key == 'readmore') {
+        if (p.preloaded.data.kind == 1) {
+        } else if (p.preloaded.data.kind == 30023) {
+          const pre_h = p.total_height
+          prep_kind30023(v, p)
+          const new_h = p.total_height
+          p.expanded = true
+          v.userY -= new_h - pre_h
+        } else {
+        }
+        v.queueLayout()
+        break
+      } else if (g.key == 'apply:name') {
+        setPersonalData(v.hpub, 'name', g.value)
+        break
+      }
 
     }
   }
