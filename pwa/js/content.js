@@ -390,11 +390,13 @@ export function reqFeed() {
   console.log(`[${TAG}] query relay`)
   homeRelay().then(relay => {
     if (thisRequestTime !== reqFeed_requestTime) return
+    let interests = [...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)]
+    if (channels.length) interests.push(...channels.map(c=>c.hpub))
     relay.send([
       'REQ',
       'feed',
       {
-        'authors': [...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub), ...channels.map(c=>c.hpub)])],
+        'authors': [...new Set(interests)],
         'since': Math.floor(Date.now()/1000) - 2 * DAY_IN_SECONDS, // double long enough to retrieve current updates from contacts to display
       }
     ])
@@ -402,7 +404,7 @@ export function reqFeed() {
       'REQ',
       'aux',
       {
-        '#p': [...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub), ...channels.map(c=>c.hpub)])],
+        '#p': [...new Set(interests)],
         'since': Math.floor(Date.now()/1000) - 2 * DAY_IN_SECONDS, // double long enough to retrieve current updates from contacts to display
       }
     ])
