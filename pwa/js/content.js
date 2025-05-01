@@ -392,6 +392,8 @@ export function reqFeed() {
     if (thisRequestTime !== reqFeed_requestTime) return
     let interests = [...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)]
     if (channels.length) interests.push(...channels.map(c=>c.hpub))
+    console.log(interests)
+  console.log(channels)
     relay.send([
       'REQ',
       'feed',
