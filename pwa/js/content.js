@@ -2,6 +2,7 @@ import { db } from './db.js'
 import { kindInfo } from './nostor-util.js'
 import { homeRelay } from './nostor-app.js'
 import { contacts, reloadContactUpdates } from './contacts.js'
+import { follows as channels } from './channels.js'
 import { keys } from './keys.js'
 
 export const eventTrigger = []
@@ -393,7 +394,7 @@ export function reqFeed() {
       'REQ',
       'feed',
       {
-        'authors': [...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)])],
+        'authors': [...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub), ...channels.map(c=>c.hpub)])],
         'since': Math.floor(Date.now()/1000) - 2 * DAY_IN_SECONDS, // double long enough to retrieve current updates from contacts to display
       }
     ])
@@ -401,7 +402,7 @@ export function reqFeed() {
       'REQ',
       'aux',
       {
-        '#p': [...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)])],
+        '#p': [...new Set([...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub), ...channels.map(c=>c.hpub)])],
         'since': Math.floor(Date.now()/1000) - 2 * DAY_IN_SECONDS, // double long enough to retrieve current updates from contacts to display
       }
     ])
