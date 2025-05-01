@@ -1,6 +1,6 @@
 import { getFeed, markUpdateAsViewed, reactionTrigger } from '../../../../content.js'
 import { getHue, getPersonalData, setPersonalData, personalDataTrigger } from '../../../../personal.js'
-import { drawRoundedRect, drawRect, drawPill, blend, alpha, setValue } from '../../../../draw.js'
+import { drawRoundedRect, drawRect, drawPill, blend, alpha, setValue, clamp } from '../../../../draw.js'
 import { prep_kind1 } from './kind/1-short-text-note.js'
 import { prep_kind30023, prep_kind30023_preview } from './kind/30023-long-form-note.js'
 import * as geom from './geometry.js'
@@ -31,7 +31,7 @@ personalDataTrigger.push(() => {
 })
 reactionTrigger.push((post_id, reaction_content) => {
   if (!v.posts) return
-  for (const p of posts) if (p.preloaded.data.id == post_id) {
+  for (const p of v.posts) if (p.preloaded.data.id == post_id) {
     if (!p.preloaded._reactions) { p.preloaded._reactions = {} }
     if (!p.preloaded._reactions[reaction_content]) { p.preloaded._reactions[reaction_content] = 0 }
     p.preloaded._reactions[reaction_content] += 1
@@ -469,8 +469,11 @@ v.render_default = function(post, y) {
   if (top_overflow > 0) {
     const w = max_w / max_h * top_overflow
     if (w < max_w) {
-      drawRect(v, fc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
-      drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
+      const f = clamp(0, 0.75 * (1 - (top_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
+      if (f > 0) {
+        drawRect(v, alpha(fc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
+        drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
+      }
     }
   } else {
     if (p.expanded) {
