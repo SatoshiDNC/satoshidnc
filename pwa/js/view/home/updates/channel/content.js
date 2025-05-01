@@ -441,14 +441,17 @@ v.render_default = function(post, y) {
     if (line == '\0') {
       const str = 'Read more...'
       const w = defaultFont.calcWidth(str)
-      const g = new fg.Gadget(v)
+      if (!p.readmoreGad) {
+        p.readmoreGad = new fg.Gadget(v)
+        p.readmoreGad.key = 'readmore'
+        if (!p.gadgets) { p.gadgets = [] }
+        p.gadgets.push(p.readmoreGad)
+      }
+      const g = p.readmoreGad
       g.x = geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT
       g.y = v.sh-y-geom.TEXT_SPACE_BELOW-line_offset*geom.TEXT_LINE_SPACING/2-geom.TEXT_HEIGHT
       g.w = w*geom.TEXT_SCALE
       g.h = geom.TEXT_HEIGHT
-      g.key = 'readmore'
-      if (!p.gadgets) { p.gadgets = [] }
-      p.gadgets.push(g)
       defaultFont.draw(0,0, str, v.hue, v.mat, m)
       p.readmore_baseline = geom.TEXT_SPACE_BELOW+line_offset*geom.TEXT_LINE_SPACING/2
     } else if (line.startsWith('# ')) {
