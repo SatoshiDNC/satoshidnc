@@ -58,6 +58,7 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.clickFunc = function(pointer) {
     const g = this, v = g.viewport
     for (const p of v.posts) {
+      const hitList = { x: pointer.x, y: pointer.y, hits: [] }
 
       // check for reactions click
       if (p.reactions_width) {
@@ -67,47 +68,49 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
         tg.w = p.reactions_width
         tg.h = geom.REACTIONS_HEIGHT
         tg.autoHull()
-        const hitList = { x: pointer.x, y: pointer.y, hits: [] }
         tg.getHits(hitList, getPointerRadius())
-        if (hitList.hits.map(h => h.gad).includes(tg)) {
+      }
+
+      // check for other gadget click
+      if (p.gadgets) {
+        p.gadgets.map(g => {
+          if (g.w <= 0 || g.h <= 0 || hit) return
+          g.autoHull()
+          g.getHits(hitList, getPointerRadius())
+        })
+      }
+
+      // act on best hit
+      let hit = false
+      hitList.hits.map(h => {
+        if (hit) return
+        const g = h.gad
+        if (g === tg) {
+          hit = true
           const reaction = {
             kind: 7,
             content: '✓',
             tags: [['e',`${p.preloaded.data.id}`], ['p',`${p.preloaded.data.pubkey}`], ['k',`${p.preloaded.data.kind}`]],
           }
           console.log(reaction)
-          return
-        }
-      }
-
-      // check for other gadget click
-      if (p.gadgets) {
-        let hit = false
-        p.gadgets.map(g => {
-          if (g.w <= 0 || g.h <= 0 || hit) return
-          g.autoHull()
-          const hitList = { x: pointer.x, y: pointer.y, hits: [] }
-          g.getHits(hitList, getPointerRadius())
-          if (hitList.hits.map(h => h.gad).includes(g)) {
-            hit = true
-            if (g.key == 'readmore') {
-              if (p.preloaded.data.kind == 1) {
-              } else if (p.preloaded.data.kind == 30023) {
-                const pre_h = p.total_height
-                prep_kind30023(v, p)
-                const new_h = p.total_height
-                p.expanded = true
-                v.userY -= new_h - pre_h
-              } else {
-              }
-              v.queueLayout()
-            }
-            if (g.key == 'apply:name') {
-              setPersonalData(v.hpub, 'name', g.value)
-            }
+          hit = true
+        } else if (g.key == 'readmore') {
+          hit = true
+          if (p.preloaded.data.kind == 1) {
+          } else if (p.preloaded.data.kind == 30023) {
+            const pre_h = p.total_height
+            prep_kind30023(v, p)
+            const new_h = p.total_height
+            p.expanded = true
+            v.userY -= new_h - pre_h
+          } else {
           }
-        })
-      }
+          v.queueLayout()
+        } else if (g.key == 'apply:name') {
+          hit = true
+          setPersonalData(v.hpub, 'name', g.value)
+        }
+      })
 
     }
   }
