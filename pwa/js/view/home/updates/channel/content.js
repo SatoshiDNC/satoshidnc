@@ -485,8 +485,11 @@ v.render_default = function(post, y) {
   if (bottom_overflow > 0) {
     const w = max_w / max_h * bottom_overflow
     if (w < max_w) {
-      drawRect(v, fc, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
-      drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
+      const f = clamp(0, 0.75 * (1 - (bottom_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
+      if (f > 0) {
+        drawRect(v, alpha(fc, f), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
+        drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
+      }
     }
   } else {
     if (p.expanded) {
