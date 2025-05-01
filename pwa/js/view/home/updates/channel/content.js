@@ -461,50 +461,7 @@ v.render_default = function(post, y) {
     }
   }
 
-  const fc = alpha(v.textColor, 0.75)
-  const bc = alpha(v.bubbleColor, 0.75)
-  const max_w = v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT
-  const max_h = (p.lines.length - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + (geom.TEXT_HEIGHT-geom.TEXT_LINE_SPACING)
-  const top_overflow = -v.sh+(v.userY+y+geom.TEXT_SPACE_BELOW+max_h)
-  if (top_overflow > 0) {
-    if (p.total_height > v.sh) {
-      const w = max_w / max_h * top_overflow
-      if (w < max_w) {
-        const f = clamp(0, 0.75 * (1 - (top_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
-        if (f > 0) {
-          drawRect(v, alpha(fc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
-          drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
-        }
-      }
-    }
-  } else {
-    if (p.expanded) {
-      p.top_seen = true
-      try_send_reaction(p)
-    }
-  }
-  const bottom_overflow = -(v.userY+y+geom.TEXT_SPACE_BELOW)
-  if (bottom_overflow > 0) {
-    if (p.total_height > v.sh) {
-      const w = max_w / max_h * bottom_overflow
-      if (w < max_w) {
-        const f = clamp(0, 0.75 * (1 - (bottom_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
-        if (f > 0) {
-          drawRect(v, alpha(fc, f), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
-          drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
-        }
-      }
-    }
-  } else {
-    if (p.expanded) {
-      p.bottom_seen = true
-      try_send_reaction(p)
-    }
-  }
-  if (!p.expanded) {
-    p.top_seen = false
-    p.bottom_seen = false
-  }
+  check_overflow(v, p)
 }
 
 v.render_metadata = function(post, y) {
@@ -568,16 +525,34 @@ v.render_metadata = function(post, y) {
     }
   }
 
+  check_overflow(v, p)
+}
+
+export function try_send_reaction(post) {
+  const p = post
+  if (p.reacted) return
+  if (!p.top_seen || !p.bottom_seen) return
+  p.reacted = true
+  markUpdateAsViewed(p.preloaded.data.id, p.preloaded.data.pubkey, p.preloaded.data.created_at * 1000)
+}
+
+function check_overflow(view, post) {
+  const v = view, p = post
   const fc = alpha(v.textColor, 0.75)
   const bc = alpha(v.bubbleColor, 0.75)
   const max_w = v.sw-geom.SPACE_LEFT-geom.TEXT_SPACE_LEFT-geom.TEXT_SPACE_RIGHT-geom.SPACE_RIGHT
   const max_h = (p.lines.length - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + (geom.TEXT_HEIGHT-geom.TEXT_LINE_SPACING)
   const top_overflow = -v.sh+(v.userY+y+geom.TEXT_SPACE_BELOW+max_h)
   if (top_overflow > 0) {
-    const w = max_w / max_h * top_overflow
-    if (w < max_w) {
-      drawRect(v, fc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
-      drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
+    if (p.total_height > v.sh) {
+      const w = max_w / max_h * top_overflow
+      if (w < max_w) {
+        const f = clamp(0, 0.75 * (1 - (top_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
+        if (f > 0) {
+          drawRect(v, alpha(fc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY, w,2*geom.TEXT_SCALE)
+          drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT+w,v.userY, max_w-w,2*geom.TEXT_SCALE)
+        }
+      }
     }
   } else {
     if (p.expanded) {
@@ -587,10 +562,15 @@ v.render_metadata = function(post, y) {
   }
   const bottom_overflow = -(v.userY+y+geom.TEXT_SPACE_BELOW)
   if (bottom_overflow > 0) {
-    const w = max_w / max_h * bottom_overflow
-    if (w < max_w) {
-      drawRect(v, fc, v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
-      drawRect(v, bc, geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
+    if (p.total_height > v.sh) {
+      const w = max_w / max_h * bottom_overflow
+      if (w < max_w) {
+        const f = clamp(0, 0.75 * (1 - (bottom_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
+        if (f > 0) {
+          drawRect(v, alpha(fc, f), v.sw-geom.SPACE_RIGHT-geom.TEXT_SPACE_RIGHT-w,v.userY+v.sh-2*geom.TEXT_SCALE, w,2*geom.TEXT_SCALE)
+          drawRect(v, alpha(bc, f), geom.SPACE_LEFT+geom.TEXT_SPACE_LEFT,v.userY+v.sh-2*geom.TEXT_SCALE, max_w-w,2*geom.TEXT_SCALE)
+        }
+      }
     }
   } else {
     if (p.expanded) {
@@ -602,14 +582,6 @@ v.render_metadata = function(post, y) {
     p.top_seen = false
     p.bottom_seen = false
   }
-}
-
-export function try_send_reaction(post) {
-  const p = post
-  if (p.reacted) return
-  if (!p.top_seen || !p.bottom_seen) return
-  p.reacted = true
-  markUpdateAsViewed(p.preloaded.data.id, p.preloaded.data.pubkey, p.preloaded.data.created_at * 1000)
 }
 
 export function format_lines(plaintext, width = undefined) {
