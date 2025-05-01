@@ -467,7 +467,7 @@ v.render_default = function(post, y) {
   const max_h = (p.lines.length - p.lines.filter(l => l=='').length/2) * geom.TEXT_LINE_SPACING + (geom.TEXT_HEIGHT-geom.TEXT_LINE_SPACING)
   const top_overflow = -v.sh+(v.userY+y+geom.TEXT_SPACE_BELOW+max_h)
   if (top_overflow > 0) {
-    if (p.total_height > max_h) {
+    if (p.total_height > v.sh) {
       const w = max_w / max_h * top_overflow
       if (w < max_w) {
         const f = clamp(0, 0.75 * (1 - (top_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
@@ -485,7 +485,7 @@ v.render_default = function(post, y) {
   }
   const bottom_overflow = -(v.userY+y+geom.TEXT_SPACE_BELOW)
   if (bottom_overflow > 0) {
-    if (p.total_height > max_h) {
+    if (p.total_height > v.sh) {
       const w = max_w / max_h * bottom_overflow
       if (w < max_w) {
         const f = clamp(0, 0.75 * (1 - (bottom_overflow - (max_h - geom.TEXT_HEIGHT)) / geom.TEXT_HEIGHT), 0.75)
