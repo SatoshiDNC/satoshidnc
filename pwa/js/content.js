@@ -390,12 +390,7 @@ export function reqFeed() {
   console.log(`[${TAG}] query relay`)
   homeRelay().then(relay => {
     if (thisRequestTime !== reqFeed_requestTime) return
-    let interests = [...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub)]
-    if (channels.length) interests.push(...channels.map(c=>c.hpub))
-    console.log(interests)
-    console.log(keys)
-    console.log(contacts)
-    console.log(channels)
+    let interests = [...keys.map(k=>k.hpub), ...contacts.map(c=>c.hpub), ...channels]
     relay.send([
       'REQ',
       'feed',
