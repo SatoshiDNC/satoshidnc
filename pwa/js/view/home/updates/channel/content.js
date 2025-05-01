@@ -61,8 +61,8 @@ v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
       const hitList = { x: pointer.x, y: pointer.y, hits: [] }
 
       // check for reactions click
+      const tg = v.tempGad
       if (p.reactions_width) {
-        const tg = v.tempGad
         tg.x = geom.SPACE_LEFT+geom.REACTIONS_SPACE_LEFT
         tg.y = v.sh-p.y0-geom.REACTIONS_OVERLAP
         tg.w = p.reactions_width
