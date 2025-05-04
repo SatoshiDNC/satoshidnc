@@ -347,14 +347,17 @@ v.renderFunc = function() {
   const m = mat4.create()
   const mat = mat4.create()
 
+  // turn off the notification dot on the bottom bar
   barBot.paneGads.filter(g => g.label == 'Updates')[0].new = false
 
+  // title
   mat4.identity(m)
   mat4.translate(m, m, [45, 125, 0])
   mat4.scale(m, m, [41/14, 41/14, 1])
   let x = 0, y = 0
   defaultFont.draw(x,y, 'Status', v.textColor, v.mat, m)
 
+  // title
   if (v.recents.length > 0) {
     mat4.identity(m)
     mat4.translate(m, m, [45, v.recentsGad.y-32 /*434*/, 0])
@@ -362,6 +365,7 @@ v.renderFunc = function() {
     defaultFont.draw(x,y, 'Recent updates', v.subtitleColor, v.mat, m)
   }
 
+  // title
   if (v.viewed.length > 0) {
     mat4.identity(m)
     mat4.translate(m, m, [45, v.viewedGad.y-32 /*434 + (v.recents.length>0 ? v.recents.length * 200 + 98 : 0)*/, 0])
@@ -369,12 +373,14 @@ v.renderFunc = function() {
     defaultFont.draw(x,y, 'Viewed updates', v.subtitleColor, v.mat, m)
   }
 
+  // title
   mat4.identity(m)
   mat4.translate(m, m, [45, v.channelsGad.y-43, 0])
   mat4.scale(m, m, [42/14, 42/14, 1])
   defaultFont.draw(x,y, 'Channels', v.titleColor, v.mat, m)
-  if (v.channels.length > 0) {
-  } else {
+
+  // channel tip
+  if (v.channels.length == 0) {
     mat4.identity(m)
     mat4.translate(m, m, [45, v.channelsGad.y-43+70, 0])
     mat4.scale(m, m, [28/14, 28/14, 1])
@@ -384,13 +390,18 @@ v.renderFunc = function() {
     mat4.scale(m, m, [28/14, 28/14, 1])
     defaultFont.draw(x,y, 'Find channels to follow below.', v.subtitleColor, v.mat, m)
   }
+
+  // title
   mat4.identity(m)
   mat4.translate(m, m, [45, v.discoverGad.y-22, 0])
   mat4.scale(m, m, [28/14, 28/14, 1])
   defaultFont.draw(x,y, 'Find channels to follow', v.subtitleColor, v.mat, m)
 
+  // all public keys with updates
   let i = 0
   for (let hpub of [...v.selfs, ...v.recents, ...v.viewed, ...v.channels, ...v.discover]) {
+
+    // parameters
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => a+(c.viewed?1:0), 0)
@@ -435,12 +446,12 @@ v.renderFunc = function() {
       drawEllipse(v, colors.inactiveDark, 43, g.y + 37 + index * 200, 125, 125)
     }
 
-    let balance = balances[hpub]?.['sat'] || 0 // Math.round(Math.random() * 3000 - 1500)
+    let balance = balances[hpub]?.['sat'] || 0
     let rank = balance? `${Math.abs(balance)}`.length: 0
     let rankIcon = balance > 0? '💔': '❤'
     let rankColor = balance > 0? colors.brokenHeart: colors.wholeHeart
 
-    // title
+    // name / title
     let textScale = 35/14
     let str
     if (v.selfs.includes(hpub)) {
@@ -482,19 +493,18 @@ v.renderFunc = function() {
 
     // the last update time (for followed channels)
     if (g === v.channelsGad) {
-      const news = 0
       const ts = 25/14
       const str = `12:37 BTC`
       const w = defaultFont.calcWidth(str)*ts
       mat4.identity(m)
       mat4.translate(m, m, [v.sw-45-w, g.y+index*200 + 82, 0])
       mat4.scale(m, m, [ts, ts, 1])
-      defaultFont.draw(0,0, str, news? colors.accent: v.subtitleColor, v.mat, m)
+      defaultFont.draw(0,0, str, numUpdates? colors.accent: v.subtitleColor, v.mat, m)
 
       // the number of new messages
-      if (news) {
+      if (numUpdates) {
         const ts = 21/14
-        const str = ''+news
+        const str = `${numUpdates}`
         const tw = defaultFont.calcWidth(str)*ts
         const w = Math.max(55, 19 + tw)
         drawPill(v, colors.accent, v.sw-42-w, g.y+index*200 + 109, w,55)
