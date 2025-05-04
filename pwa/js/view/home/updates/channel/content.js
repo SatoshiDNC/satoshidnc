@@ -8,7 +8,6 @@ import { kindInfo } from '../../../../nostor-util.js'
 
 const TAG = 'channel'
 const DAY_IN_SECONDS = 86400
-const debug = true
 
 const touchRadius = 85, clickRadius = 5;
 const getPointerRadius = function() { return (navigator.maxTouchPoints>0 ? touchRadius : clickRadius); }

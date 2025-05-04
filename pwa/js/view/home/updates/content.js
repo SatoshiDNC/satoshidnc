@@ -405,6 +405,7 @@ v.renderFunc = function() {
     const numUpdates = v.query.results.filter(u => u.hpub == hpub).length
     const newest = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => Math.max(a,c.data.created_at * 1000), 0)
     const numViewed = v.query.results.filter(u => u.hpub == hpub).reduce((a,c) => a+(c.viewed?1:0), 0)
+    const numNew = numUpdates - numViewed
     const g =
       i < v.selfs.length? v.selfsGad:
       i < v.selfs.length + v.recents.length? v.recentsGad:
@@ -499,13 +500,13 @@ v.renderFunc = function() {
       mat4.identity(m)
       mat4.translate(m, m, [v.sw-45-w, g.y+index*200 + 82, 0])
       mat4.scale(m, m, [ts, ts, 1])
-      defaultFont.draw(0,0, str, numUpdates? colors.accent: v.subtitleColor, v.mat, m)
+      defaultFont.draw(0,0, str, numNew? colors.accent: v.subtitleColor, v.mat, m)
 
       // the number of new messages
-      if (numUpdates) {
+      if (numNew) {
         console.log('updates:', v.query.results.filter(u => u.hpub == hpub))
         const ts = 21/14
-        const str = `${numUpdates}`
+        const str = `${numNew}`
         const tw = defaultFont.calcWidth(str)*ts
         const w = Math.max(55, 19 + tw)
         drawPill(v, colors.accent, v.sw-42-w, g.y+index*200 + 109, w,55)
