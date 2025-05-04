@@ -503,6 +503,7 @@ v.renderFunc = function() {
 
       // the number of new messages
       if (numUpdates) {
+        console.log('updates:', v.query.results.filter(u => u.hpub == hpub))
         const ts = 21/14
         const str = `${numUpdates}`
         const tw = defaultFont.calcWidth(str)*ts
