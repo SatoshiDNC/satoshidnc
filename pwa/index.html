@@ -356,10 +356,6 @@
                 })
 
                 setInterval(() => {
-                  registration.sync.register('minutely').then(() => {
-                  }, error => {
-                    pushError(`Sync registration failed: ${error}`)
-                  })
                   minutelyUI()
                 }, 60 * 1000)
 
