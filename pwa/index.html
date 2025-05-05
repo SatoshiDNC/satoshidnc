@@ -375,8 +375,9 @@
                       })
                     })
                   } else {
-                    console.log('note: background sync is not available (requires install)')
-                    clearStatus('registering_periodic_sync')
+                    console.error('note: background sync is not available (requires install)')
+                    pushError(`Periodic sync not enabled: ${error}`)
+                    // clearStatus('registering_periodic_sync')
                   }
                 })
               }
