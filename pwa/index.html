@@ -366,12 +366,19 @@
                 navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
                   if (status.state == 'granted' && 'periodicSync' in registration) {
                     navigator.serviceWorker.ready.then(async sw => {
-                      sw.periodicSync.register('periodicsync', {
-                        minInterval: 60 * 1000,
-                      }).then(() => {
-                        clearStatus('registering_periodic_sync')
-                      }, error => {
-                        pushError(`Periodic sync registration failed: ${error}`)
+                      sw.periodicSync.getTags().then((tags) => {
+                        if (tags.includes('minutely-test')) {
+                          console.log('minutely-test exists')
+                        } else {
+                          console.log('minutely-test does not exist')
+                          sw.periodicSync.register('minutely-test', {
+                            minInterval: 60 * 1000,
+                          }).then(() => {
+                            clearStatus('registering_periodic_sync')
+                          }, error => {
+                            pushError(`Periodic sync registration failed: ${error}`)
+                          })
+                        }
                       })
                     })
                   } else {
