@@ -369,6 +369,7 @@
                       sw.periodicSync.getTags().then((tags) => {
                         if (tags.includes('minutely-test')) {
                           console.log('minutely-test exists')
+                          clearStatus('registering_periodic_sync')
                         } else {
                           console.log('minutely-test does not exist')
                           sw.periodicSync.register('minutely-test', {
