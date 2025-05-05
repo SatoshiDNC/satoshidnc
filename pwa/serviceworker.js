@@ -21,6 +21,7 @@ const MINUTE = 60 * 1000
 let minutely
 let waiting_for_startup = true
 self.addEventListener('sync', event => {
+  console.log(`[${TAG}] sync`, event.tag)
   let now = Date.now()
   switch (event.tag) {
     case 'startup-trigger':
@@ -34,7 +35,7 @@ self.addEventListener('sync', event => {
       minutelyTasks()
       break
     default:
-      console.log(`[${TAG}] sync`, event.tag)
+//      console.log(`[${TAG}] sync`, event.tag)
   }
 })
 
