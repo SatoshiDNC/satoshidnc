@@ -325,7 +325,13 @@ v.renderFunc = function() {
   str = '\x15'
   s = 211/18
   mat4.identity(m)
-  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + TITLE_TOP - 128 + v.menuH * f0, 0])
+  mat4.translate(m,m, [v.menuX + (v.menuW - iconFont.calcWidth(str) * s) / 2, v.menuY + TITLE_TOP - 128 + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, str, colors.accent, v.mat, m)
+  str = '\x16'
+  s = 211/18
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + (v.menuW - iconFont.calcWidth(str) * s) / 2, v.menuY + TITLE_TOP - 128 + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   iconFont.draw(0,0, str, v.textColor, v.mat, m)
 
