@@ -12,11 +12,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.label = ':'
   g.font = iconFont
   g.fontSize = 11
-  g.items = [
-    { id: 1, label: 'Create channel', handler: g.handleSequential, subhandler: createChannelPopup.invoker },
-    { id: 2, label: 'Status privacy', handler: g.handler },
-    { id: 3, label: 'Settings', handler: g.handleSettings },
-  ]
   g.handleSettings = function(item, parentRoot) {
     const g = this, v = this.viewport
     console.log(`settings ${JSON.stringify(item)}`)
@@ -41,6 +36,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       handleAction()
     }
   }
+  g.items = [
+    { id: 1, label: 'Create channel', handler: g.handleSequential, subhandler: createChannelPopup.invoker },
+    { id: 2, label: 'Status privacy', handler: g.handler },
+    { id: 3, label: 'Settings', handler: g.handleSettings },
+  ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
     if (fg.getRoot() !== g.target || g.target.easingState() == -1) {
