@@ -1,4 +1,4 @@
-import { sfx } from './js/sound.js'
+import { sfx } from '../sound.js'
 
 const TAG = 'sw-minutely'
 
