@@ -34,6 +34,7 @@ v.name = Object.keys({menuView}).pop()
 v.designSize = 1080*2183
 v.bgColor = [0x12/0xff, 0x1b/0xff, 0x22/0xff, 1]
 v.textColor = [0xf7/0xff, 0xf8/0xff, 0xfa/0xff, 1]
+v.subtextColor = colors.inactive
 v.flashAnim = 0
 v.invoker = function(item, parentRoot) {
   const v = this
@@ -328,6 +329,19 @@ v.renderFunc = function() {
   mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.textColor, v.mat, m)
+  str = 'Channels are public, so anyone can find them'
+  s = 29/14
+  y += 61
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.subtextColor, v.mat, m)
+  str = 'and see 30 days of history.'
+  y += 56
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.subtextColor, v.mat, m)
 
   let i = 0
   for (const item of v.items) {
