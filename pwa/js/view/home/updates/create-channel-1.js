@@ -48,7 +48,9 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.x = 69, g.h = 104
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
-    menuRoot.followUp = createChannelRoot
+    menuRoot.followUp = () => {
+      fg.setRoot(createChannelRoot)
+    }
     menuRoot.easeOut()
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
