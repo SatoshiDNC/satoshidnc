@@ -225,6 +225,14 @@ v.gadgets.push(g = v.discoverGad = new fg.Gadget(v))
     const updates = v.query.results.filter(u => u.hpub == v.discover[index])
     v.displayAction(updates, v.discover[index], v.parent.parent, g.root, g.target, 1)
   }
+v.gadgets.push(g = v.exploreGad = new fg.Gadget(v))
+  g.actionFlags = fg.GAF_CLICKABLE
+  g.x = 37
+  g.w = 362, g.h = 104
+  g.clickFunc = function(e) {
+    const g = this, v = this.viewport
+    console.log('explore')
+  }
 v.gadgets.push(g = v.swipeGad = new fg.SwipeGadget(v))
   g.actionFlags = fg.GAF_SWIPEABLE_UPDOWN|fg.GAF_SCROLLABLE_UPDOWN
 v.clearQuery = function() {
@@ -331,9 +339,12 @@ v.layoutFunc = function() {
   g.x = x, g.y = v.channelsGad.y + v.channelsGad.h + ((channels.length > 0) ? 93 : 246)
   g.w = v.sw, g.h = discover.length * 200
   g.autoHull()
+  g = v.exploreGad
+  g.y = v.discoverGad.y + v.discoverGad.h + ((discover.length > 0) ? 12 : 12)
+  g.autoHull()
 
   v.minX = 0, v.maxX = v.sw
-  v.minY = 0, v.maxY = v.discoverGad.y + v.discoverGad.h + 346
+  v.minY = 0, v.maxY = v.exploreGad.y + v.exploreGad.h + 346
 
   g = v.swipeGad
   g.layout.call(g)
@@ -557,5 +568,16 @@ v.renderFunc = function() {
 
     i++
   }
+
+  let g = v.exploreGad
+  drawPill(v, colors.inactive, g.x,g.y, g.w,g.h)
+  drawPill(v, v.bgColor, g.x+3,g.y, g.w-6,g.h-6)
+  const label = 'Explore more'
+  const ts = 29/14
+  const w = defaultFont.calcWidth(label)*ts
+  mat4.identity(m)
+  mat4.translate(m, m, [g.x+g.w/2-w/2, g.y, 0])
+  mat4.scale(m, m, [ts, ts, 1])
+  defaultFont.draw(0,0, label, colors.accent, v.mat, m)
   
 }
