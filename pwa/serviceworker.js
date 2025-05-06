@@ -28,9 +28,9 @@ self.addEventListener('sync', event => {
       if (waiting_for_startup) break
       startupTasks()
       event.target.registration.sync.register('minutely').then(() => {
-        console.log('registered minutely')
+        console.log(`[${TAG}] registered minutely`)
       }, error => {
-        console.error(`sync registration failed: ${error}`)
+        console.error(`[${TAG}] sync registration failed: ${error}`)
       })
       break
     case 'minutely':
@@ -39,9 +39,9 @@ self.addEventListener('sync', event => {
       minutely = now
       setTimeout(() => {
         event.target.registration.sync.register('minutely').then(() => {
-          console.log('re-registered minutely')
+          console.log(`[${TAG}] re-registered minutely`)
         }, error => {
-          console.error(`sync registration failed: ${error}`)
+          console.error(`[${TAG}] sync registration failed: ${error}`)
         })
       }, 60 * 1000)
       minutelyTasks()
