@@ -313,7 +313,7 @@ v.layoutFunc = function() {
   let g
   g = v.selfsGad
   g.x = x, g.y = 170
-  g.w = v.sw, g.h = keys.length * 200
+  g.w = v.sw, g.h = v.selfs.length * 200
   g.autoHull()
   g = v.recentsGad
   g.x = x, g.y = v.selfsGad.y + v.selfsGad.h + ((recents.length > 0) ? 96 : 0)
@@ -443,7 +443,7 @@ v.renderFunc = function() {
 
     // the avatar
     if (mode == 'channels') {
-      drawAvatar(v, hpub, 42, g.y + 36 + index * 200, 127, 127, v.selfs.includes(hpub)?0:balances[hpub]?.['sat']||0)
+      drawAvatar(v, hpub, 42, g.y + 36 + index * 200, 127, 127, v.keys.includes(hpub)?0:balances[hpub]?.['sat']||0)
     } else {
       drawEllipse(v, colors.inactiveDark, 43, g.y + 37 + index * 200, 125, 125)
     }
@@ -456,7 +456,7 @@ v.renderFunc = function() {
     // name / title
     let textScale = 35/14
     let str
-    if (v.selfs.includes(hpub) && g === v.selfsGad) {
+    if (v.keys.includes(hpub) && g === v.selfsGad) {
       if (v.selfs.length == 1) {
         str = 'My status'
       } else {
@@ -473,7 +473,7 @@ v.renderFunc = function() {
     } else {
       str = getName(hpub)
     }
-    const max_len = -32 + v.sw-211-32 + ((rank && !v.selfs.includes(hpub))? -2*(20/14) - Math.ceil(rank/3)*26*(20/14) - rank*4: 0)
+    const max_len = -32 + v.sw-211-32 + ((rank && !v.keys.includes(hpub))? -2*(20/14) - Math.ceil(rank/3)*26*(20/14) - rank*4: 0)
     while (str.length > 1 && defaultFont.calcWidth(str)*textScale > max_len) {
       str = str.replace(/…$/,'')
       str = str.replace(/.$/,'') + '…'
@@ -489,7 +489,7 @@ v.renderFunc = function() {
     mat4.scale(m, m, [30/14, 30/14, 1])
     const subtitle =
       (g === v.discoverGad)?'Public channel':
-      (g === v.channelsGad)?(v.selfs.includes(hpub)?`The channel was created`:'Public channel'):
+      (g === v.channelsGad)?(v.keys.includes(hpub)?`The channel was created`:'Public channel'):
       updatePostedAsOf(newest)
     defaultFont.draw(0,0, subtitle, v.subtitleColor, v.mat, m)
 
@@ -542,7 +542,7 @@ v.renderFunc = function() {
         mat4.scale(m, m, [ts, ts, 1])
         defaultFont.draw(0,0, label, blend(v.titleColor,hue(colors.accent),TINGE.ACTION_BUTTON), v.mat, m)
       }
-    } /* else if (rank && !v.selfs.includes(hpub)) {
+    } /* else if (rank && !v.keys.includes(hpub)) {
       mat4.identity(m)
       let iconScale = 20/14
       let d = 4*iconScale
