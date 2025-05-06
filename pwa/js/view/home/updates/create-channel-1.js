@@ -343,6 +343,48 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.subtextColor, v.mat, m)
 
+  str = 'People see your channel, not you'
+  s = 33/14
+  y += 107
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.textColor, v.mat, m)
+  str = 'Followers can’t see your phone number,'
+  s = 29/14
+  y += 61
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.subtextColor, v.mat, m)
+  str = 'other profile pictures, or names.'
+  y += 56
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.subtextColor, v.mat, m)
+
+  str = 'You’re responsible for your channel'
+  s = 33/14
+  y += 107
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.textColor, v.mat, m)
+  str = 'Your channel needs to follow our guidelines'
+  s = 29/14
+  y += 61
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.subtextColor, v.mat, m)
+  str = 'and is reviewed against them.'
+  y += 56
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.subtextColor, v.mat, m)
+
   let i = 0
   for (const item of v.items) {
     if (item.name == v.items?.[v.index]?.name) {
