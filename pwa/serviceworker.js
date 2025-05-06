@@ -59,6 +59,10 @@ self.addEventListener('sync', event => {
 
 self.addEventListener('periodicsync', event => {
   console.log(`[${TAG}] periodicsync`, event.tag)
+  self.clients.matchAll().then(list => {
+    list[0]?.postMessage({ note: 'periodicsync test'})
+  })
+
   // if (event.tag === 'sync-messages') {
   //   event.waitUntil(sendMessages())
   // }
