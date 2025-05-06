@@ -45,7 +45,7 @@ self.addEventListener('sync', event => {
       minutely = now
       setTimeout(() => {
         event.target.registration.sync.register('minutely').then(() => {
-          console.log(`[${TAG}] re-registered minutely`)
+          // console.log(`[${TAG}] re-registered minutely`)
         }, error => {
           console.error(`[${TAG}] sync registration failed: ${error}`)
         })
