@@ -3,7 +3,7 @@ import { noteDecode, nsecDecode, validKey, relayUrl, npub, nostrWatchRelays, get
 import { findEvent, publishEvent } from '../../../nostor-app.js'
 import { relays } from '../../../relays.js'
 import { finalizeEvent } from 'nostr-tools'
-import { root as createChannelRoot } from './create-channel/root.js'
+import { rootView as createChannelRoot } from './create-channel/root.js'
 
 const TITLE_TOP = 507
 const ITEM_TOP = TITLE_TOP + 61
