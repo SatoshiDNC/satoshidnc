@@ -376,6 +376,10 @@
                   minutelyUI()
                 }, 60 * 1000)
 
+                navigator.serviceWorker.addEventListener("message", (event) => {
+                  console.log(event)
+                })
+                
                 // navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
                 //   if (status.state == 'granted' && 'periodicSync' in registration) {
                 //     navigator.serviceWorker.ready.then(async sw => {
