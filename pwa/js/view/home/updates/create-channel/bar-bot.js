@@ -7,6 +7,7 @@ import * as nip19 from 'nostr-tools/nip19'
 import { generateSecretKey, getPublicKey } from 'nostr-tools/pure'
 import { putDeviceKey } from '../../../../keys.js'
 import { Buffer } from 'buffer'
+import { followChannel } from '../../../../channels.js'
 
 let v, g
 export const barBot = v = new fg.View()
