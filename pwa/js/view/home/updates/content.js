@@ -571,12 +571,12 @@ v.renderFunc = function() {
 
   let g = v.exploreGad
   drawPill(v, colors.inactive, g.x,g.y, g.w,g.h)
-  drawPill(v, v.bgColor, g.x+3,g.y, g.w-6,g.h-6)
+  drawPill(v, v.bgColor, g.x+3,g.y+3, g.w-6,g.h-6)
   const label = 'Explore more'
   const ts = 29/14
   const w = defaultFont.calcWidth(label)*ts
   mat4.identity(m)
-  mat4.translate(m, m, [g.x+g.w/2-w/2, g.y, 0])
+  mat4.translate(m, m, [g.x+g.w/2-w/2, g.y + 55, 0])
   mat4.scale(m, m, [ts, ts, 1])
   defaultFont.draw(0,0, label, colors.accent, v.mat, m)
   
