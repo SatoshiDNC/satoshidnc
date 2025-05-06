@@ -19,7 +19,7 @@ import { finalizeEvent } from 'nostr-tools'
 // export function bpub() { return Buffer.from(hpub(), 'hex') }
 // export function npub() { return nip19.npubEncode(hpub()) }
 
-const TITLE_TOP = 507 - 405
+const TITLE_TOP = 507
 const ITEM_TOP = TITLE_TOP + 61
 const ITEM_LEFT = 90
 const ITEM_SIZE = 179
@@ -254,7 +254,7 @@ v.prepMenu = function(items) {
 }
 v.layoutFunc = function() {
   const v = this
-  v.menuH = 1669 - 56 - 405
+  v.menuH = 1669 - 56
   v.menuY = v.sh - v.menuH
   v.menuW = v.sw
   let g
@@ -384,68 +384,6 @@ v.renderFunc = function() {
   mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.subtextColor, v.mat, m)
-
-  let i = 0
-  for (const item of v.items) {
-    if (item.name == v.items?.[v.index]?.name) {
-      drawRect(v, colors.inactiveDark, v.menuX, v.menuY + ITEM_TOP + 79 + 55 / 2 - ITEM_SIZE / 2 + ITEM_SIZE * i + v.menuH * f0, v.menuW, ITEM_SIZE)
-      mat4.identity(m)
-      mat4.translate(m,m, [v.menuX + v.menuW - 190, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 55 + v.menuH * f0, 0])
-      mat4.scale(m,m, [55/14, 55/14, 1])
-      iconFont.draw(0,0, '?', blend(v.textColor, colors.inactiveDark, (Math.cos(v.flashAnim*2*Math.PI)+1)/2), v.mat, m)
-      v.flashAnim += 0.02
-      if (v.flashAnim >= 1) {
-        v.flashAnim -= 1
-      }
-      v.setRenderFlag(true)
-    }
-    mat4.identity(m)
-    mat4.translate(m,m, [v.menuX + ITEM_LEFT, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0, 0])
-    mat4.scale(m,m, [35/14, 35/14, 1])
-    defaultFont.draw(0,0, item.name, v.textColor, v.mat, m)
-    let goal
-    goal = 0
-    if (item.subtitle) {
-      goal = 1
-      item.subtitleCached = item.subtitle
-    }
-
-    if (item.copyAnim != goal) {
-      item.copyAnim -= 0.02
-      if (item.copyAnim < goal) {
-        item.copyAnim = goal
-      }
-      v.setRenderFlag(true)
-    }
-
-    if (item.subtitleCached) {
-      mat4.identity(m)
-      mat4.translate(m,m, [v.menuX + ITEM_LEFT, v.menuY + ITEM_TOP + 134 + i * ITEM_SIZE + 25 + v.menuH * f0, 0])
-      s = 25/14
-      mat4.scale(m,m, [s, s, 1])
-      const w = v.menuW - ITEM_LEFT - 135
-      let str
-      if (defaultFont.calcWidth(item.subtitleCached) * s > w) {
-        let l = item.subtitleCached.length
-        while (defaultFont.calcWidth(item.subtitleCached.substring(0,l)+'...') * s > w) {
-          l--
-        }
-        str = item.subtitleCached.substring(0,l)+'...'
-      } else {
-        str = item.subtitleCached
-      }
-      defaultFont.draw(0,0, str, alpha(colors.inactive, item.copyAnim), v.mat, m)
-    }
-
-    mat4.identity(m)
-    s = 35/18
-    mat4.translate(m,m, [v.menuX + v.menuW - 190 + 7*s, v.menuY + ITEM_TOP + 79 + i * ITEM_SIZE + 35 + v.menuH * f0 - 9*s, 0])
-    s = 35/18*(1+(1-item.copyAnim))
-    mat4.scale(m,m, [s, s, 1])
-    iconFont.draw(-7,9, '@', alpha(v.textColor, item.copyAnim), v.mat, m)
-
-    i++
-  }
 
   let g = v.closeGad
   drawPill(v, colors.accent, g.x, g.y + v.menuH * f0, g.w, g.h)
