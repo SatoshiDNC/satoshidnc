@@ -37,6 +37,8 @@ import { rootView as home_updates_channel_root } from './view/home/updates/chann
 import { barTop as home_updates_channel_top } from './view/home/updates/channel/bar-top.js'
 import { rootView as home_updates_createChannel_root } from './view/home/updates/create-channel/root.js'
 import { barTop as home_updates_createChannel_top } from './view/home/updates/create-channel/bar-top.js'
+import { barBot as home_updates_createChannel_bot } from './view/home/updates/create-channel/bar-bot.js'
+import { contentView as home_updates_createChannel_content } from './view/home/updates/create-channel/content.js'
 import { rootView as home_updates_display_root } from './view/home/updates/display/root.js'
 import { overlayView as home_updates_display_overlay } from './view/home/updates/display/overlay.js'
 import { rootView as home_updates_verbal_root } from './view/home/updates/verbal/root.js'
@@ -89,6 +91,7 @@ home_updates_channel_top.backGad.root = home_updates_channel_root, home_updates_
 home_updates_channel_top.menuGad.target = menuRoot
 home_updates_top.menuGad.target = menuRoot
 home_updates_createChannel_top.backGad.root = home_updates_createChannel_root, home_updates_createChannel_top.backGad.target = home_updates_root
+home_updates_createChannel_bot.saveGad.formView = home_updates_createChannel_content
 home_updates_overlay.cameraGad.root = home_updates_root, home_updates_overlay.cameraGad.target = home_updates_verbal_root
 home_updates_overlay.pencilGad.root = home_updates_root, home_updates_overlay.pencilGad.target = home_updates_verbal_root
 home_updates_verbal_overlay.closeGad.root = home_updates_verbal_root, home_updates_verbal_overlay.closeGad.target = home_updates_root
