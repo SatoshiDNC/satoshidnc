@@ -31,12 +31,12 @@ let minutely
 let startup_trigger = false
 let waiting_for_database = true
 self.addEventListener('sync', event => {
-  console.log(`[${TAG}] sync`, event.tag, event)
   let now = Date.now()
   switch (event.tag) {
     case 'startup-trigger':
       startup_trigger = true
       if (waiting_for_database) break
+      if (!startup_trigger) break
       startup(event.target)
       break
     case 'minutely':
@@ -53,8 +53,8 @@ self.addEventListener('sync', event => {
       minutelyTasks()
       break
     default:
-//      console.log(`[${TAG}] sync`, event.tag)
-  }
+      console.log(`[${TAG}] sync`, event.tag, event)
+    }
 })
 
 self.addEventListener('periodicsync', event => {
@@ -66,6 +66,7 @@ self.addEventListener('periodicsync', event => {
 
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'DB_READY') {
+    if (!waiting_for_database) return
     waiting_for_database = false
     console.log(`[${TAG}] received DB-ready all-clear signal`)
     if (!startup_trigger) return
