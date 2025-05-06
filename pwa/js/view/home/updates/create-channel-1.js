@@ -369,6 +369,12 @@ v.renderFunc = function() {
   mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.textColor, v.mat, m)
+  str = '\x19'
+  s = 53/18
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + 116 - iconFont.calcWidth(str) * s / 2, v.menuY + y + 66 + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, str, colors.accent, v.mat, m)
   str = 'Followers can’t see your phone number,'
   s = 29/14
   y += 61
@@ -390,6 +396,12 @@ v.renderFunc = function() {
   mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.textColor, v.mat, m)
+  str = '\x1A'
+  s = 53/18
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + 116 - iconFont.calcWidth(str) * s / 2, v.menuY + y + 66 + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, str, colors.accent, v.mat, m)
   str = 'Your channel needs to follow our guidelines'
   s = 29/14
   y += 61
