@@ -254,7 +254,7 @@ v.prepMenu = function(items) {
 }
 v.layoutFunc = function() {
   const v = this
-  v.menuH = 1669
+  v.menuH = 1669 - 56
   v.menuY = v.sh - v.menuH
   v.menuW = v.sw
   let g
