@@ -91,6 +91,7 @@ home_updates_channel_top.backGad.root = home_updates_channel_root, home_updates_
 home_updates_channel_top.menuGad.target = menuRoot
 home_updates_top.menuGad.target = menuRoot
 home_updates_createChannel_top.backGad.root = home_updates_createChannel_root, home_updates_createChannel_top.backGad.target = home_updates_root
+home_updates_createChannel_bot.saveGad.root = home_updates_createChannel_root, home_updates_createChannel_bot.saveGad.target = home_updates_root
 home_updates_createChannel_bot.saveGad.formView = home_updates_createChannel_content
 home_updates_overlay.cameraGad.root = home_updates_root, home_updates_overlay.cameraGad.target = home_updates_verbal_root
 home_updates_overlay.pencilGad.root = home_updates_root, home_updates_overlay.pencilGad.target = home_updates_verbal_root

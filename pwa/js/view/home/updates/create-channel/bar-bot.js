@@ -37,6 +37,7 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
         cancel = true
       } else {
         putDeviceKey(hpub, hsec)
+        followChannel(hpub)
         addNewContact(hpub, name)
         setPersonalData(hpub, 'about', desc)
       }
