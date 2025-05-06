@@ -48,11 +48,11 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     menuRoot.followUp = () => {
-      createChannelRoot.easingState = -1
-      createChannelRoot.easingValue = 0
+      createChannelRoot.easingState = 1
+      createChannelRoot.easingValue = 1
       fg.setRoot(createChannelRoot)
     }
-    menuRoot.easeOut(createChannelRoot)
+    menuRoot.easeOut()
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
