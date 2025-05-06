@@ -12,8 +12,8 @@ v.textColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.iconColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 183, g.y = 100, g.h = 70
-  g.label = 'Name on this device'
+  g.x = 44, g.y = 100, g.h = 70
+  g.label = 'Channel name'
   g.text = '', g.defaultValue =''//'Satoshi, D.N.C.'
   g.animValue = 0
   g.focusValue = 0
@@ -32,20 +32,11 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
       clearInterval(g.timerId), delete g.timerId
     }, 10)
   }
-v.gadgets.push(g = v.pubkeyGad = new fg.Gadget(v))
+v.gadgets.push(g = v.descGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 183, g.y = 100 + 212, g.h = 70
-  g.label = 'Nostor public key'
-  g.text = '', g.defaultValue = ''//'npub128rrvpkys0wfk3ph8682yszffwqsre9j8kjhnutlasv4q2fq06vsez5dlf'
-  g.animValue = 0
-  g.focusValue = 0
-  g.focused = false
-  g.clickFunc = v.nameGad.clickFunc
-v.gadgets.push(g = v.relayGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 183, g.y = 100 + 212 * 2, g.h = 70
-  g.label = 'Relay'
-  g.text = '', g.defaultValue = 'relay.satoshidnc.com'
+  g.x = 44, g.y = 100 + 212 * 2, g.h = 70
+  g.label = 'Describe your channel.'
+  g.text = '', g.defaultValue = ''
   g.animValue = 0
   g.focusValue = 0
   g.focused = false
@@ -53,21 +44,17 @@ v.gadgets.push(g = v.relayGad = new fg.Gadget(v))
 v.clear = function() {
   const v = this
   v.nameGad.text = ''
-  v.pubkeyGad.text = ''
-  v.relayGad.text = ''
+  v.descGad.text = ''
   v.setRenderFlag(true)
 }
 v.layoutFunc = function() {
   const v = this
   let g
   g = v.nameGad
-  g.w = v.sw - 183 - 73
+  g.w = v.sw - 44 - 44
   g.autoHull()
-  g = v.pubkeyGad
-  g.w = v.sw - 183 - 73
-  g.autoHull()
-  g = v.relayGad
-  g.w = v.sw - 183 - 73
+  g = v.descGad
+  g.w = v.sw - 44 - 44
   g.autoHull()
 }
 v.renderFunc = function() {
@@ -142,30 +129,10 @@ v.renderFunc = function() {
     mainShapes.drawArrays2('rect')
   }
 
-  mat4.identity(m)
-  mat4.translate(m,m, [73, 158, 0])
-  s = 43/iconFont.calcWidth('\x00')
-  mat4.scale(m,m, [s, s, 1])
-  iconFont.draw(0,0, '\x00', v.iconColor, v.mat, m)
-
   drawTextInput(v.nameGad)
   
-  mat4.identity(m)
-  mat4.translate(m,m, [73, 158 + 212, 0])
-  s = 43/iconFont.calcWidth('\x06')
-  mat4.scale(m,m, [s, s, 1])
-  iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
+  drawTextInput(v.descGad)
 
-  drawTextInput(v.pubkeyGad)
-
-  mat4.identity(m)
-  mat4.translate(m,m, [73, 158 + 212 * 2, 0])
-  s = 43/iconFont.calcWidth('\x06')
-  mat4.scale(m,m, [s, s, 1])
-  iconFont.draw(0,0, '\x06', v.iconColor, v.mat, m)
-
-  drawTextInput(v.relayGad)
-  
   for (g of v.gadgets) {
     if (g.animValue != 0 && g.animValue != 1) {
       v.setRenderFlag(true)
