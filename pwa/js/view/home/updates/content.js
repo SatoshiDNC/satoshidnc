@@ -576,7 +576,7 @@ v.renderFunc = function() {
   const ts = 29/14
   const w = defaultFont.calcWidth(label)*ts
   mat4.identity(m)
-  mat4.translate(m, m, [g.x+g.w/2-w/2, g.y + 55, 0])
+  mat4.translate(m, m, [g.x+g.w/2-w/2, g.y + 66, 0])
   mat4.scale(m, m, [ts, ts, 1])
   defaultFont.draw(0,0, label, colors.accent, v.mat, m)
   
