@@ -455,7 +455,7 @@ v.renderFunc = function() {
     // name / title
     let textScale = 35/14
     let str
-    if (v.selfs.includes(hpub)) {
+    if (v.selfs.includes(hpub) && g === v.selfsGad) {
       if (v.selfs.length == 1) {
         str = 'My status'
       } else {
@@ -488,7 +488,7 @@ v.renderFunc = function() {
     mat4.scale(m, m, [30/14, 30/14, 1])
     const subtitle =
       (g === v.discoverGad)?'Public channel':
-      (g === v.channelsGad)?'Public channel':
+      (g === v.channelsGad)?(v.selfs.includes(hpub)?`The channel was created`:'Public channel'):
       updatePostedAsOf(newest)
     defaultFont.draw(0,0, subtitle, v.subtitleColor, v.mat, m)
 
