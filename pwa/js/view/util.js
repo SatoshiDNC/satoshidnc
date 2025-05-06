@@ -18,8 +18,8 @@ export const setEasingParameters = function(v) {
         if (v.easingValue < 0) {
           v.easingValue = 0
           v.easingState = 0
-          v.easingTarget.easingState = 1
-          v.easingTarget.easingValue = 0
+          v.easingTarget?.easingState = 1
+          v.easingTarget?.easingValue = 0
           fg.setRoot(v.easingTarget)
         }
       }
