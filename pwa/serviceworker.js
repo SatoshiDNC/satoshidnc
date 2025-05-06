@@ -25,21 +25,25 @@ self.addEventListener('sync', event => {
   let now = Date.now()
   switch (event.tag) {
     case 'startup-trigger':
+      if (waiting_for_startup) break
+      startupTasks()
+      event.target.registration.sync.register('minutely').then(() => {
+        console.log('registered minutely')
+      }, error => {
+        console.error(`sync registration failed: ${error}`)
+      })
+      break
+    case 'minutely':
+      if (waiting_for_startup) break
+      if (minutely && now - minutely < MINUTE) break
+      minutely = now
       setTimeout(() => {
         event.target.registration.sync.register('minutely').then(() => {
           console.log('re-registered minutely')
         }, error => {
           console.error(`sync registration failed: ${error}`)
         })
-      }, 1000)
-
-      if (waiting_for_startup) break
-      startupTasks()
-      break
-    case 'minutely':
-      if (waiting_for_startup) break
-      if (minutely && now - minutely < MINUTE) break
-      minutely = now
+      }, 60 * 1000)
       minutelyTasks()
       break
     default:
