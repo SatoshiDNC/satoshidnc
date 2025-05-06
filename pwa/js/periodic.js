@@ -19,6 +19,9 @@ contactDependencies.push(() => {
 let lastFulfillment = 0
 export function minutelyUI() {
 
+  // startup gate
+  if (!db) return
+
   // floodgate
   const now = Date.now()
   if (now - lastFulfillment < ONE_MINUTE_IN_MILLISECONDS) return
