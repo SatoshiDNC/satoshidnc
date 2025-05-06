@@ -4,21 +4,6 @@ import { findEvent, publishEvent } from '../../../nostor-app.js'
 import { relays } from '../../../relays.js'
 import { finalizeEvent } from 'nostr-tools'
 
-// import * as nip19 from 'nostr-tools/nip19'
-// import { Buffer } from 'buffer'
-// import { getKeyInfo, putTrezorKey } from '../../keys.js'
-// import { getPersonalData, setPersonalData } from '../../personal.js'
-
-// /* secret key should not leave this file */
-// const my_hsec = Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('hex')
-// function hsec() { return my_hsec }
-// function bsec() { return Buffer.from(hsec(), 'hex') }
-// function nsec() { return nip19.nsecEncode(bsec()) }
-
-// export function hpub() { return getPublicKey(bsec()) }
-// export function bpub() { return Buffer.from(hpub(), 'hex') }
-// export function npub() { return nip19.npubEncode(hpub()) }
-
 const TITLE_TOP = 507
 const ITEM_TOP = TITLE_TOP + 61
 const ITEM_LEFT = 90
@@ -38,7 +23,7 @@ v.subtextColor = colors.inactive
 v.flashAnim = 0
 v.invoker = function(item, parentRoot) {
   const v = this
-  const openNostorPanel = () => {
+  const openPanel = () => {
     if (fg.getRoot() !== menuRoot || menuRoot.easingState() == -1) {
       menuRoot.easeIn?.()
     } else {
@@ -46,7 +31,7 @@ v.invoker = function(item, parentRoot) {
     }
   }
   setTimeout(() => {
-    openNostorPanel()
+    openPanel()
   })
 }
 v.easingState = 1
@@ -63,183 +48,6 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     menuRoot.easeOut()
-  }
-v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
-  g.actionFlags = fg.GAF_CLICKABLE
-  g.clickFunc = function(e) {
-    const g = this, v = this.viewport
-    const x = e.x / v.viewScale - v.menuX, y = e.y / v.viewScale - v.menuY
-    const index = Math.floor((y - ITEM_TOP - 79 - 35 / 2 + ITEM_SIZE / 2) / ITEM_SIZE)
-    if (v.index >= 0) return
-    if (index >= 0 && index < v.items.length) {
-      v.index = index
-      v.setRenderFlag(true)
-      v.flashAnim = 0
-      const clearSelection = () => {
-        if (v.index == index) {
-          v.index = -1
-          v.setRenderFlag(true)
-        }
-      }
-      const handleResult = result => {
-        console.log('menu handleResult', result)
-        clearSelection()
-        if (result.message != 'Cancelled') {
-          alert(result.message || result.xpub || result.address)
-        }
-      }
-      const handleError = e => {
-        alert(e)
-        clearSelection()
-      }
-      const item = v.items[v.index]
-      switch (item.key) {
-
-        case DEL_EVENT:
-          setTimeout(() => {
-
-            let entry = prompt(`Event id:`)
-            if (!entry) {
-              clearSelection()
-              return
-            }
-
-            let id = (noteDecode(entry) || entry)?.toLowerCase()
-            if (!validKey(id)) {
-              if (id?.trim()) alert(`Invalid event id`)
-              clearSelection()
-              return
-            }
-
-            let allRelays = []
-            let foundOnRelays = []
-            nostrWatchRelays().then(onlineRelays => {
-              let hits = 0
-              let pubkeys = [], kinds = []
-              let checksInProgress = []
-              const queryRelayForNote = relay => {
-                checksInProgress.push(findEvent(id, relay))
-              }
-              const waitForResults = () => {
-                console.log('waitForResults', checksInProgress.length)
-                Promise.allSettled(checksInProgress).then(results => {
-                  console.log('settled', results.length)
-                  hits += results.reduce((a, c) => {
-                    if (c.status == 'fulfilled') {
-                      foundOnRelays.push(c.value?._foundOnRelay)
-                    }
-                    let pk = c.value?.pubkey
-                    if (pk && !pubkeys.includes(pk)) {
-                      pubkeys.push(pk)
-                    }
-                    let kind = c.value?.kind
-                    if (kind && !kinds.includes(kind)) {
-                      kinds.push(kind)
-                    }
-                    return c.status == 'fulfilled'? a + 1 : a
-                  }, 0)
-                  checksInProgress = []
-                  let input = prompt(`${
-                    pubkeys.length > 0?
-                      `Found ${pubkeys.length !== 1? `${pubkeys.length} `: ``}event${pubkeys.length !== 1? `s`: ``}`
-                    :
-                      `Not found`
-                  } on ${hits?`${hits} of `:``}${allRelays.length} relays.${
-                    kinds.length > 0 && pubkeys.length > 0 ? ` Kind ${
-                      kinds.join(', ')
-                    } owned by ${
-                      pubkeys.map(hpub => {
-                        let np = npub(hpub)
-                        return `${np.substring(0,9)}···${np.substring(np.length-4)} (hex ${hpub.substring(0,4)}···${hpub.substring(hpub.length-4)})`
-                      }).join(', ')
-                    }.` : ``
-                  } Enter ${
-                    allRelays.length > 0 ? `additional relay(s) or continue` : `relay(s)`
-                  }:`, allRelays.length == 0? 'all': '')
-                  if (input === null) {
-                    clearSelection()
-                  } else if (!input) {
-                    finish()
-                  } else {
-                    input.split(',').map(element => {
-                      let relay = relayUrl(element.trim())
-                      if (element == 'all') {
-                        [...onlineRelays, ...relays.map(relay => relay.url)].map(r => {
-                          let relay = relayUrl(r)
-                          if (!relay) {
-                            // alert(`Invalid relay name or url`)
-                          } else if (allRelays.includes(relay)) {
-                            // alert(`Relay was already checked`)
-                          } else {
-                            allRelays.push(relay)
-                            queryRelayForNote(relay)
-                          }
-                        })
-                      } else if (!relay) {
-                        // alert(`Invalid relay name or url`)
-                      } else if (allRelays.includes(relay)) {
-                        // alert(`Relay was already checked`)
-                      } else {
-                        allRelays.push(relay)
-                        queryRelayForNote(relay)
-                      }
-                    })
-                    waitForResults()
-                  }
-                })
-              }
-              allRelays.map(queryRelayForNote)
-              waitForResults()
-              const finish = () => {
-                let busy = false
-                let reason = prompt(`Reason for deletion:`)
-                if (reason !== null) {
-                  const secret = prompt(`Secret key (nsec) of event owner (to sign deletion event):`)
-                  if (secret) {
-                    let hsec = nsecDecode(secret) || secret
-                    if (!validKey(hsec)) {
-                      alert('Invalid key')
-                    } else if (!pubkeys.includes(getPubkey(hsec))) {
-                      alert(`This key doesn’t correspond to the original event`)
-                    } else {
-                      const deletionEvent = finalizeEvent({
-                        kind: 5,
-                        created_at: Math.floor(Date.now() / 1000),
-                        tags: [
-                          ['e', `${id}`],
-                          ...kinds.map(kind => ['k', `${kind}`])
-                        ],
-                        content: `${reason}`,
-                      }, hexToBytes(hsec))
-                      console.log(foundOnRelays)
-                      console.log(JSON.stringify(deletionEvent))
-  
-                      if (confirm(`Publish deletion event to ${foundOnRelays.length} relay(s)?`)) {
-                        busy = true
-                        Promise.allSettled(foundOnRelays.map(relay => publishEvent(deletionEvent, relay))).then(results => {
-                          const sent = results.reduce((a, c) => c.status == 'fulfilled'? a+1: a, 0)
-                          alert(`Sent successfully to ${sent} of ${results.length} relays.`)
-                          clearSelection()
-                        })
-                      }
-                    }
-                  }
-                }
-                if (!busy) {
-                  clearSelection()
-                }
-              }
-            })
-
-          }, 100)
-          break
-
-      }
-      // v.items[index].handler(v.items[index])
-      // menuRoot.easeOut()
-    } else {
-      // console.log('menu', x, y, index)
-    }
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
