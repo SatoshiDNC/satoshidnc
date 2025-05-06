@@ -21,16 +21,15 @@ const MINUTE = 60 * 1000
 let minutely
 let waiting_for_startup = true
 self.addEventListener('sync', event => {
-  console.log(`[${TAG}] sync`, event.tag)
+  console.log(`[${TAG}] sync`, event.tag, event)
   let now = Date.now()
   switch (event.tag) {
     case 'startup-trigger':
-      console.log(event)
-      // registration.sync.register('startup-trigger').then(() => {
-      //   clearStatus('registering_sync')
-      // }, error => {
-      //   pushError(`Sync registration failed: ${error}`)
-      // })
+      event.target.registration.sync.register('startup-trigger').then(() => {
+        console.log('re-registered startup-trigger')
+      }, error => {
+        console.error(`sync registration failed: ${error}`)
+      })
 
       if (waiting_for_startup) break
       startupTasks()
