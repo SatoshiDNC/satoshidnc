@@ -342,6 +342,12 @@ v.renderFunc = function() {
   mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.textColor, v.mat, m)
+  str = '\x17'
+  s = 53/18
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + 116 - iconFont.calcWidth(str) * s / 2, v.menuY + y + 66 + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, str, colors.accent, v.mat, m)
   str = 'Channels are public, so anyone can find them'
   s = 29/14
   y += 61
