@@ -19,7 +19,7 @@ import { finalizeEvent } from 'nostr-tools'
 // export function bpub() { return Buffer.from(hpub(), 'hex') }
 // export function npub() { return nip19.npubEncode(hpub()) }
 
-const TITLE_TOP = 120
+const TITLE_TOP = 507
 const ITEM_TOP = TITLE_TOP + 61
 const ITEM_LEFT = 90
 const ITEM_SIZE = 179
@@ -307,8 +307,12 @@ v.renderFunc = function() {
   drawPill(v, colors.inactive, v.menuX + (v.menuW - 84) / 2, v.menuY + 26 + v.menuH * f0, 84, 11)
 
   mat4.identity(m)
-  let str = 'Nostor tools'
-  let s = 41/14
+  let str = 'Create a channel to reach'
+  let s = 51/14
+  mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + TITLE_TOP + 51 + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.textColor, v.mat, m)
+  str = 'unlimited followers'
   mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + TITLE_TOP + 41 + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.textColor, v.mat, m)
