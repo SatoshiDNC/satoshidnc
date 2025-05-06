@@ -302,7 +302,8 @@ v.layoutFunc = function() {
   discover.push('d98a11b4be2839cd9d4495e163852aa037e3cdafdd1e6ce730307d0d05f468c3') // Daily Bible
   discover.push('fd3db6deffb739f806026e81d1c8d99cc245a3f386acbbaba8dc983710c7e81a') // Bitcoin Paraguay
 
-  v.selfs = keys.map(k => k.hpub)
+  v.keys = keys.map(k => k.hpub)
+  v.selfs = [ defaultKey ]
   v.recents = recents
   v.viewed = viewed
   v.channels = channels
