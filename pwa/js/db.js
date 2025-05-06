@@ -8,16 +8,13 @@ export const log_and_reject = () => {
 
 export function init() {
   return new Promise((resolve, reject) => {
-    console.log(`[${TAG}] init`)
     const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 9)
-    console.log(`[${TAG}] req`, req)
     req.onsuccess = e => {
-      console.log(`[${TAG}] success`)
       db = req.result
       resolve()
     }
     req.onerror = e => {
-      console.log(`[${TAG}] error`)
+      console.error(`[${TAG}] database error`, e)
       reject(e)
     }
     req.onupgradeneeded = e => {
