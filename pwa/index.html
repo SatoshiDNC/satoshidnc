@@ -355,35 +355,52 @@
                   pushError(`Sync registration failed: ${error}`)
                 })
 
+                registration.periodicSync.getTags().then((tags) => {
+                  if (tags.includes('minutely-test')) {
+                    console.log('minutely-test exists')
+                    clearStatus('registering_periodic_sync')
+                  } else {
+                    console.log('minutely-test does not exist')
+                    registration.periodicSync.register('minutely-test', {
+                      minInterval: 60 * 1000,
+                    }).then(() => {
+                      clearStatus('registering_periodic_sync')
+                    }, error => {
+                      pushError(`periodic sync registration failed: ${error}`)
+                    })
+                  }
+                })
+
+
                 setInterval(() => {
                   minutelyUI()
                 }, 60 * 1000)
 
-                navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
-                  if (status.state == 'granted' && 'periodicSync' in registration) {
-                    navigator.serviceWorker.ready.then(async sw => {
-                      sw.periodicSync.getTags().then((tags) => {
-                        if (tags.includes('minutely-test')) {
-                          console.log('minutely-test exists')
-                          clearStatus('registering_periodic_sync')
-                        } else {
-                          console.log('minutely-test does not exist')
-                          sw.periodicSync.register('minutely-test', {
-                            minInterval: 60 * 1000,
-                          }).then(() => {
-                            clearStatus('registering_periodic_sync')
-                          }, error => {
-                            pushError(`periodic sync registration failed: ${error}`)
-                          })
-                        }
-                      })
-                    })
-                  } else {
-                    console.warn('note: background sync is not available (requires install)')
-                    // pushError(`Periodic sync not enabled: ${error}`)
-                    clearStatus('registering_periodic_sync')
-                  }
-                })
+                // navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
+                //   if (status.state == 'granted' && 'periodicSync' in registration) {
+                //     navigator.serviceWorker.ready.then(async sw => {
+                //       // sw.periodicSync.getTags().then((tags) => {
+                //       //   if (tags.includes('minutely-test')) {
+                //       //     console.log('minutely-test exists')
+                //       //     clearStatus('registering_periodic_sync')
+                //       //   } else {
+                //       //     console.log('minutely-test does not exist')
+                //       //     sw.periodicSync.register('minutely-test', {
+                //       //       minInterval: 60 * 1000,
+                //       //     }).then(() => {
+                //       //       clearStatus('registering_periodic_sync')
+                //       //     }, error => {
+                //       //       pushError(`periodic sync registration failed: ${error}`)
+                //       //     })
+                //       //   }
+                //       // })
+                //     })
+                //   } else {
+                //     console.warn('note: background sync is not available (requires install)')
+                //     // pushError(`Periodic sync not enabled: ${error}`)
+                //     clearStatus('registering_periodic_sync')
+                //   }
+                // })
               }
               // console.log(`[${TAG}:sw] state: ${sw.state}`)
               if (sw.state == 'installed') {
