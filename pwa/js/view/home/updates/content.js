@@ -332,7 +332,7 @@ v.layoutFunc = function() {
   g.autoHull()
 
   v.minX = 0, v.maxX = v.sw
-  v.minY = 0, v.maxY = v.viewedGad.y + v.viewedGad.h
+  v.minY = 0, v.maxY = v.discoverGad.y + v.discoverGad.h
 
   g = v.swipeGad
   g.layout.call(g)
