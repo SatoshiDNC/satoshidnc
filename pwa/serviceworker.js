@@ -25,6 +25,13 @@ self.addEventListener('sync', event => {
   let now = Date.now()
   switch (event.tag) {
     case 'startup-trigger':
+      console.log(event)
+      // registration.sync.register('startup-trigger').then(() => {
+      //   clearStatus('registering_sync')
+      // }, error => {
+      //   pushError(`Sync registration failed: ${error}`)
+      // })
+
       if (waiting_for_startup) break
       startupTasks()
       break
