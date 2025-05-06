@@ -48,7 +48,7 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     menuRoot.followUp = () => {
-      createChannelRoot.easingState = 1
+      createChannelRoot.easingState = 0
       createChannelRoot.easingValue = 1
       fg.setRoot(createChannelRoot)
     }
