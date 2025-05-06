@@ -11,10 +11,12 @@ export function init() {
     console.log(`[${TAG}] init`)
     const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 9)
     req.onsuccess = e => {
+      console.log(`[${TAG}] success`)
       db = req.result
       resolve()
     }
     req.onerror = e => {
+      console.log(`[${TAG}] error`)
       reject(e)
     }
     req.onupgradeneeded = e => {
