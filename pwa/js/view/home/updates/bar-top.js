@@ -1,4 +1,5 @@
 import { Buffer } from 'buffer'
+import { menuView as createChannelPopup } from './create-channel-1.js'
 
 let v, g
 export const barTop = v = new fg.View()
@@ -11,51 +12,11 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
   g.label = ':'
   g.font = iconFont
   g.fontSize = 11
-  g.handler = function(item) {
-    console.log(`id ${JSON.stringify(item)}`)
-  }
-  g.copyResult = function(item, parentRoot) {
-    navigator.clipboard.writeText(barTop.menuGad.computationResult)
-  }
-  g.sha256 = function(item, parentRoot) {
-    const g = this
-    setTimeout(() => {
-      const handleAction = () => {
-        const text = prompt(item.label)
-        if (text !== null) {
-          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
-            const hash = Buffer.from(bytes).toString('hex')
-            barTop.menuGad.computationResult = hash
-          })
-        }
-      }
-      if (fg.getRoot() === parentRoot) {
-        parentRoot.followUp = handleAction
-      } else {
-        handleAction()
-      }
-    },10)
-  }
-  g.indexHash = function(item, parentRoot) {
-    const g = this
-    setTimeout(() => {
-      const handleAction = () => {
-        const text = prompt(item.label)
-        if (text !== null) {
-          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(bytes => {
-            const hash = Buffer.from(bytes).toString('hex')
-            const index = '' + (parseInt(hash.substring(0,8), 16) & 0x7fffffff)
-            barTop.menuGad.computationResult = index
-          })
-        }
-      }
-      if (fg.getRoot() === parentRoot) {
-        parentRoot.followUp = handleAction
-      } else {
-        handleAction()
-      }
-    },10)
-  }
+  g.items = [
+    { id: 1, label: 'Create channel', handler: g.handleSequential, subhandler: createChannelPopup.invoker },
+    { id: 2, label: 'Status privacy', handler: g.handler },
+    { id: 3, label: 'Settings', handler: g.handleSettings },
+  ]
   g.handleSettings = function(item, parentRoot) {
     const g = this, v = this.viewport
     console.log(`settings ${JSON.stringify(item)}`)
@@ -68,7 +29,7 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       handleAction()
     }
   }
-  g.handleSerial = function(item, parentRoot) {
+  g.handleSequential = function(item, parentRoot) {
     const g = this, v = this.viewport
     console.log(`serial item ${JSON.stringify(item)}`)
     const handleAction = () => {
@@ -80,18 +41,6 @@ v.gadgets.push(g = v.menuGad = new fg.Gadget(v))
       handleAction()
     }
   }
-  g.items = [
-    { id: 1, handler: g.handler, label: 'New group' },
-    { id: 2, handler: g.handler, label: 'New broadcast' },
-    { id: 3, handler: g.handler, label: 'Linked devices' },
-    { id: 4, handler: g.handler, label: 'Starred messages' },
-    { id: 5, label: 'Settings', handler: g.handleSettings },
-    // { id: 6, label: 'Compute SHA-256', handler: g.sha256 },
-    // { id: 7, label: 'Compute index hash', handler: g.indexHash },
-    // { id: 8, label: 'Copy result', handler: g.copyResult },
-    // { id: 8, label: 'Nostor tools', handler: g.handleSerial, subhandler: nostorTools.invoker },
-    // { id: 9, label: 'Trezor tools', handler: trezorTools.invoker },
-  ]
   g.clickFunc = function() {
     const g = this, v = this.viewport
     if (fg.getRoot() !== g.target || g.target.easingState() == -1) {
