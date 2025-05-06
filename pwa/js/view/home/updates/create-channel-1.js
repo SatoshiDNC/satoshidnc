@@ -52,7 +52,7 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
       createChannelRoot.easingValue = 0
       fg.setRoot(createChannelRoot)
     }
-    menuRoot.easeOut()
+    menuRoot.easeOut(createChannelRoot)
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
