@@ -1,8 +1,6 @@
-import { sfx } from '../sound.js'
-
 const TAG = 'sw-minutely'
 
 export function minutelyTasks() {
   console.log(`[${TAG}] no-op`)
-  sfx('new update', false)
+  console.log(self.clients.matchAll())
 }
