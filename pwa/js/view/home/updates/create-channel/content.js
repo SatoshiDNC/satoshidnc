@@ -1,5 +1,5 @@
 import { getKeyboardInput } from '../../../util.js'
-import { drawEllipse } from '../../../../draw.js'
+import { drawEllipse, alpha } from '../../../../draw.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -65,7 +65,13 @@ v.renderFunc = function() {
   const m = mat4.create()
   let s
 
-  drawEllipse(v,colors.inactive, v.sw/2-158,74, 316,316)
+  drawEllipse(v, alpha(colors.inactive, 0.5), v.sw/2-158,74, 316,316)
+
+  mat4.identity(m)
+  mat4.translate(m,m, [v.sw/2 - 154/2, 309, 0])
+  s = 154/18
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, '\x15', colors.inactive, v.mat, m)
 
   const drawTextInput = (g) => {
     let goal = g.focused || g.text? 1: 0
