@@ -17,24 +17,30 @@ self.addEventListener('activate', event => {
   return self.clients.claim()
 })
 
+function startup(sw) {
+  startupTasks()
+  sw.registration.sync.register('minutely').then(() => {
+    console.log(`[${TAG}] registered minutely`)
+  }, error => {
+    console.error(`[${TAG}] sync registration failed: ${error}`)
+  })
+}
+
 const MINUTE = 60 * 1000
 let minutely
-let waiting_for_startup = true
+let startup_trigger = false
+let waiting_for_database = true
 self.addEventListener('sync', event => {
   console.log(`[${TAG}] sync`, event.tag, event)
   let now = Date.now()
   switch (event.tag) {
     case 'startup-trigger':
-      if (waiting_for_startup) break
-      startupTasks()
-      event.target.registration.sync.register('minutely').then(() => {
-        console.log(`[${TAG}] registered minutely`)
-      }, error => {
-        console.error(`[${TAG}] sync registration failed: ${error}`)
-      })
+      startup_trigger = true
+      if (waiting_for_database) break
+      startup(event.target)
       break
     case 'minutely':
-      if (waiting_for_startup) break
+      if (waiting_for_database) break
       if (minutely && now - minutely < MINUTE) break
       minutely = now
       setTimeout(() => {
@@ -60,8 +66,10 @@ self.addEventListener('periodicsync', event => {
 
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'DB_READY') {
-    waiting_for_startup = false
+    waiting_for_database = false
     console.log(`[${TAG}] received DB-ready all-clear signal`)
+    if (!startup_trigger) return
+    startup(event.target)
   }
 })
 
