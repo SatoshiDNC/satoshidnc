@@ -2,5 +2,7 @@ const TAG = 'sw-minutely'
 
 export function minutelyTasks() {
   console.log(`[${TAG}] no-op`)
-  console.log(self.clients.matchAll())
+  self.clients.matchAll().then(list => {
+    console.log(list)
+  })
 }
