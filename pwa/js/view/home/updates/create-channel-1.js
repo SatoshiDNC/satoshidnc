@@ -3,6 +3,7 @@ import { noteDecode, nsecDecode, validKey, relayUrl, npub, nostrWatchRelays, get
 import { findEvent, publishEvent } from '../../../nostor-app.js'
 import { relays } from '../../../relays.js'
 import { finalizeEvent } from 'nostr-tools'
+import { root as createChannelRoot } from './create-channel/root.js'
 
 const TITLE_TOP = 507
 const ITEM_TOP = TITLE_TOP + 61
@@ -47,6 +48,7 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.x = 69, g.h = 104
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
+    menuRoot.followUp = createChannelRoot
     menuRoot.easeOut()
   }
 v.gadgets.push(g = v.screenGad = new fg.Gadget(v))
