@@ -39,7 +39,6 @@ v.easingState = 1
 v.easingValue = 0
 v.easingRate = 0.033
 v.items = [
-  { key: DEL_EVENT, copyAnim: 0, name: 'Delete an event'},
 ]
 v.menuX = 0
 v.menuR = 32
@@ -49,6 +48,8 @@ v.gadgets.push(g = v.closeGad = new fg.Gadget(v))
   g.clickFunc = function(e) {
     const g = this, v = this.viewport
     menuRoot.followUp = () => {
+      createChannelRoot.easingState = -1
+      createChannelRoot.easingValue = 0
       fg.setRoot(createChannelRoot)
     }
     menuRoot.easeOut()
