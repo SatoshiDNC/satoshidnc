@@ -348,8 +348,8 @@
               sw = registration.active
             }
             if (sw) {
-              const setup = sw => {
-                sw.sync.register('startup-trigger').then(() => {
+              const setup = () => {
+                registration.sync.register('startup-trigger').then(() => {
                   clearStatus('registering_sync')
                 }, error => {
                   pushError(`Sync registration failed: ${error}`)
@@ -360,7 +360,7 @@
                 }, 60 * 1000)
 
                 navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
-                  if (status.state == 'granted' && 'periodicSync' in sw) {
+                  if (status.state == 'granted' && 'periodicSync' in registration) {
                     navigator.serviceWorker.ready.then(async sw => {
                       sw.periodicSync.getTags().then((tags) => {
                         if (tags.includes('minutely-test')) {
@@ -391,7 +391,7 @@
               } else if (sw.state == 'activated') {
                 clearStatus('installing_sw')
                 clearStatus('waiting_on_sw')
-                setup(sw)
+                setup()
               }
               sw.addEventListener('statechange', function(e) {
                 // console.log(`[${TAG}:sw] state: ${e.target.state}`)
@@ -400,7 +400,7 @@
                 } else if (e.target.state == 'activated') {
                   clearStatus('installing_sw')
                   clearStatus('waiting_on_sw')
-                  setup(e.target)
+                  setup()
                 }
               })
             } else {
