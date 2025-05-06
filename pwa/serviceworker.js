@@ -40,7 +40,7 @@ self.addEventListener('sync', event => {
       startup(event.target)
       break
     case 'minutely':
-      if (waiting_for_database) break
+      if (waiting_for_database) break 
       if (minutely && now - minutely < MINUTE) break
       minutely = now
       setTimeout(() => {
