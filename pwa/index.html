@@ -255,6 +255,7 @@
     import { minutelyUI } from './js/periodic.js'
     import { updateBalances } from './js/deals.js'
     import { reloadChannelFollows } from './js/channels.js'
+    import { handle } from './js/event-handler.js'
 
     const TAG = 'init'
     // This module demonstrates use of Fireglass and Rune.
@@ -377,9 +378,9 @@
                 }, 60 * 1000)
 
                 navigator.serviceWorker.addEventListener("message", (event) => {
-                  console.log(event)
+                  handle(event)
                 })
-                
+
                 // navigator.permissions.query({ name: 'periodic-background-sync' }).then(status => {
                 //   if (status.state == 'granted' && 'periodicSync' in registration) {
                 //     navigator.serviceWorker.ready.then(async sw => {
