@@ -24,6 +24,7 @@ const ITEM_TOP = TITLE_TOP + 61
 const ITEM_LEFT = 90
 const ITEM_SIZE = 179
 const BOT_SPACE = 203
+const ITEM_INDENT = 253
 
 const DEL_EVENT = 'DEL_EVENT'
 
@@ -308,13 +309,23 @@ v.renderFunc = function() {
 
   let str = 'Create a channel to reach'
   let s = 51/14
+  let y = TITLE_TOP + 51
   mat4.identity(m)
-  mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + TITLE_TOP + 51 + v.menuH * f0, 0])
+  mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + y + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.textColor, v.mat, m)
   str = 'unlimited followers'
+  y += 93
   mat4.identity(m)
-  mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + TITLE_TOP + 51 + 93 + v.menuH * f0, 0])
+  mat4.translate(m,m, [v.menuX + (v.menuW - defaultFont.calcWidth(str) * s) / 2, v.menuY + y + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  defaultFont.draw(0,0, str, v.textColor, v.mat, m)
+
+  str = 'Anyone can discover your channel'
+  s = 33/14
+  y += 123
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + y + v.menuH * f0, 0])
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.textColor, v.mat, m)
 
