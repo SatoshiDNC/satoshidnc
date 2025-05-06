@@ -14,7 +14,7 @@ v.buttonTextColor = colors.accentButtonText
 v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
   g.x = 79, g.h = 104
-  g.label = 'Save'
+  g.label = 'Create channel'
   g.clickFunc = function() {
     const g = this, v = g.viewport
     const name = g.formView.nameGad.text
