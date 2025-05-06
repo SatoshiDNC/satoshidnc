@@ -4,6 +4,8 @@ import { detectRelay } from '../../../../relays.js'
 import { addRelayContactRelation, R_KNOWS_C } from '../../../../graph.js'
 import { drawPill } from '../../../../draw.js'
 import * as nip19 from 'nostr-tools/nip19'
+import { generateSecretKey, getPublicKey } from 'nostr-tools/pure'
+import { putDeviceKey } from '../../../../keys.js'
 
 let v, g
 export const barBot = v = new fg.View()
@@ -18,73 +20,24 @@ v.gadgets.push(g = v.saveGad = new fg.Gadget(v))
   g.clickFunc = function() {
     const g = this, v = g.viewport
     const name = g.formView.nameGad.text
-    const pubkey = g.formView.pubkeyGad.text
-    const relay = g.formView.relayGad.text
-    if (name && pubkey) {
-      let hpub, relays
+    const desc = g.formView.descGad.text
+    if (name && desc) {
 
-      // If it's a hex key, use it verbatim
-      if (pubkey.length == 64 && Array.from(pubkey.toLowerCase()).reduce((pre, cur) => pre && '01234566789abcdef'.includes(cur), true)) {
-        hpub = pubkey.toLowerCase()
-      }
-
-      // Otherwise...
-      if (!hpub) {
-
-        // Strip the nostr: URL scheme, if present
-        let bech32 = pubkey
-        if (pubkey.startsWith('nostr:')) {
-          bech32 = pubkey.substring(6)
-        }
-
-        // Handle Bech32-encoded formats
-        try {
-          const decoded = nip19.decode(bech32)
-          if (decoded?.type == 'nprofile') {
-            hpub = decoded.data.pubkey
-            relays = decoded.data.relays
-          } else if (decoded?.type == 'npub') {
-            hpub = decoded.data
-          }
-        } catch(e) {
-          if (bech32.startsWith('nprofile') || bech32.startsWith('npub')) {
-            alert(`${e}`)
-            return
-          }
-        }
-      }
-
-      // If we couldn't recognize the key, error and return early
-      if (!hpub) {
-        alert(`Unrecognized public key format. Supported formats include: nprofile, npub, hex`)
-        return
-      }
+      // generate new keypair
+      let sk = generateSecretKey() // `sk` is a Uint8Array
+      let hpub = getPublicKey(sk) // `pk` is a hex string
+      let hsec = Buffer.from(sk).toString('hex')
 
       // We have the hex public key; import the contact
       let cancel = false
       const existing = contacts.filter(c => c.hpub == hpub)?.[0]
       if (existing) {
-        const existingName = getName(existing.hpub)
-        if (name != existingName) {
-          if (confirm(`Contact exists as '${existingName}'.\nUpdate name?`)) {
-            setPersonalData(hpub, 'name', name)
-          } else {
-            cancel = true
-          }
-        }
-        const existingRelay = getPersonalData(existing.hpub, 'relay')
-        if (relay != existingRelay) {
-          if (confirm(`Contact exists with relay '${existingRelay}'.\nUpdate relay?`)) {
-            setPersonalData(hpub, 'relay', relay)
-          } else {
-            cancel = true
-          }
-        }
+        console.error(`unexpected: generated key matches existing contact`)
+        cancel = true
       } else {
+        putDeviceKey(hpub, hsec)
         addNewContact(hpub, name)
-        //setPersonalData(hpub, 'relay', relay) // FIX needed
-        relays?.map(r => detectRelay(r))
-        relays?.map(r => addRelayContactRelation(r, hpub, R_KNOWS_C))
+        setPersonalData(hpub, 'about', desc)
       }
       if (!cancel) {
         g.root.easeOut(g.target)
