@@ -1,4 +1,5 @@
 import { getKeyboardInput } from '../../../util.js'
+import { drawEllipse } from '../../../../draw.js'
 
 let v, g
 export const contentView = v = new fg.View(null)
@@ -12,7 +13,7 @@ v.textColor = [0xe9/0xff, 0xed/0xff, 0xee/0xff, 1]
 v.iconColor = [0x8d/0xff, 0x95/0xff, 0x98/0xff, 1]
 v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 44, g.y = 100, g.h = 70
+  g.x = 44, g.y = 574, g.h = 70
   g.label = 'Channel name'
   g.text = '', g.defaultValue =''//'Satoshi, D.N.C.'
   g.animValue = 0
@@ -34,7 +35,7 @@ v.gadgets.push(g = v.nameGad = new fg.Gadget(v))
   }
 v.gadgets.push(g = v.descGad = new fg.Gadget(v))
   g.actionFlags = fg.GAF_CLICKABLE
-  g.x = 44, g.y = 100 + 212 * 2, g.h = 70
+  g.x = 44, g.y = 574 + 212 * 2, g.h = 70
   g.label = 'Describe your channel.'
   g.text = '', g.defaultValue = ''
   g.animValue = 0
@@ -63,6 +64,8 @@ v.renderFunc = function() {
   gl.clear(gl.COLOR_BUFFER_BIT)  
   const m = mat4.create()
   let s
+
+  drawEllipse(v,colors.inactive, v.sw/2-158,74, 316,316)
 
   const drawTextInput = (g) => {
     let goal = g.focused || g.text? 1: 0
