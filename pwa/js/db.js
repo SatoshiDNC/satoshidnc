@@ -10,6 +10,7 @@ export function init() {
   return new Promise((resolve, reject) => {
     console.log(`[${TAG}] init`)
     const req = ((typeof window !== 'undefined')? window.indexedDB : indexedDB).open('db', 9)
+    console.log(`[${TAG}] req`, req)
     req.onsuccess = e => {
       console.log(`[${TAG}] success`)
       db = req.result
