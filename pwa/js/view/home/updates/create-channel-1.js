@@ -19,7 +19,7 @@ import { finalizeEvent } from 'nostr-tools'
 // export function bpub() { return Buffer.from(hpub(), 'hex') }
 // export function npub() { return nip19.npubEncode(hpub()) }
 
-const TITLE_TOP = 507
+const TITLE_TOP = 507 - 405
 const ITEM_TOP = TITLE_TOP + 61
 const ITEM_LEFT = 90
 const ITEM_SIZE = 179
@@ -254,7 +254,7 @@ v.prepMenu = function(items) {
 }
 v.layoutFunc = function() {
   const v = this
-  v.menuH = 1669 - 56
+  v.menuH = 1669 - 56 - 405
   v.menuY = v.sh - v.menuH
   v.menuW = v.sw
   let g
