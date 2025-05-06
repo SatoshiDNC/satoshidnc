@@ -252,7 +252,7 @@ v.prepMenu = function(items) {
 }
 v.layoutFunc = function() {
   const v = this
-  v.menuH = ITEM_TOP + ITEM_SIZE * v.currentItemCount + BOT_SPACE
+  v.menuH = 1669
   v.menuY = v.sh - v.menuH
   v.menuW = v.sw
   let g
