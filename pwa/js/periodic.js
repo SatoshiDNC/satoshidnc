@@ -4,6 +4,7 @@ import { ONE_MINUTE_IN_MILLISECONDS } from './time.js'
 import { defaultKey, sign } from './keys.js'
 import { contactDependencies } from './contacts.js'
 import { updateBalances } from './deals.js'
+import { db } from './db.js'
 
 let timer
 contactDependencies.push(() => {
