@@ -70,12 +70,6 @@ v.layoutFunc = function() {
   g.y = v.sh - 147
   g.w = v.sw - 2 * g.x
   g.autoHull()
-  g = v.menuGad
-  g.x = v.menuX
-  g.y = v.menuY
-  g.w = v.menuW
-  g.h = v.menuH
-  g.autoHull()
   g = v.screenGad
   g.x = 0
   g.y = 0
