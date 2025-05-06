@@ -322,6 +322,13 @@ v.renderFunc = function() {
   mat4.scale(m,m, [s, s, 1])
   defaultFont.draw(0,0, str, v.textColor, v.mat, m)
 
+  str = '\x15'
+  s = 211/18
+  mat4.identity(m)
+  mat4.translate(m,m, [v.menuX + ITEM_INDENT, v.menuY + TITLE_TOP - 128 + v.menuH * f0, 0])
+  mat4.scale(m,m, [s, s, 1])
+  iconFont.draw(0,0, str, v.textColor, v.mat, m)
+
   str = 'Anyone can discover your channel'
   s = 33/14
   y += 123
