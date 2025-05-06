@@ -349,7 +349,7 @@
             }
             if (sw) {
               const setup = () => {
-                registration.sync.register('startup-trigger').then(() => {
+                sw.sync.register('startup-trigger').then(() => {
                   clearStatus('registering_sync')
                 }, error => {
                   pushError(`Sync registration failed: ${error}`)
@@ -373,15 +373,15 @@
                           }).then(() => {
                             clearStatus('registering_periodic_sync')
                           }, error => {
-                            pushError(`Periodic sync registration failed: ${error}`)
+                            pushError(`periodic sync registration failed: ${error}`)
                           })
                         }
                       })
                     })
                   } else {
-                    console.error('note: background sync is not available (requires install)')
-                    pushError(`Periodic sync not enabled: ${error}`)
-                    // clearStatus('registering_periodic_sync')
+                    console.warn('note: background sync is not available (requires install)')
+                    // pushError(`Periodic sync not enabled: ${error}`)
+                    clearStatus('registering_periodic_sync')
                   }
                 })
               }
