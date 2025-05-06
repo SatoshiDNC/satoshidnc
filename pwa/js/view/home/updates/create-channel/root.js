@@ -4,7 +4,7 @@ import { contentView } from './content.js'
 import { setEasingParameters } from '../../../util.js'
 
 export const root = v = new fg.DualSliceView(null, 'v', 147, 211)
-v.name = Object.keys({newContactRoot}).pop()
+v.name = 'updates create-channel root'
 v.designSize = 1080 * 2183
 v.bgColor = [0,0,0,1]
 v.a = barTop; barTop.parent = v
