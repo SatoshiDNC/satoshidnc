@@ -6,6 +6,7 @@ import { drawPill } from '../../../../draw.js'
 import * as nip19 from 'nostr-tools/nip19'
 import { generateSecretKey, getPublicKey } from 'nostr-tools/pure'
 import { putDeviceKey } from '../../../../keys.js'
+import { Buffer } from 'buffer'
 
 let v, g
 export const barBot = v = new fg.View()
