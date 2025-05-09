@@ -366,7 +366,8 @@
                     }).then(() => {
                       clearStatus('registering_periodic_sync')
                     }, error => {
-                      pushError(`periodic sync registration failed: ${error}`)
+                      console.warn(`[${TAG}] periodic sync registration failed: ${error}`)
+                      clearStatus('registering_periodic_sync')
                     })
                   }
                 })
